@@ -1,0 +1,45 @@
+{
+  "formatVersion": 4,
+  "id": "level_0006",
+  "conveyor": "square_42",
+  "slots": 4,
+  "extraSlots": 2,
+  "slotLocks": [],
+  "trayCapacity": 4,
+  "colors": [3, 4, 5, 7, 8],
+  "feeders": [
+    { "bottles": [
+      7, 7, 7, 7,
+      3, 3, 3, 3,
+      4, 4, 4, 4,
+      8, 8, 8, 8,
+      5, 5, 5, 5,
+      3, 3, 3, 3,
+      5, 5, 5, 5,
+      3, 3, 3, 3,
+      7, 7, 7, 7,
+      3, 3, 3, 3,
+      4, 4, 4, 4
+    ], "hiddenRows": [], "entry": "left" },
+    { "bottles": [
+      8, 8, 8, 8,
+      5, 5, 5, 5,
+      8, 8, 8, 8,
+      7, 7, 7, 7,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      7, 7, 7, 7,
+      5, 5, 5, 5,
+      7, 7, 7, 7,
+      8, 8, 8, 8
+    ], "hiddenRows": [], "entry": "right" }
+  ],
+  "lanes": [
+    [{ "color": 7 }, { "color": 3 }, { "color": 7 }, { "color": 4, "size": 2 }, { "color": 3 }, { "color": 3 }],
+    [{ "color": 8 }, { "color": 4 }, { "color": 5 }, { "color": 5 }, { "color": 5 }, { "color": 8 }],
+    [{ "color": 5 }, { "color": 8, "size": 2 }, { "color": 3 }, { "color": 7 }, { "color": 7, "size": 2 }, { "color": 4 }]
+  ],
+  "links": [],
+  "view": { "cameraPreset": "default" },
+  "meta": { "name": "Three Queues", "difficulty": "easy", "intro": "A third queue, with a few 8-item boxes.", "booster": "2nd" }
+}

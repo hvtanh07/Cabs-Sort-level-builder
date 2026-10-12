@@ -1,0 +1,33 @@
+{
+  "formatVersion": 4,
+  "id": "level_0002",
+  "conveyor": "square_42",
+  "slots": 4,
+  "extraSlots": 2,
+  "slotLocks": [],
+  "trayCapacity": 4,
+  "colors": [3, 4, 6, 7],
+  "feeders": [
+    { "bottles": [
+      3, 3, 3, 3,
+      4, 4, 4, 4,
+      6, 6, 6, 6,
+      3, 3, 3, 3,
+      7, 7, 7, 7,
+      4, 4, 4, 4,
+      7, 7, 7, 7,
+      6, 6, 6, 6,
+      4, 4, 4, 4,
+      3, 3, 3, 3,
+      7, 7, 7, 7,
+      6, 6, 6, 6
+    ], "hiddenRows": [], "entry": "middle" }
+  ],
+  "lanes": [
+    [{ "color": 3 }, { "color": 6 }, { "color": 3 }, { "color": 7 }, { "color": 4 }, { "color": 7 }],
+    [{ "color": 4 }, { "color": 7 }, { "color": 4 }, { "color": 6 }, { "color": 3 }, { "color": 6 }]
+  ],
+  "links": [],
+  "view": { "cameraPreset": "default" },
+  "meta": { "name": "Two Queues", "difficulty": "easy", "intro": "A second queue: pick which front box to send." }
+}

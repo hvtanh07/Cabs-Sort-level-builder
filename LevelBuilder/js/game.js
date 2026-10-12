@@ -209,7 +209,7 @@
       items,
       boxes: this.lanes.some(l => l.some(b => b.lock > 0)),
       slots: this.slots.some(s => s.lock > 0),
-      door: this.doorTurns > 0 && this.feeders.some(f => f.shut),
+      door: this.doorTurns > 0 && this.feeders.some(f => f.shut && f.rows.some(r => r.some(x => x))),   // only a shut door with items behind it
       queue: !!this.blocked
     };
   };

@@ -1,0 +1,229 @@
+/* Build + verify the 40 element-unlock levels. node gen.js [only=N,...] */
+'use strict';
+global.window = global;
+const L = require('path').join(__dirname, '../../js/') ;
+require(L + 'conveyors.js'); require(L + 'data.js'); require(L + 'game.js');
+const CS = global.CS;
+const GEOM = {};
+CS.PRESET_CONVEYORS.forEach(r => { const c = CS.normConveyor(r); GEOM[c.id] = CS.buildGeom(c); });
+
+function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const ri = (r, a, b) => a + Math.floor(r() * (b - a + 1));
+const pick = (r, arr) => arr[Math.floor(r() * arr.length)];
+
+/* ---------- level construction ---------- */
+function make(S, seed) {
+  const r = rng(seed * 7919 + S.n * 104729);
+  const N = S.boxes, lanesN = S.lanes;
+  // sizes
+  const sizes = new Array(N).fill(1);
+  const free = [...Array(N).keys()].filter(i => i >= (S.bigFrom != null ? S.bigFrom : 0));
+  CS.shuffle(free, r);
+  let k = 0;
+  [[2, S.big2 || 0], [3, S.big3 || 0], [4, S.big4 || 0]].forEach(([sz, cnt]) => { for (let i = 0; i < cnt; i++) sizes[free[k++]] = sz; });
+  // colours: in send order, cycle a shuffled palette, no colour twice within the last few boxes
+  const pal = CS.shuffle(S.palette ? S.palette.slice() : [1, 2, 3, 4, 5, 6, 7, 8], r).slice(0, S.colors);
+  const cols = [];
+  const gap = Math.min(S.colors - 1, S.colorGap != null ? S.colorGap : 2);
+  const used = {}; pal.forEach(c => used[c] = 0);
+  for (let i = 0; i < N; i++) {
+    const recent = cols.slice(Math.max(0, i - gap));
+    // colour phases: only a sliding window of the palette is active, so far-off boxes need colours that are not on the belt yet
+    const act = S.phase ? pal.filter((c, ci) => { const st = Math.floor(i / S.phaseLen); return ((ci - st) % pal.length + pal.length) % pal.length < S.phase; }) : pal;
+    let cand = act.filter(c => !recent.includes(c));
+    if (!cand.length) cand = act.slice();
+    const mn = Math.min(...cand.map(c => used[c]));
+    cand = cand.filter(c => used[c] <= mn + (S.colorSlack || 0));
+    const c = pick(r, cand);
+    cols.push(c); used[c] += sizes[i];
+  }
+  if (S.late && S.late.unique) {
+    // the first big box gets a colour of its own, so the belt cannot fill it from other boxes' items
+    const bi = sizes.findIndex(z => z >= 2), own = cols[bi], rest = pal.filter(c => c !== own);
+    let k2 = 0;
+    for (let i = 0; i < N; i++) if (i !== bi && cols[i] === own) {
+      const near = [cols[i - 1], cols[i - 2], cols[i + 1], cols[i + 2], cols[i - lanesN], cols[i + lanesN]];
+      const ok = rest.filter(c => !near.includes(c));
+      cols[i] = ok.length ? ok[k2++ % ok.length] : rest[k2++ % rest.length];
+    }
+  }
+  // send order -> lanes (round robin by depth)
+  const order = [];
+  for (let i = 0; i < N; i++) order.push({ i, color: cols[i], size: sizes[i], lane: i % lanesN, depth: Math.floor(i / lanesN) });
+  if (S.stick) {
+    // solution order sends runs from one queue: wrong picks fill slots with boxes whose items are still far away
+    const left = Array.from({ length: lanesN }, (_, l) => Math.floor(N / lanesN) + (l < N % lanesN ? 1 : 0));
+    const depth = new Array(lanesN).fill(0);
+    let cur = ri(r, 0, lanesN - 1);
+    order.forEach(b => {
+      if (!(left[cur] > 0 && r() < S.stick)) {
+        const opts = [...Array(lanesN).keys()].filter(l => left[l] > 0 && l !== cur);
+        const tot = opts.reduce((a, l) => a + left[l], 0);
+        if (opts.length) { let x = r() * tot; cur = opts.find(l => (x -= left[l]) < 0); if (cur == null) cur = opts[opts.length - 1]; }
+      }
+      b.lane = cur; b.depth = depth[cur]++; left[cur]--;
+    });
+  }
+  // items in send order, one colour per Enter Path row: each box brings `size` rows of 4 of its colour
+  const units = [];
+  order.forEach(b => { for (let j = 0; j < b.size; j++) units.push({ c: b.color, b: b.i, key: units.length }); });
+  if (S.swap) {   // swap where two boxes sit in the queues, but keep their items where they were
+    const [a, b] = S.swap; const A = order[a], B = order[b];
+    [A.lane, B.lane] = [B.lane, A.lane]; [A.depth, B.depth] = [B.depth, A.depth];
+  }
+  const w = (S.window || 0) / 4;   // spec windows are in items
+  units.forEach(x => { x.key += r() * w; });
+  if (S.late) {  // L5: the last rows of the first big box go to the very end
+    const lb = order.find(b => b.size >= 2);
+    const idx = units.map((x, i) => i).filter(i => units[i].b === lb.i);
+    idx.slice(-Math.ceil(S.late.count / 4)).forEach(i => { units[i].key = 1e9 + i; });
+  }
+  units.sort((a, b) => a.key - b.key);
+  const rows = units.map(x => [x.c, x.c, x.c, x.c]);
+  // lanes
+  const lanes = Array.from({ length: lanesN }, () => []);
+  order.slice().sort((a, b) => a.depth - b.depth || a.lane - b.lane).forEach(b => {
+    lanes[b.lane].push({ color: b.color, size: b.size, _o: b.i });
+  });
+  // feeders
+  const F = S.entries.length;
+  const feeders = S.entries.map(e => ({ rows: [], entry: e }));
+  if (S.door) {
+    // Block Door: items for the boxes sent while a door is open queue behind that door
+    units.forEach(x => {
+      const ph = Math.floor((x.b + (S.doorLead || 0)) / S.door);
+      feeders[x.b >= N * (1 - (S.doorTail || 0)) ? 0 : ph % 2].rows.push({ cells: [x.c, x.c, x.c, x.c], hidden: false, lock: 0 });
+    });
+  } else rows.forEach((row, i) => feeders[i % F].rows.push({ cells: row, hidden: false, lock: 0 }));
+
+  // ---- elements ----
+  const boxes = []; lanes.forEach((q, l) => q.forEach((b, t) => boxes.push({ b, l, t })));
+  const taken = new Set();
+  const choose = (n, filt) => {
+    const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && filt(x)), r).slice(0, n);
+    c.forEach(x => taken.add(x.b)); return c;
+  };
+  const maxDepth = Math.max(...lanes.map(q => q.length));
+  if (S.hidden) {
+    const hs = S.hiddenSizes || [1];
+    const c = S.needHiddenSize ? choose(1, x => x.t >= 1 && x.b.size === S.needHiddenSize) : [];
+    c.push(...choose(S.hidden - c.length, x => x.t >= 1 && hs.includes(x.b.size)));
+    c.forEach(x => { x.b.hidden = true; });
+    if (c.length < S.hidden) throw new Error('not enough hidden candidates');
+  }
+  if (S.locks) {
+    const [a, b] = S.lockRange || [2, 4];
+    const c = choose(S.locks, x => x.t <= (S.lockDepth != null ? S.lockDepth : 2));
+    c.forEach(x => { x.b.lockTurns = ri(r, a, b) + x.t; });
+  }
+  const links = [];
+  if (S.links) {
+    for (let n = 0; n < S.links; n++) {
+      const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= 1 && !x.b.hidden), r);
+      let done = false;
+      for (const x of c) {
+        const y = c.find(z => z !== x && z.l !== x.l && Math.abs(z.t - x.t) <= (S.linkSpread || 1) && !taken.has(z.b));
+        if (y && !taken.has(x.b)) { taken.add(x.b); taken.add(y.b); links.push({ a: { lane: x.l, tray: x.t }, b: { lane: y.l, tray: y.t } }); done = true; break; }
+      }
+      if (!done) throw new Error('no link pair');
+    }
+  }
+  if (S.lockedRows) {
+    const [a, b] = S.rowLockRange || [3, 6];
+    const cand = [];
+    feeders.forEach((f, fi) => f.rows.forEach((row, ri2) => { if (ri2 >= 1 && ri2 <= Math.max(2, Math.floor(f.rows.length * 0.5))) cand.push(row); }));
+    CS.shuffle(cand, r).slice(0, S.lockedRows).forEach(row => { row.lock = ri(r, a, b); });
+  }
+  if (S.hiddenRows) {
+    const cand = [];
+    feeders.forEach(f => f.rows.forEach((row, i) => { if (i >= 2 && !row.lock) cand.push(row); }));
+    CS.shuffle(cand, r).slice(0, S.hiddenRows).forEach(row => { row.hidden = true; });
+  }
+  const j = {
+    formatVersion: 4, id: 'level_' + String(S.n).padStart(4, '0'), conveyor: S.conveyor,
+    slots: S.slots || 4, extraSlots: S.extraSlots != null ? S.extraSlots : 2, slotLocks: [], trayCapacity: 4,
+    feeders: feeders.map((f, fi) => {
+      const o = { bottles: [].concat(...f.rows.map(x => x.cells)), hiddenRows: f.rows.map((x, i) => x.hidden ? i : -1).filter(i => i >= 0) };
+      const lk = f.rows.map((x, i) => x.lock ? { row: i, lockTurns: x.lock } : null).filter(Boolean);
+      if (lk.length) o.lockedRows = lk;
+      o.entry = f.entry;
+      if (S.door && fi === (S.doorShut != null ? S.doorShut : 1)) o.doorShut = true;
+      return o;
+    }),
+    lanes: lanes.map(q => q.map(b => { const t = { color: b.color }; if (b.hidden) t.hidden = true; if (b.size > 1) t.size = b.size; if (b.lockTurns) t.lockTurns = b.lockTurns; return t; })),
+    links,
+    view: { cameraPreset: 'default' },
+    meta: { name: S.name, difficulty: S.diff }
+  };
+  if (S.door) j.doorTurns = S.door;
+  if (S.block) j.blockedLane = { lane: S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1), lockTurns: S.block };
+  if (S.intro) j.meta.intro = S.intro;
+  if (S.unlock) j.meta.unlock = S.unlock;
+  if (S.booster) j.meta.booster = S.booster;
+  // go through the tool's own model so the export matches the tool exactly
+  const m = CS.fromJSON(j);
+  return { m, json: CS.toJSON(m) };
+}
+
+/* ---------- bots ---------- */
+// careful player: sends a box only when its colour is on the belt (or about to enter), unless nothing else can move
+function smartMove(g) {
+  if (g.over || g.freeSlot() < 0) return -1;
+  const avail = {};
+  g.rows.forEach(r => r.forEach(it => { if (it && !(it.lock > 0)) avail[it.color] = (avail[it.color] || 0) + 1; }));
+  g.feeders.forEach(f => { if (!f.shut) f.rows.slice(0, 3).forEach(r => r.forEach(it => { if (it && !(it.lock > 0)) avail[it.color] = (avail[it.color] || 0) + 1; })); });
+  const need = {}; g.slots.forEach(s => { if (s.box) need[s.box.color] = (need[s.box.color] || 0) + s.box.cap - s.box.filled; });
+  let best = -1, bs = -Infinity;
+  g.lanes.forEach((q, l) => {
+    if (!g.canSendLane(l)) return;
+    const b = q[0];
+    const left = (avail[b.color] || 0) - (need[b.color] || 0);
+    const score = Math.min(left, b.cap) / b.cap * 10 + q.length * 0.05 + (left >= b.cap ? 2 : 0);
+    if (score > bs) { bs = score; best = l; }
+  });
+  if (best < 0) return -1;
+  const b = g.lanes[best][0];
+  const left = (avail[b.color] || 0) - (need[b.color] || 0);
+  const moving = g.slots.some(s => s.box && (avail[s.box.color] || 0) > 0);
+  if (left <= 0 && moving) return -1;   // wait for the belt instead of parking a box that cannot fill
+  g.send(best);
+  return best;
+}
+function play(m, mode, policy, seed, track, stat) {
+  const g = new CS.Game(m, GEOM[m.conveyor], { pickZone: mode.zone, prefill: mode.prefill });
+  const r = rng(seed);
+  let guard = 0;
+  const tr = track ? { entered: null, sent: null } : null;
+  while (!g.over && guard++ < 40000) {
+    for (let s = 0; s < 6; s++) {
+      if (g.over || g.freeSlot() < 0) break;
+      const can = g.lanes.map((_, l) => l).filter(l => g.canSendLane(l));
+      if (!can.length) break;
+      let l;
+      if (policy === 'smart') { l = smartMove(g); if (l < 0) break; }
+      else if (policy === 'greedy' || (policy > 0 && r() >= policy)) { l = g.botMove(); if (l < 0) break; }
+      else { l = pick(r, can); g.send(l); }
+      if (tr && tr.sent == null && g.slots.some(x => x.box && x.box.uid === track)) tr.sent = g.ticks;
+    }
+    g.step();
+    if (stat) {
+      const on = {}; g.rows.forEach(row => row.forEach(it => { if (it && !(it.lock > 0)) on[it.color] = 1; }));
+      g.slots.forEach(x => { if (x.box) { stat.busy++; if (!on[x.box.color]) stat.wait++; } stat.all++; });
+      if (g.slots.every(x => x.box || x.lock > 0)) stat.full++;
+      stat.t++;
+    }
+    if (tr && tr.entered == null) {
+      const box = g.lanes.flat().find(b => b.uid === track) || g.slots.map(x => x.box).find(b => b && b.uid === track);
+      if (box) { let on = false; g.rows.forEach(row => row.forEach(it => { if (it && it.color === box.color) on = true; })); if (on) tr.entered = g.ticks; }
+    }
+  }
+  return { win: g.over === 'win', ticks: g.ticks, sends: g.sends, failsafe: g.failsafe, tr };
+}
+const MODES = { zon: { zone: true, prefill: true }, zoff: { zone: false, prefill: true }, zonNP: { zone: true, prefill: false }, zoffNP: { zone: false, prefill: false } };
+function rate(m, mode, eps, runs, seed0) {
+  let w = 0, t = 0; const st = { busy: 0, wait: 0, full: 0, all: 0, t: 0 }; let fs = 0;
+  for (let s = 0; s < runs; s++) { const x = play(m, mode, eps, seed0 + s, null, st); if (x.win) w++; if (x.failsafe) fs++; t += x.ticks; }
+  return { rate: w / runs, ticks: Math.round(t / runs), wait: +(st.wait / st.all).toFixed(3), full: +(st.full / st.t).toFixed(3), fs: fs / runs };
+}
+
+module.exports = { smart: smartMove, make, play, rate, MODES, GEOM, CS, rng };

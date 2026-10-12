@@ -1,0 +1,58 @@
+{
+  "formatVersion": 4,
+  "id": "level_0012",
+  "conveyor": "bean_42",
+  "slots": 4,
+  "extraSlots": 2,
+  "slotLocks": [],
+  "trayCapacity": 4,
+  "colors": [2, 3, 4, 5, 7, 8],
+  "feeders": [
+    { "bottles": [
+      4, 4, 4, 4,
+      5, 5, 5, 5,
+      3, 3, 3, 3,
+      4, 4, 4, 4,
+      2, 2, 2, 2,
+      5, 5, 5, 5,
+      7, 7, 7, 7,
+      4, 4, 4, 4,
+      2, 2, 2, 2,
+      2, 2, 2, 2,
+      3, 3, 3, 3,
+      7, 7, 7, 7,
+      8, 8, 8, 8,
+      3, 3, 3, 3,
+      2, 2, 2, 2,
+      5, 5, 5, 5,
+      7, 7, 7, 7
+    ], "hiddenRows": [], "entry": "left" },
+    { "bottles": [
+      2, 2, 2, 2,
+      3, 3, 3, 3,
+      8, 8, 8, 8,
+      7, 7, 7, 7,
+      8, 8, 8, 8,
+      7, 7, 7, 7,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      5, 5, 5, 5,
+      3, 3, 3, 3,
+      8, 8, 8, 8,
+      5, 5, 5, 5,
+      7, 7, 7, 7,
+      8, 8, 8, 8,
+      8, 8, 8, 8,
+      2, 2, 2, 2,
+      5, 5, 5, 5
+    ], "hiddenRows": [], "entry": "right" }
+  ],
+  "lanes": [
+    [{ "color": 2 }, { "color": 4 }, { "color": 5 }, { "color": 3, "size": 2 }, { "color": 8 }, { "color": 2 }, { "color": 8 }, { "color": 7, "size": 2 }, { "color": 5 }],
+    [{ "color": 4, "lockTurns": 2 }, { "color": 5 }, { "color": 8 }, { "color": 7 }, { "color": 2 }, { "color": 5 }, { "color": 7 }, { "color": 2 }, { "color": 5 }],
+    [{ "color": 7, "lockTurns": 2 }, { "color": 4, "size": 3 }, { "color": 2, "size": 2 }, { "color": 3, "size": 2 }, { "color": 7 }, { "color": 5 }, { "color": 8 }, { "color": 3 }, { "color": 8, "size": 2 }]
+  ],
+  "links": [],
+  "view": { "cameraPreset": "default" },
+  "meta": { "name": "Locked Box", "difficulty": "normal", "intro": "Introduces Locked Box.", "unlock": "Locked Box" }
+}

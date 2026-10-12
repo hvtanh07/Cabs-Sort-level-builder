@@ -18,6 +18,13 @@ A level design tool for Caps Sorting. Open `index.html` in Chrome or Edge. No in
 - **Import / Export**: level JSON in the `demo.json` layout. Export all gives a zip (or one bundle JSON when offline).
 - **Conveyors**: your six premade conveyors are built in, and more can be imported (see below).
 
+## Bundled levels
+
+The 40 element-unlock levels (`levels/`, notes and checks in `levels/README.md`) load into the level list automatically the first time the tool opens.
+If a level of yours already used one of their ids, yours stays in the list under the next free id, and a message says which one moved.
+When `js/levels.js` changes, levels you have not edited are updated and your edited ones are kept.
+`tools/levelgen/` rebuilds the set with Node.
+
 ## Design flow
 
 1. **New level** opens a short wizard: name, id, difficulty, slots, conveyor, and empty queues or a random draft.
@@ -85,5 +92,6 @@ To add a new premade conveyor permanently, put its JSON in `conveyors/` and add 
 - Hidden Enter Path rows show their colour once the items reach the conveyor.
 - Boxes already at the front of a queue when the level starts are revealed.
 - Lose = every free slot is taken and nothing has moved for a full loop. Win = every box cleared.
+- The "every box sent" fail-safe only counts a shut door if items are still waiting behind it.
 - Hand does not count as a box sent, so it does not lower lock counters.
 - Shuffle moves at most one box per chosen colour, each to the top of a different queue.

@@ -6,6 +6,7 @@
   function init() {
     A.loadConveyors();
     A.loadStore();
+    const bundleNote = syncBundle();
     if (!A.store.order.length) {
       // first run: start with the sample level from demo.json if it was bundled, otherwise a blank level
       const sample = window.CS_SAMPLE_LEVEL;
@@ -64,6 +65,57 @@
     if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (A.mode === 'edit') A.drawConveyorPreview(); });
 
     A.openLevel(A.store.current && A.store.levels[A.store.current] ? A.store.current : A.store.order[0]);
+    if (bundleNote) A.toast(bundleNote, 7000);
+  }
+
+  /* Bundled levels (js/levels.js): loaded into the list once per bundle version.
+     Levels the designer edited are kept; a different level that already uses a bundled id moves to a free id. */
+  function syncBundle() {
+    const B = window.CS_BUNDLED_LEVELS;
+    if (!B || !Array.isArray(B.levels) || !B.levels.length || A.prefs.bundle === B.version) return '';
+    const hash = t => { let h = 5381; for (let i = 0; i < t.length; i++) h = (h * 33 ^ t.charCodeAt(i)) >>> 0; return h.toString(36); };
+    const sig = A.prefs.bundleSig || {};
+    const firstTime = !A.prefs.bundle;
+    const bundled = B.levels.map(src => CS.toJSON(CS.fromJSON(src)));
+    const taken = new Set(A.store.order.map(k => A.store.levels[k].id).concat(bundled.map(j => j.id)));
+    let max = 0;
+    taken.forEach(id => { const n = (String(id).match(/(\d+)$/) || [])[1]; if (n) max = Math.max(max, +n); });
+    const keyOf = {};
+    A.store.order.forEach(k => { keyOf[A.store.levels[k].id] = k; });
+    const keys = [], moved = [];
+    let added = 0, updated = 0, kept = 0;
+    bundled.forEach(j => {
+      const text = JSON.stringify(j);
+      const k = keyOf[j.id];
+      if (k && JSON.stringify(A.store.levels[k]) === text) keys.push(k);
+      else if (k && sig[j.id]) {
+        if (hash(JSON.stringify(A.store.levels[k])) === sig[j.id]) { A.store.levels[k] = j; updated++; } else kept++;
+        keys.push(k);
+      } else {
+        if (k) {   // one of the designer's own levels has this id: keep it, under the next free id
+          const old = A.store.levels[k];
+          old.id = 'level_' + String(++max).padStart(4, '0');
+          moved.push(`${j.id} "${(old.meta && old.meta.name) || ''}" is now ${old.id}`);
+        }
+        keys.push(A.addLevel(j)); added++;
+      }
+      sig[j.id] = hash(text);
+    });
+    if (firstTime) {   // put the bundled set at the top of the list, in level order
+      const rest = A.store.order.filter(k => !keys.includes(k));
+      A.store.order = keys.concat(rest);
+      A.store.current = keys[0];
+    }
+    A.prefs.bundle = B.version; A.prefs.bundleSig = sig; A.savePrefs();
+    A.saveStore();
+    const parts = [];
+    if (added) parts.push(`Added ${added} level${added > 1 ? 's' : ''} from levels.js`);
+    if (updated) parts.push(`updated ${updated}`);
+    if (kept) parts.push(`kept your edits on ${kept}`);
+    let msg = parts.join(', ');
+    if (msg) msg = msg[0].toUpperCase() + msg.slice(1);
+    if (moved.length) msg += (msg ? '. ' : '') + 'Your ' + moved.join('; ') + '.';
+    return msg;
   }
 
   function onKey(e) {
