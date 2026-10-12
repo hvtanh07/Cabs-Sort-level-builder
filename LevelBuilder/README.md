@@ -73,10 +73,10 @@ Use **Conveyors → Import conveyor JSON** for new ones; imported configs are ke
 
 The tool reads the game format (formatVersion 2):
 
-- `loop.nodes`: the belt loop in travel order, `x` / `z` in game units (z points up the screen).
+- `loop.nodes`: the belt loop, `x` / `z` in game units (z points up the screen). The belt runs counter-clockwise on screen whichever way the nodes are listed; add `"direction": "cw"` to a config to make it run clockwise.
 - `rows`: belt length in rows; `width`: items per row (4).
 - `feeders[]`: `side` (left / middle / right), `mergeAt` (the loop row where it joins), `nodes` (the Enter Path track, drawn up to the merge point).
-- `pickRows`: rows from the start of the loop where boxes pick items when **Pickup zone** is ticked.
+- `pickRows`: rows from the first loop node (in the listed node order) where boxes pick items when **Pickup → Pickup zone** is chosen.
 - `scale` is kept but not used for drawing. `meta.name` is the display name.
 
 A level's `conveyor` field must match a config `id`. A simpler shape format (`shape`: roundrect / circle / points / svg plus `entries`) also imports.
@@ -85,9 +85,12 @@ To add a new premade conveyor permanently, put its JSON in `conveyors/` and add 
 
 ## Rules the GDD leaves open (defaults used in play test)
 
-- Boxes in slots pull matching items from anywhere on the belt, one item per box per conveyor step.
-  Tick **Pickup zone** to only pull from the first `pickRows` rows of the loop.
-- Enter Paths join the loop at `mergeAt / rows` of the way around, measured from the first loop node.
+- Boxes in slots pull items only as they pass the lowest point of the conveyor loop (marked with a yellow dashed line).
+  A box takes every matching item in the row passing that point, up to what it still needs; the first slot goes first.
+  The **Pickup** menu in play test also offers the older rules: **Pickup zone** (the first `pickRows` rows of the loop)
+  and **Anywhere** (one item per box per step from anywhere on the belt).
+- The belt runs counter-clockwise.
+- Enter Paths join the loop at `mergeAt / rows` of the way around, measured from the first loop node in the listed order.
 - The level starts with the conveyor already filled from the Enter Paths (one full loop).
 - Hidden Enter Path rows show their colour once the items reach the conveyor.
 - Boxes already at the front of a queue when the level starts are revealed.

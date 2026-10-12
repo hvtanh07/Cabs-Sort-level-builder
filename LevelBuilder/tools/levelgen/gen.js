@@ -12,15 +12,19 @@ const ri = (r, a, b) => a + Math.floor(r() * (b - a + 1));
 const pick = (r, arr) => arr[Math.floor(r() * arr.length)];
 
 /* ---------- level construction ---------- */
+const SIZE = { 1: 4, 2: 5, 3: 6, 4: 8 };
 function make(S, seed) {
   const r = rng(seed * 7919 + S.n * 104729);
   const N = S.boxes, lanesN = S.lanes;
-  // sizes
+  // sizes: specs count boxes by tier (1 = small, big2 / big3 / big4 = the next tiers up); SIZE turns a tier into the
+  // box size in trays of 4 items (16 / 20 / 24 / 32 items)
+  const SZ = S.sizeMap || SIZE;
   const sizes = new Array(N).fill(1);
   const free = [...Array(N).keys()].filter(i => i >= (S.bigFrom != null ? S.bigFrom : 0));
   CS.shuffle(free, r);
   let k = 0;
   [[2, S.big2 || 0], [3, S.big3 || 0], [4, S.big4 || 0]].forEach(([sz, cnt]) => { for (let i = 0; i < cnt; i++) sizes[free[k++]] = sz; });
+  for (let i = 0; i < N; i++) sizes[i] = SZ[sizes[i]];
   // colours: in send order, cycle a shuffled palette, no colour twice within the last few boxes
   const pal = CS.shuffle(S.palette ? S.palette.slice() : [1, 2, 3, 4, 5, 6, 7, 8], r).slice(0, S.colors);
   const cols = [];
@@ -39,7 +43,7 @@ function make(S, seed) {
   }
   if (S.late && S.late.unique) {
     // the first big box gets a colour of its own, so the belt cannot fill it from other boxes' items
-    const bi = sizes.findIndex(z => z >= 2), own = cols[bi], rest = pal.filter(c => c !== own);
+    const bi = sizes.findIndex(z => z > SZ[1]), own = cols[bi], rest = pal.filter(c => c !== own);
     let k2 = 0;
     for (let i = 0; i < N; i++) if (i !== bi && cols[i] === own) {
       const near = [cols[i - 1], cols[i - 2], cols[i + 1], cols[i + 2], cols[i - lanesN], cols[i + lanesN]];
@@ -74,7 +78,7 @@ function make(S, seed) {
   const w = (S.window || 0) / 4;   // spec windows are in items
   units.forEach(x => { x.key += r() * w; });
   if (S.late) {  // L5: the last rows of the first big box go to the very end
-    const lb = order.find(b => b.size >= 2);
+    const lb = order.find(b => b.size > SZ[1]);
     const idx = units.map((x, i) => i).filter(i => units[i].b === lb.i);
     idx.slice(-Math.ceil(S.late.count / 4)).forEach(i => { units[i].key = 1e9 + i; });
   }
@@ -94,7 +98,22 @@ function make(S, seed) {
       const ph = Math.floor((x.b + (S.doorLead || 0)) / S.door);
       feeders[x.b >= N * (1 - (S.doorTail || 0)) ? 0 : ph % 2].rows.push({ cells: [x.c, x.c, x.c, x.c], hidden: false, lock: 0 });
     });
-  } else rows.forEach((row, i) => feeders[i % F].rows.push({ cells: row, hidden: false, lock: 0 }));
+  } else {
+    // share the rows so every Enter Path still has about the same number of rows waiting once the belt is full:
+    // each path first gets the rows it feeds while the belt fills, plus an equal share of the rest
+    const take = prefillRows(S.conveyor, S.entries);
+    const spare = Math.max(0, rows.length - take.reduce((a, b) => a + b, 0));
+    const want = take.map(t => t + spare / F);
+    const tot = want.reduce((a, b) => a + b, 0) || 1;
+    const got = new Array(F).fill(0);
+    rows.forEach((row, i) => {
+      // smooth weighted round robin: the path furthest behind its share takes the next row
+      let k = 0, best = -Infinity;
+      for (let f = 0; f < F; f++) { const d = want[f] / tot * (i + 1) - got[f]; if (d > best + 1e-9) { best = d; k = f; } }
+      got[k]++;
+      feeders[k].rows.push({ cells: row, hidden: false, lock: 0 });
+    });
+  }
 
   // ---- elements ----
   const boxes = []; lanes.forEach((q, l) => q.forEach((b, t) => boxes.push({ b, l, t })));
@@ -104,9 +123,12 @@ function make(S, seed) {
     c.forEach(x => taken.add(x.b)); return c;
   };
   const maxDepth = Math.max(...lanes.map(q => q.length));
-  if (S.hidden) {
-    const hs = S.hiddenSizes || [1];
-    const c = S.needHiddenSize ? choose(1, x => x.t >= 1 && x.b.size === S.needHiddenSize) : [];
+  if (S.hiddenPattern) {
+    // fixed pattern by queue and position (1 = front box, never hidden)
+    boxes.forEach(x => { if (x.t >= 1 && S.hiddenPattern(x.l, x.t + 1)) { x.b.hidden = true; taken.add(x.b); } });
+  } else if (S.hidden) {
+    const hs = (S.hiddenSizes || [1]).map(t => SZ[t]);
+    const c = S.needHiddenSize ? choose(1, x => x.t >= 1 && x.b.size === SZ[S.needHiddenSize]) : [];
     c.push(...choose(S.hidden - c.length, x => x.t >= 1 && hs.includes(x.b.size)));
     c.forEach(x => { x.b.hidden = true; });
     if (c.length < S.hidden) throw new Error('not enough hidden candidates');
@@ -160,9 +182,46 @@ function make(S, seed) {
   if (S.intro) j.meta.intro = S.intro;
   if (S.unlock) j.meta.unlock = S.unlock;
   if (S.booster) j.meta.booster = S.booster;
+  if (S.grouped) groupByBox(j, units);
   // go through the tool's own model so the export matches the tool exactly
   const m = CS.fromJSON(j);
   return { m, json: CS.toJSON(m) };
+}
+
+// rows each Enter Path feeds while the belt fills at the start (Game.reset prefill), with every path open
+function prefillRows(conveyor, entries) {
+  const g = GEOM[conveyor], R = g.rows, belt = new Array(R).fill(false), n = entries.map(() => 0);
+  for (let shift = 1; shift <= R; shift++) {
+    entries.forEach((e, k) => {
+      const j = (((g.entryRow[e] - shift) % R) + R) % R;
+      if (!belt[j]) { belt[j] = true; n[k]++; }
+    });
+  }
+  return n;
+}
+
+// Level 1: lay the rows out so that, once the belt has filled, each box's rows sit together and reach the pickup point
+// in queue order. Rows are labelled, the start fill is played, and the order they pass the lowest point is read back.
+function groupByBox(j, units) {
+  const f = j.feeders[0], n = f.bottles.length / 4;
+  const probe = CS.fromJSON(Object.assign({}, j, { feeders: [Object.assign({}, f)] }));
+  const g = new CS.Game(probe, GEOM[j.conveyor], { pickMode: 'low' });
+  const seen = [], step = [], R = g.R;
+  for (let s = 0; s < R * 2 && seen.length < n; s++) {
+    g.shift = (g.shift + 1) % R;
+    const row = g.rowAtPos(GEOM[j.conveyor].lowRow);
+    const it = row.find(Boolean);
+    if (it) { const r = Math.floor((it.id - 1) / 4); if (!seen.includes(r)) { seen.push(r); step.push(s); } }
+  }
+  if (seen.length !== n) throw new Error('grouping: not every row reached the belt');
+  // units are in send order (box by box, since the window is 0 for this level)
+  const order = units.slice().sort((a, b) => a.b - b.b || a.key - b.key);
+  const out = new Array(n * 4);
+  // where the belt has an empty stretch, start the box groups so that no box is split across it
+  const gap = step.findIndex((s, k) => k > 0 && s - step[k - 1] > 1);
+  const off = gap > 0 ? gap % 4 : 0;
+  seen.forEach((r, k) => { const u = order[(k - off + n) % n]; for (let c = 0; c < 4; c++) out[r * 4 + c] = u.c; });
+  f.bottles = out;
 }
 
 /* ---------- bots ---------- */
@@ -190,7 +249,7 @@ function smartMove(g) {
   return best;
 }
 function play(m, mode, policy, seed, track, stat) {
-  const g = new CS.Game(m, GEOM[m.conveyor], { pickZone: mode.zone, prefill: mode.prefill });
+  const g = new CS.Game(m, GEOM[m.conveyor], { pickMode: mode.pick, prefill: mode.prefill });
   const r = rng(seed);
   let guard = 0;
   const tr = track ? { entered: null, sent: null } : null;
@@ -219,11 +278,15 @@ function play(m, mode, policy, seed, track, stat) {
   }
   return { win: g.over === 'win', ticks: g.ticks, sends: g.sends, failsafe: g.failsafe, tr };
 }
-const MODES = { zon: { zone: true, prefill: true }, zoff: { zone: false, prefill: true }, zonNP: { zone: true, prefill: false }, zoffNP: { zone: false, prefill: false } };
+// pick: 'low' = lowest point of the loop (the play test default), 'zone' = the config's pickRows, 'any' = anywhere; NP = no prefill
+const MODES = {
+  low: { pick: 'low', prefill: true }, zon: { pick: 'zone', prefill: true }, zoff: { pick: 'any', prefill: true },
+  lowNP: { pick: 'low', prefill: false }, zonNP: { pick: 'zone', prefill: false }, zoffNP: { pick: 'any', prefill: false }
+};
 function rate(m, mode, eps, runs, seed0) {
   let w = 0, t = 0; const st = { busy: 0, wait: 0, full: 0, all: 0, t: 0 }; let fs = 0;
   for (let s = 0; s < runs; s++) { const x = play(m, mode, eps, seed0 + s, null, st); if (x.win) w++; if (x.failsafe) fs++; t += x.ticks; }
   return { rate: w / runs, ticks: Math.round(t / runs), wait: +(st.wait / st.all).toFixed(3), full: +(st.full / st.t).toFixed(3), fs: fs / runs };
 }
 
-module.exports = { smart: smartMove, make, play, rate, MODES, GEOM, CS, rng };
+module.exports = { SIZE, smart: smartMove, make, play, rate, MODES, GEOM, CS, rng };

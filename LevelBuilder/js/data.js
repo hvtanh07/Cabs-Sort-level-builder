@@ -329,6 +329,12 @@ window.CS = window.CS || {};
   CS.PRESET_CONVEYORS = (window.CS_CONVEYORS && window.CS_CONVEYORS.length) ? window.CS_CONVEYORS :
     [{ id: 'square_42', name: 'Square 42', rows: 42, shape: { type: 'roundrect', w: 300, h: 210, r: 62 } }];
 
+  CS.signedArea = function (poly) {
+    let a = 0;
+    for (let i = 0; i < poly.length; i++) { const p = poly[i], q = poly[(i + 1) % poly.length]; a += p.x * q.y - q.x * p.y; }
+    return a / 2;
+  };
+
   const ptOf = p => Array.isArray(p) ? { x: +p[0], y: +p[1] } : { x: +p.x, y: +(p.y != null ? p.y : p.z) };
 
   /* Accepts many reasonable layouts for an imported conveyor config. See README. */
@@ -352,7 +358,7 @@ window.CS = window.CS || {};
         shape: { type: 'points', points: loopNodes.map(toPt), smooth: int(raw.smooth, 0) },
         entries: Object.keys(entries2).length ? entries2 : null, feederPaths: paths,
         pickRows: raw.pickRows != null ? int(raw.pickRows, 0) : null, width: int(raw.width, 4), scale: raw.scale,
-        source: raw.__source || 'imported', format: 2
+        direction: raw.direction, source: raw.__source || 'imported', format: 2
       };
     }
     const id = String(raw.id || raw.key || raw.name || fallbackId || 'conveyor_' + Date.now());
@@ -377,10 +383,12 @@ window.CS = window.CS || {};
       });
       entries = o;
     }
-    return { id, name: raw.name || id, rows: Math.max(4, rows), shape, entries: entries || null, feederPaths: raw.feederPaths || null, pickRows: raw.pickRows != null ? int(raw.pickRows, 0) : null, source: raw.__source || 'imported' };
+    return { id, name: raw.name || id, rows: Math.max(4, rows), shape, entries: entries || null, feederPaths: raw.feederPaths || null, pickRows: raw.pickRows != null ? int(raw.pickRows, 0) : null, direction: raw.direction, source: raw.__source || 'imported' };
   };
 
-  /* Build sampled geometry: polyline, arc length, entry positions. Path order = direction of travel. */
+  /* Build sampled geometry: polyline, arc length, entry positions.
+     The belt runs counter-clockwise on screen unless the config says "direction": "cw"; a path drawn the other way is
+     reversed from the same start point, and row / t based entries are mirrored so they stay at the same place. */
   CS.buildGeom = function (cfg) {
     const s = cfg.shape;
     let poly = [];
@@ -421,6 +429,9 @@ window.CS = window.CS || {};
     }
     // drop duplicate closing point
     if (poly.length > 2) { const a = poly[0], b = poly[poly.length - 1]; if (Math.hypot(a.x - b.x, a.y - b.y) < 1e-6) poly.pop(); }
+    const wantCW = String(cfg.direction || '').toLowerCase() === 'cw';
+    const reversed = poly.length > 2 && (CS.signedArea(poly) > 0) !== wantCW;   // signed area > 0 = clockwise on screen (y down)
+    if (reversed) poly = [poly[0]].concat(poly.slice(1).reverse());
     const cum = [0];
     for (let i = 1; i <= poly.length; i++) {
       const a = poly[i - 1], b = poly[i % poly.length];
@@ -429,7 +440,7 @@ window.CS = window.CS || {};
     const total = cum[poly.length] || 1;
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     poly.forEach(p => { minX = Math.min(minX, p.x); minY = Math.min(minY, p.y); maxX = Math.max(maxX, p.x); maxY = Math.max(maxY, p.y); });
-    const g = { poly, cum, total, bbox: { minX, minY, maxX, maxY, w: maxX - minX || 1, h: maxY - minY || 1 }, rows: cfg.rows };
+    const g = { poly, cum, total, bbox: { minX, minY, maxX, maxY, w: maxX - minX || 1, h: maxY - minY || 1 }, rows: cfg.rows, reversed };
     g.pointAt = function (t) {
       t = ((t % 1) + 1) % 1;
       const d = t * total;
@@ -449,14 +460,15 @@ window.CS = window.CS || {};
     // entries
     g.entryT = {};
     const E = cfg.entries;
+    const flip = t => reversed ? 1 - t : t;      // t measured along the path as written
     const resolve = v => {
       if (v == null) return null;
-      if (typeof v === 'number') return v > 1 ? v / cfg.rows : v;
+      if (typeof v === 'number') return flip(v > 1 ? v / cfg.rows : v);
       if (typeof v === 'object') {
-        if (v.t != null) return +v.t;
-        if (v.at != null) return +v.at > 1 ? +v.at / cfg.rows : +v.at;
-        if (v.row != null) return +v.row / cfg.rows;
-        if (v.index != null) return +v.index / cfg.rows;
+        if (v.t != null) return flip(+v.t);
+        if (v.at != null) return flip(+v.at > 1 ? +v.at / cfg.rows : +v.at);
+        if (v.row != null) return flip(+v.row / cfg.rows);
+        if (v.index != null) return flip(+v.index / cfg.rows);
         if (v.x != null) { const p = ptOf(v); return g.nearestT(p.x, p.y); }
       }
       return null;
@@ -496,6 +508,14 @@ window.CS = window.CS || {};
     g.pickRows = cfg.pickRows;
     g.entryRow = {};
     Object.keys(g.entryT).forEach(k => { g.entryRow[k] = Math.round(g.entryT[k] * cfg.rows) % cfg.rows; });
+    // pickup point: the belt row at the lowest point of the loop (middle of a flat bottom edge)
+    let lowY = -Infinity;
+    const ys = Array.from({ length: cfg.rows }, (_, p) => g.pointAt(p / cfg.rows));
+    ys.forEach(p => { lowY = Math.max(lowY, p.y); });
+    const midX = g.bbox.minX + g.bbox.w / 2, tol = g.bbox.h * 0.02;
+    let lowRow = 0, bestX = Infinity;
+    ys.forEach((p, i) => { if (p.y >= lowY - tol && Math.abs(p.x - midX) < bestX) { bestX = Math.abs(p.x - midX); lowRow = i; } });
+    g.lowRow = lowRow;
     return g;
   };
 

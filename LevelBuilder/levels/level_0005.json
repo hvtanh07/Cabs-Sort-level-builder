@@ -6,48 +6,53 @@
   "extraSlots": 2,
   "slotLocks": [],
   "trayCapacity": 4,
-  "colors": [1, 2, 5, 7, 8],
+  "colors": [1, 2, 3, 4, 5],
   "feeders": [
     { "bottles": [
-      8, 8, 8, 8,
-      5, 5, 5, 5,
-      7, 7, 7, 7,
       1, 1, 1, 1,
+      5, 5, 5, 5,
+      5, 5, 5, 5,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      4, 4, 4, 4,
       2, 2, 2, 2,
-      7, 7, 7, 7,
       2, 2, 2, 2,
-      7, 7, 7, 7,
-      8, 8, 8, 8,
-      7, 7, 7, 7,
-      2, 2, 2, 2,
-      7, 7, 7, 7,
-      7, 7, 7, 7,
-      2, 2, 2, 2,
-      1, 1, 1, 1
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      3, 3, 3, 3,
+      5, 5, 5, 5
     ], "hiddenRows": [], "entry": "left" },
     { "bottles": [
       1, 1, 1, 1,
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      5, 5, 5, 5,
+      5, 5, 5, 5,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
       2, 2, 2, 2,
-      7, 7, 7, 7,
-      1, 1, 1, 1,
-      8, 8, 8, 8,
       2, 2, 2, 2,
-      8, 8, 8, 8,
-      7, 7, 7, 7,
-      1, 1, 1, 1,
       2, 2, 2, 2,
       1, 1, 1, 1,
       1, 1, 1, 1,
-      8, 8, 8, 8,
-      1, 1, 1, 1,
-      5, 5, 5, 5
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      3, 3, 3, 3
     ], "hiddenRows": [], "entry": "right" }
   ],
   "lanes": [
-    [{ "color": 8 }, { "color": 5, "size": 2 }, { "color": 7, "size": 2 }, { "color": 2 }, { "color": 7 }, { "color": 8 }, { "color": 1 }, { "color": 7 }, { "color": 1, "size": 2 }, { "color": 2 }, { "color": 1, "size": 2 }],
-    [{ "color": 1 }, { "color": 2 }, { "color": 1, "size": 2 }, { "color": 8 }, { "color": 2, "size": 2 }, { "color": 7, "size": 2 }, { "color": 8 }, { "color": 2, "size": 2 }, { "color": 7, "size": 2 }, { "color": 8 }]
+    [{ "color": 1, "size": 4 }, { "color": 3, "size": 4 }, { "color": 2, "size": 5 }, { "color": 4, "size": 4 }],
+    [{ "color": 5, "size": 5 }, { "color": 4, "size": 4 }, { "color": 1, "size": 4 }, { "color": 3, "size": 5 }]
   ],
   "links": [],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Big Box", "difficulty": "easy", "intro": "First 8-item box. The belt is full, so its last items pour in from the Enter Path later." }
+  "meta": { "name": "Big Box", "difficulty": "easy", "intro": "First 20-item box. The belt is full, so its last items pour in from the Enter Path later." }
 }

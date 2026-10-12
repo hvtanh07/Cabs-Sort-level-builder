@@ -5,6 +5,9 @@
   function Game(model, geom, opts) {
     this.m = model; this.geom = geom; this.R = geom.rows;
     this.opts = Object.assign({ prefill: true, pickPerTick: 1 }, opts || {});
+    // where boxes pull items: 'low' = only as items pass the lowest point of the loop (default),
+    // 'zone' = the config's pickRows (older Pickup zone option), 'any' = anywhere on the belt
+    this.pickMode = this.opts.pickMode || (this.opts.pickZone === true ? 'zone' : this.opts.pickZone === false ? 'any' : 'low');
     this.reset();
   }
   CS.Game = Game;
@@ -14,12 +17,17 @@
     const m = this.m, R = this.R;
     let nid = 1;
     this.rows = Array.from({ length: R }, () => new Array(W).fill(null));
-    // optional pickup zone: only the part of the loop nearest the slots (bottom 40 % of the shape)
+    // pickup positions on the loop (null = anywhere)
     this.zone = null;
-    if (this.opts.pickZone) {
+    if (this.pickMode === 'low') {
+      const low = this.geom.lowRow || 0;
+      this.zone = Array.from({ length: R }, (_, p) => p === low);
+    } else if (this.pickMode === 'zone') {
       const bb = this.geom.bbox;
-      // configs with pickRows: the first pickRows rows of the loop (start of the loop, nearest the slots)
-      this.zone = this.geom.pickRows > 0 ? Array.from({ length: R }, (_, p) => p < this.geom.pickRows)
+      // configs with pickRows: the first pickRows rows of the loop as the config draws it (start of the loop, nearest the slots);
+      // when the belt was reversed to run counter-clockwise, row p sits where row R - p used to be
+      const orig = p => this.geom.reversed ? (R - p) % R : p;
+      this.zone = this.geom.pickRows > 0 ? Array.from({ length: R }, (_, p) => orig(p) < this.geom.pickRows)
         : Array.from({ length: R }, (_, p) => this.geom.pointAt(p / R).y >= bb.minY + bb.h * 0.6);
     }
     this.shift = 0;
@@ -99,7 +107,8 @@
     this.slots.forEach((s, si) => {
       const b = s.box;
       if (!b || b.filled >= b.cap) return;
-      let n = this.opts.pickPerTick;
+      // at the lowest point a box takes every matching item in the row passing it; elsewhere one item per step
+      let n = this.pickMode === 'low' ? Infinity : this.opts.pickPerTick;
       for (let p = 0; p < R && n > 0; p++) {
         if (this.zone && !this.zone[p]) continue;
         const j = this.rowIndexAtPos(p);

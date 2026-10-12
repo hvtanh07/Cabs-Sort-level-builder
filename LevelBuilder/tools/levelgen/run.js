@@ -7,13 +7,13 @@ function check(S, seed) {
   const v = G.CS.validate(m, null).filter(x => x.level === 'error');
   if (v.length) return { ok: false, why: v.map(x => x.msg).join('; ') };
   const res = { items: json.feeders.reduce((a, f) => a + f.bottles.length, 0), cap: G.GEOM[S.conveyor].rows * 4, boxes: json.lanes.flat().length };
-  const g1 = G.play(m, G.MODES.zon, 'smart', 1), g2 = G.play(m, G.MODES.zoff, 'smart', 1);
+  const g1 = G.play(m, G.MODES.low, 'smart', 1), g2 = G.play(m, G.MODES.zoff, 'smart', 1);
   res.greedy = [g1.win, g2.win]; res.ticks = g1.ticks; res.gfs = [g1.failsafe, g2.failsafe];
   if (!g1.win || !g2.win) return { ok: false, why: 'smart lost', res };
   if (S.diff === 'easy') {
     for (const k of Object.keys(G.MODES)) { const r = G.rate(m, G.MODES[k], 1, 60, 1000); res['rnd_' + k] = r.rate; if (r.rate < 1) return { ok: false, why: 'random lost ' + k + ' ' + r.rate, res }; }
   } else {
-    const a = G.rate(m, G.MODES.zon, 1, 60, 1000), b = G.rate(m, G.MODES.zoff, 1, 60, 1000), e = G.rate(m, G.MODES.zon, 0.3, 30, 2000);
+    const a = G.rate(m, G.MODES.low, 1, 60, 1000), b = G.rate(m, G.MODES.zoff, 1, 60, 1000), e = G.rate(m, G.MODES.low, 0.3, 30, 2000);
     res.rnd = [a.rate, b.rate]; res.rndTicks = a.ticks; res.eps = e.rate; res.fs = e.fs;
     if (S.diff === 'normal' && (a.rate < 0.9 || b.rate < (S.door ? 0.6 : 0.9))) return { ok: false, why: 'random ' + res.rnd, res };
     if (S.diff === 'hard' && (a.rate < 0.75 || b.rate < 0.75)) return { ok: false, why: 'random ' + res.rnd, res };
@@ -24,7 +24,7 @@ function check(S, seed) {
 for (const S of SPECS) {
   if (only && !only.includes(S.n)) continue;
   let best = null, last = null;
-  for (let seed = 1; seed <= 80; seed++) {
+  for (let seed = 1; seed <= 300; seed++) {
     let r; try { r = check(S, seed); } catch (e) { r = { ok: false, why: e.message }; }
     last = r;
     if (r.ok) { best = Object.assign(r, { seed }); break; }

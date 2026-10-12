@@ -63,7 +63,12 @@
       </div>
       <button id="pStep" title="Advance the conveyor by one row (.)">Step</button>
       <label class="chk"><input type="checkbox" id="pAuto"> Auto play</label>
-      <label class="chk" title="Boxes only pull items from the first pickRows rows of the loop (from the conveyor config)"><input type="checkbox" id="pZone"> Pickup zone</label>
+      <label class="chk" title="Where boxes in the slots pull items from the conveyor">Pickup
+        <select id="pPick">
+          <option value="low">Lowest point</option>
+          <option value="zone">Pickup zone (pickRows)</option>
+          <option value="any">Anywhere</option>
+        </select></label>
       <span class="grow"></span>
       <button id="pExit">Back to edit</button>
     </div>

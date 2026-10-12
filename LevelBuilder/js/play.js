@@ -16,7 +16,7 @@
     $$('#modeSeg button').forEach(b => b.classList.toggle('on', b.dataset.mode === 'play'));
     $('#editBar').classList.add('hidden'); $('#playBar').classList.remove('hidden');
     $('#board').classList.add('play');
-    $('#pZone').checked = !!A.prefs.zone;
+    $('#pPick').value = A.prefs.pick;
     $$('#speedSeg button').forEach(b => b.classList.toggle('on', +b.dataset.speed === A.prefs.speed));
     P.restart();
     cancelAnimationFrame(P.raf);
@@ -38,7 +38,7 @@
   P.restart = function () {
     const A = CS.App;
     const g = A.geom(A.m.conveyor);
-    P.game = new CS.Game(CS.clone(A.m), g, { pickZone: A.prefs.zone });
+    P.game = new CS.Game(CS.clone(A.m), g, { pickMode: A.prefs.pick });
     P.view = new CS.ConvView($('#convCanvas'), g);
     P.acc = 0; P.anims = []; P.flashes = {}; P.time = 0; P.tool = null; P.seenVersion = -1;
     P.setRunning(true);
@@ -82,7 +82,7 @@
   };
   P.drawConveyor = function () {
     const G = P.game, A = CS.App;
-    P.view.draw({ rows: G.rows, shift: G.shift, phase: G.over ? 0 : P.acc }, A.gatesFor(A.m, P.view.g, G));
+    P.view.draw({ rows: G.rows, shift: G.shift, phase: G.over ? 0 : P.acc }, A.gatesFor(A.m, P.view.g, G), { pickMark: G.pickMode === 'low' });
   };
 
   /* positions (relative to the board) for animations */
@@ -169,7 +169,7 @@
     $('#slots').innerHTML = G.slots.map((s, i) => {
       const fresh = P.flashes['n' + i] && now - P.flashes['n' + i] < 400;
       let inner = '';
-      if (s.box) inner = CS.boxHTML(s.box, s.box.cap - s.box.filled, { fill: s.box.filled / s.box.cap, extra: fresh ? 'pop' : '' });
+      if (s.box) inner = CS.boxHTML(s.box, s.box.cap - s.box.filled, { fill: s.box.filled / s.box.cap, extra: fresh ? 'popin' : '' });
       else if (s.lock > 0) inner = `<span class="lockb">🔒${s.lock}</span>`;
       return `<div class="slot ${s.rv ? 'rv' : ''} ${!s.box && !(s.lock > 0) ? 'free' : ''}" data-slot="${i}">${inner}</div>`;
     }).join('') + (G.rvLeft > 0 && G.slots.length < CS.MAX_SLOTS ? `<button class="slot rv" data-rv="1" title="Watch an ad for an extra slot">+ RV<br><small>${G.rvLeft} left</small></button>` : '');
@@ -278,7 +278,10 @@
     $('#pRestart').onclick = () => P.restart();
     $('#pExit').onclick = () => P.stop();
     $('#pStep').onclick = () => { if (P.game && !P.game.over) { P.setRunning(false); P.game.step(); } };
-    $('#pZone').onchange = e => { A.prefs.zone = e.target.checked; A.savePrefs(); P.restart(); A.toast(e.target.checked ? 'Pickup zone on: boxes only pull items near the slots. Restarted.' : 'Pickup zone off: boxes pull items from anywhere. Restarted.'); };
+    $('#pPick').onchange = e => {
+      A.prefs.pick = e.target.value; A.savePrefs(); P.restart();
+      A.toast({ low: 'Boxes pull items only as they pass the lowest point of the conveyor. Restarted.', zone: 'Pickup zone: boxes pull items from the config\'s pickRows rows. Restarted.', any: 'Boxes pull items from anywhere on the conveyor. Restarted.' }[A.prefs.pick]);
+    };
     $('#speedSeg').addEventListener('click', e => {
       const b = e.target.closest('[data-speed]'); if (!b) return;
       A.prefs.speed = +b.dataset.speed; A.savePrefs();

@@ -21,7 +21,7 @@
     conveyors: {}, convOrder: [],
     mode: 'edit', tab: 'level',
     valCache: {},
-    prefs: Object.assign({ speed: 1, zone: false }, lsGet(LS_PREF) || {})
+    prefs: Object.assign({ speed: 1, pick: 'low' }, lsGet(LS_PREF) || {})
   };
   A.savePrefs = () => lsSet(LS_PREF, A.prefs);
 
@@ -370,7 +370,7 @@
     return `<div class="${cls.join(' ')}" data-uid="${b.uid}" ${o.drag ? 'draggable="true"' : ''} title="${o.title || ''}">` +
       `<b>${label}</b>${b.size > 1 ? `<i class="sz">×${b.size}</i>` : ''}` +
       `${b.lock > 0 ? `<span class="lk">🔒${b.lock}</span>` : ''}${o.link ? `<span class="ln">⛓${o.link}</span>` : ''}` +
-      `${o.fill != null ? `<span class="fill" style="width:${o.fill * 100}%"></span>` : ''}</div>`;
+      `${o.fill != null ? `<span class="fillt"><span class="fill" style="width:${o.fill * 100}%"></span></span>` : ''}</div>`;
   };
 
   A.renderBoard = function () {
@@ -867,7 +867,7 @@
       let wins = 0, sends = 0, fs = 0, ticks = 0;
       const N = 20;
       for (let i = 0; i < N; i++) {
-        const G = new CS.Game(A.m, g, { pickZone: A.prefs.zone });
+        const G = new CS.Game(A.m, g, { pickMode: A.prefs.pick });
         let n = 0;
         while (!G.over && n < 30000) { if (n % 3 === 0) G.botMove(); G.step(); n++; }
         if (G.over === 'win') { wins++; sends += G.sends; ticks += G.ticks; }
@@ -961,7 +961,7 @@
   ],
   "meta": { "name": "Rounded square" }
 }</pre>
-<div class="hint">loop.nodes are read in belt order, x / z in game units (z up the screen). mergeAt is the loop row where that Enter Path joins. pickRows sets the Pickup zone in play test. Simpler configs with a "shape" (roundrect, circle, points, svg) and "entries" also import.</div></pre></details>
+<div class="hint">loop.nodes are read in belt order, x / z in game units (z up the screen). mergeAt is the loop row where that Enter Path joins. Belts run counter-clockwise unless the config has "direction": "cw". Boxes pick at the lowest point of the loop; pickRows sets the optional Pickup zone in play test. Simpler configs with a "shape" (roundrect, circle, points, svg) and "entries" also import.</div></pre></details>
       <div class="foot"><button type="button" id="convImport">Import conveyor JSON…</button><span class="grow"></span><button value="cancel" class="primary">Close</button></div>`,
       null, form => {
         draw(form);
