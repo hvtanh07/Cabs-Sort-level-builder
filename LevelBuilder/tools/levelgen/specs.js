@@ -10,9 +10,9 @@ S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Tw
   conveyor: 'square_42', entries: LR, lanes: 1, boxes: 12, colors: 4, window: 0, swap: [0, 11] });
 S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths.',
   conveyor: 'square_42', entries: LR, lanes: 2, boxes: 10, colors: 5, window: 4 });
-S.push({ n: 5, name: 'Big Box', diff: 'easy', intro: 'First 20-item box. The belt is full, so its last items pour in from the Enter Path later.',
+S.push({ n: 5, name: 'Big Box', diff: 'easy', intro: 'First 24-item box. The belt is full, so its last items pour in from the Enter Path later.',
   conveyor: 'triangle_28', entries: LR, lanes: 2, boxes: 21, big2: 9, bigFrom: 1, colors: 5, window: 6, late: { count: 4, unique: true } });
-S.push({ n: 6, name: 'Three Queues', diff: 'easy', booster: '2nd', intro: 'A third queue, with a few 20-item boxes.',
+S.push({ n: 6, name: 'Three Queues', diff: 'easy', booster: '2nd', intro: 'A third queue, with a few 24-item boxes.',
   conveyor: 'square_42', entries: LR, lanes: 3, boxes: 18, big2: 3, colors: 5, window: 8 });
 S.push({ n: 7, name: 'Hidden Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Two Enter Paths, two queues.',
   conveyor: 'square_42', entries: LR, lanes: 2, boxes: 16, big2: 2, hidden: 3, hiddenSizes: [1], colors: 5, window: 8,
@@ -60,8 +60,8 @@ for (let n = 11; n <= 40; n++) {
     window: Math.round((10 + x * 0.6) * (hard ? 2.2 : 1)), stick: hard ? 0.8 : 0.5
   };
   const intro = [];
-  if (n === 11) intro.push('First 24-item box.');
-  if (n === 26) intro.push('First 32-item box.');
+  if (n === 11) intro.push('First 32-item box.');
+  if (n === 26) intro.push('First 40-item box.');
   f.forEach(k => {
     if (FIRST[k] === n) { s.unlock = FNAME[k]; intro.push('Introduces ' + FNAME[k] + '.'); }
     if (k === 'H') { s.hidden = Math.round(boxes * (hard ? 0.22 : 0.16)); s.hiddenSizes = n < 20 ? [1, 2] : [1, 2, 3]; }
@@ -95,7 +95,7 @@ S.forEach(s => {
   const x = s.n - 11;
   const extra = EXTRA[s.n] || Math.round((48 + x * 2) * (s.diff === 'hard' ? 1.6 : 1) / 4) * 4;
   const units = Math.ceil((BELT[s.conveyor] * 4 + extra) / 4);   // one unit = 4 items = one Enter Path row
-  // boxes come in four tiers: 16 / 20 / 24 / 32 items = 4 / 5 / 6 / 8 rows (SIZE in gen.js)
+  // boxes come in four tiers: 16 / 24 / 32 / 40 items = 4 / 6 / 8 / 10 rows (SIZE in gen.js)
   const rowsOf = N => 4 * (N - (s.big2 || 0) - (s.big3 || 0) - (s.big4 || 0)) + 5 * (s.big2 || 0) + 6 * (s.big3 || 0) + 8 * (s.big4 || 0);
   if (s.n <= 10) {
     // keep the hand-written mix: the same share of the next size up, the rest are 16-item boxes
@@ -106,7 +106,7 @@ S.forEach(s => {
     if (s.window) s.window = Math.round(s.window * units / (s.boxes + (s.big2 || 0)));
     s.boxes = N;
   } else {
-    // same tier mix as before: 20 % 20-item, 5-8 % 24-item, 1-2 32-item boxes
+    // same tier mix as before: 20 % 24-item, 5-8 % 32-item, 1-2 40-item boxes
     const r3 = s.n === 11 ? 3 / 26 : s.n < 20 ? 0.05 : 0.08;
     let N = Math.round(units / 4.5);
     for (let k = 0; k < 30; k++) {

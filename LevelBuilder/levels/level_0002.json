@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../../../docs/design/level.schema.json",
   "formatVersion": 4,
   "id": "level_0002",
   "conveyor": "square_42",
@@ -56,10 +57,10 @@
     ], "hiddenRows": [], "entry": "middle" }
   ],
   "lanes": [
-    [{ "color": 2, "size": 4 }, { "color": 1, "size": 4 }, { "color": 4, "size": 4 }, { "color": 3, "size": 4 }, { "color": 2, "size": 4 }, { "color": 4, "size": 4 }],
-    [{ "color": 4, "size": 4 }, { "color": 3, "size": 4 }, { "color": 2, "size": 4 }, { "color": 1, "size": 4 }, { "color": 3, "size": 4 }]
+    [{ "color": 2 }, { "color": 1 }, { "color": 4 }, { "color": 3 }, { "color": 2 }, { "color": 4 }],
+    [{ "color": 4 }, { "color": 3 }, { "color": 2 }, { "color": 1 }, { "color": 3 }]
   ],
   "links": [],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Two Queues", "difficulty": "easy", "intro": "A second queue: pick which front box to send." }
+  "meta": { "name": "Two Queues", "difficulty": "easy", "notes": "A second queue: pick which front box to send." }
 }

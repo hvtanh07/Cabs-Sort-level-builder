@@ -70,6 +70,9 @@
 
   /* Bundled levels (js/levels.js): loaded into the list once per bundle version.
      Levels the designer edited are kept; a different level that already uses a bundled id moves to a free id. */
+  const playContent = j => { const o = CS.toJSON(CS.fromJSON(j)); delete o.meta; delete o.$schema; return JSON.stringify(o); };
+  function sameContent(a, b) { try { return playContent(a) === playContent(b); } catch (e) { return false; } }
+
   function syncBundle() {
     const B = window.CS_BUNDLED_LEVELS;
     if (!B || !Array.isArray(B.levels) || !B.levels.length || A.prefs.bundle === B.version) return '';
@@ -89,7 +92,8 @@
       const k = keyOf[j.id];
       if (k && JSON.stringify(A.store.levels[k]) === text) keys.push(k);
       else if (k && sig[j.id]) {
-        if (hash(JSON.stringify(A.store.levels[k])) === sig[j.id]) { A.store.levels[k] = j; updated++; } else kept++;
+        // unedited, or only its name / notes differ (the play content matches this version): take the new copy
+        if (hash(JSON.stringify(A.store.levels[k])) === sig[j.id] || sameContent(A.store.levels[k], j)) { A.store.levels[k] = j; updated++; } else kept++;
         keys.push(k);
       } else {
         if (k) {   // one of the designer's own levels has this id: keep it, under the next free id
@@ -101,11 +105,10 @@
       }
       sig[j.id] = hash(text);
     });
-    if (firstTime) {   // put the bundled set at the top of the list, in level order
-      const rest = A.store.order.filter(k => !keys.includes(k));
-      A.store.order = keys.concat(rest);
-      A.store.current = keys[0];
-    }
+    // put the bundled set at the top of the list in level order (levels added since a previous version would otherwise land at the end)
+    const rest = A.store.order.filter(k => !keys.includes(k));
+    A.store.order = keys.concat(rest);
+    if (firstTime) A.store.current = keys[0];
     A.prefs.bundle = B.version; A.prefs.bundleSig = sig; A.savePrefs();
     A.saveStore();
     const parts = [];

@@ -40,10 +40,49 @@ window.CS = window.CS || {};
 
   CS.defaultEntries = n => n <= 1 ? ['middle'] : n === 2 ? ['left', 'right'] : ['left', 'middle', 'right'];
 
+  CS.LEVEL_SCHEMA = '../../../../../docs/design/level.schema.json';
+
+  // Box sizes: a box's `size` sets how many items it holds (size 1 = 16, 2 = 24, 3 = 32, 4 = 40).
+  CS.BOX_ITEMS = { 1: 16, 2: 24, 3: 32, 4: 40 };
+  CS.MAX_BOX_SIZE = 4;
+  CS.boxItems = size => CS.BOX_ITEMS[size] || 16 + 8 * (Math.max(1, size) - 1);
+  // split an item count into box sizes (largest first), or null when it can't be made from 16 / 24 / 32 / 40
+  CS.splitBoxes = function (n) {
+    const out = [];
+    while (n > 0) {
+      const s = n === 40 || n >= 56 ? 4 : n === 32 ? 3 : n === 24 || n === 48 ? 2 : n === 16 ? 1 : 0;
+      if (!s) return null;
+      out.push(s); n -= CS.boxItems(s);
+    }
+    return out;
+  };
+  // Files saved before the size table (no $schema, every box size 4 or more) used size = trays of trayCapacity items:
+  // 4 / 5 / 6 / 8 trays of 4 were the 16 / 20 / 24 / 32-item boxes, which become sizes 1 / 2 / 3 / 4.
+  function migrateSizes(j) {
+    if (j.$schema !== undefined || !Array.isArray(j.lanes)) return;
+    const boxes = [].concat(...j.lanes.filter(Array.isArray)).filter(t => t);
+    if (!boxes.length || boxes.some(t => !(+t.size >= 4))) return;
+    const tc = +j.trayCapacity || 4;
+    const OLD = { 16: 1, 20: 2, 24: 3, 32: 4 };
+    j.lanes = j.lanes.map(l => Array.isArray(l) ? l.map(t => {
+      if (!t) return t;
+      const items = t.size * tc;
+      return Object.assign({}, t, { size: OLD[items] || Math.max(1, Math.min(CS.MAX_BOX_SIZE, Math.round(items / 8) - 1)) });
+    }) : l);
+  }
+
+  // Older files kept meta.intro / meta.unlock / meta.booster: intro becomes meta.notes, the other two are dropped.
+  function migrateMeta(meta) {
+    if (meta.intro !== undefined && meta.notes === undefined) meta.notes = meta.intro;
+    delete meta.intro; delete meta.unlock; delete meta.booster;
+    return meta;
+  }
+
   CS.fromJSON = function (j) {
     j = j || {};
+    if (Array.isArray(j.lanes)) { j = Object.assign({}, j); migrateSizes(j); }
     const m = {
-      schema: j.$schema,
+      schema: j.$schema !== undefined ? j.$schema : CS.LEVEL_SCHEMA,
       formatVersion: j.formatVersion != null ? j.formatVersion : 4,
       id: String(j.id || 'level_0001'),
       conveyor: String(j.conveyor || 'square_42'),
@@ -57,7 +96,7 @@ window.CS = window.CS || {};
       doorTurns: int(j.doorTurns, 0),
       blockedLane: j.blockedLane && j.blockedLane.lane != null ? { lane: int(j.blockedLane.lane, 0), lockTurns: int(j.blockedLane.lockTurns, 3) } : null,
       view: j.view !== undefined ? CS.clone(j.view) : { cameraPreset: 'default' },
-      meta: Object.assign({ name: '', difficulty: 'normal' }, CS.clone(j.meta || {})),
+      meta: migrateMeta(Object.assign({ name: '', difficulty: 'normal' }, CS.clone(j.meta || {}))),
       extra: CS.clone(pickExtra(j, KNOWN))
     };
     (j.slotLocks || []).forEach(s => { if (s && s.slot != null) m.slotLocks[int(s.slot, 0)] = int(s.lockTurns, 1); });
@@ -118,7 +157,7 @@ window.CS = window.CS || {};
 
   CS.toJSON = function (m) {
     const o = {};
-    if (m.schema !== undefined) o.$schema = m.schema;
+    o.$schema = m.schema !== undefined ? m.schema : CS.LEVEL_SCHEMA;
     o.formatVersion = m.formatVersion;
     o.id = m.id;
     o.conveyor = m.conveyor;
@@ -201,7 +240,7 @@ window.CS = window.CS || {};
     const items = {}, cap = {}, boxes = {};
     for (let c = 1; c <= 8; c++) { items[c] = 0; cap[c] = 0; boxes[c] = 0; }
     m.feeders.forEach(f => f.rows.forEach(r => r.cells.forEach(c => { if (c > 0) items[c]++; })));
-    m.lanes.forEach(l => l.forEach(b => { cap[b.color] += b.size * m.trayCapacity; boxes[b.color]++; }));
+    m.lanes.forEach(l => l.forEach(b => { cap[b.color] += CS.boxItems(b.size); boxes[b.color]++; }));
     return { items, cap, boxes };
   };
 

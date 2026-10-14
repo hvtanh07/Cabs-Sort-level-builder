@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../../../docs/design/level.schema.json",
   "formatVersion": 4,
   "id": "level_0013",
   "conveyor": "lens_42",
@@ -21,6 +22,8 @@
       3, 3, 3, 3,
       2, 2, 2, 2,
       8, 8, 8, 8,
+      8, 8, 8, 8,
+      3, 3, 3, 3,
       8, 8, 8, 8,
       3, 3, 3, 3,
       3, 3, 3, 3,
@@ -54,9 +57,11 @@
       3, 3, 3, 3,
       3, 3, 3, 3,
       3, 3, 3, 3,
+      3, 3, 3, 3,
+      5, 5, 5, 5,
       5, 5, 5, 5,
       6, 6, 6, 6,
-      5, 5, 5, 5,
+      6, 6, 6, 6,
       6, 6, 6, 6,
       6, 6, 6, 6,
       1, 1, 1, 1,
@@ -66,9 +71,9 @@
     ], "hiddenRows": [], "entry": "right" }
   ],
   "lanes": [
-    [{ "color": 1, "size": 4 }, { "color": 8, "size": 4 }, { "color": 5, "size": 4 }, { "color": 2, "size": 4 }],
-    [{ "color": 3, "size": 4, "lockTurns": 5 }, { "color": 2, "size": 4 }, { "color": 3, "size": 6, "lockTurns": 7 }, { "color": 1, "size": 4 }],
-    [{ "color": 6, "size": 4 }, { "color": 8, "size": 5, "lockTurns": 5 }, { "color": 5, "size": 4 }, { "color": 6, "size": 5 }]
+    [{ "color": 1 }, { "color": 8, "lockTurns": 4 }, { "color": 5 }, { "color": 2 }],
+    [{ "color": 3 }, { "color": 2 }, { "color": 3, "size": 3, "lockTurns": 6 }, { "color": 1 }],
+    [{ "color": 6 }, { "color": 8, "size": 2, "lockTurns": 6 }, { "color": 5 }, { "color": 6, "size": 2 }]
   ],
   "links": [],
   "view": { "cameraPreset": "default" },

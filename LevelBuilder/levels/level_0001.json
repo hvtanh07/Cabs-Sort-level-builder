@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../../../docs/design/level.schema.json",
   "formatVersion": 4,
   "id": "level_0001",
   "conveyor": "square_42",
@@ -48,9 +49,9 @@
     ], "hiddenRows": [], "entry": "middle" }
   ],
   "lanes": [
-    [{ "color": 2, "size": 4 }, { "color": 4, "size": 4 }, { "color": 1, "size": 4 }, { "color": 3, "size": 4 }, { "color": 2, "size": 4 }, { "color": 4, "size": 4 }, { "color": 3, "size": 4 }, { "color": 1, "size": 4 }, { "color": 4, "size": 4 }]
+    [{ "color": 2 }, { "color": 4 }, { "color": 1 }, { "color": 3 }, { "color": 2 }, { "color": 4 }, { "color": 3 }, { "color": 1 }, { "color": 4 }]
   ],
   "links": [],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "First Sort", "difficulty": "easy", "intro": "Tap a box to send it up. One middle Enter Path, 4 colours, small boxes only." }
+  "meta": { "name": "First Sort", "difficulty": "easy", "notes": "Tap a box to send it up. One middle Enter Path, 4 colours, small boxes only." }
 }

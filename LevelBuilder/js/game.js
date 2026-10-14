@@ -49,7 +49,7 @@
     const link = {};
     m.links.forEach(([a, b]) => { link[a] = b; link[b] = a; });
     this.lanes = m.lanes.map(l => l.map(b => ({
-      uid: b.uid, color: b.color, size: b.size, cap: b.size * m.trayCapacity, filled: 0,
+      uid: b.uid, color: b.color, size: b.size, cap: CS.boxItems(b.size), filled: 0,
       hidden: !!b.hidden, lock: b.lock || 0, link: link[b.uid] || null
     })));
     this.slots = Array.from({ length: m.slots }, (_, i) => ({ box: null, lock: m.slotLocks[i] || 0, rv: false }));

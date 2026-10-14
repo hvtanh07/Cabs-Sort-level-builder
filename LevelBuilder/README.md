@@ -44,10 +44,12 @@ Same layout as `demo.json` (formatVersion 4). Notes:
 
 | Field | Meaning in the tool |
 | --- | --- |
+| `$schema` | Always written first as `../../../../../docs/design/level.schema.json`. |
+| `meta` | `name`, `difficulty` and optional `notes`. Older files with `meta.intro` import fine: it becomes `meta.notes`, and `meta.unlock` / `meta.booster` are dropped. |
 | `feeders[]` | Enter Paths. `bottles` is a flat list read in rows of 4. Row 0 enters the conveyor first. |
 | `feeders[].hiddenRows` | Rows whose items show "?" until they reach the conveyor. |
 | `feeders[].lockedRows` | Locked Items: `{ row, lockTurns }`. |
-| `lanes[][]` | Queues. Box 0 is the front box. `size × trayCapacity` = items the box holds. |
+| `lanes[][]` | Queues. Box 0 is the front box. `size` sets the items the box holds: 1 = 16, 2 = 24, 3 = 32, 4 = 40 (no `size` = 1). Older files that used `size × trayCapacity` are converted on import. |
 | `lanes[][].hidden` / `lockTurns` | Hidden Box / Locked Box. |
 | `links` | Linked Boxes: `{ a: { lane, tray }, b: { lane, tray } }`. |
 | `slotLocks` | Locked Slot: `{ slot, lockTurns }`. |

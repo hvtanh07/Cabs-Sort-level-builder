@@ -12,12 +12,13 @@ const ri = (r, a, b) => a + Math.floor(r() * (b - a + 1));
 const pick = (r, arr) => arr[Math.floor(r() * arr.length)];
 
 /* ---------- level construction ---------- */
-const SIZE = { 1: 4, 2: 5, 3: 6, 4: 8 };
+const SIZE = { 1: 4, 2: 6, 3: 8, 4: 10 };   // rows of 4 items per box tier: 16 / 24 / 32 / 40 items
+const TIER = { 4: 1, 6: 2, 8: 3, 10: 4 };   // rows back to the box `size` saved in the level file
 function make(S, seed) {
   const r = rng(seed * 7919 + S.n * 104729);
   const N = S.boxes, lanesN = S.lanes;
   // sizes: specs count boxes by tier (1 = small, big2 / big3 / big4 = the next tiers up); SIZE turns a tier into the
-  // box size in trays of 4 items (16 / 20 / 24 / 32 items)
+  // box size in rows of 4 items (16 / 24 / 32 / 40 items)
   const SZ = S.sizeMap || SIZE;
   const sizes = new Array(N).fill(1);
   const free = [...Array(N).keys()].filter(i => i >= (S.bigFrom != null ? S.bigFrom : 0));
@@ -162,7 +163,7 @@ function make(S, seed) {
     CS.shuffle(cand, r).slice(0, S.hiddenRows).forEach(row => { row.hidden = true; });
   }
   const j = {
-    formatVersion: 4, id: 'level_' + String(S.n).padStart(4, '0'), conveyor: S.conveyor,
+    $schema: CS.LEVEL_SCHEMA, formatVersion: 4, id: 'level_' + String(S.n).padStart(4, '0'), conveyor: S.conveyor,
     slots: S.slots || 4, extraSlots: S.extraSlots != null ? S.extraSlots : 2, slotLocks: [], trayCapacity: 4,
     feeders: feeders.map((f, fi) => {
       const o = { bottles: [].concat(...f.rows.map(x => x.cells)), hiddenRows: f.rows.map((x, i) => x.hidden ? i : -1).filter(i => i >= 0) };
@@ -172,16 +173,14 @@ function make(S, seed) {
       if (S.door && fi === (S.doorShut != null ? S.doorShut : 1)) o.doorShut = true;
       return o;
     }),
-    lanes: lanes.map(q => q.map(b => { const t = { color: b.color }; if (b.hidden) t.hidden = true; if (b.size > 1) t.size = b.size; if (b.lockTurns) t.lockTurns = b.lockTurns; return t; })),
+    lanes: lanes.map(q => q.map(b => { const t = { color: b.color }; if (b.hidden) t.hidden = true; if (TIER[b.size] > 1) t.size = TIER[b.size]; if (b.lockTurns) t.lockTurns = b.lockTurns; return t; })),
     links,
     view: { cameraPreset: 'default' },
     meta: { name: S.name, difficulty: S.diff }
   };
   if (S.door) j.doorTurns = S.door;
   if (S.block) j.blockedLane = { lane: S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1), lockTurns: S.block };
-  if (S.intro) j.meta.intro = S.intro;
-  if (S.unlock) j.meta.unlock = S.unlock;
-  if (S.booster) j.meta.booster = S.booster;
+  if (S.intro) j.meta.notes = S.intro;
   if (S.grouped) groupByBox(j, units);
   // go through the tool's own model so the export matches the tool exactly
   const m = CS.fromJSON(j);

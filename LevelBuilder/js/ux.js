@@ -76,7 +76,7 @@
     const draw = () => {
       const b = m.lanes[p.lane][p.tray];
       const linked = m.links.some(L => L.includes(uid));
-      return `<div class="mhead">Box · Q${p.lane + 1} #${p.tray + 1} · holds ${b.size * m.trayCapacity}</div>
+      return `<div class="mhead">Box · Q${p.lane + 1} #${p.tray + 1} · holds ${CS.boxItems(b.size)}</div>
         <div class="mrow">${COLS.map(c => sw(c, `data-m="color" data-v="${c}"`, b.color === c)).join('')}</div>
         ${stepper('size', 'Size', b.size)}${stepper('lock', 'Lock', b.lock)}
         ${item('hidden', (b.hidden ? '☑' : '☐') + ' Hidden Box')}
@@ -86,7 +86,7 @@
     U.openPop(x, y, draw(), (k, v) => {
       const b = m.lanes[p.lane][p.tray];
       if (k === 'color') b.color = +v;
-      else if (k === 'size') b.size = Math.max(1, b.size + +v);
+      else if (k === 'size') b.size = Math.max(1, Math.min(CS.MAX_BOX_SIZE, b.size + +v));
       else if (k === 'lock') b.lock = Math.max(0, b.lock + +v);
       else if (k === 'hidden') b.hidden = !b.hidden;
       else if (k === 'unlink') m.links = m.links.filter(L => !L.includes(uid));
@@ -172,12 +172,11 @@
     m.feeders.forEach(f => { f.rows = f.rows.filter(r => r.cells.some(x => x > 0)); });
   };
   U.addBoxes = function (m, c, n) {
-    const tc = m.trayCapacity;
     if (!m.lanes.length) m.lanes.push([]);
-    for (let i = 0; i < Math.floor(n / tc); i++) {
+    (CS.splitBoxes(n) || []).forEach(size => {
       const lane = m.lanes.slice().sort((a, b) => a.length - b.length)[0];
-      lane.push({ uid: CS.uid(), color: c, size: 1, hidden: false, lock: 0, extra: {} });
-    }
+      lane.push({ uid: CS.uid(), color: c, size, hidden: false, lock: 0, extra: {} });
+    });
   };
   U.balanceMenu = function (c, x, y) {
     const m = A.m, bal = CS.balance(m);
@@ -188,7 +187,8 @@
     if (d < 0) html += item('add', `+ Add ${-d} ${name} items to an Enter Path`);
     if (d > 0) {
       html += item('remove', `− Remove ${d} ${name} items from the back rows`);
-      if (d % m.trayCapacity === 0) html += item('boxes', `+ Add ${d / m.trayCapacity} ${name} box${d / m.trayCapacity > 1 ? 'es' : ''} to the shortest queues`);
+      const add = CS.splitBoxes(d);
+      if (add) html += item('boxes', `+ Add ${add.length} ${name} box${add.length > 1 ? 'es' : ''} (${add.map(CS.boxItems).join(' + ')} items) to the shortest queues`);
     }
     html += item('select', `Paint with ${name}`);
     U.openPop(x, y, html, k => {

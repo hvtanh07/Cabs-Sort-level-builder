@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../docs/design/level.schema.json",
+  "formatVersion": 4,
+  "id": "level_0005",
+  "conveyor": "triangle_28",
+  "slots": 4,
+  "extraSlots": 2,
+  "slotLocks": [],
+  "trayCapacity": 4,
+  "colors": [1, 2, 3, 4, 5],
+  "feeders": [
+    { "bottles": [
+      1, 1, 1, 1,
+      5, 5, 5, 5,
+      5, 5, 5, 5,
+      5, 5, 5, 5,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      4, 4, 4, 4,
+      2, 2, 2, 2,
+      2, 2, 2, 2,
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      4, 4, 4, 4,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      3, 3, 3, 3
+    ], "hiddenRows": [], "entry": "left" },
+    { "bottles": [
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      5, 5, 5, 5,
+      5, 5, 5, 5,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      2, 2, 2, 2,
+      2, 2, 2, 2,
+      2, 2, 2, 2,
+      2, 2, 2, 2,
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      4, 4, 4, 4,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      3, 3, 3, 3,
+      5, 5, 5, 5
+    ], "hiddenRows": [], "entry": "right" }
+  ],
+  "lanes": [
+    [{ "color": 1 }, { "color": 3 }, { "color": 2, "size": 2 }, { "color": 4 }],
+    [{ "color": 5, "size": 2 }, { "color": 4 }, { "color": 1 }, { "color": 3, "size": 2 }]
+  ],
+  "links": [],
+  "view": { "cameraPreset": "default" },
+  "meta": { "name": "Big Box", "difficulty": "easy", "notes": "First 24-item box. The belt is full, so its last items pour in from the Enter Path later." }
+}

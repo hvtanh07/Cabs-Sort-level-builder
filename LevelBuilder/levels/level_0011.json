@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../../../docs/design/level.schema.json",
   "formatVersion": 4,
   "id": "level_0011",
   "conveyor": "square_42",
@@ -16,24 +17,26 @@
       2, 2, 2, 2,
       2, 2, 2, 2,
       2, 2, 2, 2,
-      6, 6, 6, 6,
+      2, 2, 2, 2,
       6, 6, 6, 6,
       5, 5, 5, 5,
       5, 5, 5, 5,
       7, 7, 7, 7,
       4, 4, 4, 4,
-      4, 4, 4, 4,
+      7, 7, 7, 7,
       4, 4, 4, 4,
       3, 3, 3, 3,
       6, 6, 6, 6,
+      3, 3, 3, 3,
       6, 6, 6, 6,
       7, 7, 7, 7,
       7, 7, 7, 7,
-      5, 5, 5, 5,
       7, 7, 7, 7,
       5, 5, 5, 5,
-      4, 4, 4, 4,
       5, 5, 5, 5,
+      5, 5, 5, 5,
+      5, 5, 5, 5,
+      4, 4, 4, 4,
       4, 4, 4, 4
     ], "hiddenRows": [], "entry": "left" },
     { "bottles": [
@@ -45,13 +48,13 @@
       2, 2, 2, 2,
       6, 6, 6, 6,
       6, 6, 6, 6,
+      6, 6, 6, 6,
       5, 5, 5, 5,
-      7, 7, 7, 7,
       5, 5, 5, 5,
       7, 7, 7, 7,
       7, 7, 7, 7,
       4, 4, 4, 4,
-      3, 3, 3, 3,
+      4, 4, 4, 4,
       3, 3, 3, 3,
       3, 3, 3, 3,
       6, 6, 6, 6,
@@ -60,17 +63,19 @@
       5, 5, 5, 5,
       5, 5, 5, 5,
       5, 5, 5, 5,
+      5, 5, 5, 5,
+      4, 4, 4, 4,
       4, 4, 4, 4,
       4, 4, 4, 4,
       4, 4, 4, 4
     ], "hiddenRows": [], "entry": "right" }
   ],
   "lanes": [
-    [{ "color": 3, "size": 4 }, { "color": 1, "size": 4 }, { "color": 2, "size": 5 }, { "color": 6, "size": 4 }],
-    [{ "color": 7, "size": 4 }, { "color": 4, "size": 4 }, { "color": 3, "size": 4 }, { "color": 7, "size": 4 }],
-    [{ "color": 5, "size": 4 }, { "color": 6, "size": 4 }, { "color": 5, "size": 6 }, { "color": 4, "size": 5 }]
+    [{ "color": 3 }, { "color": 1 }, { "color": 2, "size": 2 }, { "color": 6 }],
+    [{ "color": 7 }, { "color": 4 }, { "color": 3 }, { "color": 7 }],
+    [{ "color": 5 }, { "color": 6 }, { "color": 5, "size": 3 }, { "color": 4, "size": 2 }]
   ],
   "links": [],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Triple Stack", "difficulty": "normal", "intro": "First 24-item box." }
+  "meta": { "name": "Triple Stack", "difficulty": "normal", "notes": "First 32-item box." }
 }

@@ -185,11 +185,15 @@
     ul.addEventListener('dragend', () => { dragKey = null; $$('li', ul).forEach(li => li.classList.remove('drop')); });
     ul.addEventListener('drop', e => {
       e.preventDefault();
-      const li = e.target.closest('li');
+      const li = e.target.closest('li[data-key]');
       if (!dragKey) return;
+      // dropping outside a level (a slip of the mouse) leaves the order alone
+      if (!li || li.dataset.key === dragKey) { dragKey = null; A.renderList(); return; }
       const o = A.store.order;
       o.splice(o.indexOf(dragKey), 1);
-      const at = li ? o.indexOf(li.dataset.key) : o.length;
+      let at = o.indexOf(li.dataset.key);
+      const r = li.getBoundingClientRect();
+      if (at === o.length - 1 && e.clientY > r.top + r.height / 2) at = o.length;   // lower half of the last level: move to the end
       o.splice(at < 0 ? o.length : at, 0, dragKey);
       dragKey = null; A.saveSoon(); A.renderList();
     });
@@ -423,10 +427,10 @@
       const isSel = A.sel && A.sel.type === 'lane' && A.sel.l === l;
       return `<div class="lane ${blocked ? 'blocked' : ''} ${isSel ? 'sel' : ''}" data-l="${l}">
         <div class="lh" data-l="${l}" title="Queue ${l + 1}: select for queue options">Q${l + 1} · ${lane.length}${blocked ? ` <span class="blk">⛔${m.blockedLane.lockTurns}</span>` : ''}</div>
-        ${lane.map((b, t) => CS.boxHTML(b, b.size * m.trayCapacity, {
+        ${lane.map((b, t) => CS.boxHTML(b, CS.boxItems(b.size), {
           sel: A.sel && A.sel.type === 'box' && A.sel.uid === b.uid, link: L[b.uid], drag: true,
           extra: A.linkFirst === b.uid ? 'linkpick' : '',
-          title: `${CS.COLORS[b.color].name} · capacity ${b.size * m.trayCapacity}${b.hidden ? ' · hidden' : ''}${b.lock ? ' · locked ' + b.lock : ''}${L[b.uid] ? ' · link ' + L[b.uid] : ''}`
+          title: `${CS.COLORS[b.color].name} · capacity ${CS.boxItems(b.size)}${b.hidden ? ' · hidden' : ''}${b.lock ? ' · locked ' + b.lock : ''}${L[b.uid] ? ' · link ' + L[b.uid] : ''}`
         })).join('')}
         <button class="addbox" data-act="addBox" data-l="${l}" title="Add a box with the brush colour">+</button>
       </div>`;
@@ -645,7 +649,7 @@
       ${field('RV slots', num('extraSlots', m.extraSlots, 0, CS.MAX_SLOTS), 'Extra slots the player can unlock with a rewarded ad (GDD 1.3: max 6 slots in total).')}
       ${field('Locked Slot', `<div class="inline">${locks}</div>`, 'Lock turns per slot. Each box sent lowers it by 1.')}
       <h3>Boxes</h3>
-      ${field('Tray capacity', num('trayCapacity', m.trayCapacity, 1, 99), 'Items per tray. A box holds size × tray capacity items.')}
+      ${field('Tray capacity', num('trayCapacity', m.trayCapacity, 1, 99), 'Kept in the file. Box capacity comes from the box size.')}
       <h3>Block Door</h3>
       ${field('Turns', num('doorTurns', m.doorTurns, 0, 99), '0 = no Block Door. When the count reaches 0, shut doors open and open doors shut.')}
       ${m.doorTurns > 0 ? field('Start state', doors || '<span class="hint">Add an Enter Path first</span>') : ''}
@@ -672,7 +676,7 @@
       if (link) { const o = CS.boxPos(m, link[0] === b.uid ? link[1] : link[0]); linkTxt = o ? `Linked to queue ${o.lane + 1}, box ${o.tray + 1}. <a href="#" data-do="unlink">Unlink</a>` : ''; }
       return `<h3>Box · queue ${p.lane + 1}, position ${p.tray + 1}</h3>
         ${field('Colour', colorPick(b.color, 'boxColor'))}
-        ${field('Size', num('boxSize', b.size, 1, 10), `Capacity ${b.size * m.trayCapacity} items (size × tray capacity ${m.trayCapacity}).`)}
+        ${field('Size', num('boxSize', b.size, 1, CS.MAX_BOX_SIZE), `Capacity ${CS.boxItems(b.size)} items (size 1 = 16, 2 = 24, 3 = 32, 4 = 40).`)}
         ${field('Hidden Box', `<label class="chk"><input type="checkbox" data-k="boxHidden" ${b.hidden ? 'checked' : ''}> hidden until it reaches the front</label>`)}
         ${field('Locked Box', num('boxLock', b.lock, 0, 99), 'Lock turns, 0 = not locked.')}
         ${field('Linked Box', `<span>${linkTxt}</span>`)}
@@ -710,7 +714,7 @@
     }
     if (s.type === 'lane') {
       const lane = m.lanes[s.l]; if (!lane) return '';
-      const cap = lane.reduce((a, b) => a + b.size * m.trayCapacity, 0);
+      const cap = lane.reduce((a, b) => a + CS.boxItems(b.size), 0);
       return `<h3>Queue ${s.l + 1}</h3><div class="hint">${lane.length} boxes · ${cap} items of capacity</div>
         ${field('Block Queue', `<label class="chk"><input type="checkbox" data-k="laneBlocked" ${m.blockedLane && m.blockedLane.lane === s.l ? 'checked' : ''}> starts blocked</label>`)}
         <div class="btnrow"><button data-do="laneLeft">← Move</button><button data-do="laneRight">Move →</button><button data-do="laneShuffle">Shuffle boxes</button><button data-do="laneReverse">Reverse</button></div>
@@ -782,7 +786,7 @@
       case 'camera': m.view = Object.assign({}, m.view || {}, { cameraPreset: String(v) }); break;
       case 'formatVersion': m.formatVersion = Math.max(1, n); break;
       case 'boxColor': { const b = box(); if (b) b.color = n; break; }
-      case 'boxSize': { const b = box(); if (b) b.size = Math.max(1, n); break; }
+      case 'boxSize': { const b = box(); if (b) b.size = Math.max(1, Math.min(CS.MAX_BOX_SIZE, n)); break; }
       case 'boxHidden': { const b = box(); if (b) b.hidden = !!v; break; }
       case 'boxLock': { const b = box(); if (b) b.lock = n; break; }
       case 'rowFill': { const r = row(); if (r) r.cells = r.cells.map(() => n); break; }
@@ -914,8 +918,8 @@
       ${field('Queues', '<input type="number" name="lanes" value="4" min="1" max="8">')}
       ${field('Boxes', '<input type="number" name="boxes" value="32" min="1" max="200">')}
       ${field('Enter Paths', '<input type="number" name="feeders" value="2" min="1" max="3">')}
-      ${field('Size 2 boxes', '<input type="number" name="big2" value="10" min="0" max="100"> %')}
-      ${field('Size 3 boxes', '<input type="number" name="big3" value="5" min="0" max="100"> %')}
+      ${field('Size 2 boxes (24 items)', '<input type="number" name="big2" value="10" min="0" max="100"> %')}
+      ${field('Size 3 boxes (32 items)', '<input type="number" name="big3" value="5" min="0" max="100"> %')}
       ${field('Hidden Boxes', '<input type="number" name="hidden" value="0" min="0" max="100"> %')}
       ${field('Items', '<select name="mode"><option value="rows">Rows of one colour</option><option value="mixed">Mixed colours</option></select>')}
       <div class="foot"><button value="cancel">Cancel</button><button value="ok" class="primary">Generate</button></div>`,
@@ -1011,7 +1015,7 @@
       <h3>Level JSON</h3>
       <div class="hint">Matches demo.json (formatVersion 4). Fields the GDD needs that demo.json does not show are added like this:
       <code>feeders[].entry</code> ("left" | "middle" | "right"), <code>feeders[].doorShut</code>, <code>doorTurns</code> (Block Door countdown),
-      <code>blockedLane: { lane, lockTurns }</code> (Block Queue). <code>colors</code> is filled from the colours used. A box holds <code>size × trayCapacity</code> items.
+      <code>blockedLane: { lane, lockTurns }</code> (Block Queue). <code>colors</code> is filled from the colours used. A box's <code>size</code> sets its items: 1 = 16, 2 = 24, 3 = 32, 4 = 40.
       Feeder row 0 and lane box 0 are the ones nearest the conveyor and the slots. Unknown fields are kept on export.</div>
       <h3>Storage</h3>
       <div class="hint">Levels are saved in this browser automatically. Use Export / Export all to get files, or Open folder (Chrome / Edge) to load and save a folder of level files directly.</div>
