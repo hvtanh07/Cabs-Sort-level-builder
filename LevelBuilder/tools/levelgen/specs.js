@@ -71,6 +71,8 @@ for (let n = 11; n <= 40; n++) {
     if (k === 'LI') { s.lockedRows = FIRST.LI === n ? 2 : hard ? 4 : 3; s.rowLockRange = FIRST.LI === n ? [3, 4] : [3, hard ? 8 : 6]; }
     if (k === 'BQ') { s.block = FIRST.BQ === n ? 4 : 3; }
   });
+  // the level that introduces an element is very easy: random taps must win it, like levels 1-9
+  if (s.unlock) { s.tutorial = true; s.diff = 'easy'; s.minRandom = s.door ? 0.85 : 0.9; s.stick = 0; s.big4 = 0; }
   if (n === 31) s.rowLockRange = [3, 4];   // shorter Locked Item counts: the 18-row Bean belt fills fast
   if (n === 15) intro.push('Third Enter Path.');
   if (n === 20) intro.push('Fourth queue.');
@@ -90,13 +92,22 @@ const TOTAL = { 1: 64, 2: 80, 3: 96, 4: 128, 5: 136, 6: 160, 7: 192, 8: 208, 9: 
 const UNLOCKED = n => n < 5 ? 4 : n < 7 ? 5 : n < 10 ? 6 : n < 12 ? 7 : 8;
 S.forEach(s => {
   const k = UNLOCKED(s.n);
-  if (s.n <= 12) { s.palette = [1, 2, 3, 4, 5, 6, 7, 8].slice(0, k); s.colors = k; }
-  else s.colors = Math.min(k, s.colors);
+  if (s.n <= 10) { s.palette = [1, 2, 3, 4, 5, 6, 7, 8].slice(0, k); s.colors = k; }
+  else {
+    // long levels: 6 colours per level (7 on hard, 5 when a level introduces an element), so the belt does not jam;
+    // levels 11 and 12 always include the colour they unlock
+    s.palette = [1, 2, 3, 4, 5, 6, 7, 8].slice(0, k);
+    s.colors = Math.min(k, s.tutorial ? 5 : s.diff === 'hard' ? 7 : 6);
+    if (s.n === 11 || s.n === 12) s.mustColor = k;
+  }
 });
 S.forEach(s => {
   const x = s.n - 11;
-  const extra = Math.round((48 + x * 2) * (s.diff === 'hard' ? 1.6 : 1) / 4) * 4;
-  const items = TOTAL[s.n] || (s.conveyor === 'heart_21' ? 176 : 168) + extra;
+  // levels 11-40 carry on from level 9 (312 items) and level 10 (368): normal levels start at 336 items and add 4 a level,
+  // hard levels are 25 % longer, and a level that introduces an element stays at level 9's length (see `tutorial`)
+  // Block Door levels are 10 % shorter (20 % from level 31, where a quarter of the rows come at the end): the shut door holds back half the rows, so a long door level jams easily
+  const len = s.tutorial ? 312 : Math.round((336 + x * 4) * (s.diff === 'hard' ? 1.25 : 1) * (s.door ? (s.doorTail ? 0.8 : 0.9) : 1) / 4) * 4;
+  const items = TOTAL[s.n] || len;
   const units = Math.ceil(items / 4);   // one unit = 4 items = one Enter Path row
   // boxes come in four tiers: 16 / 24 / 32 / 40 items = 4 / 6 / 8 / 10 rows (SIZE in gen.js)
   const rowsOf = N => 4 * (N - (s.big2 || 0) - (s.big3 || 0) - (s.big4 || 0)) + 5 * (s.big2 || 0) + 6 * (s.big3 || 0) + 8 * (s.big4 || 0);
@@ -124,7 +135,7 @@ S.forEach(s => {
     }
     s.boxes = N;
     if (s.hidden) s.hidden = Math.round(N * (s.diff === 'hard' ? 0.22 : 0.16));
-    s.window = Math.round(s.window * 1.6);
+    s.window = s.tutorial ? 12 : Math.round(s.window * 1.6);
   }
 });
 module.exports = S;

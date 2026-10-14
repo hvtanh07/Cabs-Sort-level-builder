@@ -29,6 +29,7 @@ function make(S, seed) {
   for (let i = 0; i < N; i++) sizes[i] = SZ[sizes[i]];
   // colours: in send order, cycle a shuffled palette, no colour twice within the last few boxes
   const pal = CS.shuffle(S.palette ? S.palette.slice() : [1, 2, 3, 4, 5, 6, 7, 8], r).slice(0, S.colors);
+  if (S.mustColor && !pal.includes(S.mustColor)) pal[0] = S.mustColor;   // the colour this level unlocks
   const cols = [];
   const gap = Math.min(S.colors - 1, S.colorGap != null ? S.colorGap : 2);
   const used = {}; pal.forEach(c => used[c] = 0);
