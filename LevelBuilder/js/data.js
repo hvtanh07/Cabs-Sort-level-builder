@@ -41,6 +41,11 @@ window.CS = window.CS || {};
   CS.defaultEntries = n => n <= 1 ? ['middle'] : n === 2 ? ['left', 'right'] : ['left', 'middle', 'right'];
 
   CS.LEVEL_SCHEMA = '../../../../../docs/design/level.schema.json';
+  // the larger conveyors used before (square_42, bean_42, ...) were replaced by the game's own configs; a level that names one moves to its replacement
+  CS.CONVEYOR_ALIAS = { square_42: 'square_19', bean_42: 'bean_18', lens_42: 'lens_18', heart_44: 'heart_21', triangle_28: 'triangle_12', oval_32: 'oval_14' };
+  CS.FORMAT_VERSION = 5;   // feeders keyed by entry ("left" / "middle" / "right"), no trayCapacity
+  // a level JSON's Enter Paths as a list with `entry` (works for formatVersion 5 and older files)
+  CS.feederList = j => !j || !j.feeders ? [] : Array.isArray(j.feeders) ? j.feeders : Object.keys(j.feeders).map(e => Object.assign({ entry: e }, j.feeders[e]));
 
   // Box sizes: a box's `size` sets how many items it holds (size 1 = 16, 2 = 24, 3 = 32, 4 = 40).
   CS.BOX_ITEMS = { 1: 16, 2: 24, 3: 32, 4: 40 };
@@ -83,12 +88,11 @@ window.CS = window.CS || {};
     if (Array.isArray(j.lanes)) { j = Object.assign({}, j); migrateSizes(j); }
     const m = {
       schema: j.$schema !== undefined ? j.$schema : CS.LEVEL_SCHEMA,
-      formatVersion: j.formatVersion != null ? j.formatVersion : 4,
+      formatVersion: Math.max(CS.FORMAT_VERSION, int(j.formatVersion, CS.FORMAT_VERSION)),
       id: String(j.id || 'level_0001'),
-      conveyor: String(j.conveyor || 'square_42'),
+      conveyor: CS.CONVEYOR_ALIAS[j.conveyor] || String(j.conveyor || 'square_19'),
       slots: int(j.slots, 4),
       extraSlots: int(j.extraSlots, 0),
-      trayCapacity: int(j.trayCapacity, 4),
       slotLocks: {},
       feeders: [],
       lanes: [],
@@ -101,7 +105,9 @@ window.CS = window.CS || {};
     };
     (j.slotLocks || []).forEach(s => { if (s && s.slot != null) m.slotLocks[int(s.slot, 0)] = int(s.lockTurns, 1); });
 
-    const feeders = Array.isArray(j.feeders) ? j.feeders : [];
+    // formatVersion 5 keys the Enter Paths by entry; older files list them with an `entry` field
+    const feeders = Array.isArray(j.feeders) ? j.feeders
+      : j.feeders && typeof j.feeders === 'object' ? Object.keys(j.feeders).map(e => Object.assign({}, j.feeders[e], { entry: e })) : [];
     const defaults = CS.defaultEntries(feeders.length);
     feeders.forEach((f, i) => {
       const b = Array.isArray(f.bottles) ? f.bottles.map(x => int(x, 0)) : [];
@@ -163,22 +169,22 @@ window.CS = window.CS || {};
     o.conveyor = m.conveyor;
     o.slots = m.slots;
     o.extraSlots = m.extraSlots;
-    o.slotLocks = Object.keys(m.slotLocks).map(Number).sort((a, b) => a - b)
+    const locks = Object.keys(m.slotLocks).map(Number).sort((a, b) => a - b)
       .filter(s => m.slotLocks[s] > 0).map(s => ({ slot: s, lockTurns: m.slotLocks[s] }));
-    o.trayCapacity = m.trayCapacity;
+    if (locks.length) o.slotLocks = locks;   // left out when empty
     o.colors = CS.usedColors(m);
-    o.feeders = m.feeders.map(f => {
+    o.feeders = {};
+    m.feeders.slice().sort((a, b) => CS.ENTRIES.indexOf(a.entry) - CS.ENTRIES.indexOf(b.entry)).forEach(f => {
       let bottles = [];
       f.rows.forEach(r => { bottles = bottles.concat(r.cells); });
       while (bottles.length && bottles[bottles.length - 1] === 0) bottles.pop();
       const fo = { bottles };
       const hid = []; const lk = [];
       f.rows.forEach((r, i) => { if (r.hidden) hid.push(i); if (r.lock > 0) lk.push({ row: i, lockTurns: r.lock }); });
-      fo.hiddenRows = hid;
+      if (hid.length) fo.hiddenRows = hid;
       if (lk.length) fo.lockedRows = lk;
-      fo.entry = f.entry;
       if (f.doorShut) fo.doorShut = true;
-      return Object.assign(fo, f.extra || {});
+      o.feeders[f.entry] = Object.assign(fo, f.extra || {});
     });
     o.lanes = m.lanes.map(l => l.map(b => {
       const t = { color: b.color };
@@ -187,8 +193,9 @@ window.CS = window.CS || {};
       if (b.lock > 0) t.lockTurns = b.lock;
       return Object.assign(t, b.extra || {});
     }));
-    o.links = m.links.map(([a, b]) => ({ a: CS.boxPos(m, a), b: CS.boxPos(m, b) })).filter(L => L.a && L.b)
+    const links = m.links.map(([a, b]) => ({ a: CS.boxPos(m, a), b: CS.boxPos(m, b) })).filter(L => L.a && L.b)
       .map(L => ({ a: { lane: L.a.lane, tray: L.a.tray }, b: { lane: L.b.lane, tray: L.b.tray } }));
+    if (links.length) o.links = links;   // left out when empty
     if (m.doorTurns > 0) o.doorTurns = m.doorTurns;
     if (m.blockedLane) o.blockedLane = { lane: m.blockedLane.lane, lockTurns: m.blockedLane.lockTurns };
     if (m.view !== undefined) o.view = m.view;
@@ -210,14 +217,15 @@ window.CS = window.CS || {};
     const out = keys.map(k => {
       const v = o[k];
       let s;
-      if (k === 'feeders' && Array.isArray(v) && v.length) {
-        s = '[\n' + v.map(f => {
+      if (k === 'feeders' && v && !Array.isArray(v) && typeof v === 'object' && Object.keys(v).length) {
+        s = '{\n' + Object.keys(v).map(e => {
+          const f = v[e];
           const b = f.bottles || [];
           const rows = [];
           for (let i = 0; i < b.length; i += CS.ROW_W) rows.push('      ' + b.slice(i, i + CS.ROW_W).join(', '));
           const rest = Object.keys(f).filter(x => x !== 'bottles').map(x => ', ' + JSON.stringify(x) + ': ' + inline(f[x])).join('');
-          return '    { "bottles": [' + (rows.length ? '\n' + rows.join(',\n') + '\n    ' : '') + ']' + rest + ' }';
-        }).join(',\n') + '\n  ]';
+          return '    ' + JSON.stringify(e) + ': { "bottles": [' + (rows.length ? '\n' + rows.join(',\n') + '\n    ' : '') + ']' + rest + ' }';
+        }).join(',\n') + '\n  }';
       } else if ((k === 'lanes' || k === 'links') && Array.isArray(v) && v.length) {
         s = '[\n' + v.map(x => '    ' + inline(x)).join(',\n') + '\n  ]';
       } else s = inline(v);
@@ -228,8 +236,8 @@ window.CS = window.CS || {};
 
   CS.blankLevel = function (id) {
     return CS.fromJSON({
-      formatVersion: 4, id, conveyor: 'square_42', slots: 4, extraSlots: 2, slotLocks: [], trayCapacity: 4,
-      feeders: [{ bottles: [1, 1, 1, 1, 2, 2, 2, 2], hiddenRows: [], entry: 'left' }, { bottles: [3, 3, 3, 3], hiddenRows: [], entry: 'right' }],
+      formatVersion: CS.FORMAT_VERSION, id, conveyor: 'square_19', slots: 4, extraSlots: 2,
+      feeders: { left: { bottles: [1, 1, 1, 1, 2, 2, 2, 2] }, right: { bottles: [3, 3, 3, 3] } },
       lanes: [[{ color: 1 }, { color: 3 }], [{ color: 2 }]],
       links: [], view: { cameraPreset: 'default' }, meta: { name: 'New level', difficulty: 'normal' }
     });
@@ -253,7 +261,6 @@ window.CS = window.CS || {};
     if (!/^[A-Za-z0-9_\-]+$/.test(m.id)) warn('Level id should only use letters, digits, "_" and "-".');
     if (m.slots < 1 || m.slots > CS.MAX_SLOTS) err(`Slots must be between 1 and ${CS.MAX_SLOTS}.`);
     if (m.slots + m.extraSlots > CS.MAX_SLOTS) warn(`Slots + RV slots is ${m.slots + m.extraSlots}; the GDD caps a level at ${CS.MAX_SLOTS}.`);
-    if (m.trayCapacity < 1) err('Tray capacity must be at least 1.');
     Object.keys(m.slotLocks).forEach(s => { if (+s >= m.slots && m.slotLocks[s] > 0) err(`Slot lock on slot ${+s + 1}, but the level only has ${m.slots} slots.`); });
     if (Object.keys(m.slotLocks).filter(s => m.slotLocks[s] > 0 && +s < m.slots).length >= m.slots) err('Every slot is locked, so no box can ever be sent.');
 
@@ -366,7 +373,7 @@ window.CS = window.CS || {};
   /* ---------- conveyor configs ---------- */
   // premade configs from js/conveyors.js (copied from the conveyors folder); a stand-in is used if that file is missing
   CS.PRESET_CONVEYORS = (window.CS_CONVEYORS && window.CS_CONVEYORS.length) ? window.CS_CONVEYORS :
-    [{ id: 'square_42', name: 'Square 42', rows: 42, shape: { type: 'roundrect', w: 300, h: 210, r: 62 } }];
+    [{ id: 'square_19', name: 'Square 19', rows: 19, shape: { type: 'roundrect', w: 300, h: 210, r: 62 } }];
 
   CS.signedArea = function (poly) {
     let a = 0;

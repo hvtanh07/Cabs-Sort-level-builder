@@ -6,7 +6,7 @@ function check(S, seed) {
   const { m, json } = G.make(S, seed);
   const v = G.CS.validate(m, null).filter(x => x.level === 'error');
   if (v.length) return { ok: false, why: v.map(x => x.msg).join('; ') };
-  const res = { items: json.feeders.reduce((a, f) => a + f.bottles.length, 0), cap: G.GEOM[S.conveyor].rows * 4, boxes: json.lanes.flat().length };
+  const res = { items: G.CS.feederList(json).reduce((a, f) => a + f.bottles.length, 0), cap: G.GEOM[S.conveyor].rows * 4, boxes: json.lanes.flat().length };
   const g1 = G.play(m, G.MODES.low, 'smart', 1), g2 = G.play(m, G.MODES.zoff, 'smart', 1);
   res.greedy = [g1.win, g2.win]; res.ticks = g1.ticks; res.gfs = [g1.failsafe, g2.failsafe];
   if (!g1.win || !g2.win) return { ok: false, why: 'smart lost', res };

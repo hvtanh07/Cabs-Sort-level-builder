@@ -73,7 +73,7 @@ function make(S, seed) {
   const units = [];
   order.forEach(b => { for (let j = 0; j < b.size; j++) units.push({ c: b.color, b: b.i, key: units.length }); });
   if (S.swap) {   // swap where two boxes sit in the queues, but keep their items where they were
-    const [a, b] = S.swap; const A = order[a], B = order[b];
+    const a = S.swap[0], b = S.swap[1] < 0 ? order.length + S.swap[1] : S.swap[1]; const A = order[a], B = order[b];
     [A.lane, B.lane] = [B.lane, A.lane]; [A.depth, B.depth] = [B.depth, A.depth];
   }
   const w = (S.window || 0) / 4;   // spec windows are in items
@@ -163,8 +163,8 @@ function make(S, seed) {
     CS.shuffle(cand, r).slice(0, S.hiddenRows).forEach(row => { row.hidden = true; });
   }
   const j = {
-    $schema: CS.LEVEL_SCHEMA, formatVersion: 4, id: 'level_' + String(S.n).padStart(4, '0'), conveyor: S.conveyor,
-    slots: S.slots || 4, extraSlots: S.extraSlots != null ? S.extraSlots : 2, slotLocks: [], trayCapacity: 4,
+    $schema: CS.LEVEL_SCHEMA, formatVersion: CS.FORMAT_VERSION, id: 'level_' + String(S.n).padStart(4, '0'), conveyor: S.conveyor,
+    slots: S.slots || 4, extraSlots: S.extraSlots != null ? S.extraSlots : 2, slotLocks: [],
     feeders: feeders.map((f, fi) => {
       const o = { bottles: [].concat(...f.rows.map(x => x.cells)), hiddenRows: f.rows.map((x, i) => x.hidden ? i : -1).filter(i => i >= 0) };
       const lk = f.rows.map((x, i) => x.lock ? { row: i, lockTurns: x.lock } : null).filter(Boolean);

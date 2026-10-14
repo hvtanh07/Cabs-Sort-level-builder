@@ -3,27 +3,27 @@ const LR = ['left', 'right'], LMR = ['left', 'middle', 'right'];
 const S = [];
 // ---- levels 1-10: hand written from Ethan's brief ----
 S.push({ n: 1, name: 'First Sort', diff: 'easy', intro: 'Tap a box to send it up. One middle Enter Path, 4 colours, small boxes only.',
-  conveyor: 'square_42', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, grouped: true });
+  conveyor: 'square_19', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, grouped: true });
 S.push({ n: 2, name: 'Two Queues', diff: 'easy', intro: 'A second queue: pick which front box to send.',
-  conveyor: 'square_42', entries: ['middle'], lanes: 2, boxes: 12, colors: 4, window: 6 });
+  conveyor: 'square_19', entries: ['middle'], lanes: 2, boxes: 12, colors: 4, window: 6 });
 S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Two Enter Paths. Two boxes swapped places, so one colour rides the belt until its box comes up.',
-  conveyor: 'square_42', entries: LR, lanes: 1, boxes: 12, colors: 4, window: 0, swap: [0, 11] });
+  conveyor: 'square_19', entries: LR, lanes: 1, boxes: 12, colors: 4, window: 0, swap: [0, -1] });
 S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths.',
-  conveyor: 'square_42', entries: LR, lanes: 2, boxes: 10, colors: 5, window: 4 });
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 10, colors: 5, window: 4 });
 S.push({ n: 5, name: 'Big Box', diff: 'easy', intro: 'First 24-item box. The belt is full, so its last items pour in from the Enter Path later.',
-  conveyor: 'triangle_28', entries: LR, lanes: 2, boxes: 21, big2: 9, bigFrom: 1, colors: 5, window: 6, late: { count: 4, unique: true } });
+  conveyor: 'triangle_12', entries: LR, lanes: 2, boxes: 21, big2: 9, bigFrom: 1, colors: 5, window: 6, late: { count: 4, unique: true } });
 S.push({ n: 6, name: 'Three Queues', diff: 'easy', booster: '2nd', intro: 'A third queue, with a few 24-item boxes.',
-  conveyor: 'square_42', entries: LR, lanes: 3, boxes: 18, big2: 3, colors: 5, window: 8 });
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, big2: 3, colors: 5, window: 8 });
 S.push({ n: 7, name: 'Hidden Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Two Enter Paths, two queues.',
-  conveyor: 'square_42', entries: LR, lanes: 2, boxes: 16, big2: 2, hidden: 3, hiddenSizes: [1], colors: 5, window: 8,
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 16, big2: 2, hidden: 3, hiddenSizes: [1], colors: 5, window: 8,
   hiddenPattern: (l, p) => p > 1 && (l % 2 === 0 ? p % 2 === 0 : p % 2 === 1) });
 S.push({ n: 8, name: 'Hidden Big Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Every even box is hidden, so the queues show rows of Hidden Boxes. Three queues.',
-  conveyor: 'square_42', entries: LR, lanes: 3, boxes: 20, big2: 4, hidden: 4, hiddenSizes: [1, 2], needHiddenSize: 2, colors: 6, window: 10,
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 20, big2: 4, hidden: 4, hiddenSizes: [1, 2], needHiddenSize: 2, colors: 6, window: 10,
   hiddenPattern: (l, p) => p % 2 === 0 });
 S.push({ n: 9, name: 'Long Haul', diff: 'easy', booster: '3rd', intro: 'No Hidden Box, but a longer level. Three queues, two Enter Paths.',
-  conveyor: 'square_42', entries: LR, lanes: 3, boxes: 30, big2: 5, colors: 6, window: 12 });
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 30, big2: 5, colors: 6, window: 12 });
 S.push({ n: 10, name: 'First Challenge', diff: 'hard', unlock: 'Hidden Box', intro: 'First hard level: every box behind the front row is hidden. Longer than level 9.',
-  conveyor: 'square_42', entries: LR, lanes: 3, boxes: 36, big2: 7, hidden: 7, hiddenSizes: [1, 2], needHiddenSize: 2, colors: 6, window: 40, stick: 0.7,
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 36, big2: 7, hidden: 7, hiddenSizes: [1, 2], needHiddenSize: 2, colors: 6, window: 40, stick: 0.7,
   hiddenPattern: (l, p) => p > 1 });
 
 // ---- levels 11-40: from the level list sheet ----
@@ -42,9 +42,9 @@ const NAMES = {
 };
 const PATHS3 = new Set([15, 18, 20, 24, 29, 30, 33, 35, 36, 38, 40]);   // 3rd Enter Path from 15
 const LANES4 = new Set([20, 27, 30, 31, 34, 35, 38, 40]);              // 4th queue from 20
-const CONV = { 11: 'square_42', 12: 'bean_42', 13: 'lens_42', 14: 'square_42', 15: 'heart_44', 16: 'bean_42', 17: 'square_42', 18: 'lens_42', 19: 'bean_42',
-  20: 'square_42', 21: 'lens_42', 22: 'square_42', 23: 'bean_42', 24: 'lens_42', 25: 'heart_44', 26: 'square_42', 27: 'bean_42', 28: 'lens_42', 29: 'square_42',
-  30: 'heart_44', 31: 'bean_42', 32: 'square_42', 33: 'lens_42', 34: 'bean_42', 35: 'heart_44', 36: 'square_42', 37: 'lens_42', 38: 'bean_42', 39: 'square_42', 40: 'heart_44' };
+const CONV = { 11: 'square_19', 12: 'bean_18', 13: 'lens_18', 14: 'square_19', 15: 'heart_21', 16: 'bean_18', 17: 'square_19', 18: 'lens_18', 19: 'bean_18',
+  20: 'square_19', 21: 'lens_18', 22: 'square_19', 23: 'bean_18', 24: 'lens_18', 25: 'heart_21', 26: 'square_19', 27: 'bean_18', 28: 'lens_18', 29: 'square_19',
+  30: 'heart_21', 31: 'bean_18', 32: 'square_19', 33: 'lens_18', 34: 'bean_18', 35: 'heart_21', 36: 'square_19', 37: 'lens_18', 38: 'bean_18', 39: 'bean_18', 40: 'heart_21' };   // 39 on Bean: on the 19-row square its doors blocked random play too often
 for (let n = 11; n <= 40; n++) {
   const hard = n % 5 === 0;
   const f = FEAT[n];
@@ -71,6 +71,7 @@ for (let n = 11; n <= 40; n++) {
     if (k === 'LI') { s.lockedRows = FIRST.LI === n ? 2 : hard ? 4 : 3; s.rowLockRange = FIRST.LI === n ? [3, 4] : [3, hard ? 8 : 6]; }
     if (k === 'BQ') { s.block = FIRST.BQ === n ? 4 : 3; }
   });
+  if (n === 31) s.rowLockRange = [3, 4];   // shorter Locked Item counts: the 18-row Bean belt fills fast
   if (n === 15) intro.push('Third Enter Path.');
   if (n === 20) intro.push('Fourth queue.');
   if (hard) intro.push('Hard level.');
@@ -78,11 +79,12 @@ for (let n = 11; n <= 40; n++) {
   S.push(s);
 }
 // ---- level length: from level 2 on, every level holds more items than the belt, so items are still waiting in the Enter Paths
-// once the belt is full. EXTRA = items beyond the belt's spots (rows x 4). Box counts are worked out from it.
-const BELT = { square_42: 42, bean_42: 42, lens_42: 42, heart_44: 44, triangle_28: 28, oval_32: 32 };
-// levels 1-3 are lighter: level 1 fills about 90 % of the belt, level 2 leaves 3 rows waiting, level 3 a little more;
-// from level 4 the count builds up to the normal amount
-const EXTRA = { 1: -24, 2: 12, 3: 24, 4: 28, 5: 32, 6: 36, 7: 40, 8: 48, 9: 56, 10: 160 };
+// once the belt is full. The belts are the game's conveyors (Rounded square 19 rows = 76 spots, Triangle 12 = 48, Heart 30 = 120).
+// Levels 1-3 are sized to the belt: level 1 fills about 85 % of it, level 2 leaves 1 row waiting, level 3 a few rows per Enter Path.
+// From level 4 the item count builds up to the normal amount: TOTAL gives levels 1-10 in items; levels 11-40 hold
+// 168 items (176 on Heart) plus EXTRA, the same amounts as before the conveyors changed.
+const BELT = { square_19: 19, bean_18: 18, lens_18: 18, heart_21: 30, triangle_12: 12, oval_14: 14 };   // belt rows of each conveyor
+const TOTAL = { 1: 64, 2: 80, 3: 96, 4: 128, 5: 136, 6: 160, 7: 192, 8: 208, 9: 224, 10: 352 };
 // colours unlock one by one: Red, Blue, Green and Yellow first, then Pink at level 5, Orange at 7, Purple at 10 and Cyan at 12.
 // Up to level 12 a level uses every unlocked colour; after that any of the 8 can be mixed in.
 const UNLOCKED = n => n < 5 ? 4 : n < 7 ? 5 : n < 10 ? 6 : n < 12 ? 7 : 8;
@@ -93,8 +95,9 @@ S.forEach(s => {
 });
 S.forEach(s => {
   const x = s.n - 11;
-  const extra = EXTRA[s.n] || Math.round((48 + x * 2) * (s.diff === 'hard' ? 1.6 : 1) / 4) * 4;
-  const units = Math.ceil((BELT[s.conveyor] * 4 + extra) / 4);   // one unit = 4 items = one Enter Path row
+  const extra = Math.round((48 + x * 2) * (s.diff === 'hard' ? 1.6 : 1) / 4) * 4;
+  const items = TOTAL[s.n] || (s.conveyor === 'heart_21' ? 176 : 168) + extra;
+  const units = Math.ceil(items / 4);   // one unit = 4 items = one Enter Path row
   // boxes come in four tiers: 16 / 24 / 32 / 40 items = 4 / 6 / 8 / 10 rows (SIZE in gen.js)
   const rowsOf = N => 4 * (N - (s.big2 || 0) - (s.big3 || 0) - (s.big4 || 0)) + 5 * (s.big2 || 0) + 6 * (s.big3 || 0) + 8 * (s.big4 || 0);
   if (s.n <= 10) {

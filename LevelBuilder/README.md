@@ -15,7 +15,7 @@ A level design tool for Caps Sorting. Open `index.html` in Chrome or Edge. No in
 - **Play test**: plays the level with the GDD rules: sending boxes, Hidden / Locked / Linked Box, Locked Item,
   Block Door, Block Queue, Locked Slot, the fail-safe, win / lose, Revive, RV slots and the Hand, Shuffle and Magnet boosters.
   Auto play, step and speed controls help check a level quickly.
-- **Import / Export**: level JSON in the `demo.json` layout. Export all gives a zip (or one bundle JSON when offline).
+- **Import / Export**: level JSON in formatVersion 5 (older formatVersion 4 files still import). Export all gives a zip (or one bundle JSON when offline).
 - **Conveyors**: your six premade conveyors are built in, and more can be imported (see below).
 
 ## Bundled levels
@@ -40,28 +40,27 @@ Inspector sections fold away and remember their state. Press **?** for all short
 
 ## Level JSON
 
-Same layout as `demo.json` (formatVersion 4). Notes:
+formatVersion 5. Older files (formatVersion 4: `feeders` as a list with `entry`, plus `trayCapacity`) import fine and are saved in the new layout. Notes:
 
 | Field | Meaning in the tool |
 | --- | --- |
 | `$schema` | Always written first as `../../../../../docs/design/level.schema.json`. |
 | `meta` | `name`, `difficulty` and optional `notes`. Older files with `meta.intro` import fine: it becomes `meta.notes`, and `meta.unlock` / `meta.booster` are dropped. |
-| `feeders[]` | Enter Paths. `bottles` is a flat list read in rows of 4. Row 0 enters the conveyor first. |
-| `feeders[].hiddenRows` | Rows whose items show "?" until they reach the conveyor. |
-| `feeders[].lockedRows` | Locked Items: `{ row, lockTurns }`. |
-| `lanes[][]` | Queues. Box 0 is the front box. `size` sets the items the box holds: 1 = 16, 2 = 24, 3 = 32, 4 = 40 (no `size` = 1). Older files that used `size × trayCapacity` are converted on import. |
+| `feeders` | Enter Paths, keyed by the conveyor entry they join: `"left"`, `"middle"` or `"right"`. `bottles` is a flat list read in rows of 4. Row 0 enters the conveyor first. |
+| `feeders.<entry>.hiddenRows` | Rows whose items show "?" until they reach the conveyor. Left out when empty. |
+| `feeders.<entry>.lockedRows` | Locked Items: `{ row, lockTurns }`. Left out when empty. |
+| `lanes[][]` | Queues. Box 0 is the front box. `size` sets the items the box holds: 1 = 16, 2 = 24, 3 = 32, 4 = 40 (no `size` = 1). There is no `trayCapacity`. Older files that used `size × trayCapacity` are converted on import. |
 | `lanes[][].hidden` / `lockTurns` | Hidden Box / Locked Box. |
-| `links` | Linked Boxes: `{ a: { lane, tray }, b: { lane, tray } }`. |
-| `slotLocks` | Locked Slot: `{ slot, lockTurns }`. |
+| `links` | Linked Boxes: `{ a: { lane, tray }, b: { lane, tray } }`. Left out when there are none. |
+| `slotLocks` | Locked Slot: `{ slot, lockTurns }`. Left out when no slot is locked. |
 | `extraSlots` | RV slots the player can unlock with an ad. |
 | `colors` | Filled automatically from the colours used. |
 
-Fields the GDD needs that `demo.json` does not show. Rename them if the game uses other names:
+Other fields the tool writes when a level uses them:
 
 | Added field | Meaning |
 | --- | --- |
-| `feeders[].entry` | `"left"`, `"middle"` or `"right"`: which conveyor entry the Enter Path joins. When missing on import: 1 path = middle, 2 = left + right, 3 = all. |
-| `feeders[].doorShut` | Block Door: this door starts shut. |
+| `feeders.<entry>.doorShut` | Block Door: this door starts shut. |
 | `doorTurns` | Block Door countdown. At 0, shut doors open and open doors shut, then it restarts. |
 | `blockedLane` | Block Queue: `{ lane, lockTurns }`. At 0 the block moves to the next queue that still has boxes. |
 
@@ -69,7 +68,7 @@ Unknown fields are kept as they are on export.
 
 ## Conveyor config
 
-The six premade conveyors (Rounded square 42, Large oval 32, Bean 42, Lens 42, Heart 44, Triangle 28) are built in.
+The six game conveyors (Rounded square 19, Large oval 14, Bean 18, Lens 18, Heart 30 rows (`heart_21`), Triangle 12) are built in. Levels that name the larger configs used before (`square_42`, `bean_42`, `lens_42`, `heart_44`, `triangle_28`, `oval_32`) are moved to these when they load.
 They live in `conveyors/` and are bundled into `js/conveyors.js` so the page works offline.
 Use **Conveyors → Import conveyor JSON** for new ones; imported configs are kept in the browser.
 

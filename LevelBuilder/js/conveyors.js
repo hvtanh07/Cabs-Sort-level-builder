@@ -3,11 +3,16 @@ window.CS_CONVEYORS = [
  {
   "$schema": "../../../../../docs/design/conveyor.schema.json",
   "formatVersion": 2,
-  "id": "square_42",
-  "rows": 42,
+  "id": "square_19",
+  "rows": 19,
   "width": 4,
   "pickRows": 5,
   "scale": 0.46,
+  "scaleRate": 1,
+  "offset": {
+   "x": 0,
+   "z": 0
+  },
   "loop": {
    "nodes": [
     {
@@ -55,7 +60,7 @@ window.CS_CONVEYORS = [
   "feeders": [
    {
     "side": "right",
-    "mergeAt": 34,
+    "mergeAt": 15,
     "nodes": [
      {
       "x": 2.7,
@@ -81,7 +86,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "left",
-    "mergeAt": 13,
+    "mergeAt": 6,
     "nodes": [
      {
       "x": -2.7,
@@ -107,7 +112,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "middle",
-    "mergeAt": 23,
+    "mergeAt": 10,
     "nodes": [
      {
       "x": -0.229,
@@ -134,11 +139,16 @@ window.CS_CONVEYORS = [
  {
   "$schema": "../../../../../docs/design/conveyor.schema.json",
   "formatVersion": 2,
-  "id": "oval_32",
-  "rows": 32,
+  "id": "oval_14",
+  "rows": 14,
   "width": 4,
-  "pickRows": 6,
+  "pickRows": 4,
   "scale": 0.483,
+  "scaleRate": 1,
+  "offset": {
+   "x": 0,
+   "z": 0
+  },
   "loop": {
    "nodes": [
     {
@@ -176,7 +186,7 @@ window.CS_CONVEYORS = [
   "feeders": [
    {
     "side": "right",
-    "mergeAt": 24,
+    "mergeAt": 10,
     "nodes": [
      {
       "x": 2.018,
@@ -202,7 +212,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "left",
-    "mergeAt": 12,
+    "mergeAt": 5,
     "nodes": [
      {
       "x": -2.018,
@@ -228,7 +238,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "middle",
-    "mergeAt": 18,
+    "mergeAt": 8,
     "nodes": [
      {
       "x": 0,
@@ -255,11 +265,16 @@ window.CS_CONVEYORS = [
  {
   "$schema": "../../../../../docs/design/conveyor.schema.json",
   "formatVersion": 2,
-  "id": "bean_42",
-  "rows": 42,
+  "id": "bean_18",
+  "rows": 18,
   "width": 4,
   "pickRows": 5,
   "scale": 0.45,
+  "scaleRate": 1,
+  "offset": {
+   "x": 0,
+   "z": 0
+  },
   "loop": {
    "nodes": [
     {
@@ -312,7 +327,7 @@ window.CS_CONVEYORS = [
   "feeders": [
    {
     "side": "right",
-    "mergeAt": 32,
+    "mergeAt": 13,
     "nodes": [
      {
       "x": 2.4,
@@ -338,7 +353,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "left",
-    "mergeAt": 14,
+    "mergeAt": 6,
     "nodes": [
      {
       "x": -2.4,
@@ -364,7 +379,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "middle",
-    "mergeAt": 26,
+    "mergeAt": 11,
     "nodes": [
      {
       "x": -0.055,
@@ -391,11 +406,16 @@ window.CS_CONVEYORS = [
  {
   "$schema": "../../../../../docs/design/conveyor.schema.json",
   "formatVersion": 2,
-  "id": "lens_42",
-  "rows": 42,
+  "id": "lens_18",
+  "rows": 18,
   "width": 4,
   "pickRows": 5,
   "scale": 0.45,
+  "scaleRate": 1,
+  "offset": {
+   "x": 0,
+   "z": 0
+  },
   "loop": {
    "nodes": [
     {
@@ -448,7 +468,7 @@ window.CS_CONVEYORS = [
   "feeders": [
    {
     "side": "right",
-    "mergeAt": 32,
+    "mergeAt": 13,
     "nodes": [
      {
       "x": 2.686,
@@ -474,7 +494,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "left",
-    "mergeAt": 13,
+    "mergeAt": 5,
     "nodes": [
      {
       "x": -2.686,
@@ -500,7 +520,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "middle",
-    "mergeAt": 22,
+    "mergeAt": 9,
     "nodes": [
      {
       "x": -0.057,
@@ -527,11 +547,16 @@ window.CS_CONVEYORS = [
  {
   "$schema": "../../../../../docs/design/conveyor.schema.json",
   "formatVersion": 2,
-  "id": "heart_44",
-  "rows": 44,
+  "id": "heart_21",
+  "rows": 30,
   "width": 4,
   "pickRows": 4,
   "scale": 0.44,
+  "scaleRate": 1,
+  "offset": {
+   "x": 0,
+   "z": 0
+  },
   "loop": {
    "nodes": [
     {
@@ -584,7 +609,7 @@ window.CS_CONVEYORS = [
   "feeders": [
    {
     "side": "right",
-    "mergeAt": 31,
+    "mergeAt": 15,
     "nodes": [
      {
       "x": 2.65,
@@ -610,7 +635,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "left",
-    "mergeAt": 14,
+    "mergeAt": 6,
     "nodes": [
      {
       "x": -2.65,
@@ -636,7 +661,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "middle",
-    "mergeAt": 25,
+    "mergeAt": 12,
     "nodes": [
      {
       "x": -0.21,
@@ -663,11 +688,16 @@ window.CS_CONVEYORS = [
  {
   "$schema": "../../../../../docs/design/conveyor.schema.json",
   "formatVersion": 2,
-  "id": "triangle_28",
-  "rows": 28,
+  "id": "triangle_12",
+  "rows": 12,
   "width": 4,
-  "pickRows": 4,
+  "pickRows": 3,
   "scale": 0.598,
+  "scaleRate": 1,
+  "offset": {
+   "x": 0,
+   "z": 0
+  },
   "loop": {
    "nodes": [
     {
@@ -720,7 +750,7 @@ window.CS_CONVEYORS = [
   "feeders": [
    {
     "side": "right",
-    "mergeAt": 19,
+    "mergeAt": 8,
     "nodes": [
      {
       "x": 2.499,
@@ -746,7 +776,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "left",
-    "mergeAt": 9,
+    "mergeAt": 4,
     "nodes": [
      {
       "x": -2.499,
@@ -772,7 +802,7 @@ window.CS_CONVEYORS = [
    },
    {
     "side": "middle",
-    "mergeAt": 15,
+    "mergeAt": 6,
     "nodes": [
      {
       "x": 0,

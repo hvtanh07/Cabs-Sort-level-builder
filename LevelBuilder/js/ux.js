@@ -345,7 +345,7 @@
       if (q && !(String(j.id).toLowerCase().includes(q) || name.toLowerCase().includes(q) || diff.toLowerCase().includes(q) || String(j.conveyor).includes(q))) return '';
       const st = A.levelStatus(k);
       const boxes = (j.lanes || []).reduce((a, l) => a + l.length, 0);
-      const items = (j.feeders || []).reduce((a, f) => a + (f.bottles || []).filter(x => x > 0).length, 0);
+      const items = CS.feederList(j).reduce((a, f) => a + (f.bottles || []).filter(x => x > 0).length, 0);
       return `<li data-key="${k}" draggable="true" class="${k === A.key ? 'on' : ''}" title="${esc(j.id)} · double-click to rename">
         <span class="n">${i + 1}</span>
         <span class="nm"><b>${esc(name || j.id)}</b><small>${esc(j.id)}${diff ? `<span class="diff d-${esc(diff.replace(/\s+/g, '-').toLowerCase())}">${esc(diff)}</span>` : ''}${A.dir && A.dirty[k] ? ' •' : ''}</small>

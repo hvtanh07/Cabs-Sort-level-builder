@@ -228,7 +228,7 @@
   /* ---------- import / export ---------- */
   const looksLikeConveyor = j => j && typeof j === 'object' && !Array.isArray(j) && !Array.isArray(j.lanes) &&
     !!(j.loop || j.shape || j.path || j.points || j.svgPath || j.d || j.waypoints || j.cells || j.entries || j.entryPoints);
-  const looksLikeLevel = j => j && typeof j === 'object' && !Array.isArray(j) && !looksLikeConveyor(j) && (Array.isArray(j.lanes) || Array.isArray(j.feeders));
+  const looksLikeLevel = j => j && typeof j === 'object' && !Array.isArray(j) && !looksLikeConveyor(j) && (Array.isArray(j.lanes) || (j.feeders && typeof j.feeders === 'object'));
   A.importTexts = function (texts) {   // [{name, text}]
     const levels = [], convs = [], bad = [];
     texts.forEach(({ name, text }) => {
@@ -649,7 +649,7 @@
       ${field('RV slots', num('extraSlots', m.extraSlots, 0, CS.MAX_SLOTS), 'Extra slots the player can unlock with a rewarded ad (GDD 1.3: max 6 slots in total).')}
       ${field('Locked Slot', `<div class="inline">${locks}</div>`, 'Lock turns per slot. Each box sent lowers it by 1.')}
       <h3>Boxes</h3>
-      ${field('Tray capacity', num('trayCapacity', m.trayCapacity, 1, 99), 'Kept in the file. Box capacity comes from the box size.')}
+      <div class="hint">A box's size sets how many items it holds: 1 = 16, 2 = 24, 3 = 32, 4 = 40.</div>
       <h3>Block Door</h3>
       ${field('Turns', num('doorTurns', m.doorTurns, 0, 99), '0 = no Block Door. When the count reaches 0, shut doors open and open doors shut.')}
       ${m.doorTurns > 0 ? field('Start state', doors || '<span class="hint">Add an Enter Path first</span>') : ''}
@@ -779,7 +779,6 @@
       } break;
       case 'slots': m.slots = Math.max(1, Math.min(CS.MAX_SLOTS, n)); break;
       case 'extraSlots': m.extraSlots = Math.min(CS.MAX_SLOTS, n); break;
-      case 'trayCapacity': m.trayCapacity = Math.max(1, n); break;
       case 'doorTurns': m.doorTurns = n; break;
       case 'blockLane': { const l = CS.int(v, -1); m.blockedLane = l < 0 ? null : { lane: l, lockTurns: (m.blockedLane && m.blockedLane.lockTurns) || 3 }; break; }
       case 'blockTurns': if (m.blockedLane) m.blockedLane.lockTurns = Math.max(1, n); break;
@@ -1013,8 +1012,8 @@
       <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd> undo / redo · <kbd>Ctrl</kbd>+<kbd>S</kbd> save (linked folder) or download ·
       <kbd>Ctrl</kbd>+<kbd>Enter</kbd> play test · <kbd>Esc</kbd> back to edit · in play: <kbd>Space</kbd> pause, <kbd>R</kbd> restart, <kbd>.</kbd> step, <kbd>1</kbd>–<kbd>6</kbd> send queue.</div>
       <h3>Level JSON</h3>
-      <div class="hint">Matches demo.json (formatVersion 4). Fields the GDD needs that demo.json does not show are added like this:
-      <code>feeders[].entry</code> ("left" | "middle" | "right"), <code>feeders[].doorShut</code>, <code>doorTurns</code> (Block Door countdown),
+      <div class="hint">formatVersion 5: <code>feeders</code> is keyed by entry (<code>"left"</code> | <code>"middle"</code> | <code>"right"</code>), each with <code>bottles</code>, <code>hiddenRows</code>, <code>lockedRows</code> and <code>doorShut</code> when used.
+      Older files (feeders as a list with <code>entry</code>, <code>trayCapacity</code>) still import. Other fields: <code>doorTurns</code> (Block Door countdown),
       <code>blockedLane: { lane, lockTurns }</code> (Block Queue). <code>colors</code> is filled from the colours used. A box's <code>size</code> sets its items: 1 = 16, 2 = 24, 3 = 32, 4 = 40.
       Feeder row 0 and lane box 0 are the ones nearest the conveyor and the slots. Unknown fields are kept on export.</div>
       <h3>Storage</h3>
