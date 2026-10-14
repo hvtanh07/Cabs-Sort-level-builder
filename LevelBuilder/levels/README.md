@@ -9,20 +9,20 @@ Each level was played many times by two bots in the tool's play test:
 - **Random taps**: sends a random front box whenever a slot is free, with no thought.
 - **Careful player**: only sends a box when its colour is on the belt, unless nothing else can move.
 
-From level 2 on, every level holds more items than its belt has spots, so once the belt has filled at the start, items are still waiting in the Enter Paths (on Block Door levels they wait behind the shut door). Level 1 fills about 84 % of the belt, level 2 leaves 1 row waiting, level 3 a little more, and the count builds up from there. The levels use the game's own conveyors (Rounded square 19 rows = 76 spots, Bean 18, Lens 18, Heart 30, Triangle 12).
+Every level holds more items than its belt has spots, so once the belt has filled at the start, items are still waiting in the Enter Paths (on Block Door levels they wait behind the shut door). Level 1 leaves 5 rows waiting, and the count builds up from there. The levels use the game's own conveyors (Rounded square 19 rows = 76 spots, Bean 18, Lens 18, Heart 30, Triangle 12).
 
-Every level 1–40 is won by the careful player, with boxes picking at the lowest point and picking anywhere. Levels 1–9 win **every time** with random taps (300 runs each, in every pickup mode, with the belt starting full or empty). Level 10, the first hard level, wins about 8 in 10. The last column of the table shows random taps on every level.
+Every level 1–40 is won by the careful player, with boxes picking at the lowest point and picking anywhere. Levels 1–8 win **every time** with random taps (300 runs each, in every pickup mode, with the belt starting full or empty), and level 9 wins at least 99 % of runs in every mode. Level 10, the first hard level, wins about 8 in 10. The last column of the table shows random taps on every level.
 
 ## Design notes
 
 - **Colour unlocks.** Levels 1–4 use Red, Blue, Green and Yellow. Pink joins at level 5, Orange at level 7, Purple at level 10 and Cyan at level 12; up to level 12 a level uses every colour unlocked so far. From level 13 any of the 8 colours can be mixed in.
-- **Level 1 layout.** The items start on the belt in 16-item groups, one group per box, in queue order: the first box's group reaches the pickup point first, then the second box's, and so on.
+- **Level 1 layout.** The items come in 16-item groups, one group per box, in queue order: the first box's group reaches the pickup point first, then the second box's, and so on. The groups that don't fit on the belt at the start wait in the Enter Path in the same order.
 - **Hidden Box patterns.** Level 7 is staggered: queue 1 hides every even box and queue 2 every odd box after the front one. Level 8 hides every even box in every queue, so the queues show rows of Hidden Boxes.
 - **One colour per row.** Every Enter Path row holds 4 items of one colour, so each box's items arrive as whole rows (a 16-item box = 4 rows, a 24-item box = 6 rows). A box's `size` sets what it holds: size 1 = 16, 2 = 24, 3 = 32, 4 = 40 items.
 
 - **Difficulty.** In the play test a level is only lost when every slot holds a box that cannot fill, so random taps still win most hard levels (see the last column). The hard levels are harder through more boxes, colours, items beyond the belt and stacked elements. On the smaller belts random taps lose more often on busy levels: the lowest are levels 25, 36 and 40 at about three quarters wins. It's worth playing the hard levels by hand to judge them.
 
-- **Levels 1–10** follow your brief one by one. Each one adds one thing. Level 1 has 4 boxes (64 items, about 84 % of the 76-spot belt). Level 2 has 5 boxes and leaves 1 row waiting, level 3 has 6 boxes and leaves 2 to 3 rows per Enter Path. Levels 4–9 build up from 8 to 13 boxes (128 to 224 items); level 10 has 21 boxes, leaves about 36 rows per Enter Path and hides every box behind the front row. Levels 11–40 hold the same number of items as before the conveyors changed.
+- **Levels 1–10** follow your brief one by one. Each one adds one thing. Level 1 has 6 boxes (96 items on the 76-spot belt). Level 2 has 8 boxes, 4 per queue. Level 3 has 6 boxes and leaves 2 to 3 rows per Enter Path. Levels 4, 5, 6 and 8 have 5 boxes in every queue (10, 10, 15 and 15 boxes). Level 9 has 6 boxes in each of its 3 queues, with one 24-item box per queue (18 boxes, 312 items); level 10 has 21 boxes, leaves about 36 rows per Enter Path and hides every box behind the front row. Levels 11–40 hold the same number of items as before the conveyors changed.
 - **Queue counts for levels 2–4.** Your notes say level 2 has 2 queues, but level 4 "adds another queue" and level 6 brings the total to 3. I read this as level 2 = 2 queues, level 3 = back to 1 queue (so the swapped boxes are easy to see), level 4 = 2 queues, level 6 = 3 queues.
 - **Level 3.** The first and last boxes in the queue swapped places. The last box's items enter first, so they ride the belt until that box comes up.
 - **Level 5** uses the Triangle 12 conveyor (48 spots) with 152 items. Its first 24-item box has a colour no other box uses: most of its items are on the belt at the start and its last row pours in later.
@@ -36,15 +36,15 @@ Every level 1–40 is won by the careful player, with boxes picking at the lowes
 
 | # | Name | Difficulty | What it adds | Queues | Enter Paths | Colours | Boxes (16 / 24 / 32 / 40 items) | Items / belt spots | Conveyor | Elements | Random taps win (lowest point / anywhere) |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | First Sort | easy | Tap a box to send it up. One middle Enter Path, 4 colours, small boxes only. | 1 | Middle | 4 | 4 (4 / 0 / 0 / 0) | 64 / 76 | square_19 | none | 100% / 100% |
-| 2 | Two Queues | easy | A second queue: pick which front box to send. | 2 | Middle | 4 | 5 (5 / 0 / 0 / 0) | 80 / 76 | square_19 | none | 100% / 100% |
+| 1 | First Sort | easy | Tap a box to send it up. One middle Enter Path, 4 colours, small boxes only. | 1 | Middle | 4 | 6 (6 / 0 / 0 / 0) | 96 / 76 | square_19 | none | 100% / 100% |
+| 2 | Two Queues | easy | A second queue: pick which front box to send. | 2 | Middle | 4 | 8 (8 / 0 / 0 / 0) | 128 / 76 | square_19 | none | 100% / 100% |
 | 3 | Round and Round | easy · 1st booster | Two Enter Paths. Two boxes swapped places, so one colour rides the belt until its box comes up. | 1 | Left, Right | 4 | 6 (6 / 0 / 0 / 0) | 96 / 76 | square_19 | none | 100% / 100% |
-| 4 | Side by Side | easy | Two queues with two Enter Paths. | 2 | Left, Right | 4 | 8 (8 / 0 / 0 / 0) | 128 / 76 | square_19 | none | 100% / 100% |
-| 5 | Big Box | easy | First 24-item box. The belt is full, so its last items pour in from the Enter Path later. | 2 | Left, Right | 5 | 8 (5 / 3 / 0 / 0) | 152 / 48 | triangle_12 | none | 100% / 100% |
-| 6 | Three Queues | easy · 2nd booster | A third queue, with a few 24-item boxes. | 3 | Left, Right | 5 | 10 (8 / 2 / 0 / 0) | 176 / 76 | square_19 | none | 100% / 100% |
+| 4 | Side by Side | easy | Two queues with two Enter Paths. | 2 | Left, Right | 4 | 10 (10 / 0 / 0 / 0) | 160 / 76 | square_19 | none | 100% / 100% |
+| 5 | Big Box | easy | First 24-item box. The belt is full, so its last items pour in from the Enter Path later. | 2 | Left, Right | 5 | 10 (7 / 3 / 0 / 0) | 184 / 48 | triangle_12 | none | 100% / 100% |
+| 6 | Three Queues | easy · 2nd booster | A third queue, with a few 24-item boxes. | 3 | Left, Right | 5 | 15 (12 / 3 / 0 / 0) | 264 / 76 | square_19 | none | 100% / 100% |
 | 7 | Hidden Box | easy | Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Two Enter Paths, two queues. | 2 | Left, Right | 6 | 12 (10 / 2 / 0 / 0) | 208 / 76 | square_19 | Hidden ×5 (16/24 items) | 100% / 100% |
-| 8 | Hidden Big Box | easy | Every even box is hidden, so the queues show rows of Hidden Boxes. Three queues. | 3 | Left, Right | 6 | 12 (10 / 2 / 0 / 0) | 208 / 76 | square_19 | Hidden ×6 (16/24 items) | 100% / 100% |
-| 9 | Long Haul | easy · 3rd booster | No Hidden Box, but a longer level. Three queues, two Enter Paths. | 3 | Left, Right | 6 | 13 (11 / 2 / 0 / 0) | 224 / 76 | square_19 | none | 100% / 100% |
+| 8 | Hidden Big Box | easy | Every even box is hidden, so the queues show rows of Hidden Boxes. Three queues. | 3 | Left, Right | 6 | 15 (12 / 3 / 0 / 0) | 264 / 76 | square_19 | Hidden ×6 (16/24 items) | 100% / 100% |
+| 9 | Long Haul | easy · 3rd booster | No Hidden Box, but a longer level. Three queues, two Enter Paths. | 3 | Left, Right | 6 | 18 (15 / 3 / 0 / 0) | 312 / 76 | square_19 | none | 100% / 99% |
 | 10 | First Challenge | hard | First hard level: every box behind the front row is hidden. Longer than level 9. | 3 | Left, Right | 7 | 21 (17 / 4 / 0 / 0) | 368 / 76 | square_19 | Hidden ×18 (16/24 items) | 89% / 79% |
 | 11 | Triple Stack | normal | First 32-item box. | 3 | Left, Right | 7 | 12 (9 / 2 / 1 / 0) | 224 / 76 | square_19 | none | 97% / 96% |
 | 12 | Locked Box | normal | Introduces Locked Box. | 3 | Left, Right | 8 | 12 (9 / 2 / 1 / 0) | 224 / 72 | bean_18 | Locked Box ×2 | 100% / 100% |

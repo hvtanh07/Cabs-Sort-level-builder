@@ -3,25 +3,25 @@ const LR = ['left', 'right'], LMR = ['left', 'middle', 'right'];
 const S = [];
 // ---- levels 1-10: hand written from Ethan's brief ----
 S.push({ n: 1, name: 'First Sort', diff: 'easy', intro: 'Tap a box to send it up. One middle Enter Path, 4 colours, small boxes only.',
-  conveyor: 'square_19', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, grouped: true });
+  conveyor: 'square_19', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, grouped: true, count: 6 });
 S.push({ n: 2, name: 'Two Queues', diff: 'easy', intro: 'A second queue: pick which front box to send.',
-  conveyor: 'square_19', entries: ['middle'], lanes: 2, boxes: 12, colors: 4, window: 6 });
+  conveyor: 'square_19', entries: ['middle'], lanes: 2, boxes: 12, colors: 4, window: 6, count: 8 });
 S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Two Enter Paths. Two boxes swapped places, so one colour rides the belt until its box comes up.',
   conveyor: 'square_19', entries: LR, lanes: 1, boxes: 12, colors: 4, window: 0, swap: [0, -1] });
 S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths.',
-  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 10, colors: 5, window: 4 });
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 10, colors: 5, window: 4, count: 10 });
 S.push({ n: 5, name: 'Big Box', diff: 'easy', intro: 'First 24-item box. The belt is full, so its last items pour in from the Enter Path later.',
-  conveyor: 'triangle_12', entries: LR, lanes: 2, boxes: 21, big2: 9, bigFrom: 1, colors: 5, window: 6, late: { count: 4, unique: true } });
+  conveyor: 'triangle_12', entries: LR, lanes: 2, boxes: 21, big2: 9, bigFrom: 1, colors: 5, window: 6, late: { count: 4, unique: true }, count: 10, bigCount: 3 });
 S.push({ n: 6, name: 'Three Queues', diff: 'easy', booster: '2nd', intro: 'A third queue, with a few 24-item boxes.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, big2: 3, colors: 5, window: 8 });
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, big2: 3, colors: 5, window: 8, count: 15, bigCount: 3 });
 S.push({ n: 7, name: 'Hidden Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Two Enter Paths, two queues.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 16, big2: 2, hidden: 3, hiddenSizes: [1], colors: 5, window: 8,
   hiddenPattern: (l, p) => p > 1 && (l % 2 === 0 ? p % 2 === 0 : p % 2 === 1) });
 S.push({ n: 8, name: 'Hidden Big Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Every even box is hidden, so the queues show rows of Hidden Boxes. Three queues.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 20, big2: 4, hidden: 4, hiddenSizes: [1, 2], needHiddenSize: 2, colors: 6, window: 10,
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 20, big2: 4, hidden: 4, hiddenSizes: [1, 2], needHiddenSize: 2, colors: 6, window: 10, count: 15, bigCount: 3,
   hiddenPattern: (l, p) => p % 2 === 0 });
 S.push({ n: 9, name: 'Long Haul', diff: 'easy', booster: '3rd', intro: 'No Hidden Box, but a longer level. Three queues, two Enter Paths.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 30, big2: 5, colors: 6, window: 12 });
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 30, big2: 5, colors: 6, window: 5, count: 18, bigAt: [4, 9, 14], minRandom: 0.99 });
 S.push({ n: 10, name: 'First Challenge', diff: 'hard', unlock: 'Hidden Box', intro: 'First hard level: every box behind the front row is hidden. Longer than level 9.',
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 36, big2: 7, hidden: 7, hiddenSizes: [1, 2], needHiddenSize: 2, colors: 6, window: 40, stick: 0.7,
   hiddenPattern: (l, p) => p > 1 });
@@ -104,9 +104,13 @@ S.forEach(s => {
     // keep the hand-written mix: the same share of the next size up, the rest are 16-item boxes
     const share2 = (s.big2 || 0) / s.boxes, shareH = (s.hidden || 0) / s.boxes;
     let N = Math.max(1, Math.round(units / (4 + share2)));
-    if (s.big2) s.big2 = Math.max(1, Math.round(N * share2));
+    let big = s.big2 ? Math.max(1, Math.round(N * share2)) : 0;
+    // `count` sets the box count directly (Ethan's minimums per queue); `bigCount` / `bigAt` set the 24-item boxes
+    if (s.count) { N = s.count; big = s.bigAt ? s.bigAt.length : s.bigCount != null ? s.bigCount : 0; }
+    const u = s.count ? 4 * N + 2 * big : units;
+    if (s.big2 || s.bigAt) s.big2 = big;
+    if (s.window) s.window = Math.round(s.window * u / (s.boxes + (s.big2 || 0)));
     if (s.hidden) s.hidden = Math.max(1, Math.round(N * shareH));
-    if (s.window) s.window = Math.round(s.window * units / (s.boxes + (s.big2 || 0)));
     s.boxes = N;
   } else {
     // same tier mix as before: 20 % 24-item, 5-8 % 32-item, 1-2 40-item boxes

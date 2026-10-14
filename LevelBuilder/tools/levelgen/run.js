@@ -11,7 +11,7 @@ function check(S, seed) {
   res.greedy = [g1.win, g2.win]; res.ticks = g1.ticks; res.gfs = [g1.failsafe, g2.failsafe];
   if (!g1.win || !g2.win) return { ok: false, why: 'smart lost', res };
   if (S.diff === 'easy') {
-    for (const k of Object.keys(G.MODES)) { const r = G.rate(m, G.MODES[k], 1, 60, 1000); res['rnd_' + k] = r.rate; if (r.rate < 1) return { ok: false, why: 'random lost ' + k + ' ' + r.rate, res }; }
+    for (const k of Object.keys(G.MODES)) { const r = G.rate(m, G.MODES[k], 1, S.count ? 300 : 60, S.count ? 7000 : 1000); res['rnd_' + k] = r.rate; if (r.rate < (S.minRandom || 1)) return { ok: false, why: 'random lost ' + k + ' ' + r.rate, res }; }
   } else {
     const a = G.rate(m, G.MODES.low, 1, 60, 1000), b = G.rate(m, G.MODES.zoff, 1, 60, 1000), e = G.rate(m, G.MODES.low, 0.3, 30, 2000);
     res.rnd = [a.rate, b.rate]; res.rndTicks = a.ticks; res.eps = e.rate; res.fs = e.fs;

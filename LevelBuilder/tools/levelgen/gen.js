@@ -24,7 +24,8 @@ function make(S, seed) {
   const free = [...Array(N).keys()].filter(i => i >= (S.bigFrom != null ? S.bigFrom : 0));
   CS.shuffle(free, r);
   let k = 0;
-  [[2, S.big2 || 0], [3, S.big3 || 0], [4, S.big4 || 0]].forEach(([sz, cnt]) => { for (let i = 0; i < cnt; i++) sizes[free[k++]] = sz; });
+  if (S.bigAt) S.bigAt.forEach(i => { sizes[i] = 2; });   // fixed spots in send order, e.g. one 24-item box per queue
+  else [[2, S.big2 || 0], [3, S.big3 || 0], [4, S.big4 || 0]].forEach(([sz, cnt]) => { for (let i = 0; i < cnt; i++) sizes[free[k++]] = sz; });
   for (let i = 0; i < N; i++) sizes[i] = SZ[sizes[i]];
   // colours: in send order, cycle a shuffled palette, no colour twice within the last few boxes
   const pal = CS.shuffle(S.palette ? S.palette.slice() : [1, 2, 3, 4, 5, 6, 7, 8], r).slice(0, S.colors);
@@ -212,7 +213,8 @@ function groupByBox(j, units) {
     const it = row.find(Boolean);
     if (it) { const r = Math.floor((it.id - 1) / 4); if (!seen.includes(r)) { seen.push(r); step.push(s); } }
   }
-  if (seen.length !== n) throw new Error('grouping: not every row reached the belt');
+  // rows that do not fit on the belt at the start wait in the Enter Path and pass the pickup point after the rest, in order
+  for (let r = 0; r < n; r++) if (!seen.includes(r)) seen.push(r);
   // units are in send order (box by box, since the window is 0 for this level)
   const order = units.slice().sort((a, b) => a.b - b.b || a.key - b.key);
   const out = new Array(n * 4);
