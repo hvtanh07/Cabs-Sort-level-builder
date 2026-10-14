@@ -16,7 +16,7 @@ Every level 1–40 is won by the careful player, with boxes picking at the lowes
 ## Design notes
 
 - **Colour unlocks.** Levels 1–4 use Red, Blue, Green and Yellow. Pink joins at level 5, Orange at level 7, Purple at level 10 and Cyan at level 12; up to level 12 a level uses every colour unlocked so far. From level 13 any of the 8 colours can be mixed in.
-- **Level 1 layout.** The items come in 16-item groups, one group per box, in queue order: the first box's group reaches the pickup point first, then the second box's, and so on. The groups that don't fit on the belt at the start wait in the Enter Path in the same order.
+- **Level 1 layout.** The Enter Path rows are grouped by box in queue order: the first box's 4 rows of its colour come first, then the second box's, and so on, so the feeder reads exactly like the queue.
 - **Hidden Box patterns.** Level 7 is staggered: queue 1 hides every even box and queue 2 every odd box after the front one. Level 8 hides every even box in every queue, so the queues show rows of Hidden Boxes.
 - **One colour per row.** Every Enter Path row holds 4 items of one colour, so each box's items arrive as whole rows (a 16-item box = 4 rows, a 24-item box = 6 rows). A box's `size` sets what it holds: size 1 = 16, 2 = 24, 3 = 32, 4 = 40 items.
 

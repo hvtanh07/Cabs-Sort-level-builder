@@ -3,7 +3,7 @@ const LR = ['left', 'right'], LMR = ['left', 'middle', 'right'];
 const S = [];
 // ---- levels 1-10: hand written from Ethan's brief ----
 S.push({ n: 1, name: 'First Sort', diff: 'easy', intro: 'Tap a box to send it up. One middle Enter Path, 4 colours, small boxes only.',
-  conveyor: 'square_19', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, grouped: true, count: 6 });
+  conveyor: 'square_19', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, count: 6 });   // Enter Path rows in queue order, one box after another
 S.push({ n: 2, name: 'Two Queues', diff: 'easy', intro: 'A second queue: pick which front box to send.',
   conveyor: 'square_19', entries: ['middle'], lanes: 2, boxes: 12, colors: 4, window: 6, count: 8 });
 S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Two Enter Paths. Two boxes swapped places, so one colour rides the belt until its box comes up.',
