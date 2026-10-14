@@ -1,7 +1,0 @@
-{
-  "id": "example_roundrect_42",
-  "name": "Example round-rect 42",
-  "rows": 42,
-  "shape": { "type": "roundrect", "w": 320, "h": 200, "r": 50 },
-  "entries": { "left": 0.06, "middle": 0.15, "right": 0.24 }
-}
