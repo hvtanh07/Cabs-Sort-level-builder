@@ -128,5 +128,5 @@
     [{ "color": 2 }, { "color": 4 }, { "color": 8, "size": 2 }, { "color": 5 }, { "color": 4 }, { "color": 5, "size": 2 }, { "color": 8 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Secret Cargo", "difficulty": "normal" }
+  "meta": { "name": "Secret Cargo", "difficulty": "medium" }
 }

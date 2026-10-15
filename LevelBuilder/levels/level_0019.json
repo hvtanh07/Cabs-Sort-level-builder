@@ -114,5 +114,5 @@
     [{ "color": 7, "lockTurns": 3 }, { "color": 4, "lockTurns": 6 }, { "color": 6 }, { "color": 3 }, { "color": 7 }, { "color": 5, "size": 2 }, { "color": 2 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Patience", "difficulty": "normal" }
+  "meta": { "name": "Patience", "difficulty": "medium" }
 }

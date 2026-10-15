@@ -128,5 +128,5 @@
     { "a": { "lane": 1, "tray": 3 }, "b": { "lane": 2, "tray": 4 } }
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Chain Gang", "difficulty": "normal" }
+  "meta": { "name": "Chain Gang", "difficulty": "medium" }
 }

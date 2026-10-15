@@ -117,5 +117,5 @@
   ],
   "doorTurns": 3,
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Night Shift", "difficulty": "normal" }
+  "meta": { "name": "Night Shift", "difficulty": "medium" }
 }

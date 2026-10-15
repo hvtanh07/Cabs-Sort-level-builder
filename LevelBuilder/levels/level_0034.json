@@ -143,5 +143,5 @@
     { "a": { "lane": 0, "tray": 4 }, "b": { "lane": 3, "tray": 3 } }
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Tangled", "difficulty": "normal" }
+  "meta": { "name": "Tangled", "difficulty": "medium" }
 }

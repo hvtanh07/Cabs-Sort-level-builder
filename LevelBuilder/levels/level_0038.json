@@ -150,5 +150,5 @@
   ],
   "blockedLane": { "lane": 2, "lockTurns": 3 },
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Roadblock", "difficulty": "normal" }
+  "meta": { "name": "Roadblock", "difficulty": "medium" }
 }

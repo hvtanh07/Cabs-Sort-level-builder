@@ -118,5 +118,5 @@
     [{ "color": 3 }, { "color": 8 }, { "color": 4 }, { "color": 1, "size": 2 }, { "color": 8 }, { "color": 6 }, { "color": 4 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Fog", "difficulty": "normal" }
+  "meta": { "name": "Fog", "difficulty": "medium" }
 }

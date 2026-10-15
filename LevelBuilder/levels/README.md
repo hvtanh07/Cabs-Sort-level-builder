@@ -14,7 +14,7 @@ Every level holds more items than its belt has spots, so once the belt has fille
 
 Every level 1–40 is won by the careful player, with boxes picking at the lowest point and picking anywhere. Levels 1–8 win **every time** with random taps (300 runs each, in every pickup mode, with the belt starting full or empty), and level 9 wins at least 99 % of runs in every mode. Level 10, the first hard level, wins about 8 in 10.
 
-Levels 11–40 are longer, so pure random taps jam more often on them. Each one is checked with the casual player instead: it wins 95 % or more of every normal level except the two Block Door levels with Hidden Boxes (37 and 39, about 80 %), and 85 % or more of every hard level. Random taps still win at least half the runs on normal levels without a Block Door, and about a third or more on the door levels. The levels that introduce an element are checked like levels 1–9: random taps win 90 % or more of runs in every pickup mode. The last two columns of the table show both bots.
+Levels 11–40 are longer, so pure random taps jam more often on them. Each one is checked with the casual player instead: it wins 95 % or more of every medium level except the two Block Door levels with Hidden Boxes (37 and 39, about 80 %), and 85 % or more of every hard level. Random taps still win at least half the runs on medium levels without a Block Door, and about a third or more on the door levels. The levels that introduce an element are checked like levels 1–9: random taps win 90 % or more of runs in every pickup mode. The last two columns of the table show both bots.
 
 ## Design notes
 
@@ -23,13 +23,13 @@ Levels 11–40 are longer, so pure random taps jam more often on them. Each one 
 - **Hidden Box patterns.** Level 7 is staggered: queue 1 hides every even box and queue 2 every odd box after the front one. Level 8 hides every even box in every queue, so the queues show rows of Hidden Boxes.
 - **One colour per row.** Every Enter Path row holds 4 items of one colour, so each box's items arrive as whole rows (a 16-item box = 4 rows, a 24-item box = 6 rows). A box's `size` sets what it holds: size 1 = 16, 2 = 24, 3 = 32, 4 = 40 items.
 
-- **Difficulty.** In the play test a level is only lost when every slot holds a box that cannot fill. The hard levels are harder through more boxes, colours, items beyond the belt and stacked elements. The Block Door levels with Hidden Boxes (37 and 39) are the toughest normal levels: the casual player wins about 4 in 5. It's worth playing the hard levels by hand to judge them.
+- **Difficulty.** In the play test a level is only lost when every slot holds a box that cannot fill. The hard levels are harder through more boxes, colours, items beyond the belt and stacked elements. The Block Door levels with Hidden Boxes (37 and 39) are the toughest medium levels: the casual player wins about 4 in 5. It's worth playing the hard levels by hand to judge them.
 
 - **Levels 1–10** follow your brief one by one. Each one adds one thing. Level 1 has 6 boxes (96 items on the 76-spot belt). Level 2 has 8 boxes, 4 per queue. Level 3 has 6 boxes and leaves 2 to 3 rows per Enter Path. Levels 4, 5, 6 and 8 have 5 boxes in every queue (10, 10, 15 and 15 boxes). Level 9 has 6 boxes in each of its 3 queues, with one 24-item box per queue (18 boxes, 312 items); level 10 has 21 boxes, leaves about 36 rows per Enter Path and hides every box behind the front row.
 - **Queue counts for levels 2–4.** Your notes say level 2 has 2 queues, but level 4 "adds another queue" and level 6 brings the total to 3. I read this as level 2 = 2 queues, level 3 = back to 1 queue (so the swapped boxes are easy to see), level 4 = 2 queues, level 6 = 3 queues.
 - **Level 3.** The first and last boxes in the queue swapped places. The last box's items enter first, so they ride the belt until that box comes up.
 - **Level 5** uses the Triangle 12 conveyor (48 spots) with 152 items. Its first 24-item box has a colour no other box uses: most of its items are on the belt at the start and its last row pours in later.
-- **Level length from 11 on.** Levels 11–40 carry on from level 9 (312 items) and level 10 (368). A normal level starts at 368 items at level 11 and grows by about 4 items a level to about 500 by level 38. Hard levels are about 25 % longer than the normal levels around them (456 items at level 15, 624 at level 40). Block Door levels are 10 % shorter (20 % from level 31), because the shut door holds back half the rows and a long door level jams easily.
+- **Level length from 11 on.** Levels 11–40 carry on from level 9 (312 items) and level 10 (368). A medium level starts at 368 items at level 11 and grows by about 4 items a level to about 500 by level 38. Hard levels are about 25 % longer than the medium levels around them (456 items at level 15, 624 at level 40). Block Door levels are 10 % shorter (20 % from level 31), because the shut door holds back half the rows and a long door level jams easily.
 - **Element intro levels are very easy.** Levels 12 (Locked Box), 17 (Linked Box), 22 (Block Door), 27 (Locked Item) and 32 (Block Queue) stay at level 9's length (336 items, 18 boxes), use 5 colours, have no 40-item box, keep the rows close to box order and use only the smallest element counts. They are marked easy.
 - **Levels 11–40** follow the sheet's elements exactly. 3rd Enter Path from level 15, 4th queue from level 20, both mainly on hard levels. 32-item boxes start at level 11 and 40-item boxes at level 26.
 - **Block Door levels** use 2 Enter Paths. The items queued behind each door are the ones needed while that door is open.
@@ -51,33 +51,33 @@ Levels 11–40 are longer, so pure random taps jam more often on them. Each one 
 | 8 | Hidden Big Box | easy | Every even box is hidden, so the queues show rows of Hidden Boxes. Three queues. | 3 | Left, Right | 6 | 15 (12 / 3 / 0 / 0) | 264 / 76 | square_19 | Hidden ×6 (16/24 items) | 100% / 100% | 100% |
 | 9 | Long Haul | easy · 3rd booster | No Hidden Box, but a longer level. Three queues, two Enter Paths. | 3 | Left, Right | 6 | 18 (15 / 3 / 0 / 0) | 312 / 76 | square_19 | none | 100% / 99% | 100% |
 | 10 | First Challenge | hard | First hard level: every box behind the front row is hidden. Longer than level 9. | 3 | Left, Right | 7 | 21 (17 / 4 / 0 / 0) | 368 / 76 | square_19 | Hidden ×18 (16/24 items) | 89% / 79% | 93% |
-| 11 | Triple Stack | normal | First 32-item box. | 3 | Left, Right | 6 | 19 (13 / 4 / 2 / 0) | 368 / 76 | square_19 | none | 94% / 83% | 100% |
+| 11 | Triple Stack | medium | First 32-item box. | 3 | Left, Right | 6 | 19 (13 / 4 / 2 / 0) | 368 / 76 | square_19 | none | 94% / 83% | 100% |
 | 12 | Locked Box | easy | Introduces Locked Box. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 72 | bean_18 | Locked Box ×2 | 99% / 94% | 100% |
-| 13 | Key Count | normal |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 72 | lens_18 | Locked Box ×3 | 92% / 92% | 100% |
-| 14 | Blind Picks | normal |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 76 | square_19 | Hidden ×3 (16 items) | 87% / 92% | 100% |
+| 13 | Key Count | medium |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 72 | lens_18 | Locked Box ×3 | 92% / 92% | 100% |
+| 14 | Blind Picks | medium |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 76 | square_19 | Hidden ×3 (16 items) | 87% / 92% | 100% |
 | 15 | Three Gates | hard | Third Enter Path. Hard level. | 3 | Left, Middle, Right | 7 | 25 (19 / 5 / 1 / 0) | 456 / 120 | heart_21 | Locked Box ×4 | 90% / 98% | 93% |
-| 16 | Heavy Load | normal |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 72 | bean_18 | none | 83% / 70% | 98% |
+| 16 | Heavy Load | medium |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 72 | bean_18 | none | 83% / 70% | 98% |
 | 17 | Linked Box | easy | Introduces Linked Box. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 76 | square_19 | Linked ×1 | 100% / 96% | 100% |
-| 18 | Hidden Links | normal |  | 3 | Left, Middle, Right | 6 | 21 (16 / 4 / 1 / 0) | 384 / 72 | lens_18 | Hidden ×3 (16/24 items), Linked ×2 | 80% / 93% | 100% |
-| 19 | Patience | normal |  | 3 | Left, Right | 6 | 21 (16 / 4 / 1 / 0) | 384 / 72 | bean_18 | Locked Box ×3 | 94% / 66% | 98% |
+| 18 | Hidden Links | medium |  | 3 | Left, Middle, Right | 6 | 21 (16 / 4 / 1 / 0) | 384 / 72 | lens_18 | Hidden ×3 (16/24 items), Linked ×2 | 80% / 93% | 100% |
+| 19 | Patience | medium |  | 3 | Left, Right | 6 | 21 (16 / 4 / 1 / 0) | 384 / 72 | bean_18 | Locked Box ×3 | 94% / 66% | 98% |
 | 20 | Four Queues | hard | Fourth queue. Hard level. | 4 | Left, Middle, Right | 7 | 26 (19 / 5 / 2 / 0) | 488 / 76 | square_19 | Locked Box ×4, Linked ×3 | 88% / 83% | 98% |
-| 21 | Fog | normal |  | 3 | Left, Right | 6 | 21 (15 / 4 / 2 / 0) | 400 / 72 | lens_18 | Hidden ×3 (16/24 items) | 90% / 80% | 100% |
+| 21 | Fog | medium |  | 3 | Left, Right | 6 | 21 (15 / 4 / 2 / 0) | 400 / 72 | lens_18 | Hidden ×3 (16/24 items) | 90% / 80% | 100% |
 | 22 | Block Door | easy | Introduces Block Door. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 76 | square_19 | Block Door (4) | 99% / 90% | 100% |
-| 23 | Behind the Door | normal |  | 3 | Left, Right | 6 | 19 (13 / 4 / 2 / 0) | 368 / 72 | bean_18 | Hidden ×3 (16 items), Block Door (3) | 66% / 36% | 95% |
-| 24 | Chain Gang | normal |  | 3 | Left, Middle, Right | 6 | 22 (16 / 4 / 2 / 0) | 416 / 72 | lens_18 | Linked ×2 | 76% / 77% | 98% |
+| 23 | Behind the Door | medium |  | 3 | Left, Right | 6 | 19 (13 / 4 / 2 / 0) | 368 / 72 | bean_18 | Hidden ×3 (16 items), Block Door (3) | 66% / 36% | 95% |
+| 24 | Chain Gang | medium |  | 3 | Left, Middle, Right | 6 | 22 (16 / 4 / 2 / 0) | 416 / 72 | lens_18 | Linked ×2 | 76% / 77% | 98% |
 | 25 | Door Lock | hard | Hard level. | 3 | Left, Right | 7 | 25 (18 / 5 / 2 / 0) | 472 / 120 | heart_21 | Locked Box ×4, Block Door (3) | 88% / 50% | 88% |
-| 26 | Swing Doors | normal | First 40-item box. | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 76 | square_19 | Locked Box ×3, Block Door (3) | 88% / 83% | 100% |
+| 26 | Swing Doors | medium | First 40-item box. | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 76 | square_19 | Locked Box ×3, Block Door (3) | 88% / 83% | 100% |
 | 27 | Locked Item | easy | Introduces Locked Item. | 4 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 72 | bean_18 | Linked ×2, Locked Item rows ×2 | 98% / 92% | 100% |
-| 28 | Secret Cargo | normal |  | 3 | Left, Right | 6 | 22 (15 / 4 / 2 / 1) | 440 / 72 | lens_18 | Hidden ×4 (16 items), Locked Item rows ×3 | 70% / 65% | 97% |
-| 29 | Rush Hour | normal |  | 3 | Left, Middle, Right | 6 | 23 (15 / 5 / 2 / 1) | 464 / 76 | square_19 | none | 76% / 70% | 98% |
+| 28 | Secret Cargo | medium |  | 3 | Left, Right | 6 | 22 (15 / 4 / 2 / 1) | 440 / 72 | lens_18 | Hidden ×4 (16 items), Locked Item rows ×3 | 70% / 65% | 97% |
+| 29 | Rush Hour | medium |  | 3 | Left, Middle, Right | 6 | 23 (15 / 5 / 2 / 1) | 464 / 76 | square_19 | none | 76% / 70% | 98% |
 | 30 | Deep Freeze | hard | Hard level. | 4 | Left, Middle, Right | 7 | 28 (18 / 6 / 2 / 2) | 576 / 120 | heart_21 | Hidden ×6 (16/24/32 items), Locked Box ×4, Locked Item rows ×4 | 41% / 46% | 93% |
-| 31 | Cold Storage | normal |  | 4 | Left, Right | 6 | 23 (15 / 5 / 2 / 1) | 464 / 72 | bean_18 | Locked Item rows ×3 | 62% / 60% | 98% |
+| 31 | Cold Storage | medium |  | 4 | Left, Right | 6 | 23 (15 / 5 / 2 / 1) | 464 / 72 | bean_18 | Locked Item rows ×3 | 62% / 60% | 98% |
 | 32 | Block Queue | easy | Introduces Block Queue. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 76 | square_19 | Block Queue (4) | 100% / 96% | 100% |
-| 33 | Detour | normal |  | 3 | Left, Middle, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 72 | lens_18 | Block Queue (3) | 63% / 60% | 95% |
-| 34 | Tangled | normal |  | 4 | Left, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 72 | bean_18 | Linked ×2 | 56% / 64% | 97% |
+| 33 | Detour | medium |  | 3 | Left, Middle, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 72 | lens_18 | Block Queue (3) | 63% / 60% | 95% |
+| 34 | Tangled | medium |  | 4 | Left, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 72 | bean_18 | Linked ×2 | 56% / 64% | 97% |
 | 35 | Gridlock | hard | Hard level. | 4 | Left, Middle, Right | 7 | 30 (20 / 6 / 2 / 2) | 608 / 120 | heart_21 | Hidden ×7 (16/24 items), Locked Box ×4, Block Queue (3) | 85% / 57% | 100% |
-| 36 | Long Belt | normal |  | 3 | Left, Middle, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 76 | square_19 | none | 86% / 76% | 100% |
-| 37 | Night Shift | normal |  | 3 | Left, Right | 6 | 19 (12 / 4 / 2 / 1) | 392 / 72 | lens_18 | Hidden ×3 (16/24/32 items), Block Door (3) | 50% / 50% | 78% |
-| 38 | Roadblock | normal |  | 4 | Left, Middle, Right | 6 | 25 (17 / 5 / 2 / 1) | 496 / 72 | bean_18 | Linked ×2, Block Queue (3) | 80% / 64% | 97% |
-| 39 | Last Door | normal |  | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 72 | bean_18 | Hidden ×3 (16/32 items), Block Door (3) | 68% / 54% | 80% |
+| 36 | Long Belt | medium |  | 3 | Left, Middle, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 76 | square_19 | none | 86% / 76% | 100% |
+| 37 | Night Shift | medium |  | 3 | Left, Right | 6 | 19 (12 / 4 / 2 / 1) | 392 / 72 | lens_18 | Hidden ×3 (16/24/32 items), Block Door (3) | 50% / 50% | 78% |
+| 38 | Roadblock | medium |  | 4 | Left, Middle, Right | 6 | 25 (17 / 5 / 2 / 1) | 496 / 72 | bean_18 | Linked ×2, Block Queue (3) | 80% / 64% | 97% |
+| 39 | Last Door | medium |  | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 72 | bean_18 | Hidden ×3 (16/32 items), Block Door (3) | 68% / 54% | 80% |
 | 40 | Grand Finale | hard | Hard level. | 4 | Left, Middle, Right | 7 | 31 (21 / 6 / 2 / 2) | 624 / 120 | heart_21 | Hidden ×7 (16/24 items), Locked Box ×4, Locked Item rows ×4, Block Queue (3) | 79% / 61% | 97% |

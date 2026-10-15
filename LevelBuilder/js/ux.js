@@ -386,7 +386,7 @@
       <div class="wgrid">
         <label class="field"><span>Name</span><input type="text" name="name" value="" placeholder="Level ${A.store.order.length + 1}"></label>
         <label class="field"><span>Level id</span><input type="text" name="id" value="${id}"></label>
-        <label class="field"><span>Difficulty</span><select name="diff"><option>easy</option><option selected>normal</option><option>hard</option><option>super hard</option></select></label>
+        <label class="field"><span>Difficulty</span><select name="diff"><option>easy</option><option selected>medium</option><option>hard</option><option>super hard</option></select></label>
         <label class="field"><span>Slots</span><div class="inline"><input type="number" name="slots" value="${cur ? cur.slots : 4}" min="1" max="6"> + RV <input type="number" name="rv" value="${cur ? cur.extraSlots : 2}" min="0" max="6"></div></label>
       </div>
       <h3>Conveyor</h3><div class="wconvs">${convs}</div>

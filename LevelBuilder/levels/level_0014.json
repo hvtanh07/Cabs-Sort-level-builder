@@ -110,5 +110,5 @@
     [{ "color": 8, "size": 2 }, { "color": 6, "size": 2 }, { "color": 1 }, { "color": 3 }, { "color": 8 }, { "color": 2 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Blind Picks", "difficulty": "normal" }
+  "meta": { "name": "Blind Picks", "difficulty": "medium" }
 }

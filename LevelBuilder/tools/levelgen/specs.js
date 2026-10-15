@@ -55,7 +55,7 @@ for (let n = 11; n <= 40; n++) {
   let entries = PATHS3.has(n) ? LMR : LR;
   if (f.includes('D')) entries = LR;
   const s = {
-    n, name: NAMES[n], diff: hard ? 'hard' : 'normal', conveyor: CONV[n], entries, lanes, boxes, colors,
+    n, name: NAMES[n], diff: hard ? 'hard' : 'medium', conveyor: CONV[n], entries, lanes, boxes, colors,
     big2: Math.round(boxes * 0.2), big3: n === 11 ? 3 : Math.round(boxes * (n < 20 ? 0.05 : 0.08)), big4: n >= 26 ? (hard ? 2 : 1) : 0,
     window: Math.round((10 + x * 0.6) * (hard ? 2.2 : 1)), stick: hard ? 0.8 : 0.5
   };
@@ -103,7 +103,7 @@ S.forEach(s => {
 });
 S.forEach(s => {
   const x = s.n - 11;
-  // levels 11-40 carry on from level 9 (312 items) and level 10 (368): normal levels start at 336 items and add 4 a level,
+  // levels 11-40 carry on from level 9 (312 items) and level 10 (368): medium levels start at 336 items and add 4 a level,
   // hard levels are 25 % longer, and a level that introduces an element stays at level 9's length (see `tutorial`)
   // Block Door levels are 10 % shorter (20 % from level 31, where a quarter of the rows come at the end): the shut door holds back half the rows, so a long door level jams easily
   const len = s.tutorial ? 312 : Math.round((336 + x * 4) * (s.diff === 'hard' ? 1.25 : 1) * (s.door ? (s.doorTail ? 0.8 : 0.9) : 1) / 4) * 4;

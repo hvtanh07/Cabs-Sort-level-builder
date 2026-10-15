@@ -121,5 +121,5 @@
   ],
   "doorTurns": 3,
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Swing Doors", "difficulty": "normal", "notes": "First 40-item box." }
+  "meta": { "name": "Swing Doors", "difficulty": "medium", "notes": "First 40-item box." }
 }

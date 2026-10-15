@@ -120,5 +120,5 @@
     { "a": { "lane": 2, "tray": 3 }, "b": { "lane": 0, "tray": 2 } }
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Hidden Links", "difficulty": "normal" }
+  "meta": { "name": "Hidden Links", "difficulty": "medium" }
 }

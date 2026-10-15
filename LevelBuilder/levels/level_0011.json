@@ -110,5 +110,5 @@
     [{ "color": 2 }, { "color": 3 }, { "color": 1 }, { "color": 7 }, { "color": 3 }, { "color": 1, "size": 2 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Triple Stack", "difficulty": "normal", "notes": "First 32-item box." }
+  "meta": { "name": "Triple Stack", "difficulty": "medium", "notes": "First 32-item box." }
 }

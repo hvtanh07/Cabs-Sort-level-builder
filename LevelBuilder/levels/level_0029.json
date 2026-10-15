@@ -136,5 +136,5 @@
     [{ "color": 7, "size": 2 }, { "color": 4 }, { "color": 3 }, { "color": 4, "size": 2 }, { "color": 3 }, { "color": 2 }, { "color": 3, "size": 2 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Rush Hour", "difficulty": "normal" }
+  "meta": { "name": "Rush Hour", "difficulty": "medium" }
 }

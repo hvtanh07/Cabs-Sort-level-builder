@@ -141,5 +141,5 @@
   ],
   "blockedLane": { "lane": 2, "lockTurns": 3 },
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Detour", "difficulty": "normal" }
+  "meta": { "name": "Detour", "difficulty": "medium" }
 }

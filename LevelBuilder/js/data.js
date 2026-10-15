@@ -77,9 +77,11 @@ window.CS = window.CS || {};
   }
 
   // Older files kept meta.intro / meta.unlock / meta.booster: intro becomes meta.notes, the other two are dropped.
+  // The "normal" difficulty is now called "medium".
   function migrateMeta(meta) {
     if (meta.intro !== undefined && meta.notes === undefined) meta.notes = meta.intro;
     delete meta.intro; delete meta.unlock; delete meta.booster;
+    if (String(meta.difficulty).trim().toLowerCase() === 'normal') meta.difficulty = 'medium';
     return meta;
   }
 
@@ -100,7 +102,7 @@ window.CS = window.CS || {};
       doorTurns: int(j.doorTurns, 0),
       blockedLane: j.blockedLane && j.blockedLane.lane != null ? { lane: int(j.blockedLane.lane, 0), lockTurns: int(j.blockedLane.lockTurns, 3) } : null,
       view: j.view !== undefined ? CS.clone(j.view) : { cameraPreset: 'default' },
-      meta: migrateMeta(Object.assign({ name: '', difficulty: 'normal' }, CS.clone(j.meta || {}))),
+      meta: migrateMeta(Object.assign({ name: '', difficulty: 'medium' }, CS.clone(j.meta || {}))),
       extra: CS.clone(pickExtra(j, KNOWN))
     };
     (j.slotLocks || []).forEach(s => { if (s && s.slot != null) m.slotLocks[int(s.slot, 0)] = int(s.lockTurns, 1); });
@@ -239,7 +241,7 @@ window.CS = window.CS || {};
       formatVersion: CS.FORMAT_VERSION, id, conveyor: 'square_19', slots: 4, extraSlots: 2,
       feeders: { left: { bottles: [1, 1, 1, 1, 2, 2, 2, 2] }, right: { bottles: [3, 3, 3, 3] } },
       lanes: [[{ color: 1 }, { color: 3 }], [{ color: 2 }]],
-      links: [], view: { cameraPreset: 'default' }, meta: { name: 'New level', difficulty: 'normal' }
+      links: [], view: { cameraPreset: 'default' }, meta: { name: 'New level', difficulty: 'medium' }
     });
   };
 

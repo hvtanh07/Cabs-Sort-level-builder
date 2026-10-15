@@ -640,7 +640,7 @@
     return `<h3>Level</h3>
       ${field('Name', `<input type="text" data-k="name" value="${esc(m.meta.name)}" style="width:100%">`)}
       ${field('Level id', `<input type="text" data-k="id" value="${esc(m.id)}" style="width:100%">`)}
-      ${field('Difficulty', `<input type="text" data-k="difficulty" list="diffList" value="${esc(m.meta.difficulty || '')}" style="width:100%"><datalist id="diffList"><option>easy</option><option>normal</option><option>hard</option><option>super hard</option></datalist>`)}
+      ${field('Difficulty', `<input type="text" data-k="difficulty" list="diffList" value="${esc(m.meta.difficulty || '')}" style="width:100%"><datalist id="diffList"><option>easy</option><option>medium</option><option>hard</option><option>super hard</option></datalist>`)}
       <h3>Conveyor</h3>
       ${field('Config', `<select data-k="conveyor" style="width:100%">${convOpts}</select>`)}
       <div class="hint">${cfg.rows} rows × ${CS.ROW_W} = ${cfg.rows * CS.ROW_W} spots · entries: ${CS.ENTRIES.filter(e => g.entryT[e] != null).map(e => CS.ENTRY_LABEL[e]).join(', ') || 'none'} · <a href="#" data-open="conveyors">manage / import</a></div>

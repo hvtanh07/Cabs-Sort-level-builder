@@ -110,5 +110,5 @@
     [{ "color": 3 }, { "color": 1 }, { "color": 7, "size": 2 }, { "color": 4, "size": 2 }, { "color": 4 }, { "color": 7 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Key Count", "difficulty": "normal" }
+  "meta": { "name": "Key Count", "difficulty": "medium" }
 }

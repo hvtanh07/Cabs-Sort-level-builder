@@ -18,11 +18,11 @@ function check(S, seed) {
     const a = G.rate(m, G.MODES.low, 1, 60, 1000), b = G.rate(m, G.MODES.zoff, 1, 60, 1000), e = G.rate(m, G.MODES.low, 0.3, 30, 2000);
     res.rnd = [a.rate, b.rate]; res.rndTicks = a.ticks; res.eps = e.rate; res.fs = e.fs;
     if (S.n <= 10) {
-      if (S.diff === 'normal' && (a.rate < 0.9 || b.rate < (S.door ? 0.6 : 0.9))) return { ok: false, why: 'random ' + res.rnd, res };
+      if (S.diff === 'medium' && (a.rate < 0.9 || b.rate < (S.door ? 0.6 : 0.9))) return { ok: false, why: 'random ' + res.rnd, res };
       if (S.diff === 'hard' && (a.rate < 0.75 || b.rate < 0.75)) return { ok: false, why: 'random ' + res.rnd, res };
     } else {
       // levels 11-40 are long, so pure random taps jam more often; the casual player (careful, with 30 % random taps) must win
-      // nearly every normal level and most hard ones, and random taps must still win a fair share
+      // nearly every medium level and most hard ones, and random taps must still win a fair share
       const [minE, minR] = S.diff === 'hard' ? [0.85, 0.3] : S.relaxed ? [0.8, 0.25] : [0.95, S.door ? 0.4 : 0.5];
       if (e.rate < minE) return { ok: false, why: 'casual ' + e.rate, res };
       if (a.rate < minR || b.rate < minR) return { ok: false, why: 'random ' + res.rnd, res };
@@ -36,9 +36,9 @@ for (const S of SPECS) {
   let best = null, last = null;
   // levels 11-40 are long: if no seed passes, the rows arrive closer to box order (a smaller window) and it tries again
   const scales = S.n <= 10 ? [1] : [1, 0.6, 0.35, 0.2, 0.1];
-  // a normal Block Door level that passes nothing is checked again with a lower bar (it jams more under random taps)
+  // a medium Block Door level that passes nothing is checked again with a lower bar (it jams more under random taps)
   const tries = [];
-  [false, true].forEach(rx => { if (!rx || (S.door && S.diff === 'normal')) scales.forEach(sc => tries.push([sc, rx])); });
+  [false, true].forEach(rx => { if (!rx || (S.door && S.diff === 'medium')) scales.forEach(sc => tries.push([sc, rx])); });
   for (const [sc, rx] of tries) {
     const T = Object.assign({}, S, sc === 1 ? {} : { window: Math.round(S.window * sc) }, rx ? { relaxed: true } : {});
     for (let seed = 1; seed <= (S.n <= 10 ? 300 : 80); seed++) {

@@ -121,5 +121,5 @@
   ],
   "doorTurns": 3,
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Last Door", "difficulty": "normal" }
+  "meta": { "name": "Last Door", "difficulty": "medium" }
 }
