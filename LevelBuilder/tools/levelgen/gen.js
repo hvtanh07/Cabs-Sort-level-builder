@@ -136,7 +136,19 @@ function make(S, seed) {
     c.forEach(x => { x.b.hidden = true; });
     if (c.length < S.hidden) throw new Error('not enough hidden candidates');
   }
-  if (S.locks) {
+  if (S.locks && S.lockFrom != null) {
+    // Locked Boxes further back: from depth `lockFrom` to `lockDepth`, at most `lockPerLane` a queue and never two in a row;
+    // each opens after about `lockPerDepth` sends per box ahead of it, plus lockRange
+    const [a, b] = S.lockRange || [2, 4];
+    const perLane = {}, at = new Set(), c = [];
+    for (const x of CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= S.lockFrom && x.t <= S.lockDepth), r)) {
+      if (c.length >= S.locks) break;
+      if ((perLane[x.l] || 0) >= (S.lockPerLane || 99) || at.has(x.l + ':' + (x.t - 1)) || at.has(x.l + ':' + (x.t + 1))) continue;
+      perLane[x.l] = (perLane[x.l] || 0) + 1; at.add(x.l + ':' + x.t); taken.add(x.b); c.push(x);
+    }
+    if (c.length < S.locks) throw new Error('not enough lock candidates');
+    c.forEach(x => { x.b.lockTurns = Math.round(x.t * (S.lockPerDepth || 1)) + ri(r, a, b); });
+  } else if (S.locks) {
     const [a, b] = S.lockRange || [2, 4];
     const c = choose(S.locks, x => x.t <= (S.lockDepth != null ? S.lockDepth : 2));
     c.forEach(x => { x.b.lockTurns = ri(r, a, b) + x.t; });

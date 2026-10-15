@@ -26,6 +26,7 @@ function check(S, seed) {
       const [minE, minR] = S.diff === 'hard' ? [0.85, 0.3] : S.relaxed ? [0.8, 0.25] : [0.95, S.door ? 0.4 : 0.5];
       if (e.rate < minE) return { ok: false, why: 'casual ' + e.rate, res };
       if (a.rate < minR || b.rate < minR) return { ok: false, why: 'random ' + res.rnd, res };
+      if (S.minRandom && (a.rate < S.minRandom || b.rate < S.minRandom)) return { ok: false, why: 'random ' + res.rnd, res };
     }
     if (!S.block && (g1.failsafe || g2.failsafe || e.fs > 0.15)) return { ok: false, why: 'failsafe ' + e.fs, res };
   }
@@ -41,7 +42,7 @@ for (const S of SPECS) {
   [false, true].forEach(rx => { if (!rx || (S.door && S.diff === 'medium')) scales.forEach(sc => tries.push([sc, rx])); });
   for (const [sc, rx] of tries) {
     const T = Object.assign({}, S, sc === 1 ? {} : { window: Math.round(S.window * sc) }, rx ? { relaxed: true } : {});
-    for (let seed = 1; seed <= (S.n <= 10 ? 300 : 80); seed++) {
+    for (let seed = S.seed || 1; seed <= (S.n <= 10 ? 300 : 80); seed++) {   // `seed` starts the search at a hand-picked seed
       let r; try { r = check(T, seed); } catch (e) { r = { ok: false, why: e.message }; }
       last = r;
       if (r.ok) { best = Object.assign(r, { seed, windowScale: sc, relaxed: rx }); break; }

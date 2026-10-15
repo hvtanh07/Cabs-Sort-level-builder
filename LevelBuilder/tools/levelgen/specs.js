@@ -74,6 +74,13 @@ for (let n = 11; n <= 40; n++) {
   // the level that introduces an element is very easy: random taps must win it, like levels 1-9
   if (s.unlock) { s.tutorial = true; s.diff = 'easy'; s.minRandom = s.door ? 0.85 : 0.9; s.stick = 0; s.big4 = 0; }
   if (n === 31) s.rowLockRange = [3, 4];   // shorter Locked Item counts: the 18-row Bean belt fills fast
+  if (n === 13) {
+    // the first level after Locked Box is introduced: longer but gentler, with more Locked Boxes further back in the queues
+    // (none in the first two boxes of a queue), 5 colours, no 32-item box and rows close to box order.
+    // Seed 35 was picked over 200 runs: random taps win about 97 % (the old level 13 about 92 %)
+    Object.assign(s, { items: 432, big3Share: 0, locks: 5, lockFrom: 2, lockDepth: 6, lockPerLane: 2, lockRange: [2, 4], lockPerDepth: 2, stick: 0, minRandom: 0.9, seed: 35 });
+    s.tune = { colors: 5, window: 8 };
+  }
   if (n === 15) intro.push('Third Enter Path.');
   if (n === 20) intro.push('Fourth queue.');
   if (hard) intro.push('Hard level.');
@@ -107,7 +114,7 @@ S.forEach(s => {
   // hard levels are 25 % longer, and a level that introduces an element stays at level 9's length (see `tutorial`)
   // Block Door levels are 10 % shorter (20 % from level 31, where a quarter of the rows come at the end): the shut door holds back half the rows, so a long door level jams easily
   const len = s.tutorial ? 312 : Math.round((336 + x * 4) * (s.diff === 'hard' ? 1.25 : 1) * (s.door ? (s.doorTail ? 0.8 : 0.9) : 1) / 4) * 4;
-  const items = TOTAL[s.n] || len;
+  const items = TOTAL[s.n] || s.items || len;
   const units = Math.ceil(items / 4);   // one unit = 4 items = one Enter Path row
   // boxes come in four tiers: 16 / 24 / 32 / 40 items = 4 / 6 / 8 / 10 rows (SIZE in gen.js)
   const rowsOf = N => 4 * (N - (s.big2 || 0) - (s.big3 || 0) - (s.big4 || 0)) + 5 * (s.big2 || 0) + 6 * (s.big3 || 0) + 8 * (s.big4 || 0);
@@ -125,7 +132,7 @@ S.forEach(s => {
     s.boxes = N;
   } else {
     // same tier mix as before: 20 % 24-item, 5-8 % 32-item, 1-2 40-item boxes
-    const r3 = s.n === 11 ? 3 / 26 : s.n < 20 ? 0.05 : 0.08;
+    const r3 = s.big3Share != null ? s.big3Share : s.n === 11 ? 3 / 26 : s.n < 20 ? 0.05 : 0.08;
     let N = Math.round(units / 4.5);
     for (let k = 0; k < 30; k++) {
       s.big2 = Math.round(N * 0.2); s.big3 = Math.round(N * r3);
@@ -137,5 +144,6 @@ S.forEach(s => {
     if (s.hidden) s.hidden = Math.round(N * (s.diff === 'hard' ? 0.22 : 0.16));
     s.window = s.tutorial ? 12 : Math.round(s.window * 1.6);
   }
+  if (s.tune) { Object.assign(s, s.tune); delete s.tune; }   // per-level values set after the shared rules above
 });
 module.exports = S;

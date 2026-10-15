@@ -53,7 +53,7 @@ Levels 11–40 are longer, so pure random taps jam more often on them. Each one 
 | 10 | First Challenge | hard | First hard level: every box behind the front row is hidden. Longer than level 9. | 3 | Left, Right | 7 | 21 (17 / 4 / 0 / 0) | 368 / 76 | square_19 | Hidden ×18 (16/24 items) | 89% / 79% | 93% |
 | 11 | Triple Stack | medium | First 32-item box. | 3 | Left, Right | 6 | 19 (13 / 4 / 2 / 0) | 368 / 76 | square_19 | none | 94% / 83% | 100% |
 | 12 | Locked Box | easy | Introduces Locked Box. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 72 | bean_18 | Locked Box ×2 | 99% / 94% | 100% |
-| 13 | Key Count | medium |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 72 | lens_18 | Locked Box ×3 | 92% / 92% | 100% |
+| 13 | Key Count | medium |  | 3 | Left, Right | 5 | 25 (20 / 5 / 0 / 0) | 440 / 72 | lens_18 | Locked Box ×5 (from the 4th box of a queue back) | 97% / 96% | 100% |
 | 14 | Blind Picks | medium |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 76 | square_19 | Hidden ×3 (16 items) | 87% / 92% | 100% |
 | 15 | Three Gates | hard | Third Enter Path. Hard level. | 3 | Left, Middle, Right | 7 | 25 (19 / 5 / 1 / 0) | 456 / 120 | heart_21 | Locked Box ×4 | 90% / 98% | 93% |
 | 16 | Heavy Load | medium |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 72 | bean_18 | none | 83% / 70% | 98% |
