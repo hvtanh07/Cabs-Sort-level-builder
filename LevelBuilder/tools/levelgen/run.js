@@ -17,7 +17,14 @@ function check(S, seed) {
   } else {
     const a = G.rate(m, G.MODES.low, 1, 60, 1000), b = G.rate(m, G.MODES.zoff, 1, 60, 1000), e = G.rate(m, G.MODES.low, 0.3, 30, 2000);
     res.rnd = [a.rate, b.rate]; res.rndTicks = a.ticks; res.eps = e.rate; res.fs = e.fs;
-    if (S.n <= 10) {
+    if (S.watch) {
+      // from level 15 the player has to watch the belt: random taps must lose most runs, while a player who sends the box
+      // matching the belt (1 tap in 10 random) still wins nearly every run
+      const w = G.rate(m, G.MODES.low, 0.1, 30, 3000); res.watch = w.rate;
+      const [maxR, minW] = S.diff === 'hard' ? [0.25, 0.8] : [0.35, 0.9];
+      if (Math.max(a.rate, b.rate) > maxR) return { ok: false, why: 'random wins ' + res.rnd, res };
+      if (w.rate < minW) return { ok: false, why: 'watching ' + w.rate, res };
+    } else if (S.n <= 10) {
       if (S.diff === 'medium' && (a.rate < 0.9 || b.rate < (S.door ? 0.6 : 0.9))) return { ok: false, why: 'random ' + res.rnd, res };
       if (S.diff === 'hard' && (a.rate < 0.75 || b.rate < 0.75)) return { ok: false, why: 'random ' + res.rnd, res };
     } else {
@@ -39,17 +46,18 @@ for (const S of SPECS) {
   const scales = S.n <= 10 ? [1] : [1, 0.6, 0.35, 0.2, 0.1];
   // a medium Block Door level that passes nothing is checked again with a lower bar (it jams more under random taps)
   const tries = [];
-  [false, true].forEach(rx => { if (!rx || (S.door && S.diff === 'medium')) scales.forEach(sc => tries.push([sc, rx])); });
-  for (const [sc, rx] of tries) {
-    const T = Object.assign({}, S, sc === 1 ? {} : { window: Math.round(S.window * sc) }, rx ? { relaxed: true } : {});
-    for (let seed = S.seed || 1; seed <= (S.n <= 10 ? 300 : 80); seed++) {   // `seed` starts the search at a hand-picked seed
+  if (S.watch) S.watchTries.forEach(o => tries.push([1, false, o]));   // watch-the-belt levels: settings from gentlest to hardest
+  else [false, true].forEach(rx => { if (!rx || (S.door && S.diff === 'medium')) scales.forEach(sc => tries.push([sc, rx])); });
+  for (const [sc, rx, over] of tries) {
+    const T = Object.assign({}, S, sc === 1 ? {} : { window: Math.round(S.window * sc) }, rx ? { relaxed: true } : {}, over || {});
+    for (let seed = S.seed || 1; seed <= (S.n <= 10 ? 300 : S.watch ? (S.maxSeed || 120) : 80); seed++) {   // `seed` starts the search at a hand-picked seed
       let r; try { r = check(T, seed); } catch (e) { r = { ok: false, why: e.message }; }
       last = r;
-      if (r.ok) { best = Object.assign(r, { seed, windowScale: sc, relaxed: rx }); break; }
+      if (r.ok) { best = Object.assign(r, { seed, windowScale: sc, relaxed: rx, over }); break; }
     }
     if (best) break;
   }
-  if (best) { out[S.n] = best; console.log(S.n, 'seed', best.seed, 'scale', best.windowScale, best.relaxed ? 'relaxed' : '', JSON.stringify(best.res)); }
+  if (best) { out[S.n] = best; console.log(S.n, 'seed', best.seed, 'scale', best.windowScale, best.relaxed ? 'relaxed' : '', best.over ? JSON.stringify(best.over) : '', JSON.stringify(best.res)); }
   else console.log(S.n, 'FAIL', last.why, JSON.stringify(last.res || {}));
 }
 module.exports = out;

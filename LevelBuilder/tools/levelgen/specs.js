@@ -154,5 +154,19 @@ S.forEach(s => {
     s.window = s.tutorial ? 12 : Math.round(s.window * 1.6);
   }
   if (s.tune) { Object.assign(s, s.tune); delete s.tune; }   // per-level values set after the shared rules above
+  // from level 15 (except the levels that introduce an element) the player must watch the belt and send the box whose colour is
+  // on it: rows come close to box order, each queue sends its boxes in long runs and more colours are in play, so a box sent
+  // at random parks in a slot while its items are still far away. run.js tries these from gentlest to hardest and keeps the first
+  // that random taps mostly lose and a belt-watching player wins
+  if (s.n >= 15 && !s.tutorial) {
+    s.watch = true;
+    s.watchTries = [
+      { colors: 7, window: 6, stick: 0.9 },
+      { colors: 8, window: 6, stick: 0.9 },
+      { colors: 8, window: 8, stick: 0.95, colorGap: 4 },
+      { colors: 8, window: 4, stick: 0.95, colorGap: 5 }
+    ];
+    if (s.n === 25) s.maxSeed = 500;   // Block Door with Locked Boxes: the fail-safe often frees random taps, so few seeds pass
+  }
 });
 module.exports = S;
