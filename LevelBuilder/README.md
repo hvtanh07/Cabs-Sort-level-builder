@@ -23,6 +23,7 @@ A level design tool for Caps Sorting. Open `index.html` in Chrome or Edge. No in
 The 40 element-unlock levels (`levels/`, notes and checks in `levels/README.md`) load into the level list automatically the first time the tool opens.
 If a level of yours already used one of their ids, yours stays in the list under the next free id, and a message says which one moved.
 When `js/levels.js` changes, levels you have not edited are updated and your edited ones are kept.
+**Reset levels** (top bar) throws away the edits kept in the browser and loads the open level, or all 40, again from `js/levels.js`; it can also remove the levels you made yourself.
 `tools/levelgen/` rebuilds the set with Node.
 
 ## Design flow

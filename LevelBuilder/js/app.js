@@ -44,6 +44,7 @@
     };
     $('#btnConveyors').onclick = A.dialogConveyors;
     $('#btnHelp').onclick = A.dialogHelp;
+    $('#btnReset').onclick = dialogReset;
     $('#btnExportAll').onclick = A.exportAll;
     $('#btnFolder').onclick = () => A.dir ? A.saveAll() : A.openFolder();
     $('#btnBalance').onclick = () => A.doCmd('fillRows');
@@ -70,13 +71,13 @@
 
   /* Bundled levels (js/levels.js): loaded into the list once per bundle version.
      Levels the designer edited are kept; a different level that already uses a bundled id moves to a free id. */
+  const hash = t => { let h = 5381; for (let i = 0; i < t.length; i++) h = (h * 33 ^ t.charCodeAt(i)) >>> 0; return h.toString(36); };
   const playContent = j => { const o = CS.toJSON(CS.fromJSON(j)); delete o.meta; delete o.$schema; return JSON.stringify(o); };
   function sameContent(a, b) { try { return playContent(a) === playContent(b); } catch (e) { return false; } }
 
   function syncBundle() {
     const B = window.CS_BUNDLED_LEVELS;
     if (!B || !Array.isArray(B.levels) || !B.levels.length || A.prefs.bundle === B.version) return '';
-    const hash = t => { let h = 5381; for (let i = 0; i < t.length; i++) h = (h * 33 ^ t.charCodeAt(i)) >>> 0; return h.toString(36); };
     const sig = A.prefs.bundleSig || {};
     const firstTime = !A.prefs.bundle;
     const bundled = B.levels.map(src => CS.toJSON(CS.fromJSON(src)));
@@ -119,6 +120,53 @@
     if (msg) msg = msg[0].toUpperCase() + msg.slice(1);
     if (moved.length) msg += (msg ? '. ' : '') + 'Your ' + moved.join('; ') + '.';
     return msg;
+  }
+
+  /* Reset to the level files: throws away the copies kept in browser storage and loads the levels from js/levels.js again */
+  function resetToBundle(all, dropOwn) {
+    const B = window.CS_BUNDLED_LEVELS;
+    if (!B || !Array.isArray(B.levels) || !B.levels.length) { A.toast('No bundled levels found (js/levels.js).'); return; }
+    if (A.mode === 'play') P.stop();
+    const bundled = B.levels.map(src => CS.toJSON(CS.fromJSON(src)));
+    const keyOf = {};
+    A.store.order.forEach(k => { keyOf[A.store.levels[k].id] = k; });
+    const sig = A.prefs.bundleSig || {};
+    let open = A.key;
+    if (!all) {
+      const cur = A.key && A.store.levels[A.key];
+      const j = cur && bundled.find(x => x.id === cur.id);
+      if (!j) { A.toast('This level is not in the level files, so there is nothing to reset it to.'); return; }
+      A.store.levels[A.key] = j; sig[j.id] = hash(JSON.stringify(j)); delete A.dirty[A.key];
+    } else {
+      const keys = bundled.map(j => {
+        let k = keyOf[j.id];
+        if (k) A.store.levels[k] = j; else k = A.addLevel(j);
+        sig[j.id] = hash(JSON.stringify(j)); delete A.dirty[k];
+        return k;
+      });
+      let rest = A.store.order.filter(k => !keys.includes(k));
+      if (dropOwn) { rest.forEach(k => { delete A.store.levels[k]; delete A.files[k]; delete A.dirty[k]; }); rest = []; }
+      A.store.order = keys.concat(rest);
+      if (!A.store.levels[open]) open = keys[0];
+    }
+    A.prefs.bundle = B.version; A.prefs.bundleSig = sig; A.savePrefs();
+    A.saveStore();
+    A.openLevel(open);
+    A.toast(all ? `Loaded all ${bundled.length} levels from the level files (${B.version})` : `Reset ${A.store.levels[open].id} to the level file`, 4000);
+  }
+
+  function dialogReset() {
+    const B = window.CS_BUNDLED_LEVELS;
+    const cur = A.key && A.store.levels[A.key];
+    const inBundle = !!(B && cur && B.levels.some(x => x.id === cur.id));
+    A.dialog(`<h2>Reset to the level files</h2>
+      <div class="hint">The tool keeps your edits in this browser. This throws them away and loads the levels again from the level files
+        (js/levels.js, a copy of the levels folder${B ? `, version ${CS.esc(B.version)}` : ''}). It cannot be undone, so export anything you want to keep first.</div>
+      <label class="chk"><input type="radio" name="scope" value="one" ${inBundle ? 'checked' : 'disabled'}> Only this level${cur ? ` (${CS.esc(cur.id)})` : ''}${inBundle ? '' : ': not in the level files'}</label><br>
+      <label class="chk"><input type="radio" name="scope" value="all" ${inBundle ? '' : 'checked'}> All ${B ? B.levels.length : ''} levels</label><br>
+      <label class="chk"><input type="checkbox" name="dropOwn"> With all levels: also remove the levels you made that are not in the level files</label>
+      <div class="foot"><button value="cancel">Cancel</button><button value="ok" class="primary">Reset</button></div>`,
+      fd => resetToBundle(fd.get('scope') === 'all', !!fd.get('dropOwn')));
   }
 
   function onKey(e) {
