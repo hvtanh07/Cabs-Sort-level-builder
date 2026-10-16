@@ -146,7 +146,7 @@
   ],
   "links": [
     { "a": { "lane": 3, "tray": 1 }, "b": { "lane": 2, "tray": 2 } },
-    { "a": { "lane": 0, "tray": 3 }, "b": { "lane": 2, "tray": 4 } }
+    { "a": { "lane": 0, "tray": 3 }, "b": { "lane": 1, "tray": 2 } }
   ],
   "blockedLane": { "lane": 2, "lockTurns": 3 },
   "view": { "cameraPreset": "default" },

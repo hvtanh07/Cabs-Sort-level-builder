@@ -90,7 +90,7 @@
       else if (k === 'lock') b.lock = Math.max(0, b.lock + +v);
       else if (k === 'hidden') b.hidden = !b.hidden;
       else if (k === 'unlink') m.links = m.links.filter(L => !L.includes(uid));
-      else if (k === 'link') { A.setTool('link'); A.linkFirst = uid; A.renderBoard(); A.toast('Now click a box in another queue'); return false; }
+      else if (k === 'link') { A.setTool('link'); A.linkFirst = uid; A.renderBoard(); A.toast('Now click a box in a neighbouring queue'); return false; }
       else if (k === 'front') { m.lanes[p.lane].splice(p.tray, 1); m.lanes[p.lane].unshift(b); }
       else if (k === 'dup') { A.sel = { type: 'box', uid }; A.doCmd('boxDup'); return false; }
       else if (k === 'del') { A.sel = { type: 'box', uid }; A.doCmd('boxDel'); return false; }
@@ -251,7 +251,7 @@
   const HINT = {
     select: 'Select: click to edit · right-click for quick actions · drag boxes between queues · Alt+click picks a colour',
     paint: 'Paint: drag across item cells or click boxes to recolour · right-click clears a cell · 1–8 change colour',
-    link: 'Link: click a box, then a box in another queue · click a linked box to unlink'
+    link: 'Link: click a box, then a box in a neighbouring queue · click a linked box to unlink'
   };
   U.savedAt = null;
   U.renderStatus = function () {

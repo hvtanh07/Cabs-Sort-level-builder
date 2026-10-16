@@ -144,8 +144,8 @@
   ],
   "links": [
     { "a": { "lane": 1, "tray": 5 }, "b": { "lane": 0, "tray": 5 } },
-    { "a": { "lane": 0, "tray": 4 }, "b": { "lane": 3, "tray": 3 } },
-    { "a": { "lane": 1, "tray": 4 }, "b": { "lane": 2, "tray": 4 } }
+    { "a": { "lane": 0, "tray": 4 }, "b": { "lane": 1, "tray": 4 } },
+    { "a": { "lane": 1, "tray": 6 }, "b": { "lane": 2, "tray": 5 } }
   ],
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Four Queues", "difficulty": "hard", "notes": "Fourth queue. Hard level." }

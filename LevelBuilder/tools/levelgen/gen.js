@@ -159,7 +159,8 @@ function make(S, seed) {
       const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= 1 && !x.b.hidden), r);
       let done = false;
       for (const x of c) {
-        const y = c.find(z => z !== x && z.l !== x.l && Math.abs(z.t - x.t) <= (S.linkSpread || 1) && !taken.has(z.b));
+        // partners sit in neighbouring queues, so no other queue lies between them
+        const y = c.find(z => z !== x && Math.abs(z.l - x.l) === 1 && Math.abs(z.t - x.t) <= (S.linkSpread || 1) && !taken.has(z.b));
         if (y && !taken.has(x.b)) { taken.add(x.b); taken.add(y.b); links.push({ a: { lane: x.l, tray: x.t }, b: { lane: y.l, tray: y.t } }); done = true; break; }
       }
       if (!done) throw new Error('no link pair');

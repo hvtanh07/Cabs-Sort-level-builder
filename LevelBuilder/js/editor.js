@@ -559,10 +559,11 @@
     if (A.tool === 'link') {
       const li = m.links.findIndex(L => L.includes(uid));
       if (!A.linkFirst && li >= 0) { m.links.splice(li, 1); A.toast('Link removed'); A.commit(); return; }
-      if (!A.linkFirst) { A.linkFirst = uid; A.renderBoard(); A.toast('Now click a box in another queue'); return; }
+      if (!A.linkFirst) { A.linkFirst = uid; A.renderBoard(); A.toast('Now click a box in a neighbouring queue'); return; }
       if (A.linkFirst === uid) { A.linkFirst = null; A.renderBoard(); return; }
       const q = CS.boxPos(m, A.linkFirst);
       if (q && q.lane === p.lane) { A.toast('Linked boxes must sit in two different queues'); return; }
+      if (q && Math.abs(q.lane - p.lane) > 1) { A.toast('Linked boxes must sit in neighbouring queues'); return; }
       m.links = m.links.filter(L => !L.includes(uid) && !L.includes(A.linkFirst));
       m.links.push([A.linkFirst, uid]);
       A.linkFirst = null;

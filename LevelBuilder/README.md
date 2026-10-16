@@ -51,7 +51,7 @@ formatVersion 5. Older files (formatVersion 4: `feeders` as a list with `entry`,
 | `feeders.<entry>.lockedRows` | Locked Items: `{ row, lockTurns }`. Left out when empty. |
 | `lanes[][]` | Queues. Box 0 is the front box. `size` sets the items the box holds: 1 = 16, 2 = 24, 3 = 32, 4 = 40 (no `size` = 1). There is no `trayCapacity`. Older files that used `size × trayCapacity` are converted on import. |
 | `lanes[][].hidden` / `lockTurns` | Hidden Box / Locked Box. |
-| `links` | Linked Boxes: `{ a: { lane, tray }, b: { lane, tray } }`. Left out when there are none. |
+| `links` | Linked Boxes: `{ a: { lane, tray }, b: { lane, tray } }`; the two boxes sit in neighbouring queues. Left out when there are none. |
 | `slotLocks` | Locked Slot: `{ slot, lockTurns }`. Left out when no slot is locked. |
 | `extraSlots` | RV slots the player can unlock with an ad. |
 | `colors` | Filled automatically from the colours used. |

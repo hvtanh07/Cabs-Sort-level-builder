@@ -57,27 +57,27 @@ Levels 11–40 are longer, so pure random taps jam more often on them. Each one 
 | 14 | Blind Picks | medium |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 76 | square_19 | Hidden ×3 (16 items) | 87% / 92% | 100% |
 | 15 | Three Gates | hard | Third Enter Path. Hard level. | 3 | Left, Middle, Right | 7 | 25 (19 / 5 / 1 / 0) | 456 / 120 | heart_21 | Locked Box ×4 | 90% / 98% | 93% |
 | 16 | Heavy Load | medium |  | 3 | Left, Right | 6 | 20 (15 / 4 / 1 / 0) | 368 / 72 | bean_18 | none | 83% / 70% | 98% |
-| 17 | Linked Box | easy | Introduces Linked Box. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 76 | square_19 | Linked ×1 | 100% / 96% | 100% |
-| 18 | Hidden Links | medium |  | 3 | Left, Middle, Right | 6 | 21 (16 / 4 / 1 / 0) | 384 / 72 | lens_18 | Hidden ×3 (16/24 items), Linked ×2 | 80% / 93% | 100% |
+| 17 | Linked Box | easy | Introduces Linked Box. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 76 | square_19 | Linked ×1 | 100% / 99% | 100% |
+| 18 | Hidden Links | medium |  | 3 | Left, Middle, Right | 6 | 21 (16 / 4 / 1 / 0) | 384 / 72 | lens_18 | Hidden ×3 (16 items), Linked ×2 | 97% / 87% | 100% |
 | 19 | Patience | medium |  | 3 | Left, Right | 6 | 21 (16 / 4 / 1 / 0) | 384 / 72 | bean_18 | Locked Box ×3 | 94% / 66% | 98% |
-| 20 | Four Queues | hard | Fourth queue. Hard level. | 4 | Left, Middle, Right | 7 | 26 (19 / 5 / 2 / 0) | 488 / 76 | square_19 | Locked Box ×4, Linked ×3 | 88% / 83% | 98% |
+| 20 | Four Queues | hard | Fourth queue. Hard level. | 4 | Left, Middle, Right | 7 | 26 (19 / 5 / 2 / 0) | 488 / 76 | square_19 | Locked Box ×4, Linked ×3 | 76% / 69% | 96% |
 | 21 | Fog | medium |  | 3 | Left, Right | 6 | 21 (15 / 4 / 2 / 0) | 400 / 72 | lens_18 | Hidden ×3 (16/24 items) | 90% / 80% | 100% |
 | 22 | Block Door | easy | Introduces Block Door. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 76 | square_19 | Block Door (4) | 99% / 90% | 100% |
 | 23 | Behind the Door | medium |  | 3 | Left, Right | 6 | 19 (13 / 4 / 2 / 0) | 368 / 72 | bean_18 | Hidden ×3 (16 items), Block Door (3) | 66% / 36% | 95% |
 | 24 | Chain Gang | medium |  | 3 | Left, Middle, Right | 6 | 22 (16 / 4 / 2 / 0) | 416 / 72 | lens_18 | Linked ×2 | 76% / 77% | 98% |
 | 25 | Door Lock | hard | Hard level. | 3 | Left, Right | 7 | 25 (18 / 5 / 2 / 0) | 472 / 120 | heart_21 | Locked Box ×4, Block Door (3) | 88% / 50% | 88% |
 | 26 | Swing Doors | medium | First 40-item box. | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 76 | square_19 | Locked Box ×3, Block Door (3) | 88% / 83% | 100% |
-| 27 | Locked Item | easy | Introduces Locked Item. | 4 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 72 | bean_18 | Linked ×2, Locked Item rows ×2 | 98% / 92% | 100% |
+| 27 | Locked Item | easy | Introduces Locked Item. | 4 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 72 | bean_18 | Linked ×2, Locked Item rows ×2 | 97% / 91% | 100% |
 | 28 | Secret Cargo | medium |  | 3 | Left, Right | 6 | 22 (15 / 4 / 2 / 1) | 440 / 72 | lens_18 | Hidden ×4 (16 items), Locked Item rows ×3 | 70% / 65% | 97% |
 | 29 | Rush Hour | medium |  | 3 | Left, Middle, Right | 6 | 23 (15 / 5 / 2 / 1) | 464 / 76 | square_19 | none | 76% / 70% | 98% |
 | 30 | Deep Freeze | hard | Hard level. | 4 | Left, Middle, Right | 7 | 28 (18 / 6 / 2 / 2) | 576 / 120 | heart_21 | Hidden ×6 (16/24/32 items), Locked Box ×4, Locked Item rows ×4 | 41% / 46% | 93% |
 | 31 | Cold Storage | medium |  | 4 | Left, Right | 6 | 23 (15 / 5 / 2 / 1) | 464 / 72 | bean_18 | Locked Item rows ×3 | 62% / 60% | 98% |
 | 32 | Block Queue | easy | Introduces Block Queue. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 76 | square_19 | Block Queue (4) | 100% / 96% | 100% |
 | 33 | Detour | medium |  | 3 | Left, Middle, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 72 | lens_18 | Block Queue (3) | 63% / 60% | 95% |
-| 34 | Tangled | medium |  | 4 | Left, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 72 | bean_18 | Linked ×2 | 56% / 64% | 97% |
+| 34 | Tangled | medium |  | 4 | Left, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 72 | bean_18 | Linked ×2 | 72% / 52% | 97% |
 | 35 | Gridlock | hard | Hard level. | 4 | Left, Middle, Right | 7 | 30 (20 / 6 / 2 / 2) | 608 / 120 | heart_21 | Hidden ×7 (16/24 items), Locked Box ×4, Block Queue (3) | 85% / 57% | 100% |
 | 36 | Long Belt | medium |  | 3 | Left, Middle, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 76 | square_19 | none | 86% / 76% | 100% |
 | 37 | Night Shift | medium |  | 3 | Left, Right | 6 | 19 (12 / 4 / 2 / 1) | 392 / 72 | lens_18 | Hidden ×3 (16/24/32 items), Block Door (3) | 50% / 50% | 78% |
-| 38 | Roadblock | medium |  | 4 | Left, Middle, Right | 6 | 25 (17 / 5 / 2 / 1) | 496 / 72 | bean_18 | Linked ×2, Block Queue (3) | 80% / 64% | 97% |
+| 38 | Roadblock | medium |  | 4 | Left, Middle, Right | 6 | 25 (17 / 5 / 2 / 1) | 496 / 72 | bean_18 | Linked ×2, Block Queue (3) | 86% / 72% | 97% |
 | 39 | Last Door | medium |  | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 72 | bean_18 | Hidden ×3 (16/32 items), Block Door (3) | 68% / 54% | 80% |
 | 40 | Grand Finale | hard | Hard level. | 4 | Left, Middle, Right | 7 | 31 (21 / 6 / 2 / 2) | 624 / 120 | heart_21 | Hidden ×7 (16/24 items), Locked Box ×4, Locked Item rows ×4, Block Queue (3) | 79% / 61% | 97% |

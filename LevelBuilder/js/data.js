@@ -294,6 +294,7 @@ window.CS = window.CS || {};
       const A = CS.boxPos(m, a), B = CS.boxPos(m, b);
       if (!A || !B) { err(`Link ${i + 1} points at a box that no longer exists.`); return; }
       if (A.lane === B.lane) err(`Link ${i + 1}: linked boxes must sit in two different queues.`, { box: a });
+      else if (Math.abs(A.lane - B.lane) > 1) err(`Link ${i + 1}: linked boxes must sit in neighbouring queues, with no queue between them.`, { box: a });
       [a, b].forEach(x => { if (linked[x]) err('A box is in more than one link.', { box: x }); linked[x] = 1; });
     });
 

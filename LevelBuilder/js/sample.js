@@ -70,7 +70,7 @@ window.CS_SAMPLE_LEVEL = {
     [{ "color": 2, "lockTurns": 4 }, { "color": 3 }, { "color": 6, "size": 2 }, { "color": 4 }, { "color": 5 }, { "color": 5 }, { "color": 1 }, { "color": 7 }, { "color": 2 }, { "color": 3, "lockTurns": 5 }, { "color": 5, "hidden": true }, { "color": 7 }]
   ],
   "links": [
-    { "a": { "lane": 0, "tray": 4 }, "b": { "lane": 3, "tray": 6 } }
+    { "a": { "lane": 0, "tray": 4 }, "b": { "lane": 1, "tray": 6 } }
   ],
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Square Maze", "difficulty": "hard" }
