@@ -158,14 +158,20 @@
     const b = this.lanes[l] && this.lanes[l][0];
     if (!b) return false;
     if (b.lock > 0 || b.link) return false;
-    if (this.blocked && this.blocked.lane === l) return false;
+    if (this.isBlocked(l)) return false;
     return true;
+  };
+  // Block Queue: the blocked queue opens while no other queue can send a box (all empty, locked or waiting for a linked
+  // partner), since only sends from other queues count the block down
+  Game.prototype.isBlocked = function (l) {
+    if (!(this.blocked && this.blocked.lane === l)) return false;
+    return this.lanes.some((q, i) => i !== l && q[0] && !(q[0].lock > 0) && !q[0].link);
   };
   Game.prototype.freeSlot = function () { return this.slots.findIndex(s => !s.box && !(s.lock > 0)); };
   Game.prototype.whyNot = function (l) {
     const b = this.lanes[l] && this.lanes[l][0];
     if (!b) return 'Queue is empty';
-    if (this.blocked && this.blocked.lane === l) return `Queue is blocked (${this.blocked.count} more boxes from other queues)`;
+    if (this.isBlocked(l)) return `Queue is blocked (${this.blocked.count} more boxes from other queues)`;
     if (b.lock > 0) return `Locked Box: ${b.lock} more box${b.lock > 1 ? 'es' : ''} to send`;
     if (b.link) return 'Linked Box: its partner must reach the top of its queue';
     if (this.freeSlot() < 0) return 'No free slot';

@@ -97,9 +97,9 @@
     ] }
   },
   "lanes": [
-    [{ "color": 5, "lockTurns": 3 }, { "color": 8 }, { "color": 5 }, { "color": 2, "size": 2 }, { "color": 5 }, { "color": 3 }],
-    [{ "color": 4, "size": 2 }, { "color": 2, "size": 2 }, { "color": 8, "lockTurns": 5 }, { "color": 8 }, { "color": 4, "size": 2 }, { "color": 5 }],
-    [{ "color": 3 }, { "color": 3 }, { "color": 4 }, { "color": 3 }, { "color": 8, "size": 3 }, { "color": 2 }]
+    [{ "color": 5 }, { "color": 8 }, { "color": 5 }, { "color": 2, "size": 2 }, { "color": 5 }, { "color": 3 }],
+    [{ "color": 4, "size": 2 }, { "color": 2, "size": 2 }, { "color": 8 }, { "color": 8, "lockTurns": 6 }, { "color": 4, "size": 2 }, { "color": 5 }],
+    [{ "color": 3 }, { "color": 3, "lockTurns": 2 }, { "color": 4 }, { "color": 3 }, { "color": 8, "size": 3 }, { "color": 2 }]
   ],
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Locked Box", "difficulty": "easy", "notes": "Introduces Locked Box." }

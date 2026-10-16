@@ -178,7 +178,7 @@
     let n = 0;
     G.lanes.forEach(q => q.forEach(b => { if (b.link && !letters[b.uid]) { const L = String.fromCharCode(65 + (n++ % 26)); letters[b.uid] = L; letters[b.link] = L; } }));
     $('#queues').innerHTML = G.lanes.map((q, l) => {
-      const blocked = G.blocked && G.blocked.lane === l;
+      const blocked = G.isBlocked(l);
       const can = G.canSendLane(l) && G.freeSlot() >= 0;
       return `<div class="lane ${blocked ? 'blocked' : ''}" data-l="${l}">
         <div class="lh">Q${l + 1} · ${q.length}${blocked ? ` <span class="blk">⛔${G.blocked.count}</span>` : ''}</div>

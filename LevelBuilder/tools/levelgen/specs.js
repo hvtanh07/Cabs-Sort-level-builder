@@ -87,7 +87,7 @@ for (let n = 11; n <= 40; n++) {
   if (n === 13) {
     // the first level after Locked Box is introduced: longer but gentler, with more Locked Boxes further back in the queues
     // (none in the first two boxes of a queue), 5 colours, no 32-item box and rows close to box order.
-    // Seed 35 was picked over 200 runs: random taps win about 97 % (the old level 13 about 92 %)
+    // The search starts at seed 35 (picked for the older lock rules); seed 39 passes now: random taps win about 97 % / 93 %
     Object.assign(s, { items: 432, big3Share: 0, locks: 5, lockFrom: 2, lockDepth: 6, lockPerLane: 2, lockRange: [2, 4], lockPerDepth: 2, stick: 0, minRandom: 0.9, seed: 35 });
     s.tune = { colors: 5, window: 8 };
   }

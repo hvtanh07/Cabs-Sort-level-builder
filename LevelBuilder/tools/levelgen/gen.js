@@ -136,27 +136,45 @@ function make(S, seed) {
     c.forEach(x => { x.b.hidden = true; });
     if (c.length < S.hidden) throw new Error('not enough hidden candidates');
   }
-  if (S.locks && S.lockFrom != null) {
-    // Locked Boxes further back: from depth `lockFrom` to `lockDepth`, at most `lockPerLane` a queue and never two in a row;
-    // each opens after about `lockPerDepth` sends per box ahead of it, plus lockRange
+  if (S.locks) {
+    // Locked Boxes: a lock counts down one per box sent, so it must open well before the box's turn in the send order
+    // (`_o`), at least `lockMargin` sends early (one send per queue by default). Otherwise its items reach the belt while it is
+    // still locked and the player gets stuck with full slots. Never on a front box at the start, never two in a row in a queue,
+    // and never two at the same depth in different queues, so a row of locks never blocks every queue.
+    // `lockFrom` / `lockDepth` set the depths; each count is about `lockPerDepth` per box ahead of it plus lockRange
     const [a, b] = S.lockRange || [2, 4];
-    const perLane = {}, at = new Set(), c = [];
-    for (const x of CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= S.lockFrom && x.t <= S.lockDepth), r)) {
-      if (c.length >= S.locks) break;
-      if ((perLane[x.l] || 0) >= (S.lockPerLane || 99) || at.has(x.l + ':' + (x.t - 1)) || at.has(x.l + ':' + (x.t + 1))) continue;
-      perLane[x.l] = (perLane[x.l] || 0) + 1; at.add(x.l + ':' + x.t); taken.add(x.b); c.push(x);
-    }
+    const margin = S.lockMargin != null ? S.lockMargin : lanesN;
+    const from = S.lockFrom != null ? S.lockFrom : 1;
+    let depth = S.lockDepth != null ? S.lockDepth : Math.max(2, S.locks + 1);
+    const pickLocks = (depth, loose) => {
+      const perLane = {}, c = [];
+      for (const x of CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= from && x.t <= depth), r)) {
+        if (c.length >= S.locks) break;
+        const cap = x.b._o - margin;
+        const want = S.lockFrom != null ? Math.round(x.t * (S.lockPerDepth || 1)) + ri(r, a, b) : ri(r, a, b) + x.t;
+        const turns = Math.min(want, cap);
+        if (turns < 2) continue;
+        if ((perLane[x.l] || 0) >= (S.lockPerLane || 99)) continue;
+        // `loose`: two locks may share a depth when their queues are not next to each other
+        if (c.some(y => (y.l === x.l && Math.abs(y.t - x.t) <= 1) || (y.l !== x.l && y.t === x.t && (!loose || Math.abs(y.l - x.l) < 2)))) continue;
+        perLane[x.l] = (perLane[x.l] || 0) + 1; x.turns = turns; c.push(x);
+      }
+      return c;
+    };
+    // when the depths do not hold enough candidates (e.g. a hidden pattern takes every other box), look one box further back
+    let c = pickLocks(depth);
+    while (c.length < S.locks && depth < maxDepth) c = pickLocks(++depth);
+    if (c.length < S.locks) c = pickLocks(maxDepth, true);
     if (c.length < S.locks) throw new Error('not enough lock candidates');
-    c.forEach(x => { x.b.lockTurns = Math.round(x.t * (S.lockPerDepth || 1)) + ri(r, a, b); });
-  } else if (S.locks) {
-    const [a, b] = S.lockRange || [2, 4];
-    const c = choose(S.locks, x => x.t <= (S.lockDepth != null ? S.lockDepth : 2));
-    c.forEach(x => { x.b.lockTurns = ri(r, a, b) + x.t; });
+    c.forEach(x => { taken.add(x.b); x.b.lockTurns = x.turns; });
   }
   const links = [];
+  // with Block Queue too, the blocked queue is picked first and holds no Linked Box: a partner waiting behind the block can
+  // jam both queues
+  const blockFirst = S.block && S.links ? (S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1)) : null;
   if (S.links) {
     for (let n = 0; n < S.links; n++) {
-      const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= 1 && !x.b.hidden), r);
+      const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= 1 && !x.b.hidden && x.l !== blockFirst), r);
       let done = false;
       for (const x of c) {
         // partners sit in neighbouring queues, so no other queue lies between them
@@ -194,7 +212,7 @@ function make(S, seed) {
     meta: { name: S.name, difficulty: S.diff }
   };
   if (S.door) j.doorTurns = S.door;
-  if (S.block) j.blockedLane = { lane: S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1), lockTurns: S.block };
+  if (S.block) j.blockedLane = { lane: blockFirst != null ? blockFirst : S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1), lockTurns: S.block };
   if (S.intro) j.meta.notes = S.intro;
   if (S.grouped) groupByBox(j, units);
   // go through the tool's own model so the export matches the tool exactly

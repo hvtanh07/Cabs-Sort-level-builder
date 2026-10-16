@@ -254,6 +254,58 @@ window.CS = window.CS || {};
     return { items, cap, boxes };
   };
 
+  /* Can the queues jam for good? Every box sent counts every Locked Box down by 1, so if at some point no front box can be
+     sent (all locked, waiting for a linked partner, or in the blocked queue), nothing counts down any more and the level is
+     stuck (the play test's fail-safe hides this). Tries every order of sends from the queues (slots are not limited here)
+     and returns the first stuck state: { sent: boxes sent per queue, total, box: uid of a stuck front box }, or null. */
+  CS.queueDeadlock = function (m) {
+    const Q = m.lanes, n = Q.length;
+    if (!Q.some(q => q.some(b => b.lock > 0)) && !m.links.length && !m.blockedLane) return null;
+    const pos = {}, partner = {};
+    Q.forEach((q, l) => q.forEach((b, t) => { pos[b.uid] = [l, t]; }));
+    m.links.forEach(([a, b]) => { if (pos[a] && pos[b]) { partner[a] = b; partner[b] = a; } });
+    const bl = m.blockedLane && n > 1 && m.blockedLane.lane < n ? m.blockedLane : null;
+    const turns = bl ? Math.max(1, bl.lockTurns) : 0;
+    const start = { s: new Array(n).fill(0), b: bl ? bl.lane : -1, c: turns };
+    const key = st => st.s.join(',') + '|' + st.b + '|' + st.c;
+    const seen = new Set([key(start)]), todo = [start];
+    while (todo.length) {
+      if (seen.size > 300000) return null;   // too many orders to check
+      const st = todo.pop();
+      const total = st.s.reduce((a, x) => a + x, 0);
+      let open = [], stuckBox = null;
+      for (let l = 0; l < n; l++) {
+        const t = st.s[l]; if (t >= Q[l].length) continue;
+        const b = Q[l][t];
+        let ok = !(b.lock - total > 0);
+        // a Linked Box waits until its partner reaches the front of its queue (then the link breaks)
+        if (ok && partner[b.uid]) { const [pl, pt] = pos[partner[b.uid]]; if (st.s[pl] < pt) ok = false; }
+        if (ok) open.push(l); else if (!stuckBox) stuckBox = b.uid;
+      }
+      // Block Queue (Game.isBlocked): the blocked queue only opens while no other queue can send
+      if (open.some(l => l !== st.b)) open = open.filter(l => l !== st.b);
+      if (!open.length) {
+        if (st.s.every((t, l) => t >= Q[l].length)) continue;   // every box sent
+        return { sent: st.s.slice(), total, box: stuckBox };
+      }
+      open.forEach(l => {
+        const s = st.s.slice(); s[l]++;
+        let b = st.b, c = st.c;
+        if (b >= 0 && l !== b) {
+          c--;
+          if (c <= 0) {
+            let next = -1;
+            for (let d = 1; d < n; d++) { const x = (b + d) % n; if (s[x] < Q[x].length) { next = x; break; } }
+            if (next < 0) { b = -1; c = 0; } else { b = next; c = turns; }
+          }
+        }
+        const nx = { s, b, c }, k = key(nx);
+        if (!seen.has(k)) { seen.add(k); todo.push(nx); }
+      });
+    }
+    return null;
+  };
+
   CS.validate = function (m, conv) {
     const out = [];
     const err = (msg, target) => out.push({ level: 'error', msg, target });
@@ -297,6 +349,13 @@ window.CS = window.CS || {};
       else if (Math.abs(A.lane - B.lane) > 1) err(`Link ${i + 1}: linked boxes must sit in neighbouring queues, with no queue between them.`, { box: a });
       [a, b].forEach(x => { if (linked[x]) err('A box is in more than one link.', { box: x }); linked[x] = 1; });
     });
+
+    const jam = CS.queueDeadlock(m);
+    if (jam) {
+      const where = jam.sent.map((n, l) => n < m.lanes[l].length ? `queue ${l + 1} after ${n} sent` : null).filter(Boolean).join(', ');
+      err(`The queues can jam for good: after ${jam.total} box${jam.total === 1 ? '' : 'es'} sent (${where}), no front box can be sent ` +
+        `(Locked Box, Linked Box or Block Queue), so the locks never count down. Lower the Locked Box counts or move them.`, jam.box ? { box: jam.box } : undefined);
+    }
 
     const bal = CS.balance(m);
     let tItems = 0, tCap = 0;
