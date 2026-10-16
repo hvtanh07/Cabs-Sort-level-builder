@@ -40,7 +40,14 @@ const NAMES = {
   27: 'Locked Item', 28: 'Secret Cargo', 29: 'Rush Hour', 30: 'Deep Freeze', 31: 'Cold Storage', 32: 'Block Queue', 33: 'Detour', 34: 'Tangled',
   35: 'Gridlock', 36: 'Long Belt', 37: 'Night Shift', 38: 'Roadblock', 39: 'Last Door', 40: 'Grand Finale'
 };
-const PATHS3 = new Set([15, 18, 20, 24, 29, 30, 33, 35, 36, 38, 40]);   // 3rd Enter Path from 15
+// Hidden Boxes from level 14 follow the patterns of levels 7 and 8 instead of random boxes, taking turns level by level:
+// staggered (level 7: queue 1 hides every even box, queue 2 every odd box after the front, and so on) and rows (level 8: every even box)
+const HIDDEN_PATTERN = {
+  staggered: { fn: (l, p) => p > 1 && (l % 2 === 0 ? p % 2 === 0 : p % 2 === 1), note: 'Hidden Boxes in a staggered pattern, like level 7.' },
+  rows: { fn: (l, p) => p % 2 === 0, note: 'Every even box is hidden, like level 8.' }
+};
+const HIDDEN_LEVELS = Object.keys(FEAT).map(Number).filter(n => FEAT[n].includes('H'));
+const PATHS3 =new Set([15, 18, 20, 24, 29, 30, 33, 35, 36, 38, 40]);   // 3rd Enter Path from 15
 const LANES4 = new Set([20, 27, 30, 31, 34, 35, 38, 40]);              // 4th queue from 20
 const CONV = { 11: 'square_19', 12: 'bean_18', 13: 'lens_18', 14: 'square_19', 15: 'heart_21', 16: 'bean_18', 17: 'square_19', 18: 'lens_18', 19: 'bean_18',
   20: 'square_19', 21: 'lens_18', 22: 'square_19', 23: 'bean_18', 24: 'lens_18', 25: 'heart_21', 26: 'square_19', 27: 'bean_18', 28: 'lens_18', 29: 'square_19',
@@ -64,7 +71,10 @@ for (let n = 11; n <= 40; n++) {
   if (n === 26) intro.push('First 40-item box.');
   f.forEach(k => {
     if (FIRST[k] === n) { s.unlock = FNAME[k]; intro.push('Introduces ' + FNAME[k] + '.'); }
-    if (k === 'H') { s.hidden = Math.round(boxes * (hard ? 0.22 : 0.16)); s.hiddenSizes = n < 20 ? [1, 2] : [1, 2, 3]; }
+    if (k === 'H') {
+      const hp = HIDDEN_PATTERN[HIDDEN_LEVELS.indexOf(n) % 2 ? 'rows' : 'staggered'];
+      s.hiddenPattern = hp.fn; intro.push(hp.note);
+    }
     if (k === 'LB') { s.locks = FIRST.LB === n ? 2 : hard ? 4 : 3; s.lockRange = FIRST.LB === n ? [2, 3] : [3, hard ? 6 : 5]; }
     if (k === 'LK') { s.links = FIRST.LK === n ? 1 : hard ? 3 : 2; s.linkSpread = FIRST.LK === n ? 0 : 1; }
     if (k === 'D') { s.door = FIRST.D === n ? 4 : 3; if (n > 30) s.doorTail = 0.25; }
@@ -141,7 +151,6 @@ S.forEach(s => {
       N += d > 0 ? 1 : -1;
     }
     s.boxes = N;
-    if (s.hidden) s.hidden = Math.round(N * (s.diff === 'hard' ? 0.22 : 0.16));
     s.window = s.tutorial ? 12 : Math.round(s.window * 1.6);
   }
   if (s.tune) { Object.assign(s, s.tune); delete s.tune; }   // per-level values set after the shared rules above

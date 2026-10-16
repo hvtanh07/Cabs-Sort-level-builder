@@ -105,10 +105,10 @@
     ] }
   },
   "lanes": [
-    [{ "color": 2 }, { "color": 2 }, { "color": 3, "hidden": true }, { "color": 7, "size": 2 }, { "color": 2 }, { "color": 3, "hidden": true }, { "color": 6 }],
-    [{ "color": 7 }, { "color": 1 }, { "color": 7 }, { "color": 6, "size": 2 }, { "color": 8, "hidden": true }, { "color": 1, "size": 3 }, { "color": 3 }],
-    [{ "color": 8, "size": 2 }, { "color": 6, "size": 2 }, { "color": 1 }, { "color": 3 }, { "color": 8 }, { "color": 2 }]
+    [{ "color": 2 }, { "color": 2, "hidden": true }, { "color": 3 }, { "color": 7, "hidden": true, "size": 2 }, { "color": 2 }, { "color": 3, "hidden": true }, { "color": 6 }],
+    [{ "color": 7 }, { "color": 1 }, { "color": 7, "hidden": true }, { "color": 6, "size": 2 }, { "color": 8, "hidden": true }, { "color": 1, "size": 3 }, { "color": 3, "hidden": true }],
+    [{ "color": 8, "size": 2 }, { "color": 6, "hidden": true, "size": 2 }, { "color": 1 }, { "color": 3, "hidden": true }, { "color": 8 }, { "color": 2, "hidden": true }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Blind Picks", "difficulty": "medium" }
+  "meta": { "name": "Blind Picks", "difficulty": "medium", "notes": "Hidden Boxes in a staggered pattern, like level 7." }
 }

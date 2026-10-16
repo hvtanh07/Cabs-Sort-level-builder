@@ -11,6 +11,7 @@ node write.js      # writes levels/level_00NN.json and js/levels.js
 - `specs.js`: one entry per level. Levels 1–10 are written by hand; 11–40 follow the level list sheet.
   The block at the end sets each level's length: `TOTAL` gives levels 1–10 in items, and levels 11–40 start at 368 items and grow by about 4 a level (hard +25 %, Block Door −10 to −20 %, element intro levels fixed at level 9's length); box counts follow from it.
   Level 13 is tuned by hand at the end of the 11–40 loop: `items` sets its length, `big3Share` its share of 32-item boxes, `tune` values applied after the shared rules (colours, window), `lockFrom` / `lockDepth` / `lockPerLane` / `lockPerDepth` place its Locked Boxes further back in the queues, `minRandom` raises the random-tap bar and `seed` starts the search at a picked seed.
+  Hidden Boxes from level 14 use the level 7 and 8 patterns (`HIDDEN_PATTERN`), taking turns: staggered, then every even box, and so on.
   `count` sets a level's box count directly (levels 1, 2, 4, 5, 6, 8, 9), with `bigCount` or `bigAt` for its 24-item boxes; `bigAt` puts them at fixed places in the send order, so level 9 gets one per queue.
   Specs count boxes by tier (small, `big2`, `big3`, `big4`); `SIZE` in `gen.js` turns the tiers into 16 / 24 / 32 / 40-item boxes, saved as box `size` 1 / 2 / 3 / 4.
 - `gen.js`: turns a spec into a level, plus the bots: random taps, and a careful player that waits when no box can fill.

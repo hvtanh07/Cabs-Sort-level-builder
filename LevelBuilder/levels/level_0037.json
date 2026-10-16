@@ -111,11 +111,11 @@
     ], "doorShut": true }
   },
   "lanes": [
-    [{ "color": 2 }, { "color": 7 }, { "color": 4, "size": 2 }, { "color": 2, "size": 2 }, { "color": 6, "size": 4 }, { "color": 1 }, { "color": 7, "hidden": true }],
-    [{ "color": 7 }, { "color": 6 }, { "color": 4 }, { "color": 1 }, { "color": 2, "hidden": true, "size": 2 }, { "color": 6 }],
-    [{ "color": 5, "size": 3 }, { "color": 1 }, { "color": 5, "hidden": true, "size": 3 }, { "color": 4, "size": 2 }, { "color": 1 }, { "color": 7 }]
+    [{ "color": 2 }, { "color": 7, "hidden": true }, { "color": 4, "size": 2 }, { "color": 2, "hidden": true, "size": 2 }, { "color": 6, "size": 4 }, { "color": 1, "hidden": true }, { "color": 7 }],
+    [{ "color": 7 }, { "color": 6, "hidden": true }, { "color": 4 }, { "color": 1, "hidden": true }, { "color": 2, "size": 2 }, { "color": 6, "hidden": true }],
+    [{ "color": 5, "size": 3 }, { "color": 1, "hidden": true }, { "color": 5, "size": 3 }, { "color": 4, "hidden": true, "size": 2 }, { "color": 1 }, { "color": 7, "hidden": true }]
   ],
   "doorTurns": 3,
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Night Shift", "difficulty": "medium" }
+  "meta": { "name": "Night Shift", "difficulty": "medium", "notes": "Every even box is hidden, like level 8." }
 }

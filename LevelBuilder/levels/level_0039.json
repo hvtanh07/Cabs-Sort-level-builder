@@ -115,11 +115,11 @@
     ], "doorShut": true }
   },
   "lanes": [
-    [{ "color": 1, "size": 2 }, { "color": 3 }, { "color": 8, "size": 3 }, { "color": 7 }, { "color": 2 }, { "color": 4, "hidden": true }, { "color": 1, "size": 2 }],
-    [{ "color": 4 }, { "color": 7 }, { "color": 3 }, { "color": 8, "hidden": true, "size": 3 }, { "color": 4 }, { "color": 4, "size": 4 }, { "color": 2 }],
-    [{ "color": 2 }, { "color": 2 }, { "color": 3, "size": 2 }, { "color": 7 }, { "color": 1, "size": 2 }, { "color": 7, "hidden": true }]
+    [{ "color": 1, "size": 2 }, { "color": 3, "hidden": true }, { "color": 8, "size": 3 }, { "color": 7, "hidden": true }, { "color": 2 }, { "color": 4, "hidden": true }, { "color": 1, "size": 2 }],
+    [{ "color": 4 }, { "color": 7 }, { "color": 3, "hidden": true }, { "color": 8, "size": 3 }, { "color": 4, "hidden": true }, { "color": 4, "size": 4 }, { "color": 2, "hidden": true }],
+    [{ "color": 2 }, { "color": 2, "hidden": true }, { "color": 3, "size": 2 }, { "color": 7, "hidden": true }, { "color": 1, "size": 2 }, { "color": 7, "hidden": true }]
   ],
   "doorTurns": 3,
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Last Door", "difficulty": "medium" }
+  "meta": { "name": "Last Door", "difficulty": "medium", "notes": "Hidden Boxes in a staggered pattern, like level 7." }
 }
