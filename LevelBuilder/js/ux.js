@@ -350,9 +350,28 @@
         <span class="n">${i + 1}</span>
         <span class="nm"><b>${esc(name || j.id)}</b><small>${esc(j.id)}${diff ? `<span class="diff d-${esc(diff.replace(/\s+/g, '-').toLowerCase())}">${esc(diff)}</span>` : ''}${A.dir && A.dirty[k] ? ' •' : ''}</small>
         <small class="ls">${esc(j.conveyor || '')} · ${boxes} boxes · ${items} items</small></span>
+        <button type="button" class="lcopy" data-copy="${k}" title="Copy this level's JSON">⧉</button>
         <span class="dot ${st === 'ok' ? '' : st}" title="${st === 'ok' ? 'No problems' : st === 'warn' ? 'Has warnings' : 'Has errors'}"></span>
       </li>`;
     }).join('') || '<li class="empty-list">No levels match.</li>';
+  };
+  // quick copy: the ⧉ button on a level copies its JSON without opening it (capture, so the list's click does not open the level)
+  U.bindCopy = function () {
+    $('#levelList').addEventListener('click', async e => {
+      const btn = e.target.closest('[data-copy]'); if (!btn) return;
+      e.stopPropagation(); e.preventDefault();
+      const k = btn.dataset.copy, j = A.store.levels[k]; if (!j) return;
+      const text = A.levelText(k);
+      let ok = false;
+      try { await navigator.clipboard.writeText(text); ok = true; } catch (err) {
+        // clipboard API blocked (e.g. a file:// page): fall back to a hidden textarea
+        const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { ok = document.execCommand('copy'); } catch (err2) { ok = false; }
+        ta.remove();
+      }
+      A.toast(ok ? `Copied ${j.id} JSON` : 'Clipboard is blocked here; use Export instead.');
+    }, true);
   };
   U.bindRename = function () {
     $('#levelList').addEventListener('dblclick', e => {
@@ -470,6 +489,7 @@
 
     U.bindBalance();
     U.bindRename();
+    U.bindCopy();
     $('#btnNew').onclick = U.newLevelWizard;
 
     // right-click menus (capture, so they run before the default cell-clear)

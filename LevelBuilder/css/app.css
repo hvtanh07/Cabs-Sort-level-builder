@@ -62,7 +62,7 @@ input[type=number] { width: 70px; }
 .lp-head h2 span { color: var(--muted); font-weight: 400; }
 .search { margin: 0 10px 6px; }
 .level-list { list-style: none; margin: 0; padding: 0 6px; flex: 1; overflow: auto; }
-.level-list li { display: grid; grid-template-columns: 26px 1fr auto; align-items: center; gap: 6px; padding: 6px 6px; border-radius: 7px; cursor: pointer; border: 1px solid transparent; }
+.level-list li { display: grid; grid-template-columns: 26px 1fr auto auto; align-items: center; gap: 6px; padding: 6px 6px; border-radius: 7px; cursor: pointer; border: 1px solid transparent; }
 .level-list li:hover { background: var(--tint); }
 .level-list li.on { background: var(--tint); border-color: var(--accent); }
 .level-list li.drop { border-top: 2px solid var(--accent); }
@@ -269,6 +269,8 @@ details.sec > summary::-webkit-details-marker { display: none; }
 .board.tall .frows { max-height: none; }
 .level-list .ls { display: block; color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .level-list .rename { width: 100%; padding: 1px 4px; font-weight: 600; }
+.level-list .lcopy { padding: 2px 6px; font-size: 13px; line-height: 1; opacity: .45; }
+.level-list li:hover .lcopy, .level-list li.on .lcopy, .level-list .lcopy:focus-visible { opacity: 1; }
 .level-list .empty-list { color: var(--muted); cursor: default; display: block; padding: 10px; }
 .diff.d-easy { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
 .diff.d-hard { background: color-mix(in srgb, var(--warn) 20%, transparent); color: var(--warn); }

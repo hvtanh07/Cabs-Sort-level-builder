@@ -4,7 +4,7 @@ A level design tool for Caps Sorting. Open `index.html` in Chrome or Edge. No in
 
 ## What it does
 
-- **Level list** (left): new, duplicate, delete, search, drag to reorder. Levels save in the browser automatically.
+- **Level list** (left): new, duplicate, delete, search, drag to reorder, ⧉ copies a level's JSON without opening it. Levels save in the browser automatically.
   **Open folder** (Chrome / Edge) loads every level JSON in a folder and Ctrl+S writes the open level back to it.
 - **Board** (centre): the three Enter Paths (left, middle, right) above the conveyor, the slots, and the queues.
   - Paint items into Enter Path rows (Paint tool, drag across cells, right-click clears a cell).
