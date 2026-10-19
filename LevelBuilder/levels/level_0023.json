@@ -5,6 +5,7 @@
   "conveyor": "bean_18",
   "slots": 4,
   "extraSlots": 2,
+  "blockDoor": { "turns": 3, "doors": [{ "feeder": "left", "open": true }, { "feeder": "right", "open": false }] },
   "colors": [1, 2, 3, 4, 5, 6, 7, 8],
   "feeders": {
     "left": { "bottles": [
@@ -102,14 +103,13 @@
       2, 2, 2, 2,
       2, 2, 2, 2,
       2, 2, 2, 2
-    ], "doorShut": true }
+    ] }
   },
   "lanes": [
     [{ "color": 5, "size": 3 }, { "color": 4, "hidden": true, "size": 2 }, { "color": 8 }, { "color": 6, "hidden": true }, { "color": 3 }, { "color": 2, "hidden": true, "size": 2 }, { "color": 1 }],
     [{ "color": 5 }, { "color": 1, "hidden": true }, { "color": 6, "size": 2 }, { "color": 3, "hidden": true }, { "color": 7 }, { "color": 4, "hidden": true }],
     [{ "color": 2 }, { "color": 8, "hidden": true, "size": 2 }, { "color": 7, "size": 3 }, { "color": 2, "hidden": true }, { "color": 1 }, { "color": 3, "hidden": true }]
   ],
-  "doorTurns": 3,
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Behind the Door", "difficulty": "medium", "notes": "Every even box is hidden, like level 8." }
 }

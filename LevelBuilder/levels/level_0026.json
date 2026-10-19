@@ -5,6 +5,7 @@
   "conveyor": "square_19",
   "slots": 4,
   "extraSlots": 2,
+  "blockDoor": { "turns": 3, "doors": [{ "feeder": "left", "open": true }, { "feeder": "right", "open": false }] },
   "colors": [2, 3, 4, 5, 6, 7, 8],
   "feeders": {
     "left": { "bottles": [
@@ -112,14 +113,13 @@
       7, 7, 7, 7,
       7, 7, 7, 7,
       7, 7, 7, 7
-    ], "doorShut": true }
+    ] }
   },
   "lanes": [
     [{ "color": 4 }, { "color": 2, "lockTurns": 4 }, { "color": 6 }, { "color": 3, "size": 3 }, { "color": 8, "lockTurns": 8 }, { "color": 6, "size": 2 }, { "color": 4, "size": 2 }],
     [{ "color": 4 }, { "color": 2 }, { "color": 5 }, { "color": 8, "lockTurns": 7 }, { "color": 7 }, { "color": 5 }, { "color": 2 }],
     [{ "color": 2 }, { "color": 3, "size": 2 }, { "color": 5, "size": 3 }, { "color": 6 }, { "color": 8, "size": 2 }, { "color": 7, "size": 4 }]
   ],
-  "doorTurns": 3,
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Swing Doors", "difficulty": "medium", "notes": "First 40-item box." }
 }

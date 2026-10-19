@@ -29,7 +29,7 @@ window.CS = window.CS || {};
 
   /* ---------- level JSON <-> editor model ---------- */
   const KNOWN = ['$schema', 'formatVersion', 'id', 'conveyor', 'slots', 'extraSlots', 'slotLocks', 'trayCapacity',
-    'colors', 'feeders', 'lanes', 'links', 'doorTurns', 'blockedLane', 'view', 'meta'];
+    'colors', 'feeders', 'lanes', 'links', 'blockDoor', 'doorTurns', 'blockedLane', 'view', 'meta'];
   const FEEDER_KNOWN = ['bottles', 'hiddenRows', 'lockedRows', 'entry', 'doorShut'];
   const BOX_KNOWN = ['color', 'size', 'hidden', 'lockTurns'];
   const pickExtra = (o, known) => {
@@ -99,7 +99,8 @@ window.CS = window.CS || {};
       feeders: [],
       lanes: [],
       links: [],
-      doorTurns: int(j.doorTurns, 0),
+      // Block Door: `blockDoor: { turns, doors: [{ feeder, open }] }`; older files used `doorTurns` and `feeders.<entry>.doorShut`
+      doorTurns: j.blockDoor && typeof j.blockDoor === 'object' ? int(j.blockDoor.turns, 0) : int(j.doorTurns, 0),
       blockedLane: j.blockedLane && j.blockedLane.lane != null ? { lane: int(j.blockedLane.lane, 0), lockTurns: int(j.blockedLane.lockTurns, 3) } : null,
       view: j.view !== undefined ? CS.clone(j.view) : { cameraPreset: 'default' },
       meta: migrateMeta(Object.assign({ name: '', difficulty: 'medium' }, CS.clone(j.meta || {}))),
@@ -111,6 +112,8 @@ window.CS = window.CS || {};
     const feeders = Array.isArray(j.feeders) ? j.feeders
       : j.feeders && typeof j.feeders === 'object' ? Object.keys(j.feeders).map(e => Object.assign({}, j.feeders[e], { entry: e })) : [];
     const defaults = CS.defaultEntries(feeders.length);
+    const doorOpen = {};
+    if (j.blockDoor && Array.isArray(j.blockDoor.doors)) j.blockDoor.doors.forEach(d => { if (d && d.feeder) doorOpen[d.feeder] = d.open !== false; });
     feeders.forEach((f, i) => {
       const b = Array.isArray(f.bottles) ? f.bottles.map(x => int(x, 0)) : [];
       const hidden = new Set((f.hiddenRows || []).map(x => int(x, -1)));
@@ -122,9 +125,10 @@ window.CS = window.CS || {};
         while (cells.length < CS.ROW_W) cells.push(0);
         rows.push({ cells, hidden: hidden.has(r), lock: locks[r] || 0 });
       }
+      const entry = CS.ENTRIES.includes(f.entry) ? f.entry : defaults[i] || 'middle';
       m.feeders.push({
-        entry: CS.ENTRIES.includes(f.entry) ? f.entry : defaults[i] || 'middle',
-        doorShut: !!f.doorShut,
+        entry,
+        doorShut: doorOpen[entry] !== undefined ? !doorOpen[entry] : !!f.doorShut,
         rows,
         extra: CS.clone(pickExtra(f, FEEDER_KNOWN))
       });
@@ -174,9 +178,12 @@ window.CS = window.CS || {};
     const locks = Object.keys(m.slotLocks).map(Number).sort((a, b) => a - b)
       .filter(s => m.slotLocks[s] > 0).map(s => ({ slot: s, lockTurns: m.slotLocks[s] }));
     if (locks.length) o.slotLocks = locks;   // left out when empty
+    const feeders = m.feeders.slice().sort((a, b) => CS.ENTRIES.indexOf(a.entry) - CS.ENTRIES.indexOf(b.entry));
+    // Block Door: the countdown and each Enter Path's door, open or shut at the start (left out when there is no Block Door)
+    if (m.doorTurns > 0) o.blockDoor = { turns: m.doorTurns, doors: feeders.map(f => ({ feeder: f.entry, open: !f.doorShut })) };
     o.colors = CS.usedColors(m);
     o.feeders = {};
-    m.feeders.slice().sort((a, b) => CS.ENTRIES.indexOf(a.entry) - CS.ENTRIES.indexOf(b.entry)).forEach(f => {
+    feeders.forEach(f => {
       let bottles = [];
       f.rows.forEach(r => { bottles = bottles.concat(r.cells); });
       while (bottles.length && bottles[bottles.length - 1] === 0) bottles.pop();
@@ -185,7 +192,6 @@ window.CS = window.CS || {};
       f.rows.forEach((r, i) => { if (r.hidden) hid.push(i); if (r.lock > 0) lk.push({ row: i, lockTurns: r.lock }); });
       if (hid.length) fo.hiddenRows = hid;
       if (lk.length) fo.lockedRows = lk;
-      if (f.doorShut) fo.doorShut = true;
       o.feeders[f.entry] = Object.assign(fo, f.extra || {});
     });
     o.lanes = m.lanes.map(l => l.map(b => {
@@ -198,7 +204,6 @@ window.CS = window.CS || {};
     const links = m.links.map(([a, b]) => ({ a: CS.boxPos(m, a), b: CS.boxPos(m, b) })).filter(L => L.a && L.b)
       .map(L => ({ a: { lane: L.a.lane, tray: L.a.tray }, b: { lane: L.b.lane, tray: L.b.tray } }));
     if (links.length) o.links = links;   // left out when empty
-    if (m.doorTurns > 0) o.doorTurns = m.doorTurns;
     if (m.blockedLane) o.blockedLane = { lane: m.blockedLane.lane, lockTurns: m.blockedLane.lockTurns };
     if (m.view !== undefined) o.view = m.view;
     o.meta = m.meta;

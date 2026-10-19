@@ -5,7 +5,7 @@ for(const S of SP){const j=out[S.n].json;const m=CS.fromJSON(j);
  const b=j.lanes.flat();const items=CS.feederList(j).reduce((a,f)=>a+f.bottles.length,0);
  const feat=[];const nh=b.filter(x=>x.hidden).length;if(nh)feat.push(`Hidden ×${nh} (${[...new Set(b.filter(x=>x.hidden).map(x=>G.CS.boxItems(x.size||1)))].sort((p,q)=>p-q).join('/')} items)`);
  const nl=b.filter(x=>x.lockTurns).length;if(nl)feat.push(`Locked Box ×${nl}`);if((j.links||[]).length)feat.push(`Linked ×${j.links.length}`);
- if(j.doorTurns)feat.push(`Block Door (${j.doorTurns})`);const li=CS.feederList(j).reduce((a,f)=>a+(f.lockedRows||[]).length,0);if(li)feat.push(`Locked Item rows ×${li}`);if(j.blockedLane)feat.push(`Block Queue (${j.blockedLane.lockTurns})`);
+ if(j.blockDoor)feat.push(`Block Door (${j.blockDoor.turns})`);const li=CS.feederList(j).reduce((a,f)=>a+(f.lockedRows||[]).length,0);if(li)feat.push(`Locked Item rows ×${li}`);if(j.blockedLane)feat.push(`Block Queue (${j.blockedLane.lockTurns})`);
  const sizes={};b.forEach(x=>sizes[x.size||1]=(sizes[x.size||1]||0)+1);
  const runs=S.n<=10?300:200;const r={};
  for(const k of (S.n<=10?['low','zon','zoff','lowNP','zonNP','zoffNP']:['low','zon','zoff'])) r[k]=G.rate(m,G.MODES[k],1,runs,7000);

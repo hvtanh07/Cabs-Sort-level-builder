@@ -1013,8 +1013,9 @@
       <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd> undo / redo · <kbd>Ctrl</kbd>+<kbd>S</kbd> save (linked folder) or download ·
       <kbd>Ctrl</kbd>+<kbd>Enter</kbd> play test · <kbd>Esc</kbd> back to edit · in play: <kbd>Space</kbd> pause, <kbd>R</kbd> restart, <kbd>.</kbd> step, <kbd>1</kbd>–<kbd>6</kbd> send queue.</div>
       <h3>Level JSON</h3>
-      <div class="hint">formatVersion 5: <code>feeders</code> is keyed by entry (<code>"left"</code> | <code>"middle"</code> | <code>"right"</code>), each with <code>bottles</code>, <code>hiddenRows</code>, <code>lockedRows</code> and <code>doorShut</code> when used.
-      Older files (feeders as a list with <code>entry</code>, <code>trayCapacity</code>) still import. Other fields: <code>doorTurns</code> (Block Door countdown),
+      <div class="hint">formatVersion 5: <code>feeders</code> is keyed by entry (<code>"left"</code> | <code>"middle"</code> | <code>"right"</code>), each with <code>bottles</code>, <code>hiddenRows</code>, <code>lockedRows</code> when used.
+      Older files (feeders as a list with <code>entry</code>, <code>trayCapacity</code>, <code>doorTurns</code> / <code>doorShut</code>) still import. Other fields:
+      <code>blockDoor: { turns, doors: [{ feeder, open }] }</code> (Block Door countdown and each door's start state),
       <code>blockedLane: { lane, lockTurns }</code> (Block Queue). <code>colors</code> is filled from the colours used. A box's <code>size</code> sets its items: 1 = 16, 2 = 24, 3 = 32, 4 = 40.
       Feeder row 0 and lane box 0 are the ones nearest the conveyor and the slots. Unknown fields are kept on export.</div>
       <h3>Storage</h3>

@@ -61,8 +61,7 @@ Other fields the tool writes when a level uses them:
 
 | Added field | Meaning |
 | --- | --- |
-| `feeders.<entry>.doorShut` | Block Door: this door starts shut. |
-| `doorTurns` | Block Door countdown. At 0, shut doors open and open doors shut, then it restarts. |
+| `blockDoor` | Block Door: `{ "turns": 5, "doors": [{ "feeder": "left", "open": false }, { "feeder": "right", "open": true }] }`. `turns` is the countdown (boxes sent); at 0, shut doors open and open doors shut, then it restarts. `doors` lists each Enter Path's door and whether it starts open. Written after `extraSlots`. Older files with `doorTurns` and `feeders.<entry>.doorShut` import fine and are saved in this layout. |
 | `blockedLane` | Block Queue: `{ lane, lockTurns }`. At 0 the block moves to the next queue that still has boxes. |
 
 Unknown fields are kept as they are on export.
