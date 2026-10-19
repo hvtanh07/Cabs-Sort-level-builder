@@ -424,9 +424,10 @@
     const L = linkLetters(m);
     const qh = m.lanes.map((lane, l) => {
       const blocked = m.blockedLane && m.blockedLane.lane === l;
+      const turn = m.blockedLane && !blocked && m.blockedLane.lane2 === l;   // blocked after the first switch
       const isSel = A.sel && A.sel.type === 'lane' && A.sel.l === l;
       return `<div class="lane ${blocked ? 'blocked' : ''} ${isSel ? 'sel' : ''}" data-l="${l}">
-        <div class="lh" data-l="${l}" title="Queue ${l + 1}: select for queue options">Q${l + 1} · ${lane.length}${blocked ? ` <span class="blk">⛔${m.blockedLane.lockTurns}</span>` : ''}</div>
+        <div class="lh" data-l="${l}" title="Queue ${l + 1}: select for queue options">Q${l + 1} · ${lane.length}${blocked ? ` <span class="blk">⛔${m.blockedLane.lockTurns}</span>` : ''}${turn ? ' <span class="blk" title="Takes turns being blocked">⇄</span>' : ''}</div>
         ${lane.map((b, t) => CS.boxHTML(b, CS.boxItems(b.size), {
           sel: A.sel && A.sel.type === 'box' && A.sel.uid === b.uid, link: L[b.uid], drag: true,
           extra: A.linkFirst === b.uid ? 'linkpick' : '',
@@ -637,6 +638,7 @@
     for (let i = 0; i < m.slots; i++) locks += `<label title="Slot ${i + 1} lock turns (0 = unlocked)">${i + 1}: ${num('slotLock:' + i, m.slotLocks[i] || 0, 0, 99, 'style="width:52px"')}</label>`;
     const doors = m.feeders.map((f, i) => `<label class="chk"><input type="checkbox" data-k="doorShut:${i}" ${f.doorShut ? 'checked' : ''}> ${CS.ENTRY_LABEL[f.entry]} shut</label>`).join(' ');
     const laneOpts = `<option value="-1">None</option>` + m.lanes.map((_, i) => `<option value="${i}" ${m.blockedLane && m.blockedLane.lane === i ? 'selected' : ''}>Queue ${i + 1}</option>`).join('');
+    const lane2Opts = m.lanes.map((_, i) => `<option value="${i}" ${m.blockedLane && m.blockedLane.lane2 === i ? 'selected' : ''}>Queue ${i + 1}</option>`).join('');
     const extraKeys = Object.keys(m.extra || {});
     return `<h3>Level</h3>
       ${field('Name', `<input type="text" data-k="name" value="${esc(m.meta.name)}" style="width:100%">`)}
@@ -655,8 +657,9 @@
       ${field('Turns', num('doorTurns', m.doorTurns, 0, 99), '0 = no Block Door. When the count reaches 0, shut doors open and open doors shut.')}
       ${m.doorTurns > 0 ? field('Start state', doors || '<span class="hint">Add an Enter Path first</span>') : ''}
       <h3>Block Queue</h3>
-      ${field('Blocked queue', `<select data-k="blockLane">${laneOpts}</select>`)}
-      ${m.blockedLane ? field('Turns', num('blockTurns', m.blockedLane.lockTurns, 1, 99), 'Counts boxes sent from the other queues, then the block moves to the next queue.') : ''}
+      ${field('Starts blocked', `<select data-k="blockLane">${laneOpts}</select>`)}
+      ${m.blockedLane ? field('Takes turns with', `<select data-k="blockLane2">${lane2Opts}</select>`, 'The two queues take turns being blocked; the other queues are never blocked.') : ''}
+      ${m.blockedLane ? field('Turns', num('blockTurns', m.blockedLane.lockTurns, 1, 99), 'Counts boxes sent from the other queues, then the block switches to the other queue of the pair.') : ''}
       <h3>Other</h3>
       ${field('Camera preset', `<input type="text" data-k="camera" value="${esc(m.view && m.view.cameraPreset || '')}">`)}
       ${field('Format version', num('formatVersion', m.formatVersion, 1, 99))}
@@ -781,7 +784,8 @@
       case 'slots': m.slots = Math.max(1, Math.min(CS.MAX_SLOTS, n)); break;
       case 'extraSlots': m.extraSlots = Math.min(CS.MAX_SLOTS, n); break;
       case 'doorTurns': m.doorTurns = n; break;
-      case 'blockLane': { const l = CS.int(v, -1); m.blockedLane = l < 0 ? null : { lane: l, lockTurns: (m.blockedLane && m.blockedLane.lockTurns) || 3 }; break; }
+      case 'blockLane': { const l = CS.int(v, -1); m.blockedLane = l < 0 ? null : CS.startBlock(m, l); break; }
+      case 'blockLane2': if (m.blockedLane) m.blockedLane.lane2 = CS.int(v, m.blockedLane.lane2); break;
       case 'blockTurns': if (m.blockedLane) m.blockedLane.lockTurns = Math.max(1, n); break;
       case 'camera': m.view = Object.assign({}, m.view || {}, { cameraPreset: String(v) }); break;
       case 'formatVersion': m.formatVersion = Math.max(1, n); break;
@@ -801,7 +805,7 @@
         break;
       }
       case 'feederShut': m.feeders[s.f].doorShut = !!v; break;
-      case 'laneBlocked': m.blockedLane = v ? { lane: s.l, lockTurns: (m.blockedLane && m.blockedLane.lockTurns) || 3 } : (m.blockedLane && m.blockedLane.lane === s.l ? null : m.blockedLane); break;
+      case 'laneBlocked': m.blockedLane = v ? CS.startBlock(m, s.l) : (m.blockedLane && m.blockedLane.lane === s.l ? null : m.blockedLane); break;
       default: return;
     }
     A.commit();
@@ -838,7 +842,7 @@
       case 'laneLeft': case 'laneRight': {
         const to = s.l + (c === 'laneLeft' ? -1 : 1);
         if (!moveArr(m.lanes, s.l, to)) return;
-        if (m.blockedLane) { if (m.blockedLane.lane === s.l) m.blockedLane.lane = to; else if (m.blockedLane.lane === to) m.blockedLane.lane = s.l; }
+        if (m.blockedLane) ['lane', 'lane2'].forEach(k => { if (m.blockedLane[k] === s.l) m.blockedLane[k] = to; else if (m.blockedLane[k] === to) m.blockedLane[k] = s.l; });
         A.sel = { type: 'lane', l: to }; break;
       }
       case 'laneShuffle': CS.shuffle(m.lanes[s.l]); break;
@@ -849,7 +853,11 @@
         const gone = new Set(m.lanes[s.l].map(b => b.uid));
         m.lanes.splice(s.l, 1);
         m.links = m.links.filter(L => !gone.has(L[0]) && !gone.has(L[1]));
-        if (m.blockedLane) { if (m.blockedLane.lane === s.l) m.blockedLane = null; else if (m.blockedLane.lane > s.l) m.blockedLane.lane--; }
+        if (m.blockedLane) {
+          const B = m.blockedLane;
+          if (B.lane === s.l || B.lane2 === s.l) m.blockedLane = null;   // a pair needs both queues
+          else { if (B.lane > s.l) B.lane--; if (B.lane2 > s.l) B.lane2--; }
+        }
         A.sel = null; break;
       }
       case 'fillRows': case 'fillMixed':
@@ -1016,7 +1024,7 @@
       <div class="hint">formatVersion 5: <code>feeders</code> is keyed by entry (<code>"left"</code> | <code>"middle"</code> | <code>"right"</code>), each with <code>bottles</code>, <code>hiddenRows</code>, <code>lockedRows</code> when used.
       Older files (feeders as a list with <code>entry</code>, <code>trayCapacity</code>, <code>doorTurns</code> / <code>doorShut</code>) still import. Other fields:
       <code>blockDoor: { turns, doors: [{ feeder, open }] }</code> (Block Door countdown and each door's start state),
-      <code>blockedLane: { lane, lockTurns }</code> (Block Queue). <code>colors</code> is filled from the colours used. A box's <code>size</code> sets its items: 1 = 16, 2 = 24, 3 = 32, 4 = 40.
+      <code>blockQueue: { turns, lanes: [a, b] }</code> (Block Queue: queues a and b take turns being blocked, a first; older <code>blockedLane</code> files still import). <code>colors</code> is filled from the colours used. A box's <code>size</code> sets its items: 1 = 16, 2 = 24, 3 = 32, 4 = 40.
       Feeder row 0 and lane box 0 are the ones nearest the conveyor and the slots. Unknown fields are kept on export.</div>
       <h3>Storage</h3>
       <div class="hint">Levels are saved in this browser automatically. Use Export / Export all to get files, or Open folder (Chrome / Edge) to load and save a folder of level files directly.</div>

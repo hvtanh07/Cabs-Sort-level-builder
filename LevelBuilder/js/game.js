@@ -44,8 +44,10 @@
       });
     });
     this.doorTurns = m.doorTurns; this.doorCount = m.doorTurns;
-    this.blocked = m.blockedLane && m.lanes.length > 1 && m.blockedLane.lane < m.lanes.length
-      ? { lane: m.blockedLane.lane, turns: Math.max(1, m.blockedLane.lockTurns), count: Math.max(1, m.blockedLane.lockTurns) } : null;
+    // Block Queue: two queues take turns being blocked (`lane` first, then `other`)
+    const bq = m.blockedLane;
+    this.blocked = bq && m.lanes.length > 1 && bq.lane < m.lanes.length
+      ? { lane: bq.lane, other: bq.lane2 != null && bq.lane2 < m.lanes.length ? bq.lane2 : bq.lane, turns: Math.max(1, bq.lockTurns), count: Math.max(1, bq.lockTurns) } : null;
     const link = {};
     m.links.forEach(([a, b]) => { link[a] = b; link[b] = a; });
     this.lanes = m.lanes.map(l => l.map(b => ({
@@ -203,11 +205,12 @@
     if (this.blocked && l !== this.blocked.lane) {
       this.blocked.count--;
       if (this.blocked.count <= 0) {
-        const n = this.lanes.length;
-        let next = -1;
-        for (let d = 1; d < n; d++) { const c = (this.blocked.lane + d) % n; if (this.lanes[c].length) { next = c; break; } }
-        if (next < 0) { this.say(`Queue ${this.blocked.lane + 1} unblocked.`); this.blocked = null; }
-        else { this.say(`Queue ${this.blocked.lane + 1} unblocked; the block moves to queue ${next + 1}.`); this.blocked.lane = next; this.blocked.count = this.blocked.turns; }
+        // the block switches to the other queue of the pair; while that queue is empty it stays and counts again
+        const B = this.blocked, o = B.other;
+        if (o !== B.lane && this.lanes[o].length) { this.say(`Queue ${B.lane + 1} unblocked; queue ${o + 1} is blocked now.`); B.other = B.lane; B.lane = o; }
+        else this.say(`Queue ${B.lane + 1} stays blocked.`);
+        B.count = B.turns;
+        if (!this.lanes[B.lane].length && !this.lanes[B.other].length) this.blocked = null;   // both queues done
       }
     }
     this.updateFront();

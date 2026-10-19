@@ -29,7 +29,7 @@ window.CS = window.CS || {};
 
   /* ---------- level JSON <-> editor model ---------- */
   const KNOWN = ['$schema', 'formatVersion', 'id', 'conveyor', 'slots', 'extraSlots', 'slotLocks', 'trayCapacity',
-    'colors', 'feeders', 'lanes', 'links', 'blockDoor', 'doorTurns', 'blockedLane', 'view', 'meta'];
+    'colors', 'feeders', 'lanes', 'links', 'blockDoor', 'doorTurns', 'blockQueue', 'blockedLane', 'view', 'meta'];
   const FEEDER_KNOWN = ['bottles', 'hiddenRows', 'lockedRows', 'entry', 'doorShut'];
   const BOX_KNOWN = ['color', 'size', 'hidden', 'lockTurns'];
   const pickExtra = (o, known) => {
@@ -86,6 +86,30 @@ window.CS = window.CS || {};
     return meta;
   }
 
+  // Block Queue: `blockQueue: { turns, lanes: [a, b] }`. Queue a starts blocked; after `turns` boxes sent from the other
+  // queues the block switches to queue b, then back to a, and so on. In the model: { lane: a, lane2: b, lockTurns }.
+  // Older files used `blockedLane: { lane, lockTurns }`; they take turns with the next queue.
+  function readBlockQueue(j) {
+    const nl = Array.isArray(j.lanes) ? j.lanes.length : 0;
+    if (j.blockQueue && Array.isArray(j.blockQueue.lanes) && j.blockQueue.lanes.length) {
+      const a = int(j.blockQueue.lanes[0], 0);
+      const b = j.blockQueue.lanes.length > 1 ? int(j.blockQueue.lanes[1], 0) : nl > 1 ? (a + 1) % nl : a;
+      return { lane: a, lane2: b, lockTurns: int(j.blockQueue.turns, 3) };
+    }
+    if (j.blockedLane && j.blockedLane.lane != null) {
+      const a = int(j.blockedLane.lane, 0);
+      return { lane: a, lane2: nl > 1 ? (a + 1) % nl : a, lockTurns: int(j.blockedLane.lockTurns, 3) };
+    }
+    return null;
+  }
+
+  // Block Queue starting on queue l: keeps the current partner and count when it can, otherwise takes turns with the next queue
+  CS.startBlock = function (m, l) {
+    const old = m.blockedLane, n = m.lanes.length;
+    const lane2 = old && old.lane2 !== l && old.lane2 < n ? old.lane2 : old && old.lane !== l ? old.lane : n > 1 ? (l + 1) % n : l;
+    return { lane: l, lane2, lockTurns: (old && old.lockTurns) || 3 };
+  };
+
   CS.fromJSON = function (j) {
     j = j || {};
     if (Array.isArray(j.lanes)) { j = Object.assign({}, j); migrateSizes(j); }
@@ -102,7 +126,7 @@ window.CS = window.CS || {};
       links: [],
       // Block Door: `blockDoor: { turns, doors: [{ feeder, open }] }`; older files used `doorTurns` and `feeders.<entry>.doorShut`
       doorTurns: j.blockDoor && typeof j.blockDoor === 'object' ? int(j.blockDoor.turns, 0) : int(j.doorTurns, 0),
-      blockedLane: j.blockedLane && j.blockedLane.lane != null ? { lane: int(j.blockedLane.lane, 0), lockTurns: int(j.blockedLane.lockTurns, 3) } : null,
+      blockedLane: readBlockQueue(j),
       view: j.view !== undefined ? CS.clone(j.view) : { cameraPreset: 'default' },
       meta: migrateMeta(Object.assign({ name: '', difficulty: 'medium' }, CS.clone(j.meta || {}))),
       extra: CS.clone(pickExtra(j, KNOWN))
@@ -185,6 +209,8 @@ window.CS = window.CS || {};
     const feeders = m.feeders.slice().sort((a, b) => CS.FILE_ENTRY_ORDER.indexOf(a.entry) - CS.FILE_ENTRY_ORDER.indexOf(b.entry));
     // Block Door: the countdown and each Enter Path's door, open or shut at the start (left out when there is no Block Door)
     if (m.doorTurns > 0) o.blockDoor = { turns: m.doorTurns, doors: feeders.map(f => ({ feeder: f.entry, open: !f.doorShut })) };
+    // Block Queue: the two queues that take turns being blocked, the first one blocked at the start
+    if (m.blockedLane) o.blockQueue = { turns: m.blockedLane.lockTurns, lanes: [m.blockedLane.lane, m.blockedLane.lane2] };
     o.colors = CS.usedColors(m);
     o.feeders = {};
     feeders.forEach(f => {
@@ -208,7 +234,6 @@ window.CS = window.CS || {};
     const links = m.links.map(([a, b]) => ({ a: CS.boxPos(m, a), b: CS.boxPos(m, b) })).filter(L => L.a && L.b)
       .map(L => ({ a: { lane: L.a.lane, tray: L.a.tray }, b: { lane: L.b.lane, tray: L.b.tray } }));
     if (links.length) o.links = links;   // left out when empty
-    if (m.blockedLane) o.blockedLane = { lane: m.blockedLane.lane, lockTurns: m.blockedLane.lockTurns };
     if (m.view !== undefined) o.view = m.view;
     o.meta = m.meta;
     return Object.assign(o, m.extra || {});
@@ -275,6 +300,7 @@ window.CS = window.CS || {};
     m.links.forEach(([a, b]) => { if (pos[a] && pos[b]) { partner[a] = b; partner[b] = a; } });
     const bl = m.blockedLane && n > 1 && m.blockedLane.lane < n ? m.blockedLane : null;
     const turns = bl ? Math.max(1, bl.lockTurns) : 0;
+    const pair = bl ? [bl.lane, bl.lane2 != null && bl.lane2 < n ? bl.lane2 : bl.lane] : [];
     const start = { s: new Array(n).fill(0), b: bl ? bl.lane : -1, c: turns };
     const key = st => st.s.join(',') + '|' + st.b + '|' + st.c;
     const seen = new Set([key(start)]), todo = [start];
@@ -302,11 +328,8 @@ window.CS = window.CS || {};
         let b = st.b, c = st.c;
         if (b >= 0 && l !== b) {
           c--;
-          if (c <= 0) {
-            let next = -1;
-            for (let d = 1; d < n; d++) { const x = (b + d) % n; if (s[x] < Q[x].length) { next = x; break; } }
-            if (next < 0) { b = -1; c = 0; } else { b = next; c = turns; }
-          }
+          // the block switches to the other queue of the pair (it stays put while that queue is empty)
+          if (c <= 0) { const o = b === pair[0] ? pair[1] : pair[0]; if (s[o] < Q[o].length) b = o; c = turns; }
         }
         const nx = { s, b, c }, k = key(nx);
         if (!seen.has(k)) { seen.add(k); todo.push(nx); }
@@ -347,7 +370,8 @@ window.CS = window.CS || {};
 
     if (!m.lanes.length || m.lanes.every(l => !l.length)) err('The level has no boxes.');
     m.lanes.forEach((l, i) => { if (!l.length) warn(`Queue ${i + 1} is empty.`, { lane: i }); });
-    if (m.blockedLane && (m.blockedLane.lane >= m.lanes.length)) err('Block Queue points at a queue that does not exist.');
+    if (m.blockedLane && (m.blockedLane.lane >= m.lanes.length || m.blockedLane.lane2 >= m.lanes.length)) err('Block Queue points at a queue that does not exist.');
+    if (m.blockedLane && m.blockedLane.lane === m.blockedLane.lane2) warn('Block Queue: pick two different queues to take turns being blocked.');
     if (m.blockedLane && m.lanes.length < 2) warn('Block Queue needs at least 2 queues to count down.');
 
     const linked = {};

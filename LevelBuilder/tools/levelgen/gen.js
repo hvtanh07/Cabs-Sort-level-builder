@@ -169,12 +169,15 @@ function make(S, seed) {
     c.forEach(x => { taken.add(x.b); x.b.lockTurns = x.turns; });
   }
   const links = [];
-  // with Block Queue too, the blocked queue is picked first and holds no Linked Box: a partner waiting behind the block can
+  // Block Queue: the queue that starts blocked and its neighbour (the next one, or the one before for the last queue) take
+  // turns being blocked. With Linked Boxes the pair is picked first and holds none: a partner waiting behind the block can
   // jam both queues
   const blockFirst = S.block && S.links ? (S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1)) : null;
+  const blockPair = l => [l, l < lanesN - 1 ? l + 1 : l - 1];
+  const noLink = blockFirst != null ? blockPair(blockFirst) : [];
   if (S.links) {
     for (let n = 0; n < S.links; n++) {
-      const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= 1 && !x.b.hidden && x.l !== blockFirst), r);
+      const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= 1 && !x.b.hidden && !noLink.includes(x.l)), r);
       let done = false;
       for (const x of c) {
         // partners sit in neighbouring queues, so no other queue lies between them
@@ -212,7 +215,7 @@ function make(S, seed) {
     meta: { name: S.name, difficulty: S.diff }
   };
   if (S.door) j.doorTurns = S.door;
-  if (S.block) j.blockedLane = { lane: blockFirst != null ? blockFirst : S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1), lockTurns: S.block };
+  if (S.block) j.blockQueue = { turns: S.block, lanes: blockPair(blockFirst != null ? blockFirst : S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1)) };
   if (S.intro) j.meta.notes = S.intro;
   if (S.grouped) groupByBox(j, units);
   // go through the tool's own model so the export matches the tool exactly
