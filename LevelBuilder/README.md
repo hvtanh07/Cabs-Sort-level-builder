@@ -47,7 +47,7 @@ formatVersion 5. Older files (formatVersion 4: `feeders` as a list with `entry`,
 | --- | --- |
 | `$schema` | Always written first as `../../../../../docs/design/level.schema.json`. |
 | `meta` | `name`, `difficulty` and optional `notes`. Older files with `meta.intro` import fine: it becomes `meta.notes`, and `meta.unlock` / `meta.booster` are dropped. |
-| `feeders` | Enter Paths, keyed by the conveyor entry they join: `"left"`, `"middle"` or `"right"`. `bottles` is a flat list read in rows of 4. Row 0 enters the conveyor first. |
+| `feeders` | Enter Paths, keyed by the conveyor entry they join: `"left"`, `"middle"` or `"right"`, written in the order right, left, middle (any order imports). `bottles` is a flat list read in rows of 4. Row 0 enters the conveyor first. |
 | `feeders.<entry>.hiddenRows` | Rows whose items show "?" until they reach the conveyor. Left out when empty. |
 | `feeders.<entry>.lockedRows` | Locked Items: `{ row, lockTurns }`. Left out when empty. |
 | `lanes[][]` | Queues. Box 0 is the front box. `size` sets the items the box holds: 1 = 16, 2 = 24, 3 = 32, 4 = 40 (no `size` = 1). There is no `trayCapacity`. Older files that used `size × trayCapacity` are converted on import. |
@@ -61,7 +61,7 @@ Other fields the tool writes when a level uses them:
 
 | Added field | Meaning |
 | --- | --- |
-| `blockDoor` | Block Door: `{ "turns": 5, "doors": [{ "feeder": "left", "open": false }, { "feeder": "right", "open": true }] }`. `turns` is the countdown (boxes sent); at 0, shut doors open and open doors shut, then it restarts. `doors` lists each Enter Path's door and whether it starts open. Written after `extraSlots`. Older files with `doorTurns` and `feeders.<entry>.doorShut` import fine and are saved in this layout. |
+| `blockDoor` | Block Door: `{ "turns": 5, "doors": [{ "feeder": "right", "open": true }, { "feeder": "left", "open": false }] }`. `turns` is the countdown (boxes sent); at 0, shut doors open and open doors shut, then it restarts. `doors` lists each Enter Path's door and whether it starts open. Written after `extraSlots`. Older files with `doorTurns` and `feeders.<entry>.doorShut` import fine and are saved in this layout. |
 | `blockedLane` | Block Queue: `{ lane, lockTurns }`. At 0 the block moves to the next queue that still has boxes. |
 
 Unknown fields are kept as they are on export.

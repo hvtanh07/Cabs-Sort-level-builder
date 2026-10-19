@@ -7,7 +7,7 @@
   "extraSlots": 2,
   "colors": [1, 2, 3, 4],
   "feeders": {
-    "left": { "bottles": [
+    "right": { "bottles": [
       4, 4, 4, 4,
       4, 4, 4, 4,
       3, 3, 3, 3,
@@ -21,7 +21,7 @@
       2, 2, 2, 2,
       2, 2, 2, 2
     ] },
-    "right": { "bottles": [
+    "left": { "bottles": [
       4, 4, 4, 4,
       4, 4, 4, 4,
       3, 3, 3, 3,

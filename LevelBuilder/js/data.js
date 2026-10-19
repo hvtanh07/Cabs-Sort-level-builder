@@ -43,6 +43,7 @@ window.CS = window.CS || {};
   CS.LEVEL_SCHEMA = '../../../../../docs/design/level.schema.json';
   // the larger conveyors used before (square_42, bean_42, ...) were replaced by the game's own configs; a level that names one moves to its replacement
   CS.CONVEYOR_ALIAS = { square_42: 'square_19', bean_42: 'bean_18', lens_42: 'lens_18', heart_44: 'heart_21', triangle_28: 'triangle_12', oval_32: 'oval_14' };
+  CS.FILE_ENTRY_ORDER = ['right', 'left', 'middle'];   // order of the Enter Paths in a level file (the tool shows them left to right)
   CS.FORMAT_VERSION = 5;   // feeders keyed by entry ("left" / "middle" / "right"), no trayCapacity
   // a level JSON's Enter Paths as a list with `entry` (works for formatVersion 5 and older files)
   CS.feederList = j => !j || !j.feeders ? [] : Array.isArray(j.feeders) ? j.feeders : Object.keys(j.feeders).map(e => Object.assign({ entry: e }, j.feeders[e]));
@@ -133,6 +134,8 @@ window.CS = window.CS || {};
         extra: CS.clone(pickExtra(f, FEEDER_KNOWN))
       });
     });
+    // the tool works left to right, whatever order the file lists them in
+    m.feeders.sort((a, b) => CS.ENTRIES.indexOf(a.entry) - CS.ENTRIES.indexOf(b.entry));
 
     (Array.isArray(j.lanes) ? j.lanes : []).forEach(l => {
       m.lanes.push((Array.isArray(l) ? l : []).map(t => ({
@@ -178,7 +181,8 @@ window.CS = window.CS || {};
     const locks = Object.keys(m.slotLocks).map(Number).sort((a, b) => a - b)
       .filter(s => m.slotLocks[s] > 0).map(s => ({ slot: s, lockTurns: m.slotLocks[s] }));
     if (locks.length) o.slotLocks = locks;   // left out when empty
-    const feeders = m.feeders.slice().sort((a, b) => CS.ENTRIES.indexOf(a.entry) - CS.ENTRIES.indexOf(b.entry));
+    // level files list the Enter Paths in the game's order: right, left, middle (the Block Door list uses the same order)
+    const feeders = m.feeders.slice().sort((a, b) => CS.FILE_ENTRY_ORDER.indexOf(a.entry) - CS.FILE_ENTRY_ORDER.indexOf(b.entry));
     // Block Door: the countdown and each Enter Path's door, open or shut at the start (left out when there is no Block Door)
     if (m.doorTurns > 0) o.blockDoor = { turns: m.doorTurns, doors: feeders.map(f => ({ feeder: f.entry, open: !f.doorShut })) };
     o.colors = CS.usedColors(m);
