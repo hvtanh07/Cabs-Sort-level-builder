@@ -338,9 +338,11 @@ window.CS = window.CS || {};
         let b = st.b, c = st.c;
         if (b >= 0 && l !== b) {
           c--;
-          // the block switches to the other queue of the pair (it stays put while that queue is empty)
-          if (c <= 0) { const o = b === pair[0] ? pair[1] : pair[0]; if (s[o] < Q[o].length) b = o; c = turns; }
+          // the block switches to the other queue of the pair
+          if (c <= 0) { b = b === pair[0] ? pair[1] : pair[0]; c = turns; }
         }
+        // Game.clearSpentBlocks: the block is gone once either queue of the pair runs out of boxes
+        if (b >= 0 && pair.some(p => s[p] >= Q[p].length)) { b = -1; c = 0; }
         const nx = { s, w, b, c }, k = key(nx);
         if (!seen.has(k)) { seen.add(k); todo.push(nx); }
       });

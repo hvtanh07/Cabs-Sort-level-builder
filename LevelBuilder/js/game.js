@@ -95,8 +95,22 @@
         row[k] = it; entered = true;
       }
     });
-    if (entered) this.version++;
+    if (entered) { this.version++; this.clearSpentBlocks(); }
     return entered;
+  };
+  // Block Door and Block Queue end for the rest of the level once one Enter Path of the door pair runs out of items, or one
+  // queue of the blocked pair runs out of boxes
+  Game.prototype.clearSpentBlocks = function (silent) {
+    if (this.doorTurns > 0 && this.feeders.length > 1 && this.feeders.some(f => !f.rows.length)) {
+      this.feeders.forEach(f => { f.shut = false; });
+      this.doorTurns = 0;
+      if (!silent) this.say('Block Door removed: an Enter Path ran out of items.');
+    }
+    const B = this.blocked;
+    if (B && (!this.lanes[B.lane].length || !this.lanes[B.other].length)) {
+      this.blocked = null;
+      if (!silent) this.say('Block Queue removed: a queue of the pair ran out of boxes.');
+    }
   };
   Game.prototype.forEachItem = function (fn) {
     this.rows.forEach(r => r.forEach(it => { if (it) fn(it); }));
@@ -143,6 +157,7 @@
     return null;
   };
   Game.prototype.updateFront = function (silent) {
+    this.clearSpentBlocks(silent);
     this.lanes.forEach(l => {
       const b = l[0];
       if (b && b.hidden) { b.hidden = false; if (!silent) this.say(`Hidden Box revealed: ${CS.COLORS[b.color].name} ${b.cap}.`); }
@@ -214,12 +229,11 @@
     if (this.blocked && l !== this.blocked.lane) {
       this.blocked.count--;
       if (this.blocked.count <= 0) {
-        // the block switches to the other queue of the pair; while that queue is empty it stays and counts again
+        // the block switches to the other queue of the pair (once either queue runs out, clearSpentBlocks removes it)
         const B = this.blocked, o = B.other;
-        if (o !== B.lane && this.lanes[o].length) { this.say(`Queue ${B.lane + 1} unblocked; queue ${o + 1} is blocked now.`); B.other = B.lane; B.lane = o; }
+        if (o !== B.lane) { this.say(`Queue ${B.lane + 1} unblocked; queue ${o + 1} is blocked now.`); B.other = B.lane; B.lane = o; }
         else this.say(`Queue ${B.lane + 1} stays blocked.`);
         B.count = B.turns;
-        if (!this.lanes[B.lane].length && !this.lanes[B.other].length) this.blocked = null;   // both queues done
       }
     }
     this.updateFront();
