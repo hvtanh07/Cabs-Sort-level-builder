@@ -91,6 +91,19 @@ for (let n = 11; n <= 40; n++) {
     Object.assign(s, { items: 432, big3Share: 0, locks: 5, lockFrom: 2, lockDepth: 6, lockPerLane: 2, lockRange: [2, 4], lockPerDepth: 2, stick: 0, minRandom: 0.9, seed: 35 });
     s.tune = { colors: 5, window: 8 };
   }
+  if (n === 17) {
+    // Linked Box intro: Q1's front box is linked to the third box of Q2, so 2 sends from Q2 show the link breaking;
+    // a second link further back shows it again
+    Object.assign(s, { linkAt: [[[0, 0], [1, 2]]], links: 1, linkFrom: 3, linkSpread: 1 });
+  }
+  if (n === 27) {
+    // Locked Item intro: no Linked Boxes (`dropLinks`). The first row in from the left (the colour of queue 1's front box)
+    // is locked for 5 sends, so it still shows if other boxes go first: send that box and the rest, and its last items move
+    // in. One more locked row comes later. Seed 63 gives that first row the front box's colour, and random taps win at
+    // least 92 % in every play mode
+    s.dropLinks = true; s.seed = 63;
+    Object.assign(s, { lockedRowAt: [['left', 0, 5]], lockedRows: 1 });
+  }
   if (n === 15) intro.push('Third Enter Path.');
   if (n === 20) intro.push('Fourth queue.');
   if (hard) intro.push('Hard level.');

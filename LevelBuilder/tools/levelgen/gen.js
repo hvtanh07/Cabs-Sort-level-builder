@@ -175,9 +175,16 @@ function make(S, seed) {
   const blockFirst = S.block && S.links ? (S.blockLane != null ? S.blockLane : ri(r, 0, lanesN - 1)) : null;
   const blockPair = l => [l, l < lanesN - 1 ? l + 1 : l - 1];
   const noLink = blockFirst != null ? blockPair(blockFirst) : [];
+  // `linkAt` places links at fixed spots ([[lane, tray], [lane, tray]] pairs, e.g. a front box linked to one 2 boxes back),
+  // then `links` more are picked at random from tray `linkFrom` back
+  (S.linkAt || []).forEach(([[la, ta], [lb, tb]]) => {
+    const x = boxes.find(z => z.l === la && z.t === ta), y = boxes.find(z => z.l === lb && z.t === tb);
+    if (!x || !y || taken.has(x.b) || taken.has(y.b) || Math.abs(la - lb) !== 1) throw new Error('bad linkAt');
+    taken.add(x.b); taken.add(y.b); links.push({ a: { lane: la, tray: ta }, b: { lane: lb, tray: tb } });
+  });
   if (S.links) {
     for (let n = 0; n < S.links; n++) {
-      const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= 1 && !x.b.hidden && !noLink.includes(x.l)), r);
+      const c = CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= (S.linkFrom || 1) && !x.b.hidden && !noLink.includes(x.l)), r);
       let done = false;
       for (const x of c) {
         // partners sit in neighbouring queues, so no other queue lies between them
@@ -187,10 +194,18 @@ function make(S, seed) {
       if (!done) throw new Error('no link pair');
     }
   }
+  if (S.dropLinks) links.length = 0;
+  // `lockedRowAt` locks fixed rows ([entry, row, lock] triples, e.g. the first row in so the lock shows at the start),
+  // then `lockedRows` more are picked at random
+  (S.lockedRowAt || []).forEach(([entry, ri2, lock]) => {
+    const f = feeders.find(x => x.entry === entry);
+    if (!f || !f.rows[ri2]) throw new Error('bad lockedRowAt');
+    f.rows[ri2].lock = lock;
+  });
   if (S.lockedRows) {
     const [a, b] = S.rowLockRange || [3, 6];
     const cand = [];
-    feeders.forEach((f, fi) => f.rows.forEach((row, ri2) => { if (ri2 >= 1 && ri2 <= Math.max(2, Math.floor(f.rows.length * 0.5))) cand.push(row); }));
+    feeders.forEach((f, fi) => f.rows.forEach((row, ri2) => { if (ri2 >= 1 && ri2 <= Math.max(2, Math.floor(f.rows.length * 0.5)) && !row.lock) cand.push(row); }));
     CS.shuffle(cand, r).slice(0, S.lockedRows).forEach(row => { row.lock = ri(r, a, b); });
   }
   if (S.hiddenRows) {

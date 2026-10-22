@@ -102,6 +102,7 @@
     [{ "color": 8 }, { "color": 8 }, { "color": 5 }, { "color": 6, "size": 2 }, { "color": 1, "size": 3 }, { "color": 8 }]
   ],
   "links": [
+    { "a": { "lane": 0, "tray": 0 }, "b": { "lane": 1, "tray": 2 } },
     { "a": { "lane": 0, "tray": 4 }, "b": { "lane": 1, "tray": 5 } }
   ],
   "view": { "cameraPreset": "default" },
