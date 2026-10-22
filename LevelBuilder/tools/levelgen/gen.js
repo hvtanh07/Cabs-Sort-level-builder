@@ -200,16 +200,33 @@ function make(S, seed) {
   if (S.dropLinks) links.length = 0;
   // `lockedRowAt` locks fixed rows ([entry, row, lock] triples, e.g. the first row in so the lock shows at the start),
   // then `lockedRows` more are picked at random
+  // `lockRun`: a lock covers the run of next-to-each-other rows of the same colour around the picked row (up to that many
+  // rows, the following rows first), so a whole block of one colour is held back
+  const one = row => row.cells.every(c => c === row.cells[0]) ? row.cells[0] : 0;
+  const lockRows = (f, i, lock) => {
+    const c = one(f.rows[i]), run = [i], max = S.lockRun || 1;
+    for (let k = i + 1; c && run.length < max && f.rows[k] && !f.rows[k].lock && one(f.rows[k]) === c; k++) run.push(k);
+    for (let k = i - 1; c && run.length < max && k >= 0 && !f.rows[k].lock && one(f.rows[k]) === c; k--) run.push(k);
+    run.forEach(k => { f.rows[k].lock = lock; });
+  };
   (S.lockedRowAt || []).forEach(([entry, ri2, lock]) => {
     const f = feeders.find(x => x.entry === entry);
     if (!f || !f.rows[ri2]) throw new Error('bad lockedRowAt');
-    f.rows[ri2].lock = lock;
+    lockRows(f, ri2, lock);
   });
   if (S.lockedRows) {
     const [a, b] = S.rowLockRange || [3, 6];
     const cand = [];
-    feeders.forEach((f, fi) => f.rows.forEach((row, ri2) => { if (ri2 >= 1 && ri2 <= Math.max(2, Math.floor(f.rows.length * 0.5)) && !row.lock) cand.push(row); }));
-    CS.shuffle(cand, r).slice(0, S.lockedRows).forEach(row => { row.lock = ri(r, a, b); });
+    feeders.forEach((f, fi) => f.rows.forEach((row, ri2) => { if (ri2 >= 1 && ri2 <= Math.max(2, Math.floor(f.rows.length * 0.5)) && !row.lock) cand.push({ f, i: ri2 }); }));
+    // `lockRunOnly`: only rows that start a run of at least `lockRunMin` (default 2) rows of the same colour
+    const runAt = x => { const c = one(x.f.rows[x.i]); let k = x.i; while (c && x.f.rows[k] && one(x.f.rows[k]) === c) k++; return k - x.i; };
+    if (S.lockRunOnly) cand.splice(0, cand.length, ...cand.filter(x => runAt(x) >= (S.lockRunMin || 2)));
+    let n = 0;
+    for (const x of CS.shuffle(cand, r)) {
+      if (n >= S.lockedRows) break;
+      if (x.f.rows[x.i].lock) continue;   // already in an earlier run
+      lockRows(x.f, x.i, ri(r, a, b)); n++;
+    }
   }
   if (S.hiddenRows) {
     const cand = [];

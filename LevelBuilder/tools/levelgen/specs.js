@@ -29,7 +29,7 @@ S.push({ n: 10, name: 'First Challenge', diff: 'hard', unlock: 'Hidden Box', int
 // ---- levels 11-40: from the level list sheet ----
 const FEAT = {
   11: [], 12: ['LB'], 13: ['LB'], 14: ['H'], 15: ['LB'], 16: [], 17: ['LK'], 18: ['H', 'LK'], 19: ['LB'], 20: ['LB', 'LK'],
-  21: ['H'], 22: ['D'], 23: ['H', 'D'], 24: ['LK'], 25: ['LB', 'D'], 26: ['LB', 'D'], 27: ['LK', 'LI'], 28: ['H', 'LI'], 29: [], 30: ['H', 'LB', 'LI'],
+  21: ['H'], 22: ['D'], 23: ['H', 'D'], 24: ['LK'], 25: ['LB', 'D'], 26: ['LK', 'D'], 27: ['LK', 'LI'], 28: ['H', 'LI'], 29: [], 30: ['H', 'LB', 'LI'],
   31: ['LI'], 32: ['BQ'], 33: ['BQ'], 34: ['LK'], 35: ['H', 'LB', 'BQ'], 36: [], 37: ['H', 'D'], 38: ['LK', 'BQ'], 39: ['H', 'D'], 40: ['H', 'LB', 'LI', 'BQ']
 };
 const FIRST = { LB: 12, LK: 17, D: 22, LI: 27, BQ: 32 };
@@ -78,7 +78,7 @@ for (let n = 11; n <= 40; n++) {
     if (k === 'LB') { s.locks = FIRST.LB === n ? 2 : hard ? 4 : 3; s.lockRange = FIRST.LB === n ? [2, 2] : [2, hard ? 4 : 3]; }
     if (k === 'LK') { s.links = FIRST.LK === n ? 1 : hard ? 3 : 2; s.linkSpread = FIRST.LK === n ? 0 : 1; }
     if (k === 'D') { s.door = FIRST.D === n ? 4 : 3; if (n > 30) s.doorTail = 0.25; }
-    if (k === 'LI') { s.lockedRows = FIRST.LI === n ? 2 : hard ? 4 : 3; s.rowLockRange = FIRST.LI === n ? [3, 4] : [3, hard ? 8 : 6]; }
+    if (k === 'LI') { s.lockRun = 3; s.lockedRows = FIRST.LI === n ? 2 : hard ? 4 : 3; s.rowLockRange = FIRST.LI === n ? [3, 4] : [3, hard ? 8 : 6]; }
     if (k === 'BQ') { s.block = FIRST.BQ === n ? 4 : 3; }
   });
   // the level that introduces an element is very easy: random taps must win it, like levels 1-9
@@ -102,7 +102,7 @@ for (let n = 11; n <= 40; n++) {
     // in. One more locked row comes later. Seed 63 gives that first row the front box's colour, and random taps win at
     // least 92 % in every play mode
     s.dropLinks = true; s.seed = 63;
-    Object.assign(s, { lockedRowAt: [['left', 0, 5]], lockedRows: 1 });
+    Object.assign(s, { lockedRowAt: [['left', 0, 5]], lockedRows: 1, minRandom: 0.8 });   // 80 %: the locked runs hold back more items
   }
   if (n === 12) {
     // Locked Box intro: queue 1's front box is locked for 2 and the third box of queue 2 for 2, so the player sees that only
@@ -210,14 +210,33 @@ S.forEach(s => {
 // the belt watcher 90 %, without the fail-safe (seed 36 is the first that passes)
 S.forEach(s => {
   if (s.n === 22) Object.assign(s, { lanes: 2, noFailsafe: true });
+  // level 28 follows the Locked Item intro: easy, checked like level 23 but with 5 colours; its locks only go on runs of 2+ same-colour rows.
+  // Level 34 has 4 Linked Box pairs instead of 2
+  if (s.n === 28) {
+    delete s.watch; delete s.watchTries;
+    Object.assign(s, { diff: 'easy', colors: 5, minRandom: 0.7, minCasual: 0.9, noFailsafe: true, lockRunOnly: true });
+  }
+  if (s.n === 34) s.links = 4;
+  // level 39: Linked Box and Locked Item instead of Hidden Box and Block Door (FEAT keeps 'H' so level 40 keeps its hidden
+  // pattern). Level 40: 5 locked blocks of up to 4 same-colour rows
+  if (s.n === 39) {
+    delete s.hiddenPattern; delete s.door; s.intro = 'Linked Box with Locked Items.';
+    Object.assign(s, { name: 'Cold Links', links: 2, linkSpread: 1, lockRun: 3, lockedRows: 3, rowLockRange: [3, 6] });
+  }
+  if (s.n === 40) Object.assign(s, { lockRun: 4, lockRunOnly: true, lockRunMin: 3, lockedRows: 5 });
+  // level 26 is a breather after hard level 25: Linked Box and Block Door, checked like level 23
+  if (s.n === 26) {
+    delete s.watch; delete s.watchTries;
+    Object.assign(s, { diff: 'easy', colors: 6, minRandom: 0.7, minCasual: 0.9, noFailsafe: true });
+  }
   if (s.n !== 23) return;
   delete s.watch; delete s.watchTries;
   Object.assign(s, { diff: 'easy', colors: 6, minRandom: 0.7, minCasual: 0.9, noFailsafe: true, seed: 36 });
 });
 const KEEP = {
   12: { seed: 2 }, 13: { seed: 39 }, 15: { seed: 13, try: 2 }, 19: { seed: 3, try: 0 }, 20: { seed: 4, try: 0 },
-  25: { seed: 295, try: 1 }, 26: { seed: 72, try: 0 }, 27: { seed: 63 }, 28: { seed: 5, try: 0 }, 30: { seed: 54, try: 0 },
-  31: { seed: 1, try: 0 }, 35: { seed: 26, try: 0 }, 40: { seed: 6, try: 0 }
+  25: { seed: 295, try: 1 }, 27: { seed: 63 }, 30: { seed: 54, try: 0 },
+  31: { seed: 1, try: 0 }, 35: { seed: 26, try: 0 }, 40: { seed: 28, try: 0 }
 };
 S.forEach(s => { if (KEEP[s.n]) s.keep = KEEP[s.n]; });
 module.exports = S;

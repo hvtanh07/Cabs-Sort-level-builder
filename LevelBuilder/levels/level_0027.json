@@ -94,7 +94,7 @@
       7, 7, 7, 7,
       2, 2, 2, 2,
       2, 2, 2, 2
-    ], "lockedRows": [{ "row": 0, "lockTurns": 5 }, { "row": 15, "lockTurns": 3 }] }
+    ], "lockedRows": [{ "row": 0, "lockTurns": 5 }, { "row": 1, "lockTurns": 5 }, { "row": 15, "lockTurns": 4 }, { "row": 16, "lockTurns": 4 }] }
   },
   "lanes": [
     [{ "color": 8 }, { "color": 6 }, { "color": 1 }, { "color": 8 }, { "color": 7 }],

@@ -68,7 +68,7 @@
       4, 4, 4, 4,
       7, 7, 7, 7,
       7, 7, 7, 7
-    ], "lockedRows": [{ "row": 2, "lockTurns": 3 }, { "row": 11, "lockTurns": 3 }, { "row": 27, "lockTurns": 3 }] },
+    ], "lockedRows": [{ "row": 2, "lockTurns": 3 }, { "row": 3, "lockTurns": 3 }, { "row": 4, "lockTurns": 3 }, { "row": 10, "lockTurns": 3 }, { "row": 11, "lockTurns": 3 }, { "row": 12, "lockTurns": 3 }, { "row": 26, "lockTurns": 3 }, { "row": 27, "lockTurns": 3 }, { "row": 28, "lockTurns": 3 }] },
     "left": { "bottles": [
       6, 6, 6, 6,
       6, 6, 6, 6,
