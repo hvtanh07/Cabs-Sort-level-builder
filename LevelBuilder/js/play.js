@@ -33,6 +33,7 @@
     $('#board').classList.remove('play', 'mode-hand', 'mode-magnet');
     $('#banner').classList.add('hidden');
     P.game = null;
+    P.unlockHeights();
     A.renderAll();
   };
   P.restart = function () {
@@ -41,6 +42,7 @@
     P.game = new CS.Game(CS.clone(A.m), g, { pickMode: A.prefs.pick });
     P.view = new CS.ConvView($('#convCanvas'), g);
     P.acc = 0; P.anims = []; P.flashes = {}; P.time = 0; P.tool = null; P.seenVersion = -1;
+    P.unlockHeights();
     P.setRunning(true);
     $('#banner').classList.add('hidden');
     P.render();
@@ -191,6 +193,7 @@
           return html;
         }).join('')}</div>`;
     }).join('');
+    P.lockHeights();
     P.renderPanel();
     // banner
     const ban = $('#banner');
@@ -207,6 +210,18 @@
         <button data-b="restart">Restart</button><button data-b="exit">Back to edit</button></div>`;
       ban.classList.remove('hidden');
     } else ban.classList.add('hidden');
+  };
+
+  /* Keep the Enter Paths and queues at their tallest height so far, so the
+     conveyor and slots stay put as items and boxes run out. */
+  P.lockHeights = function () {
+    ['#feeders', '#queues'].forEach(sel => {
+      const el = $(sel);
+      el.style.minHeight = Math.max(parseFloat(el.style.minHeight) || 0, el.offsetHeight) + 'px';
+    });
+  };
+  P.unlockHeights = function () {
+    ['#feeders', '#queues'].forEach(sel => { $(sel).style.minHeight = ''; });
   };
 
   P.renderPanel = function () {
@@ -244,8 +259,10 @@
   /* ---------- input ---------- */
   P.bind = function () {
     const A = CS.App;
-    $('#board').addEventListener('click', e => {
-      if (A.mode !== 'play' || !P.game) return;
+    // pointerdown, not click: the queues are redrawn many times a second, and a
+    // redraw between mouse down and mouse up swallows the click
+    $('#board').addEventListener('pointerdown', e => {
+      if (A.mode !== 'play' || !P.game || e.button !== 0) return;
       const G = P.game;
       const b = e.target.closest('[data-b]');
       if (b) {
