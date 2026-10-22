@@ -75,7 +75,7 @@ for (let n = 11; n <= 40; n++) {
       const hp = HIDDEN_PATTERN[HIDDEN_LEVELS.indexOf(n) % 2 ? 'rows' : 'staggered'];
       s.hiddenPattern = hp.fn; intro.push(hp.note);
     }
-    if (k === 'LB') { s.locks = FIRST.LB === n ? 2 : hard ? 4 : 3; s.lockRange = FIRST.LB === n ? [2, 3] : [3, hard ? 6 : 5]; }
+    if (k === 'LB') { s.locks = FIRST.LB === n ? 2 : hard ? 4 : 3; s.lockRange = FIRST.LB === n ? [2, 2] : [2, hard ? 4 : 3]; }
     if (k === 'LK') { s.links = FIRST.LK === n ? 1 : hard ? 3 : 2; s.linkSpread = FIRST.LK === n ? 0 : 1; }
     if (k === 'D') { s.door = FIRST.D === n ? 4 : 3; if (n > 30) s.doorTail = 0.25; }
     if (k === 'LI') { s.lockedRows = FIRST.LI === n ? 2 : hard ? 4 : 3; s.rowLockRange = FIRST.LI === n ? [3, 4] : [3, hard ? 8 : 6]; }
@@ -88,7 +88,7 @@ for (let n = 11; n <= 40; n++) {
     // the first level after Locked Box is introduced: longer but gentler, with more Locked Boxes further back in the queues
     // (none in the first two boxes of a queue), 5 colours, no 32-item box and rows close to box order.
     // The search starts at seed 35 (picked for the older lock rules); seed 39 passes now: random taps win about 97 % / 93 %
-    Object.assign(s, { items: 432, big3Share: 0, locks: 5, lockFrom: 2, lockDepth: 6, lockPerLane: 2, lockRange: [2, 4], lockPerDepth: 2, stick: 0, minRandom: 0.9, seed: 35 });
+    Object.assign(s, { items: 432, big3Share: 0, locks: 5, lockFrom: 2, lockDepth: 6, lockPerLane: 2, lockRange: [2, 3], stick: 0, minRandom: 0.9, seed: 35 });
     s.tune = { colors: 5, window: 8 };
   }
   if (n === 17) {
@@ -103,6 +103,17 @@ for (let n = 11; n <= 40; n++) {
     // least 92 % in every play mode
     s.dropLinks = true; s.seed = 63;
     Object.assign(s, { lockedRowAt: [['left', 0, 5]], lockedRows: 1 });
+  }
+  if (n === 12) {
+    // Locked Box intro: queue 1's front box is locked for 2 and the third box of queue 2 for 2, so the player sees that only
+    // a box at the front counts down
+    Object.assign(s, { lockAt: [[0, 0, 2], [1, 2, 2]] });
+  }
+  if (n === 15) {
+    // Lock relay: one queue at a time holds a Locked Box with a high count, so the player works the other two. Queue 3's front
+    // box starts locked for 7; queue 1's third box, queue 2's sixth and queue 3's seventh follow, each reaching the front
+    // about when the one before opens. `lockRelay` rejects a layout where two or more queues can be locked at once
+    Object.assign(s, { lockAt: [[2, 0, 7], [0, 2, 7], [1, 5, 7], [2, 6, 7]], locks: 4, lockRelay: true });
   }
   if (n === 15) intro.push('Third Enter Path.');
   if (n === 20) intro.push('Fourth queue.');
@@ -182,4 +193,31 @@ S.forEach(s => {
     if (s.n === 25) s.maxSeed = 500;   // Block Door with Locked Boxes: the fail-safe often frees random taps, so few seeds pass
   }
 });
+// Levels with Locked Boxes or Locked Items: the seed (and the index into watchTries) each was built from before a Locked Box
+// counted only at the front of its queue and a Locked Item only on the conveyor. run.js tries it first (see `keep`)
+// level 18 (Hidden Links) came out too hard: it skips the watch-the-belt rule, so it is checked like levels 11-14
+// (the casual player wins 95 %, random taps half the runs) with 6 colours; `maxRandom` keeps it from being too easy
+S.forEach(s => { if (s.n === 18) { delete s.watch; delete s.watchTries; s.maxRandom = 0.75; } });
+// level 21 is a breather after hard level 20: no Hidden Boxes (FEAT keeps 'H' so the later levels keep their hidden
+// patterns), 6 colours and checked like an easy level (random taps win 90 % in every play mode)
+S.forEach(s => {
+  if (s.n !== 21) return;
+  delete s.hiddenPattern; delete s.watch; delete s.watchTries;
+  Object.assign(s, { name: 'Clear Skies', diff: 'easy', intro: 'Breather after a hard level: no elements.', colors: 6, minRandom: 0.9 });
+});
+// level 22 (Block Door intro) has 2 queues; level 23 comes right after it, so it keeps 3 queues, its Hidden Boxes and
+// Block Door but is checked like an easy level with 6 colours: random taps win 70 % in every play mode, the casual player and
+// the belt watcher 90 %, without the fail-safe (seed 36 is the first that passes)
+S.forEach(s => {
+  if (s.n === 22) Object.assign(s, { lanes: 2, noFailsafe: true });
+  if (s.n !== 23) return;
+  delete s.watch; delete s.watchTries;
+  Object.assign(s, { diff: 'easy', colors: 6, minRandom: 0.7, minCasual: 0.9, noFailsafe: true, seed: 36 });
+});
+const KEEP = {
+  12: { seed: 2 }, 13: { seed: 39 }, 15: { seed: 13, try: 2 }, 19: { seed: 3, try: 0 }, 20: { seed: 4, try: 0 },
+  25: { seed: 295, try: 1 }, 26: { seed: 72, try: 0 }, 27: { seed: 63 }, 28: { seed: 5, try: 0 }, 30: { seed: 54, try: 0 },
+  31: { seed: 1, try: 0 }, 35: { seed: 26, try: 0 }, 40: { seed: 6, try: 0 }
+};
+S.forEach(s => { if (KEEP[s.n]) s.keep = KEEP[s.n]; });
 module.exports = S;

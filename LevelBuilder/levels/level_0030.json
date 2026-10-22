@@ -159,10 +159,10 @@
     ], "lockedRows": [{ "row": 9, "lockTurns": 5 }, { "row": 12, "lockTurns": 6 }, { "row": 19, "lockTurns": 4 }] }
   },
   "lanes": [
-    [{ "color": 7 }, { "color": 2, "hidden": true }, { "color": 5 }, { "color": 1, "hidden": true, "size": 2 }, { "color": 4, "size": 2 }, { "color": 5, "hidden": true }, { "color": 6, "lockTurns": 12 }],
-    [{ "color": 2, "size": 3 }, { "color": 1, "hidden": true }, { "color": 3, "lockTurns": 8 }, { "color": 5, "hidden": true }, { "color": 7, "size": 2 }, { "color": 4, "hidden": true, "size": 4 }, { "color": 1, "size": 3 }],
+    [{ "color": 7 }, { "color": 2, "hidden": true }, { "color": 5 }, { "color": 1, "hidden": true, "size": 2 }, { "color": 4, "size": 2 }, { "color": 5, "hidden": true }, { "color": 6, "lockTurns": 4 }],
+    [{ "color": 2, "size": 3 }, { "color": 1, "hidden": true }, { "color": 3, "lockTurns": 4 }, { "color": 5, "hidden": true }, { "color": 7, "size": 2 }, { "color": 4, "hidden": true, "size": 4 }, { "color": 1, "size": 3 }],
     [{ "color": 3 }, { "color": 6, "hidden": true }, { "color": 4 }, { "color": 7, "hidden": true, "size": 4 }, { "color": 2, "lockTurns": 4 }, { "color": 6, "hidden": true, "size": 2 }, { "color": 3 }],
-    [{ "color": 3 }, { "color": 1, "hidden": true, "size": 2 }, { "color": 2 }, { "color": 3, "hidden": true }, { "color": 5, "size": 2 }, { "color": 6, "hidden": true }, { "color": 4, "lockTurns": 12 }]
+    [{ "color": 3 }, { "color": 1, "hidden": true, "size": 2 }, { "color": 2 }, { "color": 3, "hidden": true }, { "color": 5, "size": 2 }, { "color": 6, "hidden": true }, { "color": 4, "lockTurns": 4 }]
   ],
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Deep Freeze", "difficulty": "hard", "notes": "Every even box is hidden, like level 8. Hard level." }

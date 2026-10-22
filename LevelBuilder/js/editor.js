@@ -682,7 +682,7 @@
         ${field('Colour', colorPick(b.color, 'boxColor'))}
         ${field('Size', num('boxSize', b.size, 1, CS.MAX_BOX_SIZE), `Capacity ${CS.boxItems(b.size)} items (size 1 = 16, 2 = 24, 3 = 32, 4 = 40).`)}
         ${field('Hidden Box', `<label class="chk"><input type="checkbox" data-k="boxHidden" ${b.hidden ? 'checked' : ''}> hidden until it reaches the front</label>`)}
-        ${field('Locked Box', num('boxLock', b.lock, 0, 99), 'Lock turns, 0 = not locked.')}
+        ${field('Locked Box', num('boxLock', b.lock, 0, 99), 'Lock turns, 0 = not locked. Counts down only while the box is at the front of its queue: 1 for each box sent.')}
         ${field('Linked Box', `<span>${linkTxt}</span>`)}
         <div class="btnrow">
           <button data-do="boxUp" title="Move toward the front (↑)">↑ Front</button><button data-do="boxDown" title="Move back (↓)">↓ Back</button>
@@ -697,7 +697,7 @@
         ${r.cells.map((c, k) => field('Item ' + (k + 1), colorPick(c, 'cell:' + k) + ` <button type="button" data-set="cell:${k}" data-v="0" title="Empty">∅</button>`)).join('')}
         ${field('Fill row', colorPick(0, 'rowFill'))}
         ${field('Hidden row', `<label class="chk"><input type="checkbox" data-k="rowHidden" ${r.hidden ? 'checked' : ''}> “?” until on the conveyor</label>`)}
-        ${field('Locked Items', num('rowLock', r.lock, 0, 99), 'Lock turns for every item in this row, 0 = not locked.')}
+        ${field('Locked Items', num('rowLock', r.lock, 0, 99), 'Lock turns for every item in this row, 0 = not locked. Counts down only once the items are on the conveyor: 1 for each box sent.')}
         <div class="btnrow"><button data-do="rowUp" title="Closer to the conveyor (↓ in the list)">Move earlier</button><button data-do="rowDown">Move later</button>
         <button data-do="rowIns">Insert row before</button><button data-do="rowDup">Duplicate</button><button data-do="rowDel" class="danger">Delete (Del)</button></div>`;
     }

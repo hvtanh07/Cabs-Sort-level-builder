@@ -137,23 +137,26 @@ function make(S, seed) {
     if (c.length < S.hidden) throw new Error('not enough hidden candidates');
   }
   if (S.locks) {
-    // Locked Boxes: a lock counts down one per box sent, so it must open well before the box's turn in the send order
-    // (`_o`), at least `lockMargin` sends early (one send per queue by default). Otherwise its items reach the belt while it is
-    // still locked and the player gets stuck with full slots. Never on a front box at the start, never two in a row in a queue,
-    // and never two at the same depth in different queues, so a row of locks never blocks every queue.
-    // `lockFrom` / `lockDepth` set the depths; each count is about `lockPerDepth` per box ahead of it plus lockRange
-    const [a, b] = S.lockRange || [2, 4];
-    const margin = S.lockMargin != null ? S.lockMargin : lanesN;
+    // Locked Boxes: a lock counts down one per box sent while the box is at the front of its queue, so each count is just
+    // `lockRange` sends. `lockAt` places some at fixed spots ([lane, tray, turns], e.g. a front box locked at the start).
+    // The others are never a front box at the start, never two in a row in a queue, and never two at the same depth in
+    // neighbouring queues, so a row of locks rarely reaches the front of every queue at once (CS.queueDeadlock checks it).
+    // `lockFrom` / `lockDepth` set the depths
+    const [a, b] = S.lockRange || [2, 3];
     const from = S.lockFrom != null ? S.lockFrom : 1;
     let depth = S.lockDepth != null ? S.lockDepth : Math.max(2, S.locks + 1);
+    const fixed = (S.lockAt || []).map(([l, t, turns]) => {
+      const x = boxes.find(z => z.l === l && z.t === t);
+      if (!x || taken.has(x.b)) throw new Error('bad lockAt');
+      x.turns = turns; return x;
+    });
+    fixed.forEach(x => taken.add(x.b));
     const pickLocks = (depth, loose) => {
-      const perLane = {}, c = [];
+      const perLane = {}, c = fixed.slice();
+      fixed.forEach(x => { perLane[x.l] = (perLane[x.l] || 0) + 1; });
       for (const x of CS.shuffle(boxes.filter(x => !taken.has(x.b) && x.t >= from && x.t <= depth), r)) {
         if (c.length >= S.locks) break;
-        const cap = x.b._o - margin;
-        const want = S.lockFrom != null ? Math.round(x.t * (S.lockPerDepth || 1)) + ri(r, a, b) : ri(r, a, b) + x.t;
-        const turns = Math.min(want, cap);
-        if (turns < 2) continue;
+        const turns = ri(r, a, b);
         if ((perLane[x.l] || 0) >= (S.lockPerLane || 99)) continue;
         // `loose`: two locks may share a depth when their queues are not next to each other
         if (c.some(y => (y.l === x.l && Math.abs(y.t - x.t) <= 1) || (y.l !== x.l && y.t === x.t && (!loose || Math.abs(y.l - x.l) < 2)))) continue;

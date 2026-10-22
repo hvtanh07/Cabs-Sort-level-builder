@@ -154,6 +154,13 @@
       if (!p) { b.link = null; return; }
       if (p.t === 0) { b.link = null; p.b.link = null; if (!silent) this.say('Linked Boxes reached the top: link broken.'); }
     });
+    // A Locked Box only counts down while other queues send, so when no queue has a front box that can be sent, the front
+    // Locked Boxes open (like the Block Queue rule below)
+    const free = this.lanes.some((q, i) => q[0] && !(q[0].lock > 0) && !q[0].link && !this.isBlocked(i));
+    if (!free) this.lanes.forEach((q, i) => {
+      const b = q[0];
+      if (b && b.lock > 0 && !b.link) { b.lock = 0; if (!silent) this.say(`Locked Box in queue ${i + 1} opened: no other queue can send a box.`); }
+    });
     this.version++;
   };
   Game.prototype.canSendLane = function (l) {
@@ -185,14 +192,16 @@
     const why = this.whyNot(l);
     if (why) return why;
     const si = this.freeSlot();
+    const fronts = this.lanes.map(q => q[0]);   // the front boxes before this send
     const b = this.lanes[l].shift();
     b.hidden = false;
     this.slots[si].box = b;
     this.sends++;
     this.events.push({ type: 'send', lane: l, slot: si, color: b.color });
-    // every lock and block counts boxes sent to the slots
-    this.forEachItem(it => { if (it.lock > 0) it.lock--; });
-    this.lanes.forEach(q => q.forEach(x => { if (x.lock > 0) x.lock--; }));
+    // every lock and block counts boxes sent to the slots. A Locked Item only counts once it is on the conveyor, and a
+    // Locked Box only while it is at the front of its queue (a box that just moved up starts counting at the next send)
+    this.rows.forEach(r => r.forEach(it => { if (it && it.lock > 0) it.lock--; }));
+    fronts.forEach(x => { if (x && x !== b && x.lock > 0) x.lock--; });
     this.slots.forEach((s, i) => { if (i !== si && s.lock > 0) { s.lock--; if (!s.lock) this.say(`Slot ${i + 1} unlocked.`); } });
     if (this.doorTurns > 0 && this.feeders.length) {
       this.doorCount--;
@@ -251,8 +260,14 @@
     if (!qEmpty && !this.lanes.some((_, i) => this.canSendLane(i)) && (L.boxes || L.queue)) {
       this.releaseAll('no front-row box can be sent while a Locked Box or Block Queue is still active.'); return;
     }
-    if (qEmpty && (L.items || L.door)) {
-      this.releaseAll('every box has been sent but Locked Items or a shut door remain.'); return;
+    // Locked Items only count down while boxes are sent, so once every box is sent they open
+    if (qEmpty && L.items) {
+      this.forEachItem(it => { it.lock = 0; });
+      this.say('Locked Items opened: every box has been sent.');
+      L.items = false;
+    }
+    if (qEmpty && L.door) {
+      this.releaseAll('every box has been sent but a shut door remains.'); return;
     }
     const unlockedFull = this.slots.every(s => s.box || s.lock > 0);
     if (unlockedFull && stalled && L.slots) {
