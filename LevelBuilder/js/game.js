@@ -169,13 +169,6 @@
       if (!p) { b.link = null; return; }
       if (p.t === 0) { b.link = null; p.b.link = null; if (!silent) this.say('Linked Boxes reached the top: link broken.'); }
     });
-    // A Locked Box only counts down while other queues send, so when no queue has a front box that can be sent, the front
-    // Locked Boxes open (like the Block Queue rule below)
-    const free = this.lanes.some((q, i) => q[0] && !(q[0].lock > 0) && !q[0].link && !this.isBlocked(i));
-    if (!free) this.lanes.forEach((q, i) => {
-      const b = q[0];
-      if (b && b.lock > 0 && !b.link) { b.lock = 0; if (!silent) this.say(`Locked Box in queue ${i + 1} opened: no other queue can send a box.`); }
-    });
     this.version++;
   };
   Game.prototype.canSendLane = function (l) {
@@ -185,11 +178,10 @@
     if (this.isBlocked(l)) return false;
     return true;
   };
-  // Block Queue: the blocked queue opens while no other queue can send a box (all empty, locked or waiting for a linked
-  // partner), since only sends from other queues count the block down
+  // Block Queue: only sends from other queues count the block down. When no other queue can send, the fail-safe in
+  // checkState removes every lock and block (GDD 1.4, "Fail-safe for locks and blocks")
   Game.prototype.isBlocked = function (l) {
-    if (!(this.blocked && this.blocked.lane === l)) return false;
-    return this.lanes.some((q, i) => i !== l && q[0] && !(q[0].lock > 0) && !q[0].link);
+    return !!(this.blocked && this.blocked.lane === l);
   };
   Game.prototype.freeSlot = function () { return this.slots.findIndex(s => !s.box && !(s.lock > 0)); };
   Game.prototype.whyNot = function (l) {
@@ -274,14 +266,9 @@
     if (!qEmpty && !this.lanes.some((_, i) => this.canSendLane(i)) && (L.boxes || L.queue)) {
       this.releaseAll('no front-row box can be sent while a Locked Box or Block Queue is still active.'); return;
     }
-    // Locked Items only count down while boxes are sent, so once every box is sent they open
-    if (qEmpty && L.items) {
-      this.forEachItem(it => { it.lock = 0; });
-      this.say('Locked Items opened: every box has been sent.');
-      L.items = false;
-    }
-    if (qEmpty && L.door) {
-      this.releaseAll('every box has been sent but a shut door remains.'); return;
+    // GDD fail-safe: once every box is sent, Locked Items and shut doors can no longer count down
+    if (qEmpty && (L.items || L.door)) {
+      this.releaseAll(`every box has been sent but ${L.items ? 'Locked Items remain' : 'a shut door remains'}.`); return;
     }
     const unlockedFull = this.slots.every(s => s.box || s.lock > 0);
     if (unlockedFull && stalled && L.slots) {

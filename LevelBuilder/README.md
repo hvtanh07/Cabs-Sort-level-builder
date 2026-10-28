@@ -62,7 +62,7 @@ Other fields the tool writes when a level uses them:
 | Added field | Meaning |
 | --- | --- |
 | `blockDoor` | Block Door: `{ "turns": 5, "doors": [{ "feeder": "right", "open": true }, { "feeder": "left", "open": false }] }`. `turns` is the countdown (boxes sent); at 0, shut doors open and open doors shut, then it restarts. Once an Enter Path runs out of items, every door opens and the Block Door is removed for the rest of the level. `doors` lists each Enter Path's door and whether it starts open. Written after `extraSlots`. Older files with `doorTurns` and `feeders.<entry>.doorShut` import fine and are saved in this layout. |
-| `blockQueue` | Block Queue: `{ "turns": 3, "lanes": [0, 1] }`. The two listed queues take turns being blocked, the first one at the start; the other queues are never blocked. `turns` counts boxes sent from the other queues; at 0 the block switches to the other listed queue and the count restarts. A blocked queue also opens while no other queue can send a box, and the block is removed for the rest of the level once either listed queue runs out of boxes. Written after `extraSlots` (and `blockDoor`). Older files with `blockedLane: { lane, lockTurns }` import fine and take turns with the next queue. |
+| `blockQueue` | Block Queue: `{ "turns": 3, "lanes": [0, 1] }`. The two listed queues take turns being blocked, the first one at the start; the other queues are never blocked. `turns` counts boxes sent from the other queues; at 0 the block switches to the other listed queue and the count restarts. When no other queue can send a box, the GDD fail-safe removes every lock and block for the rest of the level. The block is removed for the rest of the level once either listed queue runs out of boxes. Written after `extraSlots` (and `blockDoor`). Older files with `blockedLane: { lane, lockTurns }` import fine and take turns with the next queue. |
 
 Unknown fields are kept as they are on export.
 
@@ -96,6 +96,7 @@ To add a new premade conveyor permanently, put its JSON in `conveyors/` and add 
 - Hidden Enter Path rows show their colour once the items reach the conveyor.
 - Boxes already at the front of a queue when the level starts are revealed.
 - Lose = every free slot is taken and nothing has moved for a full loop. Win = every box cleared.
+- Fail-safe (GDD 1.4): when no front box can be sent while a Locked Box is locked or a queue is blocked, when every box is sent while Locked Items remain or a door is shut, or when every unlocked slot is stuck while a Locked Slot is locked, every lock and block is removed for the rest of the level.
 - The "every box sent" fail-safe only counts a shut door if items are still waiting behind it.
 - Hand does not count as a box sent, so it does not lower lock counters.
 - Shuffle moves at most one box per chosen colour, each to the top of a different queue.
