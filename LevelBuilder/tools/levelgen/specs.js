@@ -3,11 +3,16 @@ const LR = ['left', 'right'], LMR = ['left', 'middle', 'right'];
 const S = [];
 // ---- levels 1-10: hand written from Ethan's brief ----
 S.push({ n: 1, name: 'First Sort', diff: 'easy', intro: 'Tap a box to send it up. One middle Enter Path, 3 colours (two boxes each), 32- and 40-item boxes.',
-  conveyor: 'square_19', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, count: 6, sizeAt: [3, 4, 3, 4, 3, 4], colorAt: [1, 1, 4, 4, 2, 2], rowOrder: [0, 2, 1, 4, 3, 5] });   // Enter Path rows in queue order, one box after another; `sizeAt` sets each box's size (3 = 32, 4 = 40 items), `colorAt` its colour (1 Red, 2 Blue, 4 Yellow), `rowOrder` the order its row groups enter: Red 32, Yellow 32, Red 40, Blue 32, Yellow 40, Blue 40
-S.push({ n: 2, name: 'Two Queues', diff: 'easy', intro: 'A second queue: pick which front box to send.',
-  conveyor: 'square_19', entries: ['middle'], lanes: 2, boxes: 12, colors: 4, window: 6, count: 8 });
-S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Two Enter Paths. Two boxes swapped places, so one colour rides the belt until its box comes up.',
-  conveyor: 'square_19', entries: LR, lanes: 1, boxes: 12, colors: 4, window: 0, swap: [0, -1] });
+  conveyor: 'square_19', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, count: 6, slots: 5, extraSlots: 0,
+  sizeAt: [3, 4, 3, 4, 3, 4], colorAt: [1, 1, 4, 4, 2, 2], rowOrder: [0, 2, 1, 4, 3, 5] });   // `sizeAt` sets each box's size in send order (3 = 32, 4 = 40 items), `colorAt` its colour (1 Red, 2 Blue, 3 Green, 4 Yellow), `rowOrder` the order its row groups enter: Red 32, Yellow 32, Red 40, Blue 32, Yellow 40, Blue 40
+// levels 2 and 3 work like level 1: 32- and 40-item boxes, each box's rows grouped together and the groups mixed (`rowOrder`).
+// Send order takes turns between the 2 queues, so each queue alternates 32 and 40
+S.push({ n: 2, name: 'Two Queues', diff: 'easy', intro: 'A second queue: pick which front box to send. 32- and 40-item boxes, row groups mixed.',
+  conveyor: 'square_19', entries: ['middle'], lanes: 2, boxes: 12, colors: 4, window: 0, count: 8, slots: 5, extraSlots: 0,
+  sizeAt: [3, 4, 4, 3, 3, 4, 4, 3], colorAt: [1, 2, 3, 4, 2, 1, 4, 3], rowOrder: [0, 3, 1, 2, 5, 4, 6, 7] });
+S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Two queues and two Enter Paths. Whole row groups take turns between the Enter Paths, mixed out of queue order.',
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 6, slots: 5, extraSlots: 0, groupPaths: true,
+  sizeAt: [3, 4, 4, 3, 3, 4], colorAt: [3, 4, 1, 2, 4, 3], rowOrder: [1, 0, 3, 2, 5, 4] });
 S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 10, colors: 5, window: 4, count: 10 });
 S.push({ n: 5, name: 'Big Box', diff: 'easy', intro: 'First 24-item box. The belt is full, so its last items pour in from the Enter Path later.',

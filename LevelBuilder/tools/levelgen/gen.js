@@ -104,6 +104,10 @@ function make(S, seed) {
       const ph = Math.floor((x.b + (S.doorLead || 0)) / S.door);
       feeders[x.b >= N * (1 - (S.doorTail || 0)) ? 0 : ph % 2].rows.push({ cells: [x.c, x.c, x.c, x.c], hidden: false, lock: 0 });
     });
+  } else if (S.groupPaths) {
+    // keep each box's rows together: whole row groups take turns between the Enter Paths, in entry order
+    let g = -1;
+    units.forEach((x, i) => { if (i === 0 || x.b !== units[i - 1].b) g++; feeders[g % F].rows.push({ cells: rows[i], hidden: false, lock: 0 }); });
   } else {
     // share the rows so every Enter Path still has about the same number of rows waiting once the belt is full:
     // each path first gets the rows it feeds while the belt fills, plus an equal share of the rest
