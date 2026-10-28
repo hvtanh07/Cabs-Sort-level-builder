@@ -24,7 +24,8 @@ function make(S, seed) {
   const free = [...Array(N).keys()].filter(i => i >= (S.bigFrom != null ? S.bigFrom : 0));
   CS.shuffle(free, r);
   let k = 0;
-  if (S.bigAt) S.bigAt.forEach(i => { sizes[i] = 2; });   // fixed spots in send order, e.g. one 24-item box per queue
+  if (S.sizeAt) S.sizeAt.forEach((z, i) => { sizes[i] = z; });   // every box's tier in send order, e.g. level 1: 32 / 40 items
+  else if (S.bigAt) S.bigAt.forEach(i => { sizes[i] = 2; });   // fixed spots in send order, e.g. one 24-item box per queue
   else [[2, S.big2 || 0], [3, S.big3 || 0], [4, S.big4 || 0]].forEach(([sz, cnt]) => { for (let i = 0; i < cnt; i++) sizes[free[k++]] = sz; });
   for (let i = 0; i < N; i++) sizes[i] = SZ[sizes[i]];
   // colours: in send order, cycle a shuffled palette, no colour twice within the last few boxes
