@@ -87,6 +87,7 @@ function make(S, seed) {
     const idx = units.map((x, i) => i).filter(i => units[i].b === lb.i);
     idx.slice(-Math.ceil(S.late.count / 4)).forEach(i => { units[i].key = 1e9 + i; });
   }
+  if (S.rowOrder) units.forEach(x => { x.key += 1e6 * S.rowOrder.indexOf(x.b); });   // box groups enter in this order (box indices in send order)
   units.sort((a, b) => a.key - b.key);
   const rows = units.map(x => [x.c, x.c, x.c, x.c]);
   // lanes
