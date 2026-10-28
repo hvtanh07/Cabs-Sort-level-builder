@@ -21,8 +21,8 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 
 ## Design notes
 
-- **Colour unlocks.** Levels 1–4 use Red, Blue, Green and Yellow. Pink joins at level 5, Orange at level 7, Purple at level 10 and Cyan at level 12; up to level 10 a level uses every colour unlocked so far. Levels 11–14 use 6 colours (5 on level 13), a level that introduces an element 5, and from level 15 the other levels use 7 or 8, picked from the ones unlocked; levels 11 and 12 always include the colour they unlock.
-- **Level 1 layout.** Level 1 uses only size 3 and size 4 boxes (32 and 40 items), taking turns: 3, 4, 3, 4, 3, 4. The Enter Path rows are grouped by box in queue order: the first box's 8 rows of its colour come first, then the second box's 10 rows, and so on, so the feeder reads exactly like the queue and each box gets exactly as many items as it holds. 32-item boxes still first show up in the other levels at level 11 and 40-item boxes at level 26.
+- **Colour unlocks.** Level 1 uses Red, Yellow and Blue; levels 2–4 use Red, Blue, Green and Yellow. Pink joins at level 5, Orange at level 7, Purple at level 10 and Cyan at level 12; up to level 10 a level uses every colour unlocked so far. Levels 11–14 use 6 colours (5 on level 13), a level that introduces an element 5, and from level 15 the other levels use 7 or 8, picked from the ones unlocked; levels 11 and 12 always include the colour they unlock.
+- **Level 1 layout.** Level 1 uses only size 3 and size 4 boxes (32 and 40 items), taking turns: 3, 4, 3, 4, 3, 4. The box colours are Red, Red, Yellow, Yellow, Blue, Blue, so each colour fills a 32-item box and then a 40-item box. The Enter Path rows are grouped by box in queue order: the first box's 8 rows of its colour come first, then the second box's 10 rows, and so on, so the feeder reads exactly like the queue and each box gets exactly as many items as it holds. 32-item boxes still first show up in the other levels at level 11 and 40-item boxes at level 26.
 - **Hidden Box patterns.** Level 7 is staggered: queue 1 hides every even box and queue 2 every odd box after the front one. Level 8 hides every even box in every queue, so the queues show rows of Hidden Boxes.
 - **One colour per row.** Every Enter Path row holds 4 items of one colour, so each box's items arrive as whole rows (a 16-item box = 4 rows, a 24-item box = 6 rows). A box's `size` sets what it holds: size 1 = 16, 2 = 24, 3 = 32, 4 = 40 items.
 
@@ -46,7 +46,7 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 
 | # | Name | Difficulty | What it adds | Queues | Enter Paths | Colours | Boxes (16 / 24 / 32 / 40 items) | Items / belt spots | Conveyor | Elements | Random taps win (lowest point / anywhere) | Casual player wins | Belt watcher wins |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | First Sort | easy | Tap a box to send it up. One middle Enter Path, 4 colours, 32- and 40-item boxes. | 1 | Middle | 4 | 6 (0 / 0 / 3 / 3) | 216 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
+| 1 | First Sort | easy | Tap a box to send it up. One middle Enter Path, 3 colours (two boxes each), 32- and 40-item boxes. | 1 | Middle | 3 | 6 (0 / 0 / 3 / 3) | 216 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
 | 2 | Two Queues | easy | A second queue: pick which front box to send. | 2 | Middle | 4 | 8 (8 / 0 / 0 / 0) | 128 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
 | 3 | Round and Round | easy · 1st booster | Two Enter Paths. Two boxes swapped places, so one colour rides the belt until its box comes up. | 1 | Left, Right | 4 | 6 (6 / 0 / 0 / 0) | 96 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
 | 4 | Side by Side | easy | Two queues with two Enter Paths. | 2 | Left, Right | 4 | 10 (10 / 0 / 0 / 0) | 160 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
