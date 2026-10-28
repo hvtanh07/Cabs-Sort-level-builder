@@ -11,7 +11,7 @@ Each level was played many times by bots in the tool's play test:
 - **Casual player**: the careful player, but 3 taps in 10 are random. This is the closest to a real player and the main check for levels 11–14.
 - **Belt watcher**: sends the front box whose colour is on the belt, with only 1 tap in 10 random. The main check from level 15.
 
-Every level holds more items than its belt has spots, so once the belt has filled at the start, items are still waiting in the Enter Paths (on Block Door levels they wait behind the shut door). Level 1 leaves 5 rows waiting, and the count builds up from there. The levels use the game's own conveyors (Rounded square 19 rows = 76 spots, Bean 18, Lens 18, Heart 30, Triangle 12).
+Every level holds more items than its belt has spots, so once the belt has filled at the start, items are still waiting in the Enter Paths (on Block Door levels they wait behind the shut door). Level 1 leaves 35 rows waiting, and the count builds up from there. The levels use the game's own conveyors (Rounded square 19 rows = 76 spots, Bean 18, Lens 18, Heart 30, Triangle 12).
 
 Every level 1–40 is won by the careful player, with boxes picking at the lowest point and picking anywhere. Levels 1–8 win **every time** with random taps (300 runs each, in every pickup mode, with the belt starting full or empty), and level 9 wins at least 99 % of runs in every mode. Level 10, the first hard level, wins about 8 in 10.
 
@@ -22,13 +22,13 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 ## Design notes
 
 - **Colour unlocks.** Levels 1–4 use Red, Blue, Green and Yellow. Pink joins at level 5, Orange at level 7, Purple at level 10 and Cyan at level 12; up to level 10 a level uses every colour unlocked so far. Levels 11–14 use 6 colours (5 on level 13), a level that introduces an element 5, and from level 15 the other levels use 7 or 8, picked from the ones unlocked; levels 11 and 12 always include the colour they unlock.
-- **Level 1 layout.** The Enter Path rows are grouped by box in queue order: the first box's 4 rows of its colour come first, then the second box's, and so on, so the feeder reads exactly like the queue.
+- **Level 1 layout.** Level 1 uses only size 3 and size 4 boxes (32 and 40 items), taking turns: 3, 4, 3, 4, 3, 4. The Enter Path rows are grouped by box in queue order: the first box's 8 rows of its colour come first, then the second box's 10 rows, and so on, so the feeder reads exactly like the queue and each box gets exactly as many items as it holds. 32-item boxes still first show up in the other levels at level 11 and 40-item boxes at level 26.
 - **Hidden Box patterns.** Level 7 is staggered: queue 1 hides every even box and queue 2 every odd box after the front one. Level 8 hides every even box in every queue, so the queues show rows of Hidden Boxes.
 - **One colour per row.** Every Enter Path row holds 4 items of one colour, so each box's items arrive as whole rows (a 16-item box = 4 rows, a 24-item box = 6 rows). A box's `size` sets what it holds: size 1 = 16, 2 = 24, 3 = 32, 4 = 40 items.
 
 - **Difficulty.** In the play test a level is only lost when every slot holds a box that cannot fill. The hard levels are harder through more boxes, colours, items beyond the belt and stacked elements. From level 15 random tapping loses most runs (see above). It's worth playing the levels from 15 on by hand to judge them.
 
-- **Levels 1–10** follow your brief one by one. Each one adds one thing. Level 1 has 6 boxes (96 items on the 76-spot belt). Level 2 has 8 boxes, 4 per queue. Level 3 has 6 boxes and leaves 2 to 3 rows per Enter Path. Levels 4, 5, 6 and 8 have 5 boxes in every queue (10, 10, 15 and 15 boxes). Level 9 has 6 boxes in each of its 3 queues, with one 24-item box per queue (18 boxes, 312 items); level 10 has 21 boxes, leaves about 36 rows per Enter Path and hides every box behind the front row.
+- **Levels 1–10** follow your brief one by one. Each one adds one thing. Level 1 has 6 boxes, all big: 32-, 40-, 32-, 40-, 32- and 40-item boxes (216 items on the 76-spot belt). Level 2 has 8 boxes, 4 per queue. Level 3 has 6 boxes and leaves 2 to 3 rows per Enter Path. Levels 4, 5, 6 and 8 have 5 boxes in every queue (10, 10, 15 and 15 boxes). Level 9 has 6 boxes in each of its 3 queues, with one 24-item box per queue (18 boxes, 312 items); level 10 has 21 boxes, leaves about 36 rows per Enter Path and hides every box behind the front row.
 - **Queue counts for levels 2–4.** Your notes say level 2 has 2 queues, but level 4 "adds another queue" and level 6 brings the total to 3. I read this as level 2 = 2 queues, level 3 = back to 1 queue (so the swapped boxes are easy to see), level 4 = 2 queues, level 6 = 3 queues.
 - **Level 3.** The first and last boxes in the queue swapped places. The last box's items enter first, so they ride the belt until that box comes up.
 - **Level 5** uses the Triangle 12 conveyor (48 spots) with 152 items. Its first 24-item box has a colour no other box uses: most of its items are on the belt at the start and its last row pours in later.
@@ -46,7 +46,7 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 
 | # | Name | Difficulty | What it adds | Queues | Enter Paths | Colours | Boxes (16 / 24 / 32 / 40 items) | Items / belt spots | Conveyor | Elements | Random taps win (lowest point / anywhere) | Casual player wins | Belt watcher wins |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | First Sort | easy | Tap a box to send it up. One middle Enter Path, 4 colours, small boxes only. | 1 | Middle | 4 | 6 (6 / 0 / 0 / 0) | 96 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
+| 1 | First Sort | easy | Tap a box to send it up. One middle Enter Path, 4 colours, 32- and 40-item boxes. | 1 | Middle | 4 | 6 (0 / 0 / 3 / 3) | 216 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
 | 2 | Two Queues | easy | A second queue: pick which front box to send. | 2 | Middle | 4 | 8 (8 / 0 / 0 / 0) | 128 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
 | 3 | Round and Round | easy · 1st booster | Two Enter Paths. Two boxes swapped places, so one colour rides the belt until its box comes up. | 1 | Left, Right | 4 | 6 (6 / 0 / 0 / 0) | 96 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
 | 4 | Side by Side | easy | Two queues with two Enter Paths. | 2 | Left, Right | 4 | 10 (10 / 0 / 0 / 0) | 160 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
