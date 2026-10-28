@@ -43,9 +43,11 @@ S.push({ n: 9, name: 'Long Haul', diff: 'easy', booster: '3rd', intro: 'Longer q
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 21, colors: 4, window: 20, count: 21, minRandom: 0.75, minCasual: 0.95,
   colorAt: L9.map(x => (x.p + (x.l === 1 ? 1 : 0)) % 4 + 1), sizeAt: L9.map(x => x.l === 1 ? 4 - x.p % 4 : 1 + x.p % 4) });
 // level 10: every box behind the front row is hidden; mostly 24 / 32 / 40-item boxes with only 3 of 16 items (3 / 6 / 6 / 6).
-// 624 items: checked like the hard levels from 11 on (`hardBar`: casual player 85 %, random taps 30 %)
+// Rows come close to box order and each queue sends its boxes in long runs, so a box sent before its colour is on the belt parks in a slot
 S.push({ n: 10, name: 'First Challenge', diff: 'hard', unlock: 'Hidden Box', intro: 'First hard level: every box behind the front row is hidden. Mostly 24- to 40-item boxes, only 3 of 16.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 21, colors: 7, window: 20, count: 21, hardBar: [0.85, 0.3],
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 21, colors: 7, window: 20, count: 21,
+  // the player has to watch the belt, like the hard levels from 15 on: random taps may win at most 25 %, the belt watcher must win 80 %
+  watch: true, watchTries: [{ window: 6, stick: 0.9 }, { window: 8, stick: 0.95, colorGap: 4 }, { window: 4, stick: 0.95, colorGap: 5 }], maxSeed: 300, seed: 42,   // seed 42: random taps win under 10 %, the belt watcher nearly every run
   sizeAt: [2, 3, 4, 3, 1, 2, 4, 2, 3, 4, 2, 1, 3, 4, 2, 3, 4, 1, 2, 3, 4],
   hiddenPattern: (l, p) => p > 1 });
 
