@@ -1,6 +1,6 @@
 # Cap Sort Level Builder
 
-A level design tool for Caps Sorting. Open `index.html` in Chrome or Edge. No install or build step.
+A level design tool for Caps Sorting. Use it online at https://hvtanh07.github.io/cabs-sort-level-builder/ or open `index.html` in Chrome or Edge. No install or build step.
 
 ## What it does
 
