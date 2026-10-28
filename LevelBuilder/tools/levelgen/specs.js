@@ -13,10 +13,13 @@ S.push({ n: 2, name: 'Two Queues', diff: 'easy', intro: 'A second queue: pick wh
 S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Two queues and two Enter Paths. Whole row groups take turns between the Enter Paths, mixed out of queue order.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, slots: 5, extraSlots: 0, groupPaths: true,
   sizeAt: [3, 4, 4, 3, 3, 4, 4, 3, 3, 4, 4, 3], colorAt: [3, 1, 4, 2, 1, 4, 3, 2, 4, 3, 1, 2], rowOrder: [1, 2, 0, 3, 4, 5, 7, 6, 9, 11, 8, 10] });
-S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths.',
-  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 10, colors: 5, window: 4, count: 10 });
-S.push({ n: 5, name: 'Big Box', diff: 'easy', intro: 'First 24-item box. The belt is full, so its last items pour in from the Enter Path later.',
-  conveyor: 'triangle_12', entries: LR, lanes: 2, boxes: 21, big2: 9, bigFrom: 1, colors: 5, window: 6, late: { count: 4, unique: true }, count: 10, bigCount: 3 });
+// level 4 adds 16- and 24-item boxes (all four sizes, 3 of each) and still groups each box's rows, mixed, one group per Enter Path
+S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths. All four box sizes (16 to 40 items); each box\'s rows still come as one group.',
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, groupPaths: true,
+  sizeAt: [4, 1, 2, 3, 4, 1, 2, 3, 3, 4, 1, 2], colorAt: [3, 2, 4, 1, 2, 4, 1, 3, 4, 1, 3, 2], rowOrder: [0, 2, 1, 3, 6, 5, 7, 4, 9, 8, 11, 10] });
+// level 5 drops the groups: the rows of all colours are mixed on the Enter Paths
+S.push({ n: 5, name: 'Mixed Rows', diff: 'easy', intro: 'The rows are no longer grouped by box: colours come mixed on the Enter Paths.',
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 5, window: 40, count: 12, sizeAt: [2, 4, 3, 1, 1, 2, 4, 4, 2, 3, 3, 1] });
 S.push({ n: 6, name: 'Three Queues', diff: 'easy', booster: '2nd', intro: 'A third queue, with a few 24-item boxes.',
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, big2: 3, colors: 5, window: 8, count: 15, bigCount: 3 });
 S.push({ n: 7, name: 'Hidden Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Two Enter Paths, two queues.',
