@@ -45,6 +45,7 @@ function make(S, seed) {
     const c = pick(r, cand);
     cols.push(c); used[c] += sizes[i];
   }
+  if (S.colorAt) S.colorAt.forEach((c, i) => { cols[i] = c; });   // every box's colour in send order, e.g. level 1: Red, Red, Yellow, Yellow, Blue, Blue
   if (S.late && S.late.unique) {
     // the first big box gets a colour of its own, so the belt cannot fill it from other boxes' items
     const bi = sizes.findIndex(z => z > SZ[1]), own = cols[bi], rest = pal.filter(c => c !== own);
