@@ -32,7 +32,9 @@ function check(S, seed) {
       if (w.rate < minW) return { ok: false, why: 'watching ' + w.rate, res };
     } else if (S.n <= 10) {
       if (S.diff === 'medium' && (a.rate < 0.9 || b.rate < (S.door ? 0.6 : 0.9))) return { ok: false, why: 'random ' + res.rnd, res };
-      if (S.diff === 'hard' && (a.rate < 0.75 || b.rate < 0.75)) return { ok: false, why: 'random ' + res.rnd, res };
+      // `hardBar` [casual, random]: level 10 is long with big boxes, so it is checked like the hard levels from 11 on
+      const [minE, minR] = S.hardBar || [0, 0.75];
+      if (S.diff === 'hard' && (e.rate < minE || a.rate < minR || b.rate < minR)) return { ok: false, why: 'random ' + res.rnd + ' casual ' + e.rate, res };
     } else {
       // levels 11-40 are long, so pure random taps jam more often; the casual player (careful, with 30 % random taps) must win
       // nearly every medium level and most hard ones, and random taps must still win a fair share

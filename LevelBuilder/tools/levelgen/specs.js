@@ -36,10 +36,17 @@ S.push({ n: 8, name: 'Hidden Rows', diff: 'easy', unlock: 'Hidden Box', intro: '
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 6, window: 20, count: 18,
   sizeAt: [2, 3, 1, 2, 1, 2, 3, 2, 3, 1, 2, 3, 2, 4, 2, 3, 1, 3], minRandom: 0.8, minCasual: 0.95,
   hiddenPattern: (l, p) => p % 2 === 0 });
-S.push({ n: 9, name: 'Long Haul', diff: 'easy', booster: '3rd', intro: 'No Hidden Box, but a longer level. Three queues, two Enter Paths.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 30, big2: 5, colors: 6, window: 5, count: 18, bigAt: [4, 9, 14], minRandom: 0.99 });
-S.push({ n: 10, name: 'First Challenge', diff: 'hard', unlock: 'Hidden Box', intro: 'First hard level: every box behind the front row is hidden. Longer than level 9.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 36, big2: 7, hidden: 7, hiddenSizes: [1, 2], needHiddenSize: 2, colors: 6, window: 40, stick: 0.7,
+// level 9: 3 queues of 7, rows mixed. Colours in a repeating chevron: queues 1 and 3 match box for box and queue 2 runs one
+// colour ahead (queue l, box p: colour (p + (l === 1)) % 4). 4 colours (Red, Blue, Green, Yellow): with 6 the casual player won only about 70 %; sizes repeat 16 / 24 / 32 / 40 down the outer queues and 40 / 32 / 24 / 16 down the middle one
+const L9 = Array.from({ length: 21 }, (_, i) => ({ l: i % 3, p: Math.floor(i / 3) }));
+S.push({ n: 9, name: 'Long Haul', diff: 'easy', booster: '3rd', intro: 'Longer queues (7 boxes each). Box colours in a repeating chevron, boxes from 16 to 40 items.',
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 21, colors: 4, window: 20, count: 21, minRandom: 0.75, minCasual: 0.95,
+  colorAt: L9.map(x => (x.p + (x.l === 1 ? 1 : 0)) % 4 + 1), sizeAt: L9.map(x => x.l === 1 ? 4 - x.p % 4 : 1 + x.p % 4) });
+// level 10: every box behind the front row is hidden; mostly 24 / 32 / 40-item boxes with only 3 of 16 items (3 / 6 / 6 / 6).
+// 624 items: checked like the hard levels from 11 on (`hardBar`: casual player 85 %, random taps 30 %)
+S.push({ n: 10, name: 'First Challenge', diff: 'hard', unlock: 'Hidden Box', intro: 'First hard level: every box behind the front row is hidden. Mostly 24- to 40-item boxes, only 3 of 16.',
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 21, colors: 7, window: 20, count: 21, hardBar: [0.85, 0.3],
+  sizeAt: [2, 3, 4, 3, 1, 2, 4, 2, 3, 4, 2, 1, 3, 4, 2, 3, 4, 1, 2, 3, 4],
   hiddenPattern: (l, p) => p > 1 });
 
 // ---- levels 11-40: from the level list sheet ----
