@@ -288,13 +288,14 @@ window.CS = window.CS || {};
     return { items, cap, boxes };
   };
 
-  /* Can the queues jam for good? A Locked Box counts down 1 for every box sent while it is at the front of its queue, and
-     opens when no queue can send; a blocked queue opens when no other queue can send. So only Linked Boxes can still jam:
-     if at some point no front box can be sent, nothing changes any more and the level is stuck (the play test's fail-safe
-     hides this). Tries every order of sends from the queues (slots are not limited here) and returns the first stuck
-     state: { sent: boxes sent per queue, total, box: uid of a stuck front box }, or null.
-     `strict`: Locked Boxes only open early in the last queue with boxes, so this finds an order where the front boxes of
-     two or more queues are all locked at once. */
+  /* Can the queues jam for good? A Locked Box counts down 1 for every box sent while it is at the front of its queue.
+     When no front box can be sent while a Locked Box is still locked or a queue is still blocked, the GDD fail-safe
+     removes every lock and block for the rest of the level. So only Linked Boxes can still jam: if at some point no front
+     box can be sent and no lock or block is left, nothing changes any more and the level is stuck. Tries every order of
+     sends from the queues (slots are not limited here) and returns the first stuck state:
+     { sent: boxes sent per queue, total, box: uid of a stuck front box }, or null.
+     `strict`: the fail-safe does not fire while the front boxes of two or more queues are locked, so this finds an order
+     where that happens. */
   CS.queueDeadlock = function (m, strict) {
     const Q = m.lanes, n = Q.length;
     if (!Q.some(q => q.some(b => b.lock > 0)) && !m.links.length && !m.blockedLane) return null;
@@ -305,8 +306,9 @@ window.CS = window.CS || {};
     const turns = bl ? Math.max(1, bl.lockTurns) : 0;
     const pair = bl ? [bl.lane, bl.lane2 != null && bl.lane2 < n ? bl.lane2 : bl.lane] : [];
     // w: sends counted by each queue's front box since it reached the front (only kept while that box is still locked)
-    const start = { s: new Array(n).fill(0), w: new Array(n).fill(0), b: bl ? bl.lane : -1, c: turns };
-    const key = st => st.s.join(',') + '|' + st.w.join(',') + '|' + st.b + '|' + st.c;
+    // f: the fail-safe has fired, so no lock or block is left
+    const start = { s: new Array(n).fill(0), w: new Array(n).fill(0), b: bl ? bl.lane : -1, c: turns, f: 0 };
+    const key = st => st.s.join(',') + '|' + st.w.join(',') + '|' + st.b + '|' + st.c + '|' + st.f;
     const seen = new Set([key(start)]), todo = [start];
     while (todo.length) {
       if (seen.size > 300000) return null;   // too many orders to check
@@ -318,14 +320,17 @@ window.CS = window.CS || {};
         const b = Q[l][t];
         // a Linked Box waits until its partner reaches the front of its queue (then the link breaks)
         if (partner[b.uid]) { const [pl, pt] = pos[partner[b.uid]]; if (st.s[pl] < pt) { if (!stuckBox) stuckBox = b.uid; continue; } }
-        if (b.lock - st.w[l] > 0) locked.push(l); else open.push(l);
+        if (!st.f && b.lock - st.w[l] > 0) locked.push(l); else open.push(l);
       }
-      // Block Queue (Game.isBlocked): the blocked queue only opens while no other queue can send
-      if (open.some(l => l !== st.b)) open = open.filter(l => l !== st.b);
-      // Game.updateFront: when no queue can send, the front Locked Boxes open
-      if (!open.length && locked.length && !(strict && locked.length > 1)) {
-        locked.forEach(l => { st.w[l] = Q[l][st.s[l]].lock; });
-        open = locked;
+      // Block Queue (Game.isBlocked): the blocked queue cannot send
+      open = open.filter(l => l !== st.b);
+      // Game.checkState fail-safe (GDD): when no front box can be sent while a Locked Box is still locked or a queue is
+      // still blocked, every lock and block is removed for the rest of the level
+      if (!open.length && !st.f && (locked.length || st.b >= 0 || Q.some((q, l) => q.some((b, t) => t > st.s[l] && b.lock > 0)))
+        && !(strict && locked.length > 1)) {
+        const nx = { s: st.s, w: st.w, b: -1, c: 0, f: 1 }, k = key(nx);
+        if (!seen.has(k)) { seen.add(k); todo.push(nx); }
+        continue;
       }
       if (!open.length) {
         if (st.s.every((t, l) => t >= Q[l].length)) continue;   // every box sent
@@ -343,7 +348,7 @@ window.CS = window.CS || {};
         }
         // Game.clearSpentBlocks: the block is gone once either queue of the pair runs out of boxes
         if (b >= 0 && pair.some(p => s[p] >= Q[p].length)) { b = -1; c = 0; }
-        const nx = { s, w, b, c }, k = key(nx);
+        const nx = { s, w, b, c, f: st.f }, k = key(nx);
         if (!seen.has(k)) { seen.add(k); todo.push(nx); }
       });
     }
