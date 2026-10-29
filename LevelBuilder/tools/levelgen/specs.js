@@ -23,7 +23,7 @@ S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two E
 // colour is coming and which queue holds that box (checked like the watch-the-belt levels). 3 queues of 6, 6 colours
 S.push({ n: 5, name: 'Colour Patches', diff: 'medium', intro: 'A third queue. Rows come in patches of one colour: watch which colour is coming and send the box for it.',
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 6, window: 4, count: 18, chunk: [3, 6], sizeAt: [3, 4, 3, 2, 3, 2, 4, 3, 2, 3, 4, 3, 2, 3, 4, 2, 3, 2],
-  watch: true, noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }], maxSeed: 300, seed: 62 });   // seed 62: gentler than level 6, the casual player wins about 92 %
+  watch: true, casualBar: [0.9, 1], noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }], maxSeed: 300, seed: 62 });   // the search starts at seed 62 (picked for the old pickup rule); seed 130 passes with the fly rule: random taps win about 53 %, the casual player 95 %
 // levels 6-8 carry on from level 5: rows mixed on the Enter Paths, mostly 24- and 32-item boxes, 6 boxes in every queue.
 // With 3 queues of 6 and mixed rows, random taps jam now and then: levels 6 and 8 ask random taps to win 80 % in every play
 // mode and the casual player (30 % random taps) and the belt watcher 95 %
@@ -34,7 +34,7 @@ const L6 = Array.from({ length: 18 }, (_, i) => ({ l: i % 3, p: Math.floor(i / 3
 S.push({ n: 6, name: 'Diagonal Stripes', diff: 'medium', booster: '2nd', intro: 'Box colours in diagonal stripes over all 8 colours; rows come in colour patches, so watch which colour is coming.',
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 8, window: 4, count: 18, chunk: [3, 6],
   sizeAt: L6.map(x => (x.p + x.l) % 2 ? 3 : 2), atPos: (l, p) => [(p + l) % 8 + 1, (p + l) % 2 ? 3 : 2],
-  watch: true, noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }, { stick: 0.9 }], maxSeed: 300, seed: 56 });   // seed 56: tapping one queue until it is empty loses in every queue order
+  watch: true, casualBar: [0.9, 1], noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }, { stick: 0.9 }], maxSeed: 300, seed: 56 });   // the search starts at seed 56; seed 226 passes with the fly rule: random taps win about 7 %, one queue at most 50 %, the casual player 93 %
 S.push({ n: 7, name: 'Hidden Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Only 32-item boxes.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 6, window: 40, count: 12, sizeAt: new Array(12).fill(3), chunk: [3, 6], minRandom: 0.9,
   hiddenPattern: (l, p) => p > 1 && (l % 2 === 0 ? p % 2 === 0 : p % 2 === 1) });
@@ -45,7 +45,7 @@ S.push({ n: 8, name: 'Hidden Rows', diff: 'medium', intro: 'Every even box is hi
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 7, window: 4, count: 18, chunk: [3, 6],
   sizeAt: [2, 3, 1, 2, 1, 2, 3, 2, 3, 1, 2, 3, 2, 4, 2, 3, 1, 3],
   hiddenPattern: (l, p) => p % 2 === 0,
-  watch: true, noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }], maxSeed: 300, seed: 107 });   // seed 107: random taps win about 4 in 10, the casual player 92 %
+  watch: true, casualBar: [0.9, 1], noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }], maxSeed: 300, seed: 107 });   // the search starts at seed 107; seed 274 passes with the fly rule: random taps win about 23 %, the casual player 93 %
 // level 9: 3 queues of 7, no Hidden Boxes. Colours in a repeating chevron: queues 1 and 3 match box for box and queue 2 runs one
 // colour ahead (queue l, box p: colour (p + (l === 1)) % 7); sizes repeat 16 / 24 / 32 / 40 down the outer queues and 40 / 32 /
 // 24 / 16 down the middle one. Medium: rows in colour patches and each queue sends in runs (`atPos` keeps the chevron in place)
@@ -54,13 +54,13 @@ const L9AT = (l, p) => [(p + (l === 1 ? 1 : 0)) % 7 + 1, l === 1 ? 4 - p % 4 : 1
 S.push({ n: 9, name: 'Long Haul', diff: 'medium', booster: '3rd', intro: 'Longer queues (7 boxes each). Box colours in a repeating chevron, boxes from 16 to 40 items; rows in colour patches.',
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 21, colors: 7, window: 4, count: 21, chunk: [3, 6],
   sizeAt: L9.map(x => L9AT(x.l, x.p)[1]), atPos: L9AT,
-  watch: true, noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.8 }, { stick: 0.9 }, { stick: 0.7 }, { stick: 0.9, window: 0 }], maxSeed: 300 });
+  watch: true, casualBar: [0.9, 1], noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.8 }, { stick: 0.9 }, { stick: 0.7 }, { stick: 0.9, window: 0 }], maxSeed: 300 });
 // level 10: every box behind the front row is hidden; mostly 24 / 32 / 40-item boxes with only 3 of 16 items (3 / 6 / 6 / 6).
 // Rows come close to box order and each queue sends its boxes in long runs, so a box sent before its colour is on the belt parks in a slot
 S.push({ n: 10, name: 'First Challenge', diff: 'hard', unlock: 'Hidden Box', intro: 'First hard level: every box behind the front row is hidden. Mostly 24- to 40-item boxes, only 3 of 16.',
   conveyor: 'square_19', entries: LR, lanes: 3, boxes: 21, colors: 8, window: 20, count: 21, chunk: [3, 6],
   // the player has to watch the belt, like the hard levels from 15 on: random taps and the blind bots may win at most 25 %, the belt watcher must win 80 %
-  watch: true, noBlind: true, watchTries: [{ window: 8, stick: 0.7 }, { window: 6, stick: 0.9 }], maxSeed: 300, seed: 75,   // seed 75: random taps win about 13 %, the belt watcher 90 %
+  watch: true, casualBar: [0, 0.85], watchBar: [0.25, 0.9], noBlind: true, watchTries: [{ window: 8, stick: 0.7 }, { window: 6, stick: 0.9 }], maxSeed: 300, seed: 75,   // the search starts at seed 75; seed 234 passes with the fly rule: random taps win about 3 %, the casual player 65 %, the belt watcher 94 %
   sizeAt: [2, 3, 4, 3, 1, 2, 4, 2, 3, 4, 2, 1, 3, 4, 2, 3, 4, 1, 2, 3, 4],
   hiddenPattern: (l, p) => p > 1 });
 
@@ -160,11 +160,11 @@ for (let n = 11; n <= 40; n++) {
   S.push(s);
 }
 // ---- level length: from level 2 on, every level holds more items than the belt, so items are still waiting in the Enter Paths
-// once the belt is full. The belts are the game's conveyors (Rounded square 19 rows = 76 spots, Triangle 12 = 48, Heart 30 = 120).
+// once the belt is full. The belts are the game's conveyors (updated 2026-10-29: Rounded square 26 rows = 104 spots, Bean 28, Lens 26, Heart 30, Triangle 20, Oval 22).
 // Levels 1-3 are sized to the belt: level 1 fills about 85 % of it, level 2 leaves 1 row waiting, level 3 a few rows per Enter Path.
 // From level 4 the item count builds up to the normal amount: TOTAL gives levels 1-10 in items; levels 11-40 hold
 // 168 items (176 on Heart) plus EXTRA, the same amounts as before the conveyors changed.
-const BELT = { square_19: 19, bean_18: 18, lens_18: 18, heart_21: 30, triangle_12: 12, oval_14: 14 };   // belt rows of each conveyor
+const BELT = { square_19: 26, bean_18: 28, lens_18: 26, heart_21: 30, triangle_12: 20, oval_14: 22 };   // belt rows of each conveyor
 const TOTAL = { 1: 64, 2: 80, 3: 96, 4: 128, 5: 136, 6: 160, 7: 192, 8: 208, 9: 224, 10: 352 };
 // colours unlock one by one: Red, Blue, Green and Yellow first, then Pink at level 5, Orange at 7, Purple at 10 and Cyan at 12.
 // Up to level 12 a level uses every unlocked colour; after that any of the 8 can be mixed in.
