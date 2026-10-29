@@ -87,6 +87,20 @@ function make(S, seed) {
     const idx = units.map((x, i) => i).filter(i => units[i].b === lb.i);
     idx.slice(-Math.ceil(S.late.count / 4)).forEach(i => { units[i].key = 1e9 + i; });
   }
+  if (S.chunk) {
+    // `chunk` [min, max]: each box's rows split into blocks of min-max rows that stay together (one Enter Path each), so the
+    // paths show blocks of one colour; each block keeps the key of its first row
+    const [lo, hi] = S.chunk;
+    let c = -1;
+    order.forEach(bx => {
+      const own = units.filter(x => x.b === bx.i);
+      const k = ri(r, Math.ceil(own.length / hi), Math.max(Math.ceil(own.length / hi), Math.floor(own.length / lo)));
+      const len = new Array(k).fill(Math.floor(own.length / k));
+      for (let j = 0; j < own.length % k; j++) len[j]++;
+      let at = 0;
+      CS.shuffle(len, r).forEach(n => { c++; own.slice(at, at + n).forEach((x, j) => { x.chunk = c; x.key = own[at].key + j * 1e-6; }); at += n; });
+    });
+  }
   if (S.rowOrder) units.forEach(x => { x.key += 1e6 * S.rowOrder.indexOf(x.b); });   // box groups enter in this order (box indices in send order)
   units.sort((a, b) => a.key - b.key);
   const rows = units.map(x => [x.c, x.c, x.c, x.c]);
@@ -104,6 +118,10 @@ function make(S, seed) {
       const ph = Math.floor((x.b + (S.doorLead || 0)) / S.door);
       feeders[x.b >= N * (1 - (S.doorTail || 0)) ? 0 : ph % 2].rows.push({ cells: [x.c, x.c, x.c, x.c], hidden: false, lock: 0 });
     });
+  } else if (S.chunk) {
+    // row blocks take turns between the Enter Paths, in entry order
+    let g = -1;
+    units.forEach((x, i) => { if (i === 0 || x.chunk !== units[i - 1].chunk) g++; feeders[g % F].rows.push({ cells: rows[i], hidden: false, lock: 0 }); });
   } else if (S.groupPaths) {
     // keep each box's rows together: whole row groups take turns between the Enter Paths, in entry order
     let g = -1;
