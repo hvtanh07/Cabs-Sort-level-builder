@@ -357,12 +357,15 @@ function smartMove(g) {
   g.send(best);
   return best;
 }
-function play(m, mode, policy, seed, track, stat) {
+// `rv`: when the bot is about to lose it takes an RV slot (up to the level's extraSlots), like a player watching an ad
+function play(m, mode, policy, seed, track, stat, rv) {
   const g = new CS.Game(m, GEOM[m.conveyor], { pickMode: mode.pick, prefill: mode.prefill });
   const r = rng(seed);
   let guard = 0;
   const tr = track ? { entered: null, sent: null } : null;
-  while (!g.over && guard++ < 40000) {
+  while (guard++ < 40000) {
+    if (g.over === 'lose' && rv && !g.addRV()) continue;
+    if (g.over) break;
     for (let s = 0; s < 6; s++) {
       if (g.over || g.freeSlot() < 0) break;
       const can = g.lanes.map((_, l) => l).filter(l => g.canSendLane(l));
@@ -370,11 +373,17 @@ function play(m, mode, policy, seed, track, stat) {
       let l;
       if (policy === 'smart') { l = smartMove(g); if (l < 0) break; }
       else if (policy === 'turns' || policy === 'stay') {
-        // blind taps, never looking at the belt: 'turns' taps the queues in turn, 'stay' keeps tapping one queue until it is
-        // empty or stuck, then moves on; both start at a random queue
-        if (g._at == null) g._at = ri(r, 0, g.lanes.length - 1);
-        l = can.find(x => x >= g._at); if (l == null) l = can[0];
-        g._at = policy === 'turns' ? l + 1 : l; g.send(l);
+        // blind taps, never looking at the belt: 'turns' taps the queues in turn from a random queue; 'stay' picks a random
+        // order of the queues and keeps tapping the first one in that order that can send (one queue until it is empty or
+        // stuck, then the next), so every order a player might pick gets tried
+        if (policy === 'stay') {
+          if (!g._ord) g._ord = CS.shuffle(g.lanes.map((_, i) => i), r);
+          l = g._ord.find(x => can.includes(x)); g.send(l);
+        } else {
+          if (g._at == null) g._at = ri(r, 0, g.lanes.length - 1);
+          l = can.find(x => x >= g._at); if (l == null) l = can[0];
+          g._at = l + 1; g.send(l);
+        }
       }
       else if (policy === 'greedy' || (policy > 0 && r() >= policy)) { l = g.botMove(); if (l < 0) break; }
       else { l = pick(r, can); g.send(l); }
@@ -408,17 +417,19 @@ const BOTS = [
   { id: 'novice', name: 'Beginner', policy: 0.5, note: 'half the taps random, half for the colour on the belt' },
   { id: 'casual', name: 'Casual', policy: 0.3, note: '3 taps in 10 random' },
   { id: 'watcher', name: 'Belt watcher', policy: 0.1, note: '1 tap in 10 random' },
-  { id: 'careful', name: 'Careful', policy: 'smart', note: 'counts the items coming and waits instead of parking a box that cannot fill' }
+  { id: 'careful', name: 'Careful', policy: 'smart', note: 'counts the items coming and waits instead of parking a box that cannot fill' },
+  // not part of the rating: the one-queue blind tap again, taking the level's RV slots when it is about to lose
+  { id: 'stayRV', name: 'Blind, one queue + RV', policy: 'stay', rv: true, extra: true, note: 'blind, one queue, but takes the RV slots when about to lose (not used for the rating)' }
 ];
 function ladder(m, mode, runs, seed0) {
   return BOTS.map(b => {
     if (b.policy === 'smart') { let w = 0; for (let s = 0; s < runs; s++) if (play(m, mode, 'smart', seed0 + s).win) w++; return w / runs; }
-    return rate(m, mode, b.policy, runs, seed0).rate;
+    return rate(m, mode, b.policy, runs, seed0, b.rv).rate;
   });
 }
-function rate(m, mode, eps, runs, seed0) {
+function rate(m, mode, eps, runs, seed0, rv) {
   let w = 0, t = 0; const st = { busy: 0, wait: 0, full: 0, all: 0, t: 0 }; let fs = 0;
-  for (let s = 0; s < runs; s++) { const x = play(m, mode, eps, seed0 + s, null, st); if (x.win) w++; if (x.failsafe) fs++; t += x.ticks; }
+  for (let s = 0; s < runs; s++) { const x = play(m, mode, eps, seed0 + s, null, st, rv); if (x.win) w++; if (x.failsafe) fs++; t += x.ticks; }
   return { rate: w / runs, ticks: Math.round(t / runs), wait: +(st.wait / st.all).toFixed(3), full: +(st.full / st.t).toFixed(3), fs: fs / runs };
 }
 
