@@ -21,8 +21,8 @@ S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two E
 // queue sends its boxes in runs (`stick`): random taps park boxes whose colour is far off, so the player has to watch which
 // colour is coming and which queue holds that box (checked like the watch-the-belt levels)
 S.push({ n: 5, name: 'Colour Patches', diff: 'medium', intro: 'Rows come in patches of one colour: watch which colour is coming and send the box for it.',
-  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 16, colors: 5, window: 4, count: 16, slots: 3, chunk: [3, 6], sizeAt: [3, 4, 3, 2, 3, 2, 4, 3, 2, 3, 4, 3, 2, 3, 4, 2],
-  watch: true, noBlind: true, watchTries: [{ stick: 0.8 }, { stick: 0.9 }, { stick: 0.7 }], maxSeed: 300, seed: 18 });   // seed 18: both blind bots lose every run
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 16, colors: 5, window: 4, count: 16, chunk: [3, 6], sizeAt: [3, 4, 3, 2, 3, 2, 4, 3, 2, 3, 4, 3, 2, 3, 4, 2],
+  watch: true, watchTries: [{ stick: 0.8 }], maxSeed: 300, seed: 96, watchBar: [0.5, 0.9] });   // seed 96 (4 slots): tapping one queue never wins, random taps about 4 in 10
 // levels 6-8 carry on from level 5: rows mixed on the Enter Paths, mostly 24- and 32-item boxes, 6 boxes in every queue.
 // With 3 queues of 6 and mixed rows, random taps jam now and then: levels 6 and 8 ask random taps to win 80 % in every play
 // mode and the casual player (30 % random taps) and the belt watcher 95 %
@@ -31,9 +31,9 @@ const L6 = Array.from({ length: 18 }, (_, i) => ({ l: i % 3, p: Math.floor(i / 3
 // Like level 5, the rows come in patches of 3-6 rows of one colour and each queue sends its boxes in runs, so the player has to
 // read the patches coming; `atPos` keeps the colours and sizes tied to the box's place in the queues, so the stripes stay
 S.push({ n: 6, name: 'Three Queues', diff: 'medium', booster: '2nd', intro: 'A third queue. Box colours in diagonal stripes; rows come in colour patches, so watch which colour is coming.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 5, window: 4, count: 18, slots: 3, chunk: [3, 6],
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 5, window: 4, count: 18, chunk: [3, 6],
   sizeAt: L6.map(x => (x.p + x.l) % 2 ? 3 : 2), atPos: (l, p) => [(p + l) % 5 + 1, (p + l) % 2 ? 3 : 2],
-  watch: true, noBlind: true, watchTries: [{ stick: 0.8 }, { stick: 0.9 }, { stick: 0.7 }], maxSeed: 300, seed: 103 });   // seed 103: both blind bots lose every run
+  watch: true, watchTries: [{ stick: 0.9 }], maxSeed: 300, seed: 79, watchBar: [0.5, 0.9] });   // seed 79 (4 slots): random taps win about 3 in 10, but tapping one queue until it is empty wins
 S.push({ n: 7, name: 'Hidden Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Only 32-item boxes.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 6, window: 40, count: 12, sizeAt: new Array(12).fill(3),
   hiddenPattern: (l, p) => p > 1 && (l % 2 === 0 ? p % 2 === 0 : p % 2 === 1) });

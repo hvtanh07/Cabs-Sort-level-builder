@@ -29,7 +29,8 @@ function check(S, seed) {
       // from level 15 the player has to watch the belt: random taps must lose most runs, while a player who sends the box
       // matching the belt (1 tap in 10 random) still wins nearly every run
       const w = G.rate(m, G.MODES.low, 0.1, 30, 3000); res.watch = w.rate;
-      const [maxR, minW] = S.diff === 'hard' ? [0.25, 0.8] : [0.35, 0.9];
+      // `watchBar` [max random, min watcher] sets the bar for one level (levels 5 and 6 keep 4 slots, so random taps win more)
+      const [maxR, minW] = S.watchBar || (S.diff === 'hard' ? [0.25, 0.8] : [0.35, 0.9]);
       if (Math.max(a.rate, b.rate) > maxR) return { ok: false, why: 'random wins ' + res.rnd, res };
       if (w.rate < minW) return { ok: false, why: 'watching ' + w.rate, res };
       // `noBlind`: tapping without looking (one queue until it is empty, or the queues in turn) must lose as often as random taps
