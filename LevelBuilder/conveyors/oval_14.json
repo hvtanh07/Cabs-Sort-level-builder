@@ -1,39 +1,126 @@
 {
-  "$schema": "../../../../../docs/design/conveyor.schema.json",
-  "formatVersion": 2,
-  "id": "oval_14",
-  "rows": 14,
-  "width": 4,
-  "pickRows": 4,
-  "scale": 0.483,
-  "scaleRate": 1,
-  "offset": { "x": 0, "z": 0 },
-  "loop": { "nodes": [
-    { "x": 0.722, "z": 3.112, "yRotation": 270 },
-    { "x": -0.722, "z": 3.112, "yRotation": 270 },
-    { "x": -1.488, "z": 3.878, "yRotation": 0 },
-    { "x": -0.722, "z": 4.644, "yRotation": 90 },
-    { "x": 0.722, "z": 4.644, "yRotation": 90 },
-    { "x": 1.488, "z": 3.878, "yRotation": 180 }
-  ] },
-  "feeders": [
-    { "side": "right", "mergeAt": 10, "nodes": [
-      { "x": 2.018, "z": 9.456, "yRotation": 180 },
-      { "x": 2.018, "z": 6.794, "yRotation": 180 },
-      { "x": 2.018, "z": 5.131, "yRotation": 180 },
-      { "x": 1.603, "z": 4.477, "yRotation": 234.4 }
-    ] },
-    { "side": "left", "mergeAt": 5, "nodes": [
-      { "x": -2.018, "z": 9.456, "yRotation": 180 },
-      { "x": -2.018, "z": 6.794, "yRotation": 180 },
-      { "x": -2.018, "z": 5.131, "yRotation": 180 },
-      { "x": -1.627, "z": 4.493, "yRotation": 124.9 }
-    ] },
-    { "side": "middle", "mergeAt": 8, "nodes": [
-      { "x": 0, "z": 10.62, "yRotation": 180 },
-      { "x": 0, "z": 7.64, "yRotation": 180.1 },
-      { "x": -0.07, "z": 5.056, "yRotation": 180 }
-    ] }
-  ],
-  "meta": { "name": "Large oval" }
+    "$schema": "../../../../../docs/design/conveyor.schema.json",
+    "formatVersion": 2,
+    "id": "oval_14",
+    "rows": 22,
+    "width": 4,
+    "pickRows": 4,
+    "scale": 0.45,
+    "scaleRate": 1,
+    "offset": {
+        "x": 0,
+        "z": 0
+    },
+    "loop": {
+        "nodes": [
+            {
+                "x": 0.673,
+                "z": 2.899,
+                "yRotation": 270
+            },
+            {
+                "x": -0.673,
+                "z": 2.899,
+                "yRotation": 270
+            },
+            {
+                "x": -1.386,
+                "z": 3.613,
+                "yRotation": 0
+            },
+            {
+                "x": -0.673,
+                "z": 4.327,
+                "yRotation": 90
+            },
+            {
+                "x": 0.673,
+                "z": 4.327,
+                "yRotation": 90
+            },
+            {
+                "x": 1.386,
+                "z": 3.613,
+                "yRotation": 180
+            }
+        ]
+    },
+    "feeders": [
+        {
+            "side": "right",
+            "mergeAt": 17,
+            "nodes": [
+                {
+                    "x": 2.411,
+                    "z": 9.172,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.411,
+                    "z": 6.695,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.411,
+                    "z": 5.408,
+                    "yRotation": 180
+                },
+                {
+                    "x": 1.577,
+                    "z": 4.266,
+                    "yRotation": 234.4
+                }
+            ]
+        },
+        {
+            "side": "left",
+            "mergeAt": 8,
+            "nodes": [
+                {
+                    "x": -2.435,
+                    "z": 9.112,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.435,
+                    "z": 6.629,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.435,
+                    "z": 5.215,
+                    "yRotation": 180
+                },
+                {
+                    "x": -1.637,
+                    "z": 4.176,
+                    "yRotation": 124.9
+                }
+            ]
+        },
+        {
+            "side": "middle",
+            "mergeAt": 13,
+            "nodes": [
+                {
+                    "x": -0.024,
+                    "z": 9.891,
+                    "yRotation": 180
+                },
+                {
+                    "x": -0.024,
+                    "z": 7.118,
+                    "yRotation": 180.1
+                },
+                {
+                    "x": -0.03,
+                    "z": 4.81,
+                    "yRotation": 180
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "name": "Large oval"
+    }
 }

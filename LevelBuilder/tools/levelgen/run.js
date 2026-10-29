@@ -11,7 +11,7 @@ function check(S, seed) {
   // `chunk`: no colour patch on an Enter Path may run past chunk[1] rows (two blocks of one colour back to back)
   if (S.chunk && G.CS.feederList(json).some(f => { let n = 0; for (let i = 0; i < f.bottles.length; i += 4) { n = i && f.bottles[i] === f.bottles[i - 4] ? n + 1 : 1; if (n > S.chunk[1]) return true; } return false; })) return { ok: false, why: 'patch too long' };
   const res = { items: G.CS.feederList(json).reduce((a, f) => a + f.bottles.length, 0), cap: G.GEOM[S.conveyor].rows * 4, boxes: json.lanes.flat().length };
-  const g1 = G.play(m, G.MODES.low, 'smart', 1), g2 = G.play(m, G.MODES.zoff, 'smart', 1);
+  const g1 = G.play(m, G.MODES.fly, 'smart', 1), g2 = G.play(m, G.MODES.zoff, 'smart', 1);
   res.greedy = [g1.win, g2.win]; res.ticks = g1.ticks; res.gfs = [g1.failsafe, g2.failsafe];
   if (!g1.win || !g2.win) return { ok: false, why: 'smart lost', res };
   // `noFailsafe`: the careful player must win without the play test's fail-safe (e.g. items still behind a shut door at the end)
@@ -20,21 +20,21 @@ function check(S, seed) {
     // a Block Door level is only checked with the belt starting full: with an empty belt and one door shut, random taps
     // park boxes before any of their items can arrive
     // `minCasual`: the casual player (careful, 30 % random taps) and the belt watcher (10 %) must also win that share
-    if (S.minCasual) for (const eps of [0.3, 0.1]) { const c = G.rate(m, G.MODES.low, eps, 60, 7000); res['eps' + eps] = c.rate; if (c.rate < S.minCasual) return { ok: false, why: 'casual ' + eps + ' ' + c.rate, res }; }
+    if (S.minCasual) for (const eps of [0.3, 0.1]) { const c = G.rate(m, G.MODES.fly, eps, 60, 7000); res['eps' + eps] = c.rate; if (c.rate < S.minCasual) return { ok: false, why: 'casual ' + eps + ' ' + c.rate, res }; }
     for (const k of Object.keys(G.MODES).filter(k => !(S.door && k.endsWith('NP')))) { const r = G.rate(m, G.MODES[k], 1, S.count ? 300 : 60, S.count ? 7000 : 1000); res['rnd_' + k] = r.rate; if (r.rate < (S.minRandom || 1)) return { ok: false, why: 'random lost ' + k + ' ' + r.rate, res }; }
   } else {
-    const a = G.rate(m, G.MODES.low, 1, 60, 1000), b = G.rate(m, G.MODES.zoff, 1, 60, 1000), e = G.rate(m, G.MODES.low, 0.3, 30, 2000);
+    const a = G.rate(m, G.MODES.fly, 1, 60, 1000), b = G.rate(m, G.MODES.zoff, 1, 60, 1000), e = G.rate(m, G.MODES.fly, 0.3, 30, 2000);
     res.rnd = [a.rate, b.rate]; res.rndTicks = a.ticks; res.eps = e.rate; res.fs = e.fs;
     if (S.watch) {
       // from level 15 the player has to watch the belt: random taps must lose most runs, while a player who sends the box
       // matching the belt (1 tap in 10 random) still wins nearly every run
-      const w = G.rate(m, G.MODES.low, 0.1, 30, 3000); res.watch = w.rate;
+      const w = G.rate(m, G.MODES.fly, 0.1, 30, 3000); res.watch = w.rate;
       // `watchBar` [max random, min watcher] sets the bar for one level (levels 5 and 6 keep 4 slots, so random taps win more)
       const [maxR, minW] = S.watchBar || (S.diff === 'hard' ? [0.25, 0.8] : [0.35, 0.9]);
       if (Math.max(a.rate, b.rate) > maxR) return { ok: false, why: 'random wins ' + res.rnd, res };
       if (w.rate < minW) return { ok: false, why: 'watching ' + w.rate, res };
       // `noBlind`: tapping without looking (one queue until it is empty, or the queues in turn) must lose as often as random taps
-      if (S.noBlind) for (const p of ['stay', 'turns']) { const x = G.rate(m, G.MODES.low, p, 30, 5000).rate; res[p] = x; if (x > maxR) return { ok: false, why: 'blind ' + p + ' ' + x, res }; }
+      if (S.noBlind) for (const p of ['stay', 'turns']) { const x = G.rate(m, G.MODES.fly, p, 30, 5000).rate; res[p] = x; if (x > maxR) return { ok: false, why: 'blind ' + p + ' ' + x, res }; }
     } else if (S.n <= 10) {
       if (S.diff === 'medium' && (a.rate < 0.9 || b.rate < (S.door ? 0.6 : 0.9))) return { ok: false, why: 'random ' + res.rnd, res };
       // `hardBar` [casual, random]: level 10 is long with big boxes, so it is checked like the hard levels from 11 on

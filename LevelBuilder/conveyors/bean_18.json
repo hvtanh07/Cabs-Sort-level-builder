@@ -1,42 +1,141 @@
 {
-  "$schema": "../../../../../docs/design/conveyor.schema.json",
-  "formatVersion": 2,
-  "id": "bean_18",
-  "rows": 18,
-  "width": 4,
-  "pickRows": 5,
-  "scale": 0.45,
-  "scaleRate": 1,
-  "offset": { "x": 0, "z": 0 },
-  "loop": { "nodes": [
-    { "x": 0.75, "z": 3.1, "yRotation": 270 },
-    { "x": -0.75, "z": 3.1, "yRotation": 270 },
-    { "x": -1.55, "z": 3.9, "yRotation": 0 },
-    { "x": -1.55, "z": 4.45, "yRotation": 0 },
-    { "x": -0.95, "z": 5.2, "yRotation": 90 },
-    { "x": 0, "z": 4.75, "yRotation": 90 },
-    { "x": 0.95, "z": 5.2, "yRotation": 90 },
-    { "x": 1.55, "z": 4.45, "yRotation": 180 },
-    { "x": 1.55, "z": 3.9, "yRotation": 180 }
-  ] },
-  "feeders": [
-    { "side": "right", "mergeAt": 13, "nodes": [
-      { "x": 2.4, "z": 11.7, "yRotation": 180 },
-      { "x": 2.4, "z": 8.4, "yRotation": 180 },
-      { "x": 2.52, "z": 6.3, "yRotation": 180 },
-      { "x": 1.922, "z": 4.35, "yRotation": 267 }
-    ] },
-    { "side": "left", "mergeAt": 6, "nodes": [
-      { "x": -2.4, "z": 11.7, "yRotation": 180 },
-      { "x": -2.4, "z": 8.4, "yRotation": 180 },
-      { "x": -2.52, "z": 6.3, "yRotation": 180 },
-      { "x": -1.922, "z": 4.35, "yRotation": 93 }
-    ] },
-    { "side": "middle", "mergeAt": 11, "nodes": [
-      { "x": -0.055, "z": 11.7, "yRotation": 180 },
-      { "x": -0.055, "z": 8.4, "yRotation": 180 },
-      { "x": 0.47, "z": 5.37, "yRotation": 151.3 }
-    ] }
-  ],
-  "meta": { "name": "Bean" }
+    "$schema": "../../../../../docs/design/conveyor.schema.json",
+    "formatVersion": 2,
+    "id": "bean_18",
+    "rows": 28,
+    "width": 4,
+    "pickRows": 5,
+    "scale": 0.45,
+    "scaleRate": 1,
+    "offset": {
+        "x": 0,
+        "z": 0
+    },
+    "loop": {
+        "nodes": [
+            {
+                "x": 0.75,
+                "z": 3.1,
+                "yRotation": 270
+            },
+            {
+                "x": -0.75,
+                "z": 3.1,
+                "yRotation": 270
+            },
+            {
+                "x": -1.55,
+                "z": 3.9,
+                "yRotation": 0
+            },
+            {
+                "x": -1.55,
+                "z": 4.45,
+                "yRotation": 0
+            },
+            {
+                "x": -0.95,
+                "z": 5.2,
+                "yRotation": 90
+            },
+            {
+                "x": 0,
+                "z": 4.75,
+                "yRotation": 90
+            },
+            {
+                "x": 0.95,
+                "z": 5.2,
+                "yRotation": 90
+            },
+            {
+                "x": 1.55,
+                "z": 4.45,
+                "yRotation": 180
+            },
+            {
+                "x": 1.55,
+                "z": 3.9,
+                "yRotation": 180
+            }
+        ]
+    },
+    "feeders": [
+        {
+            "side": "right",
+            "mergeAt": 21,
+            "nodes": [
+                {
+                    "x": 2.4,
+                    "z": 11.7,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.4,
+                    "z": 8.4,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.386,
+                    "z": 6.302,
+                    "yRotation": 180
+                },
+                {
+                    "x": 1.813,
+                    "z": 5.064,
+                    "yRotation": 242.7
+                }
+            ]
+        },
+        {
+            "side": "left",
+            "mergeAt": 10,
+            "nodes": [
+                {
+                    "x": -2.4,
+                    "z": 11.7,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.4,
+                    "z": 8.4,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.386,
+                    "z": 6.302,
+                    "yRotation": 180
+                },
+                {
+                    "x": -1.813,
+                    "z": 5.064,
+                    "yRotation": 122.1
+                }
+            ]
+        },
+        {
+            "side": "middle",
+            "mergeAt": 17,
+            "nodes": [
+                {
+                    "x": -0.055,
+                    "z": 11.7,
+                    "yRotation": 180
+                },
+                {
+                    "x": -0.054,
+                    "z": 6.828,
+                    "yRotation": 180
+                },
+                {
+                    "x": 0.514,
+                    "z": 5.505,
+                    "yRotation": 148
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "name": "Bean"
+    }
 }

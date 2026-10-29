@@ -96,7 +96,7 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 ## Bot ladder
 
 <!-- ladder -->
-Win rate of each bot over 200 runs (boxes pick at the lowest point, belt starting full). Built by `tools/levelgen/ladder.js`.
+Win rate of each bot over 200 runs (items fly straight to any matching box, belt starting full). Built by `tools/levelgen/ladder.js`.
 
 - **Blind, one queue**: never looks: keeps tapping one queue until it is empty or stuck, then the next.
 - **Blind, in turn**: never looks: taps the queues in turn (1, 2, 3, 1…).
@@ -115,40 +115,40 @@ Win rate of each bot over 200 runs (boxes pick at the lowest point, belt startin
 | 2 | Two Queues | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
 | 3 | Round and Round | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
 | 4 | Side by Side | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 5 | Colour Patches | medium | 14% | 0% | 32% | 75% | 92% | 100% | 100% | 100% | Casual | Medium |
-| 6 | Diagonal Stripes | medium | 0% | 0% | 18% | 57% | 69% | 96% | 100% | 100% | Belt watcher | Hard |
-| 7 | Hidden Box | easy | 100% | 100% | 97% | 99% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 8 | Hidden Rows | medium | 49% | 0% | 41% | 79% | 93% | 100% | 100% | 83% | Casual | Medium |
-| 9 | Long Haul | medium | 31% | 0% | 39% | 84% | 95% | 100% | 100% | 100% | Casual | Medium |
-| 10 | First Challenge | hard | 0% | 0% | 14% | 49% | 71% | 91% | 100% | 35% | Belt watcher | Hard |
-| 11 | Triple Stack | medium | 33% | 100% | 76% | 91% | 97% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 12 | Locked Box | easy | 51% | 100% | 92% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 13 | Key Count | medium | 35% | 100% | 96% | 99% | 100% | 100% | 100% | 84% | Blind, in turn | Very easy |
-| 14 | Blind Picks | medium | 34% | 100% | 83% | 95% | 98% | 100% | 100% | 82% | Blind, in turn | Very easy |
-| 15 | Three Gates | hard | 33% | 0% | 14% | 50% | 70% | 95% | 100% | 100% | Belt watcher | Hard |
-| 16 | Heavy Load | medium | 19% | 69% | 26% | 71% | 90% | 99% | 100% | 35% | Belt watcher | Hard |
-| 17 | Linked Box | easy | 100% | 100% | 97% | 99% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 18 | Hidden Links | medium | 100% | 33% | 70% | 85% | 94% | 99% | 100% | 100% | Blind, one queue | Very easy |
-| 19 | Patience | medium | 33% | 69% | 21% | 57% | 79% | 97% | 100% | 100% | Belt watcher | Hard |
-| 20 | Four Queues | hard | 13% | 24% | 27% | 67% | 78% | 96% | 100% | 90% | Belt watcher | Hard |
-| 21 | Clear Skies | easy | 84% | 100% | 96% | 99% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 22 | Block Door | easy | 53% | 100% | 98% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 23 | Behind the Door | easy | 67% | 100% | 96% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 24 | Chain Gang | medium | 17% | 0% | 26% | 71% | 88% | 100% | 100% | 83% | Belt watcher | Hard |
-| 25 | Door Lock | hard | 67% | 0% | 48% | 66% | 82% | 95% | 100% | 100% | Belt watcher | Hard |
-| 26 | Swing Doors | easy | 100% | 100% | 86% | 90% | 92% | 98% | 100% | 100% | Blind, one queue | Very easy |
-| 27 | Locked Item | easy | 80% | 100% | 98% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 28 | Secret Cargo | easy | 50% | 100% | 89% | 98% | 99% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 29 | Rush Hour | medium | 52% | 0% | 28% | 82% | 93% | 100% | 100% | 100% | Casual | Medium |
-| 30 | Deep Freeze | hard | 67% | 0% | 14% | 68% | 87% | 96% | 100% | 93% | Belt watcher | Hard |
-| 31 | Cold Storage | medium | 16% | 0% | 17% | 45% | 76% | 97% | 100% | 77% | Belt watcher | Hard |
+| 5 | Colour Patches | medium | 65% | 69% | 57% | 86% | 97% | 100% | 100% | 100% | Casual | Medium |
+| 6 | Diagonal Stripes | medium | 67% | 67% | 65% | 95% | 99% | 100% | 100% | 100% | Beginner | Easy |
+| 7 | Hidden Box | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 8 | Hidden Rows | medium | 67% | 32% | 56% | 89% | 96% | 100% | 100% | 83% | Casual | Medium |
+| 9 | Long Haul | medium | 100% | 0% | 15% | 57% | 75% | 89% | 100% | 100% | Blind, one queue | Very easy |
+| 10 | First Challenge | hard | 0% | 0% | 42% | 74% | 82% | 94% | 100% | 69% | Belt watcher | Hard |
+| 11 | Triple Stack | medium | 66% | 100% | 98% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 12 | Locked Box | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 13 | Key Count | medium | 70% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 14 | Blind Picks | medium | 48% | 100% | 97% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 15 | Three Gates | hard | 33% | 0% | 3% | 26% | 46% | 78% | 100% | 100% | Careful | Very hard |
+| 16 | Heavy Load | medium | 18% | 100% | 78% | 94% | 97% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 17 | Linked Box | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 18 | Hidden Links | medium | 100% | 100% | 88% | 97% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 19 | Patience | medium | 67% | 100% | 94% | 97% | 99% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 20 | Four Queues | hard | 39% | 76% | 56% | 87% | 93% | 98% | 100% | 97% | Casual | Medium |
+| 21 | Clear Skies | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 22 | Block Door | easy | 53% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 23 | Behind the Door | easy | 82% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 24 | Chain Gang | medium | 69% | 0% | 39% | 83% | 94% | 99% | 100% | 83% | Casual | Medium |
+| 25 | Door Lock | hard | 48% | 0% | 21% | 59% | 80% | 95% | 100% | 83% | Belt watcher | Hard |
+| 26 | Swing Doors | easy | 84% | 67% | 89% | 97% | 98% | 99% | 100% | 100% | Beginner | Easy |
+| 27 | Locked Item | easy | 94% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 28 | Secret Cargo | easy | 100% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 29 | Rush Hour | medium | 100% | 33% | 64% | 84% | 98% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 30 | Deep Freeze | hard | 57% | 0% | 8% | 43% | 74% | 94% | 100% | 100% | Belt watcher | Hard |
+| 31 | Cold Storage | medium | 62% | 53% | 75% | 94% | 98% | 100% | 100% | 91% | Beginner | Easy |
 | 32 | Block Queue | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 33 | Detour | medium | 17% | 0% | 15% | 61% | 84% | 97% | 100% | 50% | Belt watcher | Hard |
-| 34 | Tangled | medium | 34% | 0% | 26% | 68% | 85% | 94% | 100% | 100% | Belt watcher | Hard |
-| 35 | Gridlock | hard | 54% | 0% | 19% | 59% | 81% | 92% | 100% | 87% | Belt watcher | Hard |
-| 36 | Long Belt | medium | 33% | 0% | 18% | 60% | 78% | 88% | 100% | 84% | Careful | Very hard |
-| 37 | Night Shift | medium | 69% | 0% | 39% | 70% | 80% | 91% | 100% | 100% | Belt watcher | Hard |
-| 38 | Roadblock | medium | 14% | 0% | 11% | 50% | 68% | 79% | 100% | 84% | Careful | Very hard |
-| 39 | Cold Links | medium | 0% | 100% | 20% | 51% | 71% | 92% | 100% | 100% | Blind, in turn | Very easy |
-| 40 | Grand Finale | hard | 36% | 0% | 14% | 40% | 67% | 93% | 100% | 100% | Belt watcher | Hard |
+| 33 | Detour | medium | 17% | 67% | 43% | 85% | 96% | 100% | 100% | 100% | Casual | Medium |
+| 34 | Tangled | medium | 70% | 100% | 73% | 96% | 99% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 35 | Gridlock | hard | 40% | 0% | 10% | 52% | 77% | 97% | 100% | 82% | Belt watcher | Hard |
+| 36 | Long Belt | medium | 84% | 100% | 67% | 94% | 98% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 37 | Night Shift | medium | 100% | 36% | 79% | 90% | 91% | 97% | 100% | 100% | Blind, one queue | Very easy |
+| 38 | Roadblock | medium | 47% | 24% | 50% | 89% | 93% | 99% | 100% | 100% | Casual | Medium |
+| 39 | Cold Links | medium | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 40 | Grand Finale | hard | 27% | 0% | 18% | 32% | 40% | 31% | 0% | 96% | none | Unwinnable |
 <!-- /ladder -->

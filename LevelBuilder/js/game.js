@@ -5,9 +5,10 @@
   function Game(model, geom, opts) {
     this.m = model; this.geom = geom; this.R = geom.rows;
     this.opts = Object.assign({ prefill: true, pickPerTick: 1 }, opts || {});
-    // where boxes pull items: 'low' = only as items pass the lowest point of the loop (default),
-    // 'zone' = the config's pickRows (older Pickup zone option), 'any' = anywhere on the belt
-    this.pickMode = this.opts.pickMode || (this.opts.pickZone === true ? 'zone' : this.opts.pickZone === false ? 'any' : 'low');
+    // where boxes pull items: 'fly' = every item on the belt flies to a box of its colour in the slots right away, shared
+    // evenly between those boxes (default); older rules: 'low' = only as items pass the lowest point of the loop,
+    // 'zone' = the config's pickRows, 'any' = one item per box per step from anywhere on the belt
+    this.pickMode = this.opts.pickMode || (this.opts.pickZone === true ? 'zone' : this.opts.pickZone === false ? 'any' : 'fly');
     this.reset();
   }
   CS.Game = Game;
@@ -31,6 +32,7 @@
         : Array.from({ length: R }, (_, p) => this.geom.pointAt(p / R).y >= bb.minY + bb.h * 0.6);
     }
     this.shift = 0;
+    this.turn = {};   // 'fly': per colour, the box that gets the next item, so no slot goes first
     this.events = [];
     this.log = [];
     this.version = 0;
@@ -118,6 +120,7 @@
   };
 
   Game.prototype.pick = function () {
+    if (this.pickMode === 'fly') return this.pickFly();
     let picked = false;
     const R = this.R;
     this.slots.forEach((s, si) => {
@@ -138,6 +141,32 @@
         }
       }
     });
+    if (picked) this.version++;
+    return picked;
+  };
+
+  // 'fly': no pickup point. Every unlocked item on the belt flies to a box of its colour in the slots, and when several boxes
+  // share a colour the items go to them in turn (one each, round and round), with no slot first
+  Game.prototype.pickFly = function () {
+    let picked = false;
+    const R = this.R, open = {};
+    this.slots.forEach((s, si) => { const b = s.box; if (b && b.filled < b.cap) (open[b.color] = open[b.color] || []).push(si); });
+    if (!Object.keys(open).length) return false;
+    for (let p = 0; p < R; p++) {
+      const j = this.rowIndexAtPos(p), row = this.rows[j];
+      for (let k = 0; k < W; k++) {
+        const it = row[k];
+        if (!it || it.lock > 0) continue;
+        const list = open[it.color];
+        if (!list || !list.length) continue;
+        const t = (this.turn[it.color] || 0) % list.length;
+        const si = list[t], b = this.slots[si].box;
+        row[k] = null; b.filled++; picked = true;
+        this.events.push({ type: 'fly', color: it.color, from: { kind: 'belt', j, k }, to: { kind: 'slot', i: si } });
+        if (b.filled >= b.cap) { list.splice(t, 1); this.turn[it.color] = t; }
+        else this.turn[it.color] = t + 1;
+      }
+    }
     if (picked) this.version++;
     return picked;
   };
