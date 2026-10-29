@@ -291,4 +291,29 @@ const KEEP = {
   31: { seed: 1, try: 0 }, 35: { seed: 26, try: 0 }, 40: { seed: 28, try: 0 }
 };
 S.forEach(s => { if (KEEP[s.n]) s.keep = KEEP[s.n]; });
+// levels 11-20 rebuilt (2026-10-29) for the bigger conveyors and the fly pickup rule (items fly to any matching box):
+// every Enter Path patch is 3-6 rows of one colour (`chunk`), and every level that is not an element intro is a
+// watch-the-belt level checked like levels 5-10: random taps and tapping one queue (or the queues in turn) win at most
+// 50 % (25 % on hard), the casual player (30 % random taps) wins 90 % or more of a medium level and under 85 % of a hard
+// one, and the belt watcher wins 85 % (90 % on hard). The old seeds (`keep`) and random-tap bars no longer apply
+S.forEach(s => {
+  if (s.n < 11 || s.n > 20) return;
+  s.chunk = [3, 6];
+  delete s.keep;
+  if (s.tutorial) return;
+  delete s.minRandom; delete s.maxRandom;
+  const hard = s.diff === 'hard';
+  Object.assign(s, {
+    watch: true, noBlind: true, maxSeed: 300,
+    watchBar: hard ? [0.25, 0.9] : [0.5, 0.85], casualBar: hard ? [0, 0.85] : [0.9, 1],
+    watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.9 }, { stick: 0.9, window: 6 }, { colors: 7, stick: 0.9, window: 6 }]
+  });
+  // levels 15 and 19 (Locked Box on the big Heart and Bean belts): with items flying to any box, random taps win most runs of
+  // nearly every layout, or the belt fills with colours whose boxes are deep in the queues and even the careful player jams.
+  // They keep the user's bar (random and one-queue taps win under 60 %) with a looser casual / watcher bar, from a seed search:
+  // level 15 seed 138 (random 25 %, one queue 0 %, casual 60 %, watcher 86 %), level 19 seed 47 with 8 colours (random 51 %,
+  // one queue 42 %, casual 99 %)
+  if (s.n === 15) Object.assign(s, { watchBar: [0.4, 0.85], casualBar: [0, 0.9], blindMax: 0.4, seed: 138, watchTries: [{ stick: 0.9, window: 6 }] });
+  if (s.n === 19) Object.assign(s, { watchBar: [0.55, 0.85], casualBar: [0.85, 1], seed: 47, watchTries: [{ colors: 8, stick: 0.9, window: 6 }] });
+});
 module.exports = S;

@@ -11,7 +11,9 @@ function check(S, seed) {
   // `chunk`: no colour patch on an Enter Path may run past chunk[1] rows (two blocks of one colour back to back)
   if (S.chunk && G.CS.feederList(json).some(f => { let n = 0; for (let i = 0; i < f.bottles.length; i += 4) { n = i && f.bottles[i] === f.bottles[i - 4] ? n + 1 : 1; if (n > S.chunk[1]) return true; } return false; })) return { ok: false, why: 'patch too long' };
   const res = { items: G.CS.feederList(json).reduce((a, f) => a + f.bottles.length, 0), cap: G.GEOM[S.conveyor].rows * 4, boxes: json.lanes.flat().length };
-  const g1 = G.play(m, G.MODES.fly, 'smart', 1), g2 = G.play(m, G.MODES.zoff, 'smart', 1);
+  // the second run starts with the belt empty (the old 'pick anywhere' rule before the fly rule); Block Door levels keep the full belt
+  const M2 = S.door ? G.MODES.fly : G.MODES.flyNP;
+  const g1 = G.play(m, G.MODES.fly, 'smart', 1), g2 = G.play(m, M2, 'smart', 1);
   res.greedy = [g1.win, g2.win]; res.ticks = g1.ticks; res.gfs = [g1.failsafe, g2.failsafe];
   if (!g1.win || !g2.win) return { ok: false, why: 'smart lost', res };
   // `noFailsafe`: the careful player must win without the play test's fail-safe (e.g. items still behind a shut door at the end)
@@ -21,9 +23,9 @@ function check(S, seed) {
     // park boxes before any of their items can arrive
     // `minCasual`: the casual player (careful, 30 % random taps) and the belt watcher (10 %) must also win that share
     if (S.minCasual) for (const eps of [0.3, 0.1]) { const c = G.rate(m, G.MODES.fly, eps, 60, 7000); res['eps' + eps] = c.rate; if (c.rate < S.minCasual) return { ok: false, why: 'casual ' + eps + ' ' + c.rate, res }; }
-    for (const k of Object.keys(G.MODES).filter(k => !(S.door && k.endsWith('NP')))) { const r = G.rate(m, G.MODES[k], 1, S.count ? 300 : 60, S.count ? 7000 : 1000); res['rnd_' + k] = r.rate; if (r.rate < (S.minRandom || 1)) return { ok: false, why: 'random lost ' + k + ' ' + r.rate, res }; }
+    for (const k of ['fly', 'flyNP'].filter(k => !(S.door && k.endsWith('NP')))) { const r = G.rate(m, G.MODES[k], 1, S.count ? 300 : 60, S.count ? 7000 : 1000); res['rnd_' + k] = r.rate; if (r.rate < (S.minRandom || 1)) return { ok: false, why: 'random lost ' + k + ' ' + r.rate, res }; }
   } else {
-    const a = G.rate(m, G.MODES.fly, 1, 60, 1000), b = G.rate(m, G.MODES.zoff, 1, 60, 1000), e = G.rate(m, G.MODES.fly, 0.3, 30, 2000);
+    const a = G.rate(m, G.MODES.fly, 1, 60, 1000), b = G.rate(m, M2, 1, 60, 1000), e = G.rate(m, G.MODES.fly, 0.3, 30, 2000);
     res.rnd = [a.rate, b.rate]; res.rndTicks = a.ticks; res.eps = e.rate; res.fs = e.fs;
     if (S.watch) {
       // from level 15 the player has to watch the belt: random taps must lose most runs, while a player who sends the box
@@ -40,6 +42,8 @@ function check(S, seed) {
         if (e.rate < S.casualBar[0] || e.rate > S.casualBar[1]) return { ok: false, why: 'casual ' + e.rate, res };
         const c = G.rate(m, G.MODES.fly, 0.3, 100, 7000).rate; res.casual100 = c;
         if (c < S.casualBar[0] || c > S.casualBar[1]) return { ok: false, why: 'casual100 ' + c, res };
+        // random taps, one queue and the queues in turn over 100 runs too (the first 100 of the ladder's 200): at most 55 % (30 % hard; `blindMax` sets it for one level)
+        for (const p of [1, 'stay', 'turns']) { const x = G.rate(m, G.MODES.fly, p, 100, 7000).rate; res['b100_' + p] = x; if (x > (S.blindMax || (S.diff === 'hard' ? 0.3 : 0.55))) return { ok: false, why: 'blind100 ' + p + ' ' + x, res }; }
         if (S.diff === 'hard') { const w2 = G.rate(m, G.MODES.fly, 0.1, 100, 7000).rate; res.watch100 = w2; if (w2 < minW) return { ok: false, why: 'watch100 ' + w2, res }; }
       }
       // `noBlind`: tapping without looking (one queue until it is empty, or the queues in turn) must lose as often as random taps
