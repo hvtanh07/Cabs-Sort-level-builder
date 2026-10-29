@@ -17,7 +17,7 @@ const rows = levels.map((j, i) => {
   const n = i + 1;
   if (only && !only.includes(n)) return old[n];
   const r = G.ladder(G.CS.fromJSON(j), G.MODES.low, RUNS, 7000);
-  const k = r.findIndex(x => x >= WIN);
+  const k = r.findIndex((x, i) => !G.BOTS[i].extra && x >= WIN);
   const need = k < 0 ? 'none' : G.BOTS[k].name;
   const row = `| ${n} | ${j.meta.name} | ${j.meta.difficulty} | ${r.map(x => Math.round(x * 100) + '%').join(' | ')} | ${need} | ${k < 0 ? 'Unwinnable' : LABEL[G.BOTS[k].id]} |`;
   console.log(row);
@@ -29,7 +29,7 @@ const head = [
   '',
   ...G.BOTS.map(b => `- **${b.name}**: ${b.note}.`),
   '',
-  `"Needs" is the first bot that wins ${WIN * 100} % or more of runs, and "Ladder rating" turns it into a difficulty: either Blind bot or Random tap = Very easy, Beginner = Easy, Casual = Medium, Belt watcher = Hard, Careful = Very hard. The careful bot plays without luck, so it always shows 0 % or 100 %. The two blind bots only differ in which queue they start at, so they mostly show 0 % or 100 % too; a level that \"Blind, in turn\" wins can be cleared by tapping the queues in turn without looking.`,
+  `"Needs" is the first bot that wins ${WIN * 100} % or more of runs, and "Ladder rating" turns it into a difficulty: either Blind bot or Random tap = Very easy, Beginner = Easy, Casual = Medium, Belt watcher = Hard, Careful = Very hard. The careful bot plays without luck, so it always shows 0 % or 100 %. The blind bots try a random order of the queues each run; a level that \"Blind, in turn\" wins can be cleared by tapping the queues in turn without looking.`,
   '',
   `| # | Name | Difficulty | ${G.BOTS.map(b => b.name).join(' | ')} | Needs | Ladder rating |`,
   `|---|---|---|${G.BOTS.map(() => '---').join('|')}|---|---|`

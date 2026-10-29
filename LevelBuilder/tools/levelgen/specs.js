@@ -27,14 +27,14 @@ S.push({ n: 5, name: 'Colour Patches', diff: 'medium', intro: 'A third queue. Ro
 // levels 6-8 carry on from level 5: rows mixed on the Enter Paths, mostly 24- and 32-item boxes, 6 boxes in every queue.
 // With 3 queues of 6 and mixed rows, random taps jam now and then: levels 6 and 8 ask random taps to win 80 % in every play
 // mode and the casual player (30 % random taps) and the belt watcher 95 %
-// Level 6: 3 queues of 6; colours run in diagonal stripes (queue l, box p: colour (p + l) % 7) and the sizes in a 24 / 32 checkerboard
+// Level 6: 3 queues of 6; colours run in diagonal stripes (queue l, box p: colour (p + l) % 8) and the sizes in a 24 / 32 checkerboard
 const L6 = Array.from({ length: 18 }, (_, i) => ({ l: i % 3, p: Math.floor(i / 3) }));
 // Like level 5, the rows come in patches of 3-6 rows of one colour and each queue sends its boxes in runs, so the player has to
 // read the patches coming; `atPos` keeps the colours and sizes tied to the box's place in the queues, so the stripes stay
-S.push({ n: 6, name: 'Diagonal Stripes', diff: 'medium', booster: '2nd', intro: 'Box colours in diagonal stripes, 7 colours; rows come in colour patches, so watch which colour is coming.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 7, window: 4, count: 18, chunk: [3, 6],
-  sizeAt: L6.map(x => (x.p + x.l) % 2 ? 3 : 2), atPos: (l, p) => [(p + l) % 7 + 1, (p + l) % 2 ? 3 : 2],
-  watch: true, noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }, { stick: 0.9 }], maxSeed: 300, seed: 56 });
+S.push({ n: 6, name: 'Diagonal Stripes', diff: 'medium', booster: '2nd', intro: 'Box colours in diagonal stripes over all 8 colours; rows come in colour patches, so watch which colour is coming.',
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 8, window: 4, count: 18, chunk: [3, 6],
+  sizeAt: L6.map(x => (x.p + x.l) % 2 ? 3 : 2), atPos: (l, p) => [(p + l) % 8 + 1, (p + l) % 2 ? 3 : 2],
+  watch: true, noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }, { stick: 0.9 }], maxSeed: 300, seed: 56 });   // seed 56: tapping one queue until it is empty loses in every queue order
 S.push({ n: 7, name: 'Hidden Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Only 32-item boxes.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 6, window: 40, count: 12, sizeAt: new Array(12).fill(3), chunk: [3, 6], minRandom: 0.9,
   hiddenPattern: (l, p) => p > 1 && (l % 2 === 0 ? p % 2 === 0 : p % 2 === 1) });
@@ -171,9 +171,9 @@ const TOTAL = { 1: 64, 2: 80, 3: 96, 4: 128, 5: 136, 6: 160, 7: 192, 8: 208, 9: 
 const UNLOCKED = n => n < 5 ? 4 : n < 7 ? 5 : n < 10 ? 6 : n < 12 ? 7 : 8;
 S.forEach(s => {
   const k = UNLOCKED(s.n);
-  // levels 4-10 add colours early (6 on levels 4 and 5, 7 on level 6, 8 and 9, all 8 on level 10), so there is room for layouts
-  // that random taps lose
-  if (s.n <= 10) { const k2 = s.n === 10 ? 8 : s.n >= 8 || s.n === 6 ? 7 : s.n === 4 || s.n === 5 ? 6 : k; s.palette = [1, 2, 3, 4, 5, 6, 7, 8].slice(0, k2); s.colors = k2; }
+  // levels 4-10 add colours early (6 on levels 4 and 5, all 8 on levels 6 and 10, 7 on levels 8 and 9), so there is room for
+  // layouts that random taps and one-queue taps lose (with 7 colours no level 6 layout beat every one-queue order)
+  if (s.n <= 10) { const k2 = s.n === 10 || s.n === 6 ? 8 : s.n >= 8 ? 7 : s.n === 4 || s.n === 5 ? 6 : k; s.palette = [1, 2, 3, 4, 5, 6, 7, 8].slice(0, k2); s.colors = k2; }
   else {
     // long levels: 6 colours per level (7 on hard, 5 when a level introduces an element), so the belt does not jam;
     // levels 11 and 12 always include the colour they unlock

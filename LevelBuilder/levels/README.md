@@ -13,7 +13,7 @@ Each level was played many times by bots in the tool's play test:
 
 Every level holds more items than its belt has spots, so once the belt has filled at the start, items are still waiting in the Enter Paths (on Block Door levels they wait behind the shut door). Level 1 leaves 35 rows waiting, and the count builds up from there. The levels use the game's own conveyors (Rounded square 19 rows = 76 spots, Bean 18, Lens 18, Heart 30).
 
-Every level 1–40 is won by the careful player, with boxes picking at the lowest point and picking anywhere. Levels 1–4 win **every time** with random taps (300 runs each, in every pickup mode, with the belt starting full or empty). Level 7, the Hidden Box intro, wins 95 % or more with random taps in every mode. Levels 5 and 6 are the first where the player has to read the belt: random taps win 32–44 % of runs, tapping one queue until it is empty 0–33 %, the casual player 90–92 % and the belt watcher every run; level 6 is a little harder than level 5. The **Bot ladder** at the end of this page shows every level against seven bots, from blind taps to careful play. Medium levels 8 and 9 keep random taps and tapping one queue until it is empty under 60 % (random 28–41 %, one queue 33 %) while the casual player wins 93–95 %. Level 10, the first hard level, lets random taps win about 1 run in 8, neither blind bot ever wins, and the belt watcher wins 91 %.
+Every level 1–40 is won by the careful player, with boxes picking at the lowest point and picking anywhere. Levels 1–4 win **every time** with random taps (300 runs each, in every pickup mode, with the belt starting full or empty). Level 7, the Hidden Box intro, wins 95 % or more with random taps in every mode. Levels 5 and 6 are the first where the player has to read the belt: random taps win 18–44 % of runs, tapping one queue until it is empty about 1 run in 7 on level 5 and never on level 6 (in any order of the queues), the casual player 92 % / 69 % and the belt watcher 96–100 %. The **Bot ladder** at the end of this page shows every level against seven bots, from blind taps to careful play. Medium levels 8 and 9 keep random taps and tapping one queue until it is empty under 60 % (random 28–41 %, one queue 33 %) while the casual player wins 93–95 %. Level 10, the first hard level, lets random taps win about 1 run in 8, neither blind bot ever wins, and the belt watcher wins 91 %.
 
 Levels 11–14 are longer, so pure random taps jam more often on them. Each one is checked with the casual player instead: it wins nearly every run, and random taps still win most runs. The levels that introduce an element (12, 17, 22, 27, 32) are checked like levels 1–9: random taps win 90 % or more of runs in every pickup mode.
 
@@ -21,14 +21,14 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 
 ## Design notes
 
-- **Colour unlocks.** Level 1 uses Red, Yellow and Blue; levels 2 and 3 use Red, Blue, Green and Yellow. Pink and Orange join at level 4, Purple at level 6 and Cyan at level 10; up to level 10 a level uses every colour unlocked so far (6 on levels 4, 5 and 7, 7 on levels 6, 8 and 9, all 8 on level 10), so there is room for layouts that random taps lose. Levels 11–14 use 6 colours (5 on level 13; level 11 always includes Purple and level 12 Cyan), a level that introduces an element 5, and from level 15 the other levels use 7 or 8, picked from the ones unlocked.
+- **Colour unlocks.** Level 1 uses Red, Yellow and Blue; levels 2 and 3 use Red, Blue, Green and Yellow. Pink and Orange join at level 4, Purple and Cyan at level 6; levels 4, 5 and 7 use 6 colours, levels 8 and 9 use 7 and levels 6 and 10 all 8, so there is room for layouts that random taps lose. Levels 11–14 use 6 colours (5 on level 13; level 11 always includes Purple and level 12 Cyan), a level that introduces an element 5, and from level 15 the other levels use 7 or 8, picked from the ones unlocked.
 - **Level 1 layout.** Level 1 uses only size 3 and size 4 boxes (32 and 40 items), taking turns: 3, 4, 3, 4, 3, 4. The box colours are Red, Red, Yellow, Yellow, Blue, Blue, so each colour fills a 32-item box and then a 40-item box. The Enter Path rows are grouped by box, each group exactly as many items as its box holds (8 rows for a 32-item box, 10 rows for a 40-item box), but the groups are staggered instead of in queue order: Red 32 enters first, then Yellow 32, Red 40, Blue 32, Yellow 40 and Blue 40. Levels 2 and 3 are built the same way (see below). 32-item boxes next show up at level 11 and 40-item boxes at level 26.
 - **Levels 2 and 3 layout.** Both have 2 queues of 6 boxes (12 boxes, 432 items), use only 32- and 40-item boxes, and each queue alternates the two sizes; each of the 4 colours has 3 boxes. Each box's rows are grouped together and the groups are mixed out of queue order (`rowOrder` in specs.js). Level 2 has one middle Enter Path. Level 3 has 2 Enter Paths; whole groups take turns between the paths.
 - **Slots on levels 1–3.** 5 slots and no RV slot (`slots: 5`, `extraSlots: 0`). The other levels keep 4 slots and 2 RV slots.
 - **Hidden Box patterns.** Level 7 is staggered: queue 1 hides every even box and queue 2 every odd box after the front one, so the Hidden Boxes form a checkerboard. Level 8 hides every even box in every queue, so the queues show rows of Hidden Boxes.
 - **Level 9** has 3 queues of 7 boxes and no Hidden Boxes. The colours make a repeating chevron: queues 1 and 3 match box for box (Red, Blue, Green, Yellow, Pink, Orange, Purple) and queue 2 runs one colour ahead; the sizes repeat 16 / 24 / 32 / 40 down queues 1 and 3 and 40 / 32 / 24 / 16 down queue 2. It is medium: the rows come in colour patches and each queue sends its boxes in runs (`atPos` keeps the chevron in place).
 - **Level 10** hides every box behind the front row and uses mostly 24-, 32- and 40-item boxes (3 / 6 / 6 / 6 of 16 / 24 / 32 / 40). It is built like the hard levels from 15 on: the rows reach the belt close to box order and each queue sends its boxes in long runs, so a box sent before its colour is on the belt parks in a slot. Its rows come in colour patches of 3 to 6 rows and it uses all 8 colours. Random taps win about 14 % of runs, the casual player 71 % and the belt watcher 91 %; tapping without looking never wins.
-- **Levels 6–8** carry on from level 5 and the boxes are mostly 24 and 32 items. Level 6 has 3 queues of 6 boxes with the 7 colours in diagonal stripes (queue 1 starts Red, Blue, Green…, queue 2 one colour on, queue 3 two on) and 24- and 32-item boxes in a checkerboard. Like level 5, its rows come in patches of 3 to 6 rows of one colour, and each queue sends its boxes in runs, so the player has to read the patches coming and find the queue with that colour; the stripes and checkerboard follow each box's place in the queues (`atPos`). Level 7 uses only 32-item boxes; it stays easy, and its rows come in patches of 4 rows of one colour. Level 8 uses all four sizes, mostly 24 and 32 (4 / 7 / 6 / 1 boxes of 16 / 24 / 32 / 40 items); it repeats the Hidden Box lesson with rows of Hidden Boxes and is medium, with colour patches, runs from each queue and 7 colours.
+- **Levels 6–8** carry on from level 5 and the boxes are mostly 24 and 32 items. Level 6 has 3 queues of 6 boxes with all 8 colours in diagonal stripes (queue 1 starts Red, Blue, Green…, queue 2 one colour on, queue 3 two on) and 24- and 32-item boxes in a checkerboard. Like level 5, its rows come in patches of 3 to 6 rows of one colour, and each queue sends its boxes in runs, so the player has to read the patches coming and find the queue with that colour; the stripes and checkerboard follow each box's place in the queues (`atPos`). Level 7 uses only 32-item boxes; it stays easy, and its rows come in patches of 4 rows of one colour. Level 8 uses all four sizes, mostly 24 and 32 (4 / 7 / 6 / 1 boxes of 16 / 24 / 32 / 40 items); it repeats the Hidden Box lesson with rows of Hidden Boxes and is medium, with colour patches, runs from each queue and 7 colours.
 - **One colour per row.** Every Enter Path row holds 4 items of one colour, so each box's items arrive as whole rows (a 16-item box = 4 rows, a 24-item box = 6 rows). A box's `size` sets what it holds: size 1 = 16, 2 = 24, 3 = 32, 4 = 40 items.
 
 - **Difficulty.** In the play test a level is only lost when every slot holds a box that cannot fill. The hard levels are harder through more boxes, colours, items beyond the belt and stacked elements. From level 15 random tapping loses most runs (see above). It's worth playing the levels from 15 on by hand to judge them.
@@ -57,7 +57,7 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 | 3 | Round and Round | easy · 1st booster | Two queues and two Enter Paths. Whole row groups take turns between the Enter Paths, mixed out of queue order. | 2 | Left, Right | 4 | 12 (0 / 0 / 6 / 6) | 432 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
 | 4 | Side by Side | easy | Two queues with two Enter Paths. All four box sizes (16 to 40 items); each box's rows still come as one group. Two new colours. | 2 | Left, Right | 6 | 12 (3 / 3 / 3 / 3) | 336 / 76 | square_19 | none | 100% / 100% | 100% | 100% |
 | 5 | Colour Patches | medium | A third queue. Rows come in patches of one colour: watch which colour is coming and send the box for it. | 3 | Left, Right | 6 | 18 (0 / 6 / 8 / 4) | 560 / 76 | square_19 | none | 32% / 44% | 92% | 100% |
-| 6 | Diagonal Stripes | medium · 2nd booster | Box colours in diagonal stripes, 7 colours; rows come in colour patches, so watch which colour is coming. | 3 | Left, Right | 7 | 18 (0 / 9 / 9 / 0) | 504 / 76 | square_19 | none | 35% / 41% | 90% | 100% |
+| 6 | Diagonal Stripes | medium · 2nd booster | Box colours in diagonal stripes over all 8 colours; rows come in colour patches, so watch which colour is coming. | 3 | Left, Right | 8 | 18 (0 / 9 / 9 / 0) | 504 / 76 | square_19 | none | 18% / 41% | 69% | 96% |
 | 7 | Hidden Box | easy | Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Only 32-item boxes. | 2 | Left, Right | 6 | 12 (0 / 0 / 12 / 0) | 384 / 76 | square_19 | Hidden ×5 (32 items) | 97% / 96% | 100% | 100% |
 | 8 | Hidden Rows | medium | Every even box is hidden, so the queues show rows of Hidden Boxes. Rows in colour patches: watch which colour is coming. | 3 | Left, Right | 7 | 18 (4 / 7 / 6 / 1) | 464 / 76 | square_19 | Hidden ×9 (24/32/40 items) | 41% / 28% | 93% | 100% |
 | 9 | Long Haul | medium · 3rd booster | Longer queues (7 boxes each). Box colours in a repeating chevron, boxes from 16 to 40 items; rows in colour patches. | 3 | Left, Right | 7 | 21 (5 / 6 / 6 / 4) | 576 / 76 | square_19 | none | 39% / 8% | 95% | 100% |
@@ -105,49 +105,50 @@ Win rate of each bot over 200 runs (boxes pick at the lowest point, belt startin
 - **Casual**: 3 taps in 10 random.
 - **Belt watcher**: 1 tap in 10 random.
 - **Careful**: counts the items coming and waits instead of parking a box that cannot fill.
+- **Blind, one queue + RV**: blind, one queue, but takes the RV slots when about to lose (not used for the rating).
 
-"Needs" is the first bot that wins 90 % or more of runs, and "Ladder rating" turns it into a difficulty: either Blind bot or Random tap = Very easy, Beginner = Easy, Casual = Medium, Belt watcher = Hard, Careful = Very hard. The careful bot plays without luck, so it always shows 0 % or 100 %. The two blind bots only differ in which queue they start at, so they mostly show 0 % or 100 % too; a level that "Blind, in turn" wins can be cleared by tapping the queues in turn without looking.
+"Needs" is the first bot that wins 90 % or more of runs, and "Ladder rating" turns it into a difficulty: either Blind bot or Random tap = Very easy, Beginner = Easy, Casual = Medium, Belt watcher = Hard, Careful = Very hard. The careful bot plays without luck, so it always shows 0 % or 100 %. The blind bots try a random order of the queues each run; a level that "Blind, in turn" wins can be cleared by tapping the queues in turn without looking.
 
-| # | Name | Difficulty | Blind, one queue | Blind, in turn | Random tap | Beginner | Casual | Belt watcher | Careful | Needs | Ladder rating |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | First Sort | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 2 | Two Queues | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 3 | Round and Round | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 4 | Side by Side | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 5 | Colour Patches | medium | 33% | 0% | 32% | 75% | 92% | 100% | 100% | Casual | Medium |
-| 6 | Diagonal Stripes | medium | 0% | 0% | 35% | 76% | 90% | 100% | 100% | Belt watcher | Hard |
-| 7 | Hidden Box | easy | 100% | 100% | 97% | 99% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 8 | Hidden Rows | medium | 33% | 0% | 41% | 79% | 93% | 100% | 100% | Casual | Medium |
-| 9 | Long Haul | medium | 33% | 0% | 39% | 84% | 95% | 100% | 100% | Casual | Medium |
-| 10 | First Challenge | hard | 0% | 0% | 14% | 49% | 71% | 91% | 100% | Belt watcher | Hard |
-| 11 | Triple Stack | medium | 33% | 100% | 76% | 91% | 97% | 100% | 100% | Blind, in turn | Very easy |
-| 12 | Locked Box | easy | 100% | 100% | 92% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 13 | Key Count | medium | 100% | 100% | 96% | 99% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 14 | Blind Picks | medium | 0% | 100% | 83% | 95% | 98% | 100% | 100% | Blind, in turn | Very easy |
-| 15 | Three Gates | hard | 36% | 0% | 14% | 50% | 70% | 95% | 100% | Belt watcher | Hard |
-| 16 | Heavy Load | medium | 0% | 69% | 26% | 71% | 90% | 99% | 100% | Belt watcher | Hard |
-| 17 | Linked Box | easy | 100% | 100% | 97% | 99% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 18 | Hidden Links | medium | 100% | 33% | 70% | 85% | 94% | 99% | 100% | Blind, one queue | Very easy |
-| 19 | Patience | medium | 0% | 69% | 21% | 57% | 79% | 97% | 100% | Belt watcher | Hard |
-| 20 | Four Queues | hard | 24% | 24% | 27% | 67% | 78% | 96% | 100% | Belt watcher | Hard |
-| 21 | Clear Skies | easy | 65% | 100% | 96% | 99% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 22 | Block Door | easy | 48% | 100% | 98% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 23 | Behind the Door | easy | 69% | 100% | 96% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 24 | Chain Gang | medium | 32% | 0% | 26% | 71% | 88% | 100% | 100% | Belt watcher | Hard |
-| 25 | Door Lock | hard | 100% | 0% | 48% | 66% | 82% | 95% | 100% | Blind, one queue | Very easy |
-| 26 | Swing Doors | easy | 100% | 100% | 86% | 90% | 92% | 98% | 100% | Blind, one queue | Very easy |
-| 27 | Locked Item | easy | 72% | 100% | 98% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 28 | Secret Cargo | easy | 33% | 100% | 89% | 98% | 99% | 100% | 100% | Blind, in turn | Very easy |
-| 29 | Rush Hour | medium | 32% | 0% | 28% | 82% | 93% | 100% | 100% | Casual | Medium |
-| 30 | Deep Freeze | hard | 100% | 0% | 14% | 68% | 87% | 96% | 100% | Blind, one queue | Very easy |
-| 31 | Cold Storage | medium | 0% | 0% | 17% | 45% | 76% | 97% | 100% | Belt watcher | Hard |
-| 32 | Block Queue | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 33 | Detour | medium | 67% | 0% | 15% | 61% | 84% | 97% | 100% | Belt watcher | Hard |
-| 34 | Tangled | medium | 24% | 0% | 26% | 68% | 85% | 94% | 100% | Belt watcher | Hard |
-| 35 | Gridlock | hard | 100% | 0% | 19% | 59% | 81% | 92% | 100% | Blind, one queue | Very easy |
-| 36 | Long Belt | medium | 33% | 0% | 18% | 60% | 78% | 88% | 100% | Careful | Very hard |
-| 37 | Night Shift | medium | 67% | 0% | 39% | 70% | 80% | 91% | 100% | Belt watcher | Hard |
-| 38 | Roadblock | medium | 0% | 0% | 11% | 50% | 68% | 79% | 100% | Careful | Very hard |
-| 39 | Cold Links | medium | 36% | 100% | 20% | 51% | 71% | 92% | 100% | Blind, in turn | Very easy |
-| 40 | Grand Finale | hard | 0% | 0% | 14% | 40% | 67% | 93% | 100% | Belt watcher | Hard |
+| # | Name | Difficulty | Blind, one queue | Blind, in turn | Random tap | Beginner | Casual | Belt watcher | Careful | Blind, one queue + RV | Needs | Ladder rating |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | First Sort | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 2 | Two Queues | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 3 | Round and Round | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 4 | Side by Side | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 5 | Colour Patches | medium | 14% | 0% | 32% | 75% | 92% | 100% | 100% | 100% | Casual | Medium |
+| 6 | Diagonal Stripes | medium | 0% | 0% | 18% | 57% | 69% | 96% | 100% | 100% | Belt watcher | Hard |
+| 7 | Hidden Box | easy | 100% | 100% | 97% | 99% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 8 | Hidden Rows | medium | 49% | 0% | 41% | 79% | 93% | 100% | 100% | 83% | Casual | Medium |
+| 9 | Long Haul | medium | 31% | 0% | 39% | 84% | 95% | 100% | 100% | 100% | Casual | Medium |
+| 10 | First Challenge | hard | 0% | 0% | 14% | 49% | 71% | 91% | 100% | 35% | Belt watcher | Hard |
+| 11 | Triple Stack | medium | 33% | 100% | 76% | 91% | 97% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 12 | Locked Box | easy | 51% | 100% | 92% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 13 | Key Count | medium | 35% | 100% | 96% | 99% | 100% | 100% | 100% | 84% | Blind, in turn | Very easy |
+| 14 | Blind Picks | medium | 34% | 100% | 83% | 95% | 98% | 100% | 100% | 82% | Blind, in turn | Very easy |
+| 15 | Three Gates | hard | 33% | 0% | 14% | 50% | 70% | 95% | 100% | 100% | Belt watcher | Hard |
+| 16 | Heavy Load | medium | 19% | 69% | 26% | 71% | 90% | 99% | 100% | 35% | Belt watcher | Hard |
+| 17 | Linked Box | easy | 100% | 100% | 97% | 99% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 18 | Hidden Links | medium | 100% | 33% | 70% | 85% | 94% | 99% | 100% | 100% | Blind, one queue | Very easy |
+| 19 | Patience | medium | 33% | 69% | 21% | 57% | 79% | 97% | 100% | 100% | Belt watcher | Hard |
+| 20 | Four Queues | hard | 13% | 24% | 27% | 67% | 78% | 96% | 100% | 90% | Belt watcher | Hard |
+| 21 | Clear Skies | easy | 84% | 100% | 96% | 99% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 22 | Block Door | easy | 53% | 100% | 98% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 23 | Behind the Door | easy | 67% | 100% | 96% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 24 | Chain Gang | medium | 17% | 0% | 26% | 71% | 88% | 100% | 100% | 83% | Belt watcher | Hard |
+| 25 | Door Lock | hard | 67% | 0% | 48% | 66% | 82% | 95% | 100% | 100% | Belt watcher | Hard |
+| 26 | Swing Doors | easy | 100% | 100% | 86% | 90% | 92% | 98% | 100% | 100% | Blind, one queue | Very easy |
+| 27 | Locked Item | easy | 80% | 100% | 98% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 28 | Secret Cargo | easy | 50% | 100% | 89% | 98% | 99% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 29 | Rush Hour | medium | 52% | 0% | 28% | 82% | 93% | 100% | 100% | 100% | Casual | Medium |
+| 30 | Deep Freeze | hard | 67% | 0% | 14% | 68% | 87% | 96% | 100% | 93% | Belt watcher | Hard |
+| 31 | Cold Storage | medium | 16% | 0% | 17% | 45% | 76% | 97% | 100% | 77% | Belt watcher | Hard |
+| 32 | Block Queue | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 33 | Detour | medium | 17% | 0% | 15% | 61% | 84% | 97% | 100% | 50% | Belt watcher | Hard |
+| 34 | Tangled | medium | 34% | 0% | 26% | 68% | 85% | 94% | 100% | 100% | Belt watcher | Hard |
+| 35 | Gridlock | hard | 54% | 0% | 19% | 59% | 81% | 92% | 100% | 87% | Belt watcher | Hard |
+| 36 | Long Belt | medium | 33% | 0% | 18% | 60% | 78% | 88% | 100% | 84% | Careful | Very hard |
+| 37 | Night Shift | medium | 69% | 0% | 39% | 70% | 80% | 91% | 100% | 100% | Belt watcher | Hard |
+| 38 | Roadblock | medium | 14% | 0% | 11% | 50% | 68% | 79% | 100% | 84% | Careful | Very hard |
+| 39 | Cold Links | medium | 0% | 100% | 20% | 51% | 71% | 92% | 100% | 100% | Blind, in turn | Very easy |
+| 40 | Grand Finale | hard | 36% | 0% | 14% | 40% | 67% | 93% | 100% | 100% | Belt watcher | Hard |
 <!-- /ladder -->
