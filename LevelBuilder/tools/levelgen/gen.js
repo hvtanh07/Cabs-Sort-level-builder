@@ -353,7 +353,9 @@ function smartMove(g) {
   const b = g.lanes[best][0];
   const left = (avail[b.color] || 0) - (need[b.color] || 0);
   const moving = g.slots.some(s => s.box && (avail[s.box.color] || 0) > 0);
-  if (left <= 0 && moving) return -1;   // wait for the belt instead of parking a box that cannot fill
+  // wait for the belt instead of parking a box that cannot fill, but not for ever: after a full loop with nothing moving
+  // (a full belt of other colours, or a Locked Box that only opens with more sends) send the best box anyway, like a player would
+  if (left <= 0 && moving && g.stall <= g.R) return -1;
   g.send(best);
   return best;
 }
