@@ -8,9 +8,9 @@ for(const S of SP){const j=out[S.n].json;const m=CS.fromJSON(j);
  if(j.blockDoor)feat.push(`Block Door (${j.blockDoor.turns})`);const li=CS.feederList(j).reduce((a,f)=>a+(f.lockedRows||[]).length,0);if(li)feat.push(`Locked Item rows ×${li}`);if(j.blockQueue)feat.push(`Block Queue (${j.blockQueue.turns})`);
  const sizes={};b.forEach(x=>sizes[x.size||1]=(sizes[x.size||1]||0)+1);
  const runs=S.n<=10?300:200;const r={};
- for(const k of (S.n<=10?['low','zon','zoff','lowNP','zonNP','zoffNP']:['low','zon','zoff'])) r[k]=G.rate(m,G.MODES[k],1,runs,7000);
- const sm=['low','zoff'].map(k=>G.play(m,G.MODES[k],'smart',1));
- rows.push({n:S.n,name:j.meta.name,diff:j.meta.difficulty,conv:j.conveyor,queues:j.lanes.length,paths:CS.feederList(j).map(f=>f.entry[0].toUpperCase()).join(''),colors:j.colors.length,boxes:b.length,sizes,items,belt:G.GEOM[j.conveyor].rows*4,feat:feat.join(', '),smart:sm.map(x=>x.win),smartTicks:sm[0].ticks,rnd:Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v.rate])),fs:r.low.fs,warn});
+ for(const k of (S.n<=10?['fly','flyNP','low','zoff','lowNP','zoffNP']:['fly','low','zoff'])) r[k]=G.rate(m,G.MODES[k],1,runs,7000);
+ const sm=['fly','zoff'].map(k=>G.play(m,G.MODES[k],'smart',1));
+ rows.push({n:S.n,name:j.meta.name,diff:j.meta.difficulty,conv:j.conveyor,queues:j.lanes.length,paths:CS.feederList(j).map(f=>f.entry[0].toUpperCase()).join(''),colors:j.colors.length,boxes:b.length,sizes,items,belt:G.GEOM[j.conveyor].rows*4,feat:feat.join(', '),smart:sm.map(x=>x.win),smartTicks:sm[0].ticks,rnd:Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v.rate])),fs:r.fly.fs,warn});
  console.log(S.n, JSON.stringify(rows[rows.length-1]).slice(0,330));
 }
 require('fs').writeFileSync(require('path').join(__dirname,'verify.json'),JSON.stringify(rows,null,1));

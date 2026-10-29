@@ -16,7 +16,7 @@ const old = {};
 const rows = levels.map((j, i) => {
   const n = i + 1;
   if (only && !only.includes(n)) return old[n];
-  const r = G.ladder(G.CS.fromJSON(j), G.MODES.low, RUNS, 7000);
+  const r = G.ladder(G.CS.fromJSON(j), G.MODES.fly, RUNS, 7000);
   const k = r.findIndex((x, i) => !G.BOTS[i].extra && x >= WIN);
   const need = k < 0 ? 'none' : G.BOTS[k].name;
   const row = `| ${n} | ${j.meta.name} | ${j.meta.difficulty} | ${r.map(x => Math.round(x * 100) + '%').join(' | ')} | ${need} | ${k < 0 ? 'Unwinnable' : LABEL[G.BOTS[k].id]} |`;
@@ -25,7 +25,7 @@ const rows = levels.map((j, i) => {
 });
 const head = [
   '<!-- ladder -->',
-  `Win rate of each bot over ${RUNS} runs (boxes pick at the lowest point, belt starting full). Built by \`tools/levelgen/ladder.js\`.`,
+  `Win rate of each bot over ${RUNS} runs (items fly straight to any matching box, belt starting full). Built by \`tools/levelgen/ladder.js\`.`,
   '',
   ...G.BOTS.map(b => `- **${b.name}**: ${b.note}.`),
   '',

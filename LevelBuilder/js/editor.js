@@ -21,7 +21,8 @@
     conveyors: {}, convOrder: [],
     mode: 'edit', tab: 'level',
     valCache: {},
-    prefs: Object.assign({ speed: 1, pick: 'low' }, lsGet(LS_PREF) || {})
+    // pickV 2: items fly to any matching box (the new default); prefs saved before it go back to that default once
+    prefs: (p => p.pickV === 2 ? p : Object.assign(p, { pick: 'fly', pickV: 2 }))(Object.assign({ speed: 1, pick: 'fly', pickV: 2 }, lsGet(LS_PREF) || {}))
   };
   A.savePrefs = () => lsSet(LS_PREF, A.prefs);
 
@@ -973,7 +974,7 @@
   ],
   "meta": { "name": "Rounded square" }
 }</pre>
-<div class="hint">loop.nodes are read in belt order, x / z in game units (z up the screen). mergeAt is the loop row where that Enter Path joins. Belts run counter-clockwise unless the config has "direction": "cw". Boxes pick at the lowest point of the loop; pickRows sets the optional Pickup zone in play test. Simpler configs with a "shape" (roundrect, circle, points, svg) and "entries" also import.</div></pre></details>
+<div class="hint">loop.nodes are read in belt order, x / z in game units (z up the screen). mergeAt is the loop row where that Enter Path joins. Belts run counter-clockwise unless the config has "direction": "cw". Items fly straight to any box of their colour in the slots; pickRows is only used by the older Pickup zone rule in play test. Simpler configs with a "shape" (roundrect, circle, points, svg) and "entries" also import.</div></pre></details>
       <div class="foot"><button type="button" id="convImport">Import conveyor JSON…</button><span class="grow"></span><button value="cancel" class="primary">Close</button></div>`,
       null, form => {
         draw(form);

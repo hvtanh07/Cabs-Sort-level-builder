@@ -297,7 +297,7 @@
     $('#pStep').onclick = () => { if (P.game && !P.game.over) { P.setRunning(false); P.game.step(); } };
     $('#pPick').onchange = e => {
       A.prefs.pick = e.target.value; A.savePrefs(); P.restart();
-      A.toast({ low: 'Boxes pull items only as they pass the lowest point of the conveyor. Restarted.', zone: 'Pickup zone: boxes pull items from the config\'s pickRows rows. Restarted.', any: 'Boxes pull items from anywhere on the conveyor. Restarted.' }[A.prefs.pick]);
+      A.toast({ fly: 'Items on the conveyor fly straight to any box of their colour, shared evenly between those boxes. Restarted.', low: 'Boxes pull items only as they pass the lowest point of the conveyor. Restarted.', zone: 'Pickup zone: boxes pull items from the config\'s pickRows rows. Restarted.', any: 'Boxes pull items from anywhere on the conveyor. Restarted.' }[A.prefs.pick]);
     };
     $('#speedSeg').addEventListener('click', e => {
       const b = e.target.closest('[data-speed]'); if (!b) return;

@@ -403,8 +403,10 @@ function play(m, mode, policy, seed, track, stat, rv) {
   }
   return { win: g.over === 'win', ticks: g.ticks, sends: g.sends, failsafe: g.failsafe, tr };
 }
-// pick: 'low' = lowest point of the loop (the play test default), 'zone' = the config's pickRows, 'any' = anywhere; NP = no prefill
+// pick: 'fly' = items fly straight to any matching box, shared evenly (the game rule and play test default); older rules:
+// 'low' = lowest point of the loop, 'zone' = the config's pickRows, 'any' = anywhere, 1 per step; NP = no prefill
 const MODES = {
+  fly: { pick: 'fly', prefill: true }, flyNP: { pick: 'fly', prefill: false },
   low: { pick: 'low', prefill: true }, zon: { pick: 'zone', prefill: true }, zoff: { pick: 'any', prefill: true },
   lowNP: { pick: 'low', prefill: false }, zonNP: { pick: 'zone', prefill: false }, zoffNP: { pick: 'any', prefill: false }
 };

@@ -1,42 +1,131 @@
 {
-  "$schema": "../../../../../docs/design/conveyor.schema.json",
-  "formatVersion": 2,
-  "id": "triangle_12",
-  "rows": 12,
-  "width": 4,
-  "pickRows": 3,
-  "scale": 0.598,
-  "scaleRate": 1,
-  "offset": { "x": 0, "z": 0 },
-  "loop": { "nodes": [
-    { "x": 0.582, "z": 3.167, "yRotation": 270 },
-    { "x": -0.682, "z": 3.167, "yRotation": 270 },
-    { "x": -1.366, "z": 3.608, "yRotation": 335.6 },
-    { "x": -1.247, "z": 4.413, "yRotation": 41.2 },
-    { "x": -0.565, "z": 5.192, "yRotation": 41.2 },
-    { "x": 0, "z": 5.449, "yRotation": 90 },
-    { "x": 0.565, "z": 5.192, "yRotation": 138.8 },
-    { "x": 1.247, "z": 4.413, "yRotation": 138.8 },
-    { "x": 1.366, "z": 3.608, "yRotation": 204.4 }
-  ] },
-  "feeders": [
-    { "side": "right", "mergeAt": 8, "nodes": [
-      { "x": 2.499, "z": 11.707, "yRotation": 180 },
-      { "x": 2.499, "z": 8.411, "yRotation": 180 },
-      { "x": 2.5, "z": 6.3, "yRotation": 180 },
-      { "x": 1.582, "z": 4.766, "yRotation": 232.8 }
-    ] },
-    { "side": "left", "mergeAt": 4, "nodes": [
-      { "x": -2.499, "z": 11.707, "yRotation": 180 },
-      { "x": -2.499, "z": 8.411, "yRotation": 180 },
-      { "x": -2.499, "z": 6.3, "yRotation": 180 },
-      { "x": -1.582, "z": 4.766, "yRotation": 127.2 }
-    ] },
-    { "side": "middle", "mergeAt": 6, "nodes": [
-      { "x": 0, "z": 11.707, "yRotation": 180 },
-      { "x": 0, "z": 8.411, "yRotation": 179.9 },
-      { "x": 0.385, "z": 5.806, "yRotation": 200.7 }
-    ] }
-  ],
-  "meta": { "name": "Triangle" }
+    "$schema": "../../../../../docs/design/conveyor.schema.json",
+    "formatVersion": 2,
+    "id": "triangle_12",
+    "rows": 20,
+    "width": 4,
+    "pickRows": 3,
+    "scale": 0.45,
+    "scaleRate": 1,
+    "offset": {
+        "x": 0,
+        "z": 1.5
+    },
+    "loop": {
+        "nodes": [
+            {
+                "x": 0.4,
+                "z": 2.303,
+                "yRotation": 270
+            },
+            {
+                "x": -0.4,
+                "z": 2.303,
+                "yRotation": 270
+            },
+            {
+                "x": -0.623,
+                "z": 2.307,
+                "yRotation": 275
+            },
+            {
+                "x": -1.075,
+                "z": 3.285,
+                "yRotation": 35.5
+            },
+            {
+                "x": -0.832,
+                "z": 3.565,
+                "yRotation": 41.9
+            },
+            {
+                "x": 0,
+                "z": 4.135,
+                "yRotation": 90
+            },
+            {
+                "x": 0.832,
+                "z": 3.565,
+                "yRotation": 138.1
+            },
+            {
+                "x": 1.075,
+                "z": 3.285,
+                "yRotation": 144.5
+            },
+            {
+                "x": 0.623,
+                "z": 2.307,
+                "yRotation": 265
+            }
+        ]
+    },
+    "feeders": [
+        {
+            "side": "right",
+            "mergeAt": 14,
+            "nodes": [
+                {
+                    "x": 2.386,
+                    "z": 8.81,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.386,
+                    "z": 5.529,
+                    "yRotation": 180
+                },
+                {
+                    "x": 1.359,
+                    "z": 3.632,
+                    "yRotation": 236.2
+                }
+            ]
+        },
+        {
+            "side": "left",
+            "mergeAt": 6,
+            "nodes": [
+                {
+                    "x": -2.38,
+                    "z": 8.81,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.386,
+                    "z": 5.529,
+                    "yRotation": 180
+                },
+                {
+                    "x": -1.335,
+                    "z": 3.611,
+                    "yRotation": 126.8
+                }
+            ]
+        },
+        {
+            "side": "middle",
+            "mergeAt": 10,
+            "nodes": [
+                {
+                    "x": 0,
+                    "z": 8.81,
+                    "yRotation": 180
+                },
+                {
+                    "x": 0,
+                    "z": 6.329,
+                    "yRotation": 179.9
+                },
+                {
+                    "x": 0,
+                    "z": 4.568,
+                    "yRotation": 180
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "name": "Triangle"
+    }
 }

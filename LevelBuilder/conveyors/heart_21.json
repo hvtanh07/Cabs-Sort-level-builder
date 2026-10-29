@@ -1,42 +1,141 @@
 {
-  "$schema": "../../../../../docs/design/conveyor.schema.json",
-  "formatVersion": 2,
-  "id": "heart_21",
-  "rows": 30,
-  "width": 4,
-  "pickRows": 4,
-  "scale": 0.44,
-  "scaleRate": 1,
-  "offset": { "x": 0, "z": 0 },
-  "loop": { "nodes": [
-    { "x": 0.35, "z": 2.53, "yRotation": 270 },
-    { "x": -0.35, "z": 2.53, "yRotation": 270 },
-    { "x": -1.41, "z": 3.46, "yRotation": 328.5 },
-    { "x": -1.65, "z": 4.65, "yRotation": 0 },
-    { "x": -1, "z": 5.35, "yRotation": 90 },
-    { "x": 0, "z": 4.85, "yRotation": 90 },
-    { "x": 1, "z": 5.35, "yRotation": 90 },
-    { "x": 1.65, "z": 4.65, "yRotation": 180 },
-    { "x": 1.41, "z": 3.46, "yRotation": 212.9 }
-  ] },
-  "feeders": [
-    { "side": "right", "mergeAt": 15, "nodes": [
-      { "x": 2.65, "z": 11.7, "yRotation": 180 },
-      { "x": 2.65, "z": 8.9, "yRotation": 180 },
-      { "x": 2.65, "z": 6.3, "yRotation": 180 },
-      { "x": 1.832, "z": 5.113, "yRotation": 242.8 }
-    ] },
-    { "side": "left", "mergeAt": 6, "nodes": [
-      { "x": -2.65, "z": 11.7, "yRotation": 180 },
-      { "x": -2.65, "z": 8.9, "yRotation": 180 },
-      { "x": -2.65, "z": 6.3, "yRotation": 180 },
-      { "x": -1.832, "z": 5.113, "yRotation": 117.2 }
-    ] },
-    { "side": "middle", "mergeAt": 12, "nodes": [
-      { "x": -0.21, "z": 11.7, "yRotation": 180 },
-      { "x": -0.21, "z": 8.4, "yRotation": 180 },
-      { "x": 0.507, "z": 5.525, "yRotation": 148.2 }
-    ] }
-  ],
-  "meta": { "name": "Heart" }
+    "$schema": "../../../../../docs/design/conveyor.schema.json",
+    "formatVersion": 2,
+    "id": "heart_21",
+    "rows": 30,
+    "width": 4,
+    "pickRows": 4,
+    "scale": 0.45,
+    "scaleRate": 1,
+    "offset": {
+        "x": 0,
+        "z": 0.25
+    },
+    "loop": {
+        "nodes": [
+            {
+                "x": 0.358,
+                "z": 2.587,
+                "yRotation": 270
+            },
+            {
+                "x": -0.358,
+                "z": 2.587,
+                "yRotation": 270
+            },
+            {
+                "x": -1.442,
+                "z": 3.539,
+                "yRotation": 328.5
+            },
+            {
+                "x": -1.688,
+                "z": 4.756,
+                "yRotation": 0
+            },
+            {
+                "x": -1.023,
+                "z": 5.472,
+                "yRotation": 90
+            },
+            {
+                "x": 0,
+                "z": 4.96,
+                "yRotation": 90
+            },
+            {
+                "x": 1.023,
+                "z": 5.472,
+                "yRotation": 90
+            },
+            {
+                "x": 1.688,
+                "z": 4.756,
+                "yRotation": 180
+            },
+            {
+                "x": 1.442,
+                "z": 3.539,
+                "yRotation": 212.9
+            }
+        ]
+    },
+    "feeders": [
+        {
+            "side": "right",
+            "mergeAt": 21,
+            "nodes": [
+                {
+                    "x": 2.44,
+                    "z": 11.965,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.44,
+                    "z": 9.104,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.44,
+                    "z": 7.152,
+                    "yRotation": 180
+                },
+                {
+                    "x": 1.909,
+                    "z": 5.267,
+                    "yRotation": 239.8
+                }
+            ]
+        },
+        {
+            "side": "left",
+            "mergeAt": 10,
+            "nodes": [
+                {
+                    "x": -2.434,
+                    "z": 11.965,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.434,
+                    "z": 9.104,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.434,
+                    "z": 7.183,
+                    "yRotation": 180
+                },
+                {
+                    "x": -1.853,
+                    "z": 5.379,
+                    "yRotation": 127.2
+                }
+            ]
+        },
+        {
+            "side": "middle",
+            "mergeAt": 17,
+            "nodes": [
+                {
+                    "x": -0.012,
+                    "z": 11.965,
+                    "yRotation": 180
+                },
+                {
+                    "x": -0.012,
+                    "z": 8.591,
+                    "yRotation": 180
+                },
+                {
+                    "x": 0.482,
+                    "z": 5.743,
+                    "yRotation": 149.3
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "name": "Heart"
+    }
 }

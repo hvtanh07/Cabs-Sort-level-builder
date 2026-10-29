@@ -1,41 +1,136 @@
 {
-  "$schema": "../../../../../docs/design/conveyor.schema.json",
-  "formatVersion": 2,
-  "id": "square_19",
-  "rows": 19,
-  "width": 4,
-  "pickRows": 5,
-  "scale": 0.46,
-  "scaleRate": 1,
-  "offset": { "x": 0, "z": 0 },
-  "loop": { "nodes": [
-    { "x": 0.8, "z": 3.1, "yRotation": 270 },
-    { "x": -0.8, "z": 3.1, "yRotation": 270 },
-    { "x": -1.45, "z": 3.75, "yRotation": 0 },
-    { "x": -1.45, "z": 4.95, "yRotation": 0 },
-    { "x": -0.8, "z": 5.6, "yRotation": 90 },
-    { "x": 0.8, "z": 5.6, "yRotation": 90 },
-    { "x": 1.45, "z": 4.95, "yRotation": 180 },
-    { "x": 1.45, "z": 3.75, "yRotation": 180 }
-  ] },
-  "feeders": [
-    { "side": "right", "mergeAt": 15, "nodes": [
-      { "x": 2.7, "z": 11.7, "yRotation": 180 },
-      { "x": 2.7, "z": 8.4, "yRotation": 180 },
-      { "x": 2.7, "z": 6.5, "yRotation": 180 },
-      { "x": 1.855, "z": 4.35, "yRotation": 270 }
-    ] },
-    { "side": "left", "mergeAt": 6, "nodes": [
-      { "x": -2.7, "z": 11.7, "yRotation": 180 },
-      { "x": -2.7, "z": 8.4, "yRotation": 180 },
-      { "x": -2.7, "z": 6.5, "yRotation": 180 },
-      { "x": -1.845, "z": 4.35, "yRotation": 90 }
-    ] },
-    { "side": "middle", "mergeAt": 10, "nodes": [
-      { "x": -0.229, "z": 11.7, "yRotation": 180 },
-      { "x": -0.229, "z": 8.4, "yRotation": 180 },
-      { "x": -0.229, "z": 6.002, "yRotation": 180 }
-    ] }
-  ],
-  "meta": { "name": "Rounded square" }
+    "$schema": "../../../../../docs/design/conveyor.schema.json",
+    "formatVersion": 2,
+    "id": "square_19",
+    "rows": 26,
+    "width": 4,
+    "pickRows": 5,
+    "scale": 0.45,
+    "scaleRate": 1,
+    "offset": {
+        "x": 0,
+        "z": 0
+    },
+    "loop": {
+        "nodes": [
+            {
+                "x": 0.783,
+                "z": 3.033,
+                "yRotation": 270
+            },
+            {
+                "x": -0.783,
+                "z": 3.033,
+                "yRotation": 270
+            },
+            {
+                "x": -1.418,
+                "z": 3.668,
+                "yRotation": 0
+            },
+            {
+                "x": -1.418,
+                "z": 4.842,
+                "yRotation": 0
+            },
+            {
+                "x": -0.783,
+                "z": 5.478,
+                "yRotation": 90
+            },
+            {
+                "x": 0.783,
+                "z": 5.478,
+                "yRotation": 90
+            },
+            {
+                "x": 1.418,
+                "z": 4.842,
+                "yRotation": 180
+            },
+            {
+                "x": 1.418,
+                "z": 3.668,
+                "yRotation": 180
+            }
+        ]
+    },
+    "feeders": [
+        {
+            "side": "right",
+            "mergeAt": 18,
+            "nodes": [
+                {
+                    "x": 2.417,
+                    "z": 11.444,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.417,
+                    "z": 8.218,
+                    "yRotation": 180
+                },
+                {
+                    "x": 2.417,
+                    "z": 6.363,
+                    "yRotation": 180
+                },
+                {
+                    "x": 1.655,
+                    "z": 5.332,
+                    "yRotation": 234.6
+                }
+            ]
+        },
+        {
+            "side": "left",
+            "mergeAt": 10,
+            "nodes": [
+                {
+                    "x": -2.417,
+                    "z": 11.444,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.417,
+                    "z": 8.218,
+                    "yRotation": 180
+                },
+                {
+                    "x": -2.417,
+                    "z": 6.55,
+                    "yRotation": 180
+                },
+                {
+                    "x": -1.649,
+                    "z": 5.308,
+                    "yRotation": 123.2
+                }
+            ]
+        },
+        {
+            "side": "middle",
+            "mergeAt": 14,
+            "nodes": [
+                {
+                    "x": -0.024,
+                    "z": 11.443,
+                    "yRotation": 180
+                },
+                {
+                    "x": -0.024,
+                    "z": 8.216,
+                    "yRotation": 180
+                },
+                {
+                    "x": -0.024,
+                    "z": 6.047,
+                    "yRotation": 180
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "name": "Rounded square"
+    }
 }
