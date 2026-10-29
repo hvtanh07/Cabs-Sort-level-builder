@@ -14,26 +14,27 @@ S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Tw
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, slots: 5, extraSlots: 0, groupPaths: true,
   sizeAt: [3, 4, 4, 3, 3, 4, 4, 3, 3, 4, 4, 3], colorAt: [3, 1, 4, 2, 1, 4, 3, 2, 4, 3, 1, 2], rowOrder: [1, 2, 0, 3, 4, 5, 7, 6, 9, 11, 8, 10] });
 // level 4 adds 16- and 24-item boxes (all four sizes, 3 of each) and still groups each box's rows, mixed, one group per Enter Path
-S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths. All four box sizes (16 to 40 items); each box\'s rows still come as one group.',
-  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, groupPaths: true,
-  sizeAt: [4, 1, 2, 3, 4, 1, 2, 3, 3, 4, 1, 2], colorAt: [3, 2, 4, 1, 2, 4, 1, 3, 4, 1, 3, 2], rowOrder: [0, 2, 1, 3, 6, 5, 7, 4, 9, 8, 11, 10] });
+// it also brings in 2 new colours (Pink and Orange, 6 in all, two boxes each) to make it a little harder
+S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths. All four box sizes (16 to 40 items); each box\'s rows still come as one group. Two new colours.',
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 6, window: 0, count: 12, groupPaths: true,
+  sizeAt: [4, 1, 2, 3, 4, 1, 2, 3, 3, 4, 1, 2], colorAt: [3, 5, 4, 1, 6, 2, 1, 3, 5, 6, 2, 4], rowOrder: [0, 2, 1, 3, 6, 5, 7, 4, 9, 8, 11, 10] });
 // level 5: the rows come in blocks of 3-6 rows of one colour (`chunk`), so the player sees patches of colour coming, and each
 // queue sends its boxes in runs (`stick`): random taps park boxes whose colour is far off, so the player has to watch which
-// colour is coming and which queue holds that box (checked like the watch-the-belt levels)
-S.push({ n: 5, name: 'Colour Patches', diff: 'medium', intro: 'Rows come in patches of one colour: watch which colour is coming and send the box for it.',
-  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 16, colors: 5, window: 4, count: 16, chunk: [3, 6], sizeAt: [3, 4, 3, 2, 3, 2, 4, 3, 2, 3, 4, 3, 2, 3, 4, 2],
-  watch: true, watchTries: [{ stick: 0.8 }], maxSeed: 300, seed: 96, watchBar: [0.5, 0.9] });   // seed 96 (4 slots): tapping one queue never wins, random taps about 4 in 10
+// colour is coming and which queue holds that box (checked like the watch-the-belt levels). 3 queues of 6, 6 colours
+S.push({ n: 5, name: 'Colour Patches', diff: 'medium', intro: 'A third queue. Rows come in patches of one colour: watch which colour is coming and send the box for it.',
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 6, window: 4, count: 18, chunk: [3, 6], sizeAt: [3, 4, 3, 2, 3, 2, 4, 3, 2, 3, 4, 3, 2, 3, 4, 2, 3, 2],
+  watch: true, noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }], maxSeed: 300, seed: 62 });   // seed 62: gentler than level 6, the casual player wins about 92 %
 // levels 6-8 carry on from level 5: rows mixed on the Enter Paths, mostly 24- and 32-item boxes, 6 boxes in every queue.
 // With 3 queues of 6 and mixed rows, random taps jam now and then: levels 6 and 8 ask random taps to win 80 % in every play
 // mode and the casual player (30 % random taps) and the belt watcher 95 %
-// Level 6: 3 queues of 6; colours run in diagonal stripes (queue l, box p: colour (p + l) % 5) and the sizes in a 24 / 32 checkerboard
+// Level 6: 3 queues of 6; colours run in diagonal stripes (queue l, box p: colour (p + l) % 7) and the sizes in a 24 / 32 checkerboard
 const L6 = Array.from({ length: 18 }, (_, i) => ({ l: i % 3, p: Math.floor(i / 3) }));
 // Like level 5, the rows come in patches of 3-6 rows of one colour and each queue sends its boxes in runs, so the player has to
 // read the patches coming; `atPos` keeps the colours and sizes tied to the box's place in the queues, so the stripes stay
-S.push({ n: 6, name: 'Three Queues', diff: 'medium', booster: '2nd', intro: 'A third queue. Box colours in diagonal stripes; rows come in colour patches, so watch which colour is coming.',
-  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 5, window: 4, count: 18, chunk: [3, 6],
-  sizeAt: L6.map(x => (x.p + x.l) % 2 ? 3 : 2), atPos: (l, p) => [(p + l) % 5 + 1, (p + l) % 2 ? 3 : 2],
-  watch: true, watchTries: [{ stick: 0.9 }], maxSeed: 300, seed: 79, watchBar: [0.5, 0.9] });   // seed 79 (4 slots): random taps win about 3 in 10, but tapping one queue until it is empty wins
+S.push({ n: 6, name: 'Diagonal Stripes', diff: 'medium', booster: '2nd', intro: 'Box colours in diagonal stripes, 7 colours; rows come in colour patches, so watch which colour is coming.',
+  conveyor: 'square_19', entries: LR, lanes: 3, boxes: 18, colors: 7, window: 4, count: 18, chunk: [3, 6],
+  sizeAt: L6.map(x => (x.p + x.l) % 2 ? 3 : 2), atPos: (l, p) => [(p + l) % 7 + 1, (p + l) % 2 ? 3 : 2],
+  watch: true, noBlind: true, watchBar: [0.5, 0.85], watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.6 }, { stick: 0.9 }], maxSeed: 300, seed: 56 });
 S.push({ n: 7, name: 'Hidden Box', diff: 'easy', unlock: 'Hidden Box', intro: 'Hidden Box in a staggered pattern: queue 1 hides every even box, queue 2 every odd box after the front. Only 32-item boxes.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 6, window: 40, count: 12, sizeAt: new Array(12).fill(3), chunk: [3, 6], minRandom: 0.9,
   hiddenPattern: (l, p) => p > 1 && (l % 2 === 0 ? p % 2 === 0 : p % 2 === 1) });
@@ -170,8 +171,9 @@ const TOTAL = { 1: 64, 2: 80, 3: 96, 4: 128, 5: 136, 6: 160, 7: 192, 8: 208, 9: 
 const UNLOCKED = n => n < 5 ? 4 : n < 7 ? 5 : n < 10 ? 6 : n < 12 ? 7 : 8;
 S.forEach(s => {
   const k = UNLOCKED(s.n);
-  // levels 8-10 add colours early (7 on levels 8 and 9, all 8 on level 10), so there is room for layouts that random taps lose
-  if (s.n <= 10) { const k2 = s.n === 10 ? 8 : s.n >= 8 ? 7 : k; s.palette = [1, 2, 3, 4, 5, 6, 7, 8].slice(0, k2); s.colors = k2; }
+  // levels 4-10 add colours early (6 on levels 4 and 5, 7 on level 6, 8 and 9, all 8 on level 10), so there is room for layouts
+  // that random taps lose
+  if (s.n <= 10) { const k2 = s.n === 10 ? 8 : s.n >= 8 || s.n === 6 ? 7 : s.n === 4 || s.n === 5 ? 6 : k; s.palette = [1, 2, 3, 4, 5, 6, 7, 8].slice(0, k2); s.colors = k2; }
   else {
     // long levels: 6 colours per level (7 on hard, 5 when a level introduces an element), so the belt does not jam;
     // levels 11 and 12 always include the colour they unlock
