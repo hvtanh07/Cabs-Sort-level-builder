@@ -73,6 +73,9 @@ function make(S, seed) {
       b.lane = cur; b.depth = depth[cur]++; left[cur]--;
     });
   }
+  // `atPos(lane, depth)` -> [colour, tier]: colour and size follow the box's place in the queues, not the send order (level 6
+  // keeps its diagonal colour stripes and 24 / 32 checkerboard while `stick` makes each queue send in runs)
+  if (S.atPos) order.forEach(b => { const [c, z] = S.atPos(b.lane, b.depth); b.color = c; b.size = SZ[z]; });
   // items in send order, one colour per Enter Path row: each box brings `size` rows of 4 of its colour
   const units = [];
   order.forEach(b => { for (let j = 0; j < b.size; j++) units.push({ c: b.color, b: b.i, key: units.length }); });
@@ -119,9 +122,19 @@ function make(S, seed) {
       feeders[x.b >= N * (1 - (S.doorTail || 0)) ? 0 : ph % 2].rows.push({ cells: [x.c, x.c, x.c, x.c], hidden: false, lock: 0 });
     });
   } else if (S.chunk) {
-    // row blocks take turns between the Enter Paths, in entry order
-    let g = -1;
-    units.forEach((x, i) => { if (i === 0 || x.chunk !== units[i - 1].chunk) g++; feeders[g % F].rows.push({ cells: rows[i], hidden: false, lock: 0 }); });
+    // row blocks take turns between the Enter Paths, in entry order. A block that would land right behind one of its own colour
+    // and make the patch longer than `chunk[1]` rows goes to another path (run.js rejects a level where no path is free)
+    const blocks = [];
+    units.forEach((x, i) => { if (i === 0 || x.chunk !== units[i - 1].chunk) blocks.push([]); blocks[blocks.length - 1].push(i); });
+    const last = new Array(F).fill(0), run = new Array(F).fill(0);
+    let g = 0;
+    for (let bi = 0; bi < blocks.length; bi++) {
+      const pathFor = blk => { const c = units[blk[0]].c; return [...Array(F).keys()].map(d => (g + d) % F).find(k => last[k] !== c || run[k] + blk.length <= S.chunk[1]); };
+      let f = pathFor(blocks[bi]);
+      if (f == null) f = g % F;
+      blocks[bi].forEach(i => feeders[f].rows.push({ cells: rows[i], hidden: false, lock: 0 }));
+      const c = units[blocks[bi][0]].c; run[f] = last[f] === c ? run[f] + blocks[bi].length : blocks[bi].length; last[f] = c; g = f + 1;
+    }
   } else if (S.groupPaths) {
     // keep each box's rows together: whole row groups take turns between the Enter Paths, in entry order
     let g = -1;
@@ -356,6 +369,13 @@ function play(m, mode, policy, seed, track, stat) {
       if (!can.length) break;
       let l;
       if (policy === 'smart') { l = smartMove(g); if (l < 0) break; }
+      else if (policy === 'turns' || policy === 'stay') {
+        // blind taps, never looking at the belt: 'turns' taps the queues in turn, 'stay' keeps tapping one queue until it is
+        // empty or stuck, then moves on; both start at a random queue
+        if (g._at == null) g._at = ri(r, 0, g.lanes.length - 1);
+        l = can.find(x => x >= g._at); if (l == null) l = can[0];
+        g._at = policy === 'turns' ? l + 1 : l; g.send(l);
+      }
       else if (policy === 'greedy' || (policy > 0 && r() >= policy)) { l = g.botMove(); if (l < 0) break; }
       else { l = pick(r, can); g.send(l); }
       if (tr && tr.sent == null && g.slots.some(x => x.box && x.box.uid === track)) tr.sent = g.ticks;
@@ -379,10 +399,27 @@ const MODES = {
   low: { pick: 'low', prefill: true }, zon: { pick: 'zone', prefill: true }, zoff: { pick: 'any', prefill: true },
   lowNP: { pick: 'low', prefill: false }, zonNP: { pick: 'zone', prefill: false }, zoffNP: { pick: 'any', prefill: false }
 };
+// the bot ladder, from no skill to careful play: each bot is a play() policy (a number = the share of random taps, the rest
+// picked by the game's belt-watching bot). A level's difficulty is the first rung that wins most runs (see ladder.js)
+const BOTS = [
+  { id: 'stay', name: 'Blind, one queue', policy: 'stay', note: 'never looks: keeps tapping one queue until it is empty or stuck, then the next' },
+  { id: 'turns', name: 'Blind, in turn', policy: 'turns', note: 'never looks: taps the queues in turn (1, 2, 3, 1…)' },
+  { id: 'random', name: 'Random tap', policy: 1, note: 'taps a random queue as fast as slots free up' },
+  { id: 'novice', name: 'Beginner', policy: 0.5, note: 'half the taps random, half for the colour on the belt' },
+  { id: 'casual', name: 'Casual', policy: 0.3, note: '3 taps in 10 random' },
+  { id: 'watcher', name: 'Belt watcher', policy: 0.1, note: '1 tap in 10 random' },
+  { id: 'careful', name: 'Careful', policy: 'smart', note: 'counts the items coming and waits instead of parking a box that cannot fill' }
+];
+function ladder(m, mode, runs, seed0) {
+  return BOTS.map(b => {
+    if (b.policy === 'smart') { let w = 0; for (let s = 0; s < runs; s++) if (play(m, mode, 'smart', seed0 + s).win) w++; return w / runs; }
+    return rate(m, mode, b.policy, runs, seed0).rate;
+  });
+}
 function rate(m, mode, eps, runs, seed0) {
   let w = 0, t = 0; const st = { busy: 0, wait: 0, full: 0, all: 0, t: 0 }; let fs = 0;
   for (let s = 0; s < runs; s++) { const x = play(m, mode, eps, seed0 + s, null, st); if (x.win) w++; if (x.failsafe) fs++; t += x.ticks; }
   return { rate: w / runs, ticks: Math.round(t / runs), wait: +(st.wait / st.all).toFixed(3), full: +(st.full / st.t).toFixed(3), fs: fs / runs };
 }
 
-module.exports = { SIZE, smart: smartMove, make, play, rate, MODES, GEOM, CS, rng };
+module.exports = { SIZE, smart: smartMove, make, play, rate, ladder, BOTS, MODES, GEOM, CS, rng };
