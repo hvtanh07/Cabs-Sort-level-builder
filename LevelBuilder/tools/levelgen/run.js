@@ -8,6 +8,8 @@ function check(S, seed) {
   if (v.length) return { ok: false, why: v.map(x => x.msg).join('; ') };
   // `lockRelay`: no order of sends may lock every queue's front box at once (they would only open by the no-send rule)
   if (S.lockRelay && G.CS.queueDeadlock(m, true)) return { ok: false, why: 'every queue locked at once' };
+  // `chunk`: no colour patch on an Enter Path may run past chunk[1] rows (two blocks of one colour back to back)
+  if (S.chunk && G.CS.feederList(json).some(f => { let n = 0; for (let i = 0; i < f.bottles.length; i += 4) { n = i && f.bottles[i] === f.bottles[i - 4] ? n + 1 : 1; if (n > S.chunk[1]) return true; } return false; })) return { ok: false, why: 'patch too long' };
   const res = { items: G.CS.feederList(json).reduce((a, f) => a + f.bottles.length, 0), cap: G.GEOM[S.conveyor].rows * 4, boxes: json.lanes.flat().length };
   const g1 = G.play(m, G.MODES.low, 'smart', 1), g2 = G.play(m, G.MODES.zoff, 'smart', 1);
   res.greedy = [g1.win, g2.win]; res.ticks = g1.ticks; res.gfs = [g1.failsafe, g2.failsafe];
@@ -27,9 +29,12 @@ function check(S, seed) {
       // from level 15 the player has to watch the belt: random taps must lose most runs, while a player who sends the box
       // matching the belt (1 tap in 10 random) still wins nearly every run
       const w = G.rate(m, G.MODES.low, 0.1, 30, 3000); res.watch = w.rate;
-      const [maxR, minW] = S.diff === 'hard' ? [0.25, 0.8] : [0.35, 0.9];
+      // `watchBar` [max random, min watcher] sets the bar for one level (levels 5 and 6 keep 4 slots, so random taps win more)
+      const [maxR, minW] = S.watchBar || (S.diff === 'hard' ? [0.25, 0.8] : [0.35, 0.9]);
       if (Math.max(a.rate, b.rate) > maxR) return { ok: false, why: 'random wins ' + res.rnd, res };
       if (w.rate < minW) return { ok: false, why: 'watching ' + w.rate, res };
+      // `noBlind`: tapping without looking (one queue until it is empty, or the queues in turn) must lose as often as random taps
+      if (S.noBlind) for (const p of ['stay', 'turns']) { const x = G.rate(m, G.MODES.low, p, 30, 5000).rate; res[p] = x; if (x > maxR) return { ok: false, why: 'blind ' + p + ' ' + x, res }; }
     } else if (S.n <= 10) {
       if (S.diff === 'medium' && (a.rate < 0.9 || b.rate < (S.door ? 0.6 : 0.9))) return { ok: false, why: 'random ' + res.rnd, res };
       // `hardBar` [casual, random]: level 10 is long with big boxes, so it is checked like the hard levels from 11 on

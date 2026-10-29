@@ -23,6 +23,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # GitHub Pages lets browsers keep each file for 10 minutes, so new level data could take a while and a few refreshes to
+      # show. Stamp the script and style URLs with the commit (a new deploy means new URLs), stamp the build into the page and
+      # write version.json, which the page checks (uncached) to reload itself once when a newer build is live.
+      - name: Stamp the build into the page
+        run: |
+          v="${GITHUB_SHA::8}"
+          sed -i -E "s#(src|href)=\"((js|css)/[^\"?]+)\"#\1=\"\2?v=$v\"#g" LevelBuilder/index.html
+          sed -i "s#</head>#<script>window.CS_BUILD = '$v';</script>\n</head>#" LevelBuilder/index.html
+          printf '{"build":"%s"}\n' "$v" > LevelBuilder/version.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: LevelBuilder
