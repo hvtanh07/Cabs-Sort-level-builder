@@ -214,4 +214,15 @@
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+  /* After a deploy: GitHub Pages lets browsers keep its files for up to 10 minutes. The deploy stamps the page with its build
+     (window.CS_BUILD) and writes version.json; when version.json names a newer build, reload once to pick up the new level data */
+  if (window.CS_BUILD && window.fetch) {
+    fetch('version.json', { cache: 'no-store' }).then(r => r.json()).then(v => {
+      let seen = null; try { seen = sessionStorage.getItem('cs-build-reload'); } catch (e) { }
+      if (!v.build || v.build === window.CS_BUILD || seen === v.build) return;
+      try { sessionStorage.setItem('cs-build-reload', v.build); } catch (e) { return; }
+      location.reload();
+    }).catch(() => { });
+  }
 })(window.CS);
