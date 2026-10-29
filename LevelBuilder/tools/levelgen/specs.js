@@ -173,7 +173,9 @@ S.forEach(s => {
   // hard levels are 25 % longer, and a level that introduces an element stays at level 9's length (see `tutorial`)
   // Block Door levels are 10 % shorter (20 % from level 31, where a quarter of the rows come at the end): the shut door holds back half the rows, so a long door level jams easily
   const len = s.tutorial ? 312 : Math.round((336 + x * 4) * (s.diff === 'hard' ? 1.25 : 1) * (s.door ? (s.doorTail ? 0.8 : 0.9) : 1) / 4) * 4;
-  const items = TOTAL[s.n] || s.items || len;
+  // levels 11-20 were made 25 % longer and use bigger boxes (BIG below), so they do not end too fast
+  const big = s.n >= 11 && s.n <= 20;
+  const items = TOTAL[s.n] || Math.round((s.items || len) * (big ? 1.25 : 1) / 4) * 4;
   const units = Math.ceil(items / 4);   // one unit = 4 items = one Enter Path row
   // boxes come in four tiers: 16 / 24 / 32 / 40 items = 4 / 6 / 8 / 10 rows (SIZE in gen.js)
   const rowsOf = N => 4 * (N - (s.big2 || 0) - (s.big3 || 0) - (s.big4 || 0)) + 5 * (s.big2 || 0) + 6 * (s.big3 || 0) + 8 * (s.big4 || 0);
@@ -189,6 +191,16 @@ S.forEach(s => {
     if (s.window) s.window = Math.round(s.window * u / (s.boxes + (s.big2 || 0)));
     if (s.hidden) s.hidden = Math.max(1, Math.round(N * shareH));
     s.boxes = N;
+  } else if (big) {
+    // levels 11-20: 30 % 24-item, 25 % 32-item and 10 % 40-item boxes (no 40-item box on a level that introduces an element or on levels 13 and 20),
+    // the rest 16-item; the box count is set from the rows each tier really takes (4 / 6 / 8 / 10)
+    const sh4 = s.tutorial || s.n === 13 || s.n === 20 ? 0 : 0.1;   // levels 13 and 20 have no 40-item box: 13 stays gentle, 20 already adds a fourth queue
+    const rows = N => 4 * N + 2 * Math.round(N * 0.3) + 4 * Math.round(N * 0.25) + 6 * Math.round(N * sh4);
+    let N = Math.round(units / 6);
+    for (let k = 0; k < 30 && Math.abs(units - rows(N)) >= 4; k++) N += units > rows(N) ? 1 : -1;
+    Object.assign(s, { boxes: N, big2: Math.round(N * 0.3), big3: Math.round(N * 0.25), big4: Math.round(N * sh4) });
+    if (s.n === 11 || s.n === 14) s.minRandom = 0.8;   // random taps won ~90 % of these before the bigger boxes: keep them near that
+    s.window = s.tutorial ? 12 : Math.round(s.window * 1.6);
   } else {
     // same tier mix as before: 20 % 24-item, 5-8 % 32-item, 1-2 40-item boxes
     const r3 = s.big3Share != null ? s.big3Share : s.n === 11 ? 3 / 26 : s.n < 20 ? 0.05 : 0.08;
