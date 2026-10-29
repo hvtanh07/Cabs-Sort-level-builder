@@ -17,9 +17,12 @@ S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Tw
 S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths. All four box sizes (16 to 40 items); each box\'s rows still come as one group.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, groupPaths: true,
   sizeAt: [4, 1, 2, 3, 4, 1, 2, 3, 3, 4, 1, 2], colorAt: [3, 2, 4, 1, 2, 4, 1, 3, 4, 1, 3, 2], rowOrder: [0, 2, 1, 3, 6, 5, 7, 4, 9, 8, 11, 10] });
-// level 5 drops the groups: the rows of all colours are mixed on the Enter Paths
-S.push({ n: 5, name: 'Mixed Rows', diff: 'easy', intro: 'The rows are no longer grouped by box: colours come mixed on the Enter Paths.',
-  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 5, window: 40, count: 12, sizeAt: [2, 4, 3, 1, 1, 2, 4, 4, 2, 3, 3, 1] });
+// level 5: the rows come in blocks of 3-6 rows of one colour (`chunk`), so the player sees patches of colour coming, and each
+// queue sends its boxes in runs (`stick`): random taps park boxes whose colour is far off, so the player has to watch which
+// colour is coming and which queue holds that box (checked like the watch-the-belt levels)
+S.push({ n: 5, name: 'Colour Patches', diff: 'medium', intro: 'Rows come in patches of one colour: watch which colour is coming and send the box for it.',
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 16, colors: 5, window: 4, count: 16, chunk: [3, 6], sizeAt: [3, 4, 3, 2, 3, 2, 4, 3, 2, 3, 4, 3, 2, 3, 4, 2],
+  watch: true, watchTries: [{ stick: 0.9 }, { stick: 0.95, window: 0 }, { stick: 0.95, colorGap: 3 }], maxSeed: 300, seed: 47 });   // seed 47: random taps win about 47 % / 19 % (300 runs), the casual player 80 %, the belt watcher 92 %
 // levels 6-8 carry on from level 5: rows mixed on the Enter Paths, mostly 24- and 32-item boxes, 6 boxes in every queue.
 // With 3 queues of 6 and mixed rows, random taps jam now and then: levels 6 and 8 ask random taps to win 80 % in every play
 // mode and the casual player (30 % random taps) and the belt watcher 95 %
