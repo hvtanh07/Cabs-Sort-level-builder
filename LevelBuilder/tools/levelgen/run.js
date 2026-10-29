@@ -33,6 +33,15 @@ function check(S, seed) {
       const [maxR, minW] = S.watchBar || (S.diff === 'hard' ? [0.25, 0.8] : [0.35, 0.9]);
       if (Math.max(a.rate, b.rate) > maxR) return { ok: false, why: 'random wins ' + res.rnd, res };
       if (w.rate < minW) return { ok: false, why: 'watching ' + w.rate, res };
+      // `casualBar` [min, max]: the casual player (30 % random taps) must win this share, so a medium level does not end up
+      // only for careful players and a hard one does not end up easy
+      // (checked again over 100 runs once the 30-run check passes, so the ladder's 200 runs agree)
+      if (S.casualBar) {
+        if (e.rate < S.casualBar[0] || e.rate > S.casualBar[1]) return { ok: false, why: 'casual ' + e.rate, res };
+        const c = G.rate(m, G.MODES.fly, 0.3, 100, 7000).rate; res.casual100 = c;
+        if (c < S.casualBar[0] || c > S.casualBar[1]) return { ok: false, why: 'casual100 ' + c, res };
+        if (S.diff === 'hard') { const w2 = G.rate(m, G.MODES.fly, 0.1, 100, 7000).rate; res.watch100 = w2; if (w2 < minW) return { ok: false, why: 'watch100 ' + w2, res }; }
+      }
       // `noBlind`: tapping without looking (one queue until it is empty, or the queues in turn) must lose as often as random taps
       if (S.noBlind) for (const p of ['stay', 'turns']) { const x = G.rate(m, G.MODES.fly, p, 30, 5000).rate; res[p] = x; if (x > maxR) return { ok: false, why: 'blind ' + p + ' ' + x, res }; }
     } else if (S.n <= 10) {
