@@ -22,7 +22,7 @@
     mode: 'edit', tab: 'level',
     valCache: {},
     // pickV 2: items fly to any matching box (the new default); prefs saved before it go back to that default once
-    prefs: (p => p.pickV === 2 ? p : Object.assign(p, { pick: 'fly', pickV: 2 }))(Object.assign({ speed: 1, pick: 'fly', pickV: 2 }, lsGet(LS_PREF) || {}))
+    prefs: (p => Object.assign({ speed: 1, pick: 'fly', pickV: 2 }, p, p.pickV === 2 ? {} : { pick: 'fly', pickV: 2 }))(lsGet(LS_PREF) || {})
   };
   A.savePrefs = () => lsSet(LS_PREF, A.prefs);
 
