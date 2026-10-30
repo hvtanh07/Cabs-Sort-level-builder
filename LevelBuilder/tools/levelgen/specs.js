@@ -296,15 +296,17 @@ S.forEach(s => { if (KEEP[s.n]) s.keep = KEEP[s.n]; });
 // watch-the-belt level checked like levels 5-10: random taps and tapping one queue (or the queues in turn) win at most
 // 50 % (25 % on hard), the casual player (30 % random taps) wins 90 % or more of a medium level and under 85 % of a hard
 // one, and the belt watcher wins 85 % (90 % on hard). The old seeds (`keep`) and random-tap bars no longer apply
+// Levels 21-40 were rebuilt the same way (2026-10-30); the easy levels there (element intros and the breathers 21, 23, 26
+// and 28) keep their easy checks, now with colour patches too
 S.forEach(s => {
-  if (s.n < 11 || s.n > 20) return;
+  if (s.n < 11 || s.n > 40) return;
   s.chunk = [3, 6];
   delete s.keep;
-  if (s.tutorial) return;
+  if (s.tutorial || s.diff === 'easy') return;
   delete s.minRandom; delete s.maxRandom;
   const hard = s.diff === 'hard';
   Object.assign(s, {
-    watch: true, noBlind: true, maxSeed: 300,
+    watch: true, noBlind: true, maxSeed: s.n === 25 ? 500 : 300,
     watchBar: hard ? [0.25, 0.9] : [0.5, 0.85], casualBar: hard ? [0, 0.85] : [0.9, 1],
     watchTries: [{ stick: 0.7 }, { stick: 0.8 }, { stick: 0.9 }, { stick: 0.9, window: 6 }, { colors: 7, stick: 0.9, window: 6 }]
   });
@@ -315,5 +317,8 @@ S.forEach(s => {
   // one queue 42 %, casual 99 %)
   if (s.n === 15) Object.assign(s, { watchBar: [0.4, 0.85], casualBar: [0, 0.9], blindMax: 0.4, seed: 138, watchTries: [{ stick: 0.9, window: 6 }] });
   if (s.n === 19) Object.assign(s, { watchBar: [0.55, 0.85], casualBar: [0.85, 1], seed: 47, watchTries: [{ colors: 8, stick: 0.9, window: 6 }] });
+  // level 25 (Block Door with Locked Boxes): the fail-safe frees random taps in most layouts; seed 101 has random taps at 10 %
+  // but one queue / the queues in turn at 30-34 %, so its blind bars are 35-40 % (still under the user's 60 %)
+  if (s.n === 25) Object.assign(s, { blindMax: 0.4, watchBar: [0.35, 0.9], seed: 101, watchTries: [{ stick: 0.8 }] });
 });
 module.exports = S;

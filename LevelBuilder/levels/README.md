@@ -45,13 +45,13 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 - **Block Queue** uses two neighbouring queues that take turns being blocked (`blockQueue: { turns, lanes: [a, b] }`): queue a starts blocked, and after `turns` boxes sent from the other queues the block switches to queue b, then back. The other queues are never blocked. When no other queue can send a box (all empty, locked or waiting for a linked partner), the GDD fail-safe removes every lock and block for the rest of the level, since only sends from other queues count the block down. On a level with Linked Boxes, neither queue of the pair holds one. Once either queue of the pair runs out of boxes, the block is removed for the rest of the level.
 - **Block Door levels** use 2 Enter Paths. The items queued behind each door are the ones needed while that door is open. Once either Enter Path runs out of items, every door opens and the Block Door is removed for the rest of the level. The win rates for levels 22–40 with Block Door or Block Queue were measured again with this rule.
 - **Booster unlocks** follow the sheet (levels 3, 6, 9). They are not saved in the level files. The GDD says Hand 5, Shuffle 8, Magnet 10.
-- **New pickup rule and conveyors (2026-10-29).** Items no longer wait for the lowest point of the belt: every item on the belt flies straight to a box of its colour in the slots, shared evenly between same-colour boxes. With that rule and the bigger belts, levels 4–10 were built again (level 4 came out the same; level 7 stays easy with a new row layout): random taps and tapping one queue win under 60 % of the medium levels 5, 6, 8 and 9 and of hard level 10 (without RV slots), the casual player wins 90 % or more of the medium levels and the belt watcher 90 % or more of level 10 while the casual player wins under 85 % of it (`casualBar` and `watchBar` in specs.js, checked over 100 runs). Every Enter Path colour patch is 3 rows or more. Levels 11–20 were rebuilt the same way: every Enter Path patch is now 3–6 rows of one colour (before, many were 1–2 rows), and every level except the element intros 12 and 17 (still easy) is a watch-the-belt level with random taps and one-queue taps winning under 60 %. Levels 15 and 19 (Locked Box on the big Heart and Bean belts) could not meet the casual / watcher bars of the other levels, so they keep only the 60 % rule from a seed search (level 15: random 27 %, casual 63 %, watcher 86 %; level 19: 8 colours, random 52 %). The careful bot now sends a box anyway after a full loop with nothing moving, instead of waiting for ever. Levels 21–40 are not rebuilt yet: their win figures in the Levels table are from the old rule.
+- **New pickup rule and conveyors (2026-10-29).** Items no longer wait for the lowest point of the belt: every item on the belt flies straight to a box of its colour in the slots, shared evenly between same-colour boxes. With that rule and the bigger belts, levels 4–10 were built again (level 4 came out the same; level 7 stays easy with a new row layout): random taps and tapping one queue win under 60 % of the medium levels 5, 6, 8 and 9 and of hard level 10 (without RV slots), the casual player wins 90 % or more of the medium levels and the belt watcher 90 % or more of level 10 while the casual player wins under 85 % of it (`casualBar` and `watchBar` in specs.js, checked over 100 runs). Every Enter Path colour patch is 3 rows or more. Levels 11–20 were rebuilt the same way: every Enter Path patch is now 3–6 rows of one colour (before, many were 1–2 rows), and every level except the element intros 12 and 17 (still easy) is a watch-the-belt level with random taps and one-queue taps winning under 60 %. Levels 15 and 19 (Locked Box on the big Heart and Bean belts) could not meet the casual / watcher bars of the other levels, so they keep only the 60 % rule from a seed search (level 15: random 27 %, casual 63 %, watcher 86 %; level 19: 8 colours, random 52 %). The careful bot now sends a box anyway after a full loop with nothing moving, instead of waiting for ever. Levels 21–40 were rebuilt the same way (2026-10-30): every patch is 3–6 rows, and every medium and hard level is a watch-the-belt level where random taps, one queue and the queues in turn win under 60 % (without RV slots). The easy levels there (the element intros 22, 27 and 32 and the breathers 21, 23, 26 and 28) stay easy. On Block Door levels the rows behind each door are now reordered so no colour patch runs past 6 rows (before, a whole box's rows queued behind the door in one long patch). Level 25 (Block Door with Locked Boxes) has the queues in turn at 33 %, over the 25 % of the other hard levels, from a seed search (`blindMax` 0.4).
 - **Conveyors.** The game's own conveyor configs: Rounded square 19, Bean 18 and Lens 18 for most levels, Heart 30 (`heart_21`) for hard levels 15 and up. Level 39 moved from the square to Bean, and level 31 has shorter Locked Item counts.
 - Every level file starts with `"$schema": "../../../../../docs/design/level.schema.json"`. `links` and `slotLocks` are left out when a level has none. Each level's `meta` has `name`, `difficulty` and `notes` (what the level teaches, shown in the "What it adds" column below).
 
 ## Levels
 
-| # | Name | Difficulty | What it adds | Queues | Enter Paths | Colours | Boxes (16 / 24 / 32 / 40 items) | Items / belt spots | Conveyor | Elements | Random taps win (1–20: new fly rule, belt starts full / empty; 21–40: old rule, lowest point / anywhere) | Casual player wins | Belt watcher wins |
+| # | Name | Difficulty | What it adds | Queues | Enter Paths | Colours | Boxes (16 / 24 / 32 / 40 items) | Items / belt spots | Conveyor | Elements | Random taps win (items fly to any matching box; belt starts full / empty) | Casual player wins | Belt watcher wins |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | First Sort | easy | Tap a box to send it up. One middle Enter Path, 3 colours (two boxes each), 32- and 40-item boxes. | 1 | Middle | 3 | 6 (0 / 0 / 3 / 3) | 216 / 104 | square_19 | none | 100% / 100% | 100% | 100% |
 | 2 | Two Queues | easy | A second queue: pick which front box to send. 32- and 40-item boxes, row groups mixed. | 2 | Middle | 4 | 12 (0 / 0 / 6 / 6) | 432 / 104 | square_19 | none | 100% / 100% | 100% | 100% |
@@ -73,26 +73,26 @@ Levels 11–14 are longer, so pure random taps jam more often on them. Each one 
 | 18 | Hidden Links | medium | Every even box is hidden, like level 8. | 3 | Left, Middle, Right | 6 | 18 (6 / 5 / 5 / 2) | 456 / 104 | lens_18 | Hidden ×9 (16/24/32 items), Linked ×2 | 29% / 27% | 90% | 94% |
 | 19 | Patience | medium |  | 3 | Left, Right | 8 | 18 (6 / 5 / 5 / 2) | 456 / 112 | bean_18 | Locked Box ×3 | 52% / 45% | 99% | 100% |
 | 20 | Four Queues | hard | Fourth queue. Hard level. | 4 | Left, Middle, Right | 7 | 26 (11 / 8 / 7 / 0) | 592 / 104 | square_19 | Locked Box ×4, Linked ×3 | 23% / 8% | 79% | 92% |
-| 21 | Clear Skies | easy | Breather after a hard level: no elements. | 3 | Left, Right | 6 | 21 (15 / 4 / 2 / 0) | 400 / 104 | lens_18 | none | 96% / 86% | 100% | 100% |
-| 22 | Block Door | easy | Introduces Block Door. | 2 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 104 | square_19 | Block Door (4) | 98% / 98% | 100% | 100% |
-| 23 | Behind the Door | easy | Every even box is hidden, like level 8. | 3 | Left, Right | 6 | 19 (13 / 4 / 2 / 0) | 368 / 112 | bean_18 | Hidden ×9 (16/24/32 items), Block Door (3) | 96% / 89% | 100% | 100% |
-| 24 | Chain Gang | medium |  | 3 | Left, Middle, Right | 7 | 22 (16 / 4 / 2 / 0) | 416 / 104 | lens_18 | Linked ×2 | 26% / 10% | 85% | 100% |
-| 25 | Door Lock | hard | Hard level. | 3 | Left, Right | 8 | 25 (18 / 5 / 2 / 0) | 472 / 120 | heart_21 | Locked Box ×4, Block Door (3) | 48% / 18% | 82% | 95% |
-| 26 | Swing Doors | easy | First 40-item box. | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 104 | square_19 | Linked ×2, Block Door (3) | 86% / 80% | 92% | 98% |
-| 27 | Locked Item | easy | Introduces Locked Item. | 4 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 112 | bean_18 | Locked Item rows ×4 (one at the start) | 98% / 90% | 100% | 100% |
-| 28 | Secret Cargo | easy | Hidden Boxes in a staggered pattern, like level 7. | 3 | Left, Right | 5 | 22 (15 / 4 / 2 / 1) | 440 / 104 | lens_18 | Hidden ×10 (16/24/32 items), Locked Item rows ×7 | 89% / 83% | 99% | 100% |
-| 29 | Rush Hour | medium |  | 3 | Left, Middle, Right | 7 | 23 (15 / 5 / 2 / 1) | 464 / 104 | square_19 | none | 28% / 24% | 88% | 100% |
-| 30 | Deep Freeze | hard | Every even box is hidden, like level 8. Hard level. | 4 | Left, Middle, Right | 7 | 28 (18 / 6 / 2 / 2) | 576 / 120 | heart_21 | Hidden ×12 (16/24/40 items), Locked Box ×4, Locked Item rows ×9 | 14% / 12% | 87% | 96% |
-| 31 | Cold Storage | medium |  | 4 | Left, Right | 7 | 23 (15 / 5 / 2 / 1) | 464 / 112 | bean_18 | Locked Item rows ×9 | 17% / 16% | 76% | 97% |
-| 32 | Block Queue | easy | Introduces Block Queue. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 104 | square_19 | Block Queue (4) | 100% / 100% | 100% | 100% |
-| 33 | Detour | medium |  | 3 | Left, Middle, Right | 7 | 24 (16 / 5 / 2 / 1) | 480 / 104 | lens_18 | Block Queue (3) | 15% / 15% | 84% | 97% |
-| 34 | Tangled | medium |  | 4 | Left, Right | 7 | 24 (16 / 5 / 2 / 1) | 480 / 112 | bean_18 | Linked ×4 | 26% / 14% | 85% | 94% |
-| 35 | Gridlock | hard | Hidden Boxes in a staggered pattern, like level 7. Hard level. | 4 | Left, Middle, Right | 7 | 30 (20 / 6 / 2 / 2) | 608 / 120 | heart_21 | Hidden ×13 (16/24/32/40 items), Locked Box ×4, Block Queue (3) | 19% / 11% | 81% | 92% |
-| 36 | Long Belt | medium |  | 3 | Left, Middle, Right | 7 | 24 (16 / 5 / 2 / 1) | 480 / 104 | square_19 | none | 18% / 14% | 79% | 91% |
-| 37 | Night Shift | medium | Every even box is hidden, like level 8. | 3 | Left, Right | 7 | 19 (12 / 4 / 2 / 1) | 392 / 104 | lens_18 | Hidden ×9 (16/24/32/40 items), Block Door (3) | 39% / 13% | 80% | 91% |
-| 38 | Roadblock | medium |  | 4 | Left, Middle, Right | 7 | 25 (17 / 5 / 2 / 1) | 496 / 112 | bean_18 | Linked ×2, Block Queue (3) | 11% / 3% | 68% | 79% |
-| 39 | Cold Links | medium | Linked Box with Locked Items. | 3 | Left, Right | 7 | 20 (13 / 4 / 2 / 1) | 408 / 112 | bean_18 | Linked ×2, Locked Item rows ×8 | 20% / 20% | 71% | 92% |
-| 40 | Grand Finale | hard | Every even box is hidden, like level 8. Hard level. | 4 | Left, Middle, Right | 7 | 31 (21 / 6 / 2 / 2) | 624 / 120 | heart_21 | Hidden ×15 (16/24/32/40 items), Locked Box ×4, Locked Item rows ×16, Block Queue (3) | 14% / 17% | 67% | 93% |
+| 21 | Clear Skies | easy | Breather after a hard level: no elements. | 3 | Left, Right | 6 | 21 (15 / 4 / 2 / 0) | 400 / 104 | lens_18 | none | 99% / 99% | 100% | 100% |
+| 22 | Block Door | easy | Introduces Block Door. | 2 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 104 | square_19 | Block Door (4) | 95% / 90% | 100% | 100% |
+| 23 | Behind the Door | easy | Every even box is hidden, like level 8. | 3 | Left, Right | 6 | 19 (13 / 4 / 2 / 0) | 368 / 112 | bean_18 | Hidden ×9 (16/24/32 items), Block Door (3) | 99% / 94% | 100% | 100% |
+| 24 | Chain Gang | medium |  | 3 | Left, Middle, Right | 6 | 22 (16 / 4 / 2 / 0) | 416 / 104 | lens_18 | Linked ×2 | 22% / 37% | 92% | 99% |
+| 25 | Door Lock | hard | Hard level. | 3 | Left, Right | 7 | 25 (18 / 5 / 2 / 0) | 472 / 120 | heart_21 | Locked Box ×4, Block Door (3) | 14% / 21% | 65% | 87% |
+| 26 | Swing Doors | easy | First 40-item box. | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 104 | square_19 | Linked ×2, Block Door (3) | 99% / 72% | 100% | 100% |
+| 27 | Locked Item | easy | Introduces Locked Item. | 4 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 112 | bean_18 | Locked Item rows ×6 (one at the start) | 94% / 91% | 100% | 100% |
+| 28 | Secret Cargo | easy | Hidden Boxes in a staggered pattern, like level 7. | 3 | Left, Right | 5 | 22 (15 / 4 / 2 / 1) | 440 / 104 | lens_18 | Hidden ×10 (16/24/40 items), Locked Item rows ×9 | 80% / 75% | 100% | 100% |
+| 29 | Rush Hour | medium |  | 3 | Left, Middle, Right | 6 | 23 (15 / 5 / 2 / 1) | 464 / 104 | square_19 | none | 25% / 28% | 93% | 100% |
+| 30 | Deep Freeze | hard | Every even box is hidden, like level 8. Hard level. | 4 | Left, Middle, Right | 7 | 28 (18 / 6 / 2 / 2) | 576 / 120 | heart_21 | Hidden ×12 (16/24/32/40 items), Locked Box ×4, Locked Item rows ×12 | 22% / 18% | 74% | 89% |
+| 31 | Cold Storage | medium |  | 4 | Left, Right | 6 | 23 (15 / 5 / 2 / 1) | 464 / 112 | bean_18 | Locked Item rows ×9 | 51% / 45% | 95% | 100% |
+| 32 | Block Queue | easy | Introduces Block Queue. | 3 | Left, Right | 5 | 18 (13 / 4 / 1 / 0) | 336 / 104 | square_19 | Block Queue (4) | 97% / 94% | 100% | 100% |
+| 33 | Detour | medium |  | 3 | Left, Middle, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 104 | lens_18 | Block Queue (3) | 40% / 55% | 93% | 99% |
+| 34 | Tangled | medium |  | 4 | Left, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 112 | bean_18 | Linked ×4 | 42% / 27% | 91% | 100% |
+| 35 | Gridlock | hard | Hidden Boxes in a staggered pattern, like level 7. Hard level. | 4 | Left, Middle, Right | 7 | 30 (20 / 6 / 2 / 2) | 608 / 120 | heart_21 | Hidden ×13 (16/24/32 items), Locked Box ×4, Block Queue (3) | 9% / 2% | 65% | 91% |
+| 36 | Long Belt | medium |  | 3 | Left, Middle, Right | 6 | 24 (16 / 5 / 2 / 1) | 480 / 104 | square_19 | none | 55% / 58% | 92% | 99% |
+| 37 | Night Shift | medium | Every even box is hidden, like level 8. | 3 | Left, Right | 6 | 19 (12 / 4 / 2 / 1) | 392 / 104 | lens_18 | Hidden ×9 (16/24/32/40 items), Block Door (3) | 20% / 54% | 98% | 100% |
+| 38 | Roadblock | medium |  | 4 | Left, Middle, Right | 6 | 25 (17 / 5 / 2 / 1) | 496 / 112 | bean_18 | Linked ×2, Block Queue (3) | 42% / 43% | 90% | 99% |
+| 39 | Cold Links | medium | Linked Box with Locked Items. | 3 | Left, Right | 6 | 20 (13 / 4 / 2 / 1) | 408 / 112 | bean_18 | Linked ×2, Locked Item rows ×9 | 53% / 45% | 97% | 99% |
+| 40 | Grand Finale | hard | Every even box is hidden, like level 8. Hard level. | 4 | Left, Middle, Right | 7 | 31 (21 / 6 / 2 / 2) | 624 / 120 | heart_21 | Hidden ×15 (16/24/32/40 items), Locked Box ×4, Locked Item rows ×20, Block Queue (3) | 16% / 5% | 70% | 93% |
 
 ## Bot ladder
 
@@ -132,24 +132,24 @@ Win rate of each bot over 200 runs (items fly straight to any matching box, belt
 | 18 | Hidden Links | medium | 36% | 0% | 29% | 76% | 90% | 94% | 100% | 100% | Casual | Medium |
 | 19 | Patience | medium | 48% | 36% | 52% | 92% | 99% | 100% | 100% | 67% | Beginner | Easy |
 | 20 | Four Queues | hard | 26% | 0% | 23% | 56% | 79% | 92% | 100% | 73% | Belt watcher | Hard |
-| 21 | Clear Skies | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 22 | Block Door | easy | 53% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 23 | Behind the Door | easy | 82% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 24 | Chain Gang | medium | 69% | 0% | 39% | 83% | 94% | 99% | 100% | 83% | Casual | Medium |
-| 25 | Door Lock | hard | 48% | 0% | 21% | 59% | 80% | 95% | 100% | 83% | Belt watcher | Hard |
-| 26 | Swing Doors | easy | 84% | 67% | 89% | 97% | 98% | 99% | 100% | 100% | Beginner | Easy |
-| 27 | Locked Item | easy | 94% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 28 | Secret Cargo | easy | 100% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 29 | Rush Hour | medium | 100% | 33% | 64% | 84% | 98% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 30 | Deep Freeze | hard | 57% | 0% | 8% | 43% | 74% | 94% | 100% | 100% | Belt watcher | Hard |
-| 31 | Cold Storage | medium | 62% | 53% | 75% | 94% | 98% | 100% | 100% | 91% | Beginner | Easy |
-| 32 | Block Queue | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 33 | Detour | medium | 17% | 67% | 43% | 85% | 96% | 100% | 100% | 100% | Casual | Medium |
-| 34 | Tangled | medium | 70% | 100% | 73% | 96% | 99% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 35 | Gridlock | hard | 40% | 0% | 10% | 52% | 77% | 97% | 100% | 82% | Belt watcher | Hard |
-| 36 | Long Belt | medium | 84% | 100% | 67% | 94% | 98% | 100% | 100% | 100% | Blind, in turn | Very easy |
-| 37 | Night Shift | medium | 100% | 36% | 79% | 90% | 91% | 97% | 100% | 100% | Blind, one queue | Very easy |
-| 38 | Roadblock | medium | 47% | 24% | 50% | 89% | 93% | 99% | 100% | 100% | Casual | Medium |
-| 39 | Cold Links | medium | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
-| 40 | Grand Finale | hard | 27% | 0% | 18% | 32% | 40% | 31% | 0% | 96% | none | Unwinnable |
+| 21 | Clear Skies | easy | 100% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 22 | Block Door | easy | 53% | 100% | 95% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 23 | Behind the Door | easy | 83% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 24 | Chain Gang | medium | 35% | 33% | 22% | 70% | 92% | 99% | 100% | 84% | Casual | Medium |
+| 25 | Door Lock | hard | 19% | 33% | 14% | 47% | 65% | 87% | 100% | 50% | Careful | Very hard |
+| 26 | Swing Doors | easy | 100% | 100% | 99% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
+| 27 | Locked Item | easy | 90% | 100% | 94% | 99% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 28 | Secret Cargo | easy | 35% | 100% | 80% | 98% | 100% | 100% | 100% | 83% | Blind, in turn | Very easy |
+| 29 | Rush Hour | medium | 17% | 0% | 25% | 80% | 93% | 100% | 100% | 83% | Casual | Medium |
+| 30 | Deep Freeze | hard | 6% | 0% | 22% | 61% | 74% | 89% | 100% | 39% | Careful | Very hard |
+| 31 | Cold Storage | medium | 52% | 24% | 51% | 81% | 95% | 100% | 100% | 94% | Casual | Medium |
+| 32 | Block Queue | easy | 84% | 100% | 97% | 99% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 33 | Detour | medium | 50% | 0% | 40% | 80% | 93% | 99% | 100% | 100% | Casual | Medium |
+| 34 | Tangled | medium | 42% | 0% | 42% | 75% | 91% | 100% | 100% | 83% | Casual | Medium |
+| 35 | Gridlock | hard | 18% | 0% | 9% | 49% | 65% | 91% | 100% | 97% | Belt watcher | Hard |
+| 36 | Long Belt | medium | 48% | 33% | 55% | 78% | 92% | 99% | 100% | 100% | Casual | Medium |
+| 37 | Night Shift | medium | 33% | 0% | 20% | 79% | 98% | 100% | 100% | 50% | Casual | Medium |
+| 38 | Roadblock | medium | 36% | 24% | 42% | 78% | 90% | 99% | 100% | 60% | Casual | Medium |
+| 39 | Cold Links | medium | 48% | 33% | 53% | 87% | 97% | 99% | 100% | 100% | Casual | Medium |
+| 40 | Grand Finale | hard | 20% | 0% | 16% | 52% | 70% | 93% | 100% | 55% | Belt watcher | Hard |
 <!-- /ladder -->
