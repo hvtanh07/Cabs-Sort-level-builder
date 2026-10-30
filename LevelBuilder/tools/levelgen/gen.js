@@ -117,9 +117,27 @@ function make(S, seed) {
   const feeders = S.entries.map(e => ({ rows: [], entry: e }));
   if (S.door) {
     // Block Door: items for the boxes sent while a door is open queue behind that door
+    const per = feeders.map(() => []);
     units.forEach(x => {
       const ph = Math.floor((x.b + (S.doorLead || 0)) / S.door);
-      feeders[x.b >= N * (1 - (S.doorTail || 0)) ? 0 : ph % 2].rows.push({ cells: [x.c, x.c, x.c, x.c], hidden: false, lock: 0 });
+      per[x.b >= N * (1 - (S.doorTail || 0)) ? 0 : ph % 2].push(x);
+    });
+    per.forEach((list, f) => {
+      // with `chunk`, a block that would make its colour's patch longer than chunk[1] rows waits for the next block of another colour
+      let order = list;
+      if (S.chunk) {
+        const blocks = [];
+        list.forEach((x, i) => { if (i === 0 || x.chunk !== list[i - 1].chunk) blocks.push([]); blocks[blocks.length - 1].push(x); });
+        order = []; let last = 0, run = 0;
+        while (blocks.length) {
+          let i = blocks.findIndex(b => b[0].c !== last || run + b.length <= S.chunk[1]);
+          if (i < 0) i = 0;
+          const b = blocks.splice(i, 1)[0];
+          run = b[0].c === last ? run + b.length : b.length; last = b[0].c;
+          order.push(...b);
+        }
+      }
+      order.forEach(x => feeders[f].rows.push({ cells: [x.c, x.c, x.c, x.c], hidden: false, lock: 0 }));
     });
   } else if (S.chunk) {
     // row blocks take turns between the Enter Paths, in entry order. A block that would land right behind one of its own colour
