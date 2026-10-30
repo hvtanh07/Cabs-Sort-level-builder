@@ -16,7 +16,6 @@
     $$('#modeSeg button').forEach(b => b.classList.toggle('on', b.dataset.mode === 'play'));
     $('#editBar').classList.add('hidden'); $('#playBar').classList.remove('hidden');
     $('#board').classList.add('play');
-    $('#pPick').value = A.prefs.pick;
     $$('#speedSeg button').forEach(b => b.classList.toggle('on', +b.dataset.speed === A.prefs.speed));
     P.restart();
     cancelAnimationFrame(P.raf);
@@ -84,7 +83,7 @@
   };
   P.drawConveyor = function () {
     const G = P.game, A = CS.App;
-    P.view.draw({ rows: G.rows, shift: G.shift, phase: G.over ? 0 : P.acc }, A.gatesFor(A.m, P.view.g, G), { pickMark: G.pickMode === 'low' });
+    P.view.draw({ rows: G.rows, shift: G.shift, phase: G.over ? 0 : P.acc }, A.gatesFor(A.m, P.view.g, G));
   };
 
   /* positions (relative to the board) for animations */
@@ -295,10 +294,6 @@
     $('#pRestart').onclick = () => P.restart();
     $('#pExit').onclick = () => P.stop();
     $('#pStep').onclick = () => { if (P.game && !P.game.over) { P.setRunning(false); P.game.step(); } };
-    $('#pPick').onchange = e => {
-      A.prefs.pick = e.target.value; A.savePrefs(); P.restart();
-      A.toast({ fly: 'Items on the conveyor fly straight to any box of their colour, shared evenly between those boxes. Restarted.', low: 'Boxes pull items only as they pass the lowest point of the conveyor. Restarted.', zone: 'Pickup zone: boxes pull items from the config\'s pickRows rows. Restarted.', any: 'Boxes pull items from anywhere on the conveyor. Restarted.' }[A.prefs.pick]);
-    };
     $('#speedSeg').addEventListener('click', e => {
       const b = e.target.closest('[data-speed]'); if (!b) return;
       A.prefs.speed = +b.dataset.speed; A.savePrefs();

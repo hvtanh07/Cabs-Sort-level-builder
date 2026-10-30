@@ -21,8 +21,7 @@
     conveyors: {}, convOrder: [],
     mode: 'edit', tab: 'level',
     valCache: {},
-    // pickV 2: items fly to any matching box (the new default); prefs saved before it go back to that default once
-    prefs: (p => Object.assign({ speed: 1, pick: 'fly', pickV: 2 }, p, p.pickV === 2 ? {} : { pick: 'fly', pickV: 2 }))(lsGet(LS_PREF) || {})
+    prefs: Object.assign({ speed: 1 }, lsGet(LS_PREF) || {}, { pick: 'fly' })   // items always fly to any matching box (the old pickup rules are gone from the UI)
   };
   A.savePrefs = () => lsSet(LS_PREF, A.prefs);
 
@@ -967,14 +966,14 @@
 <pre>{
   "formatVersion": 2,
   "id": "square_42",
-  "rows": 42, "width": 4, "pickRows": 5, "scale": 0.46,
+  "rows": 42, "width": 4, "scale": 0.46,
   "loop": { "nodes": [ { "x": 0.8, "z": 3.1, "yRotation": 270 }, ... ] },
   "feeders": [
     { "side": "left", "mergeAt": 13, "nodes": [ { "x": -2.7, "z": 11.7, "yRotation": 180 }, ... ] }
   ],
   "meta": { "name": "Rounded square" }
 }</pre>
-<div class="hint">loop.nodes are read in belt order, x / z in game units (z up the screen). mergeAt is the loop row where that Enter Path joins. Belts run counter-clockwise unless the config has "direction": "cw". Items fly straight to any box of their colour in the slots; pickRows is only used by the older Pickup zone rule in play test. Simpler configs with a "shape" (roundrect, circle, points, svg) and "entries" also import.</div></pre></details>
+<div class="hint">loop.nodes are read in belt order, x / z in game units (z up the screen). mergeAt is the loop row where that Enter Path joins. Belts run counter-clockwise unless the config has "direction": "cw". Items fly straight to any box of their colour in the slots (a config's pickRows is no longer used). Simpler configs with a "shape" (roundrect, circle, points, svg) and "entries" also import.</div></pre></details>
       <div class="foot"><button type="button" id="convImport">Import conveyor JSON…</button><span class="grow"></span><button value="cancel" class="primary">Close</button></div>`,
       null, form => {
         draw(form);
