@@ -77,7 +77,7 @@ The tool reads the game format (formatVersion 2):
 - `loop.nodes`: the belt loop, `x` / `z` in game units (z points up the screen). The belt runs counter-clockwise on screen whichever way the nodes are listed; add `"direction": "cw"` to a config to make it run clockwise.
 - `rows`: belt length in rows; `width`: items per row (4).
 - `feeders[]`: `side` (left / middle / right), `mergeAt` (the loop row where it joins), `nodes` (the Enter Path track, drawn up to the merge point).
-- `pickRows`: rows from the first loop node (in the listed node order) where boxes pick items when the older **Pickup → Pickup zone** rule is chosen.
+- `pickRows`: no longer used. It set the pickup zone of an older rule; items now fly to any matching box from anywhere on the belt, so the field is read but ignored.
 - `scale` is kept but not used for drawing. `meta.name` is the display name.
 
 A level's `conveyor` field must match a config `id`. A simpler shape format (`shape`: roundrect / circle / points / svg plus `entries`) also imports.
@@ -89,9 +89,7 @@ To add a new premade conveyor permanently, put its JSON in `conveyors/` and add 
 - There is no pickup point on the conveyor: as soon as an item is on the conveyor and a box of its colour sits in a slot,
   the item flies into that box. When several boxes in the slots share the colour, the items are shared evenly between them
   (one each, in turn), with no slot going first. Locked Items fly once they unlock.
-  The **Pickup** menu in play test also offers the older rules: **Lowest point** (boxes pull items only as they pass the
-  lowest point of the loop, marked with a yellow dashed line), **Pickup zone** (the first `pickRows` rows of the loop)
-  and **Anywhere, 1 per step** (one item per box per step from anywhere on the belt).
+  Play test, **Simulate** and the level generator all use this rule (the older pickup rules are gone from the tool's menus).
 - The belt runs counter-clockwise.
 - Enter Paths join the loop at `mergeAt / rows` of the way around, measured from the first loop node in the listed order.
 - The level starts with the conveyor already filled from the Enter Paths (one full loop).

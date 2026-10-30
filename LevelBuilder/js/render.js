@@ -118,19 +118,6 @@
       ctx.lineTo(this.X(cx - n.x * half - p.dx * back), this.Y(cy - n.y * half - p.dy * back));
       ctx.stroke();
     }
-    // pickup point: boxes pull items as they pass the lowest point of the loop
-    if (!this.compact && opt.pickMark !== false && g.lowRow != null) {
-      const p = g.pointAt(g.lowRow / R), n = this.normal(p), half = this.beltW * 0.5;
-      ctx.save();
-      ctx.strokeStyle = 'rgba(255,216,74,.85)'; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.setLineDash([5, 4]);
-      ctx.beginPath(); ctx.moveTo(this.X(p.x + n.x * half), this.Y(p.y + n.y * half)); ctx.lineTo(this.X(p.x - n.x * half), this.Y(p.y - n.y * half)); ctx.stroke();
-      ctx.setLineDash([]);
-      const out = n.y >= 0 ? 1 : -1;      // the side of the belt facing down, toward the slots
-      const ax = this.X(p.x + n.x * (half + this.a * 0.3) * out), ay = this.Y(p.y + n.y * (half + this.a * 0.3) * out);
-      ctx.fillStyle = 'rgba(255,216,74,.9)';
-      ctx.beginPath(); ctx.moveTo(ax - 6, ay); ctx.lineTo(ax + 6, ay); ctx.lineTo(ax, ay + 7); ctx.closePath(); ctx.fill();
-      ctx.restore();
-    }
     // entry gates on top of the belt edge
     const r = Math.max(2.5, this.a * sc * 0.42);
     if (this.compact) {
