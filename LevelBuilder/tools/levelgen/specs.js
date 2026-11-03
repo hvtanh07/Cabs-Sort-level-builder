@@ -321,4 +321,17 @@ S.forEach(s => {
   // but one queue / the queues in turn at 30-34 %, so its blind bars are 35-40 % (still under the user's 60 %)
   if (s.n === 25) Object.assign(s, { blindMax: 0.4, watchBar: [0.35, 0.9], seed: 101, watchTries: [{ stick: 0.8 }] });
 });
+// Levels 29-34 retuned (2026-11-03): play tests found them too easy. Bars without RV slots: the hard level 30 lets the belt
+// watcher win only about half the runs (casual <= 45 %, random and blind taps <= 15 %, careful player always wins); the levels
+// right before a hard level (29, 34) let the casual player win 40-60 % and the belt watcher 70-85 %; the medium levels 31 and
+// 33 let the casual player win 60-80 % and the belt watcher 85 % or more. Element intro 32 stays easy. `watchMax` caps the
+// belt watcher (100 runs). Each keeps the seed and setting found by a search over seeds 1-340
+const RETUNE = {
+  29: { seed: 80, watchBar: [0.3, 0.7], casualBar: [0.4, 0.6], blindMax: 0.3, watchMax: 0.85, watchTries: [{ colors: 8, stick: 0.9, window: 6 }] },
+  30: { seed: 288, watchBar: [0.15, 0.35], casualBar: [0, 0.45], blindMax: 0.15, watchMax: 0.6, watchTries: [{ colors: 8, stick: 0.9, window: 6 }] },
+  31: { seed: 45, watchBar: [0.45, 0.85], casualBar: [0.6, 0.8], blindMax: 0.45, watchTries: [{ stick: 0.8 }] },
+  33: { seed: 131, watchBar: [0.45, 0.85], casualBar: [0.6, 0.8], blindMax: 0.45, watchTries: [{ stick: 0.7 }] },
+  34: { seed: 49, watchBar: [0.3, 0.7], casualBar: [0.4, 0.6], blindMax: 0.3, watchMax: 0.85, watchTries: [{ stick: 0.9, window: 6 }] }
+};
+S.forEach(s => { if (RETUNE[s.n]) Object.assign(s, RETUNE[s.n]); });
 module.exports = S;
