@@ -44,6 +44,7 @@ function check(S, seed) {
         if (c < S.casualBar[0] || c > S.casualBar[1]) return { ok: false, why: 'casual100 ' + c, res };
         // random taps, one queue and the queues in turn over 100 runs too (the first 100 of the ladder's 200): at most 55 % (30 % hard; `blindMax` sets it for one level)
         for (const p of [1, 'stay', 'turns']) { const x = G.rate(m, G.MODES.fly, p, 100, 7000).rate; res['b100_' + p] = x; if (x > (S.blindMax || (S.diff === 'hard' ? 0.3 : 0.55))) return { ok: false, why: 'blind100 ' + p + ' ' + x, res }; }
+        if (S.watchMax) { const w3 = G.rate(m, G.MODES.fly, 0.1, 100, 7000).rate; res.watch100 = w3; if (w3 < minW || w3 > S.watchMax) return { ok: false, why: 'watchMax ' + w3, res }; }
         if (S.diff === 'hard') { const w2 = G.rate(m, G.MODES.fly, 0.1, 100, 7000).rate; res.watch100 = w2; if (w2 < minW) return { ok: false, why: 'watch100 ' + w2, res }; }
       }
       // `noBlind`: tapping without looking (one queue until it is empty, or the queues in turn) must lose as often as random taps
