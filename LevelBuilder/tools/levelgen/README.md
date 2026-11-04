@@ -44,3 +44,9 @@ Running it again with the same specs gives the same levels. Editing a level in t
 - **Sharp, impatient**: never taps at random, but fills every free slot at once and never waits.
 
 Each level is checked against its role from GDD section 7 (Hard every 5 levels from 10; element intro levels and the level after a Hard level easy; the level before a Hard level a step up from medium) with the bars in `TARGET`, measured without RV slots.
+
+## Retune to the GDD roles (2026-11-04)
+
+`node retune.js N` searches settings (`stick`, `window`, `colors`) and seeds for level N until its play test bots (200 runs, no RV slots) land inside the bars of its role in `playtest.js` `TARGET`; every Enter Path patch stays 3–6 rows and the careful player must win with the belt full and empty. Options: `MAXSEED`, `SEED0`, `WANT`, `WIDE=1` (harsher grid), `GRID` (grid by hand), `TGT` (bars by hand), `NEAR=1` (print the closest miss). `retune.json` keeps the chosen setting and seed of each retuned level, and `node apply.js retune.json` rebuilds those levels into `levels/` and `js/levels.js` with the difficulty of their role.
+
+Roles: element intro levels easy; the level right after an intro only a little harder (casual 80–90 %, watcher ≥ 90 %); the level after a Hard level easy (casual ≥ 90 %, beginner ≥ 80 %); medium casual 60–80 %, watcher ≥ 85 %; the level before a Hard level casual 40–60 %, watcher 70–85 %; Hard watcher 40–60 %, casual ≤ 30 %, random ≤ 10 %; random and one-queue taps under 60 % from medium up. 24 levels were retuned. Level 15 (Locked Box relay on the Heart belt) could not reach the Hard bars in about 60 000 layouts and keeps the closest one: watcher 69 %, casual 35 %, random 1 %.
