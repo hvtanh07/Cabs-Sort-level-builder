@@ -34,3 +34,13 @@ node write.js      # writes levels/level_00NN.json and js/levels.js
   `OUT=file.json node run.js 11,12` writes the chosen levels to that file, so the levels can be built in a few processes at once and merged into `out.json`.
 
 Running it again with the same specs gives the same levels. Editing a level in the tool and exporting it is fine; the generator is only for rebuilding the set.
+
+## Play test report
+
+`node playtest.js` (or `node playtest.js 29,30`) plays every level with ten bots, from blind taps to the careful player, 200 runs each (`RUNS=` changes it), without and with the RV slots, and writes `playtest.json`. Besides the ladder bots in `gen.js` (blind one queue, blind in turn, random taps, beginner, casual, belt watcher, careful) it adds three play styles that only read what a player can see (hidden Enter Path rows are not counted):
+
+- **Belt glancer**: sends a box as soon as its colour is anywhere on the belt, without counting; otherwise taps at random.
+- **Patient casual**: the casual player (3 taps in 10 random) who keeps the last free slot for a box whose items are on the belt.
+- **Sharp, impatient**: never taps at random, but fills every free slot at once and never waits.
+
+Each level is checked against its role from GDD section 7 (Hard every 5 levels from 10; element intro levels and the level after a Hard level easy; the level before a Hard level a step up from medium) with the bars in `TARGET`, measured without RV slots.

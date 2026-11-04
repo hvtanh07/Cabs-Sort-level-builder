@@ -1,0 +1,1728 @@
+{
+ "runs": 200,
+ "bots": [
+  {
+   "id": "stay",
+   "name": "Blind, one queue",
+   "tier": "Rất kém",
+   "note": "không nhìn băng chuyền, bấm 1 hàng tới khi hết rồi sang hàng khác (thứ tự hàng ngẫu nhiên mỗi lần)"
+  },
+  {
+   "id": "turns",
+   "name": "Blind, in turn",
+   "tier": "Rất kém",
+   "note": "không nhìn, bấm lần lượt hàng 1, 2, 3, 1…"
+  },
+  {
+   "id": "random",
+   "name": "Random tap",
+   "tier": "Rất kém",
+   "note": "bấm ngẫu nhiên, lấp mọi slot trống ngay"
+  },
+  {
+   "id": "glance",
+   "name": "Belt glancer",
+   "tier": "Kém",
+   "note": "thấy màu hộp có trên băng chuyền là gửi, không đếm số lượng; không có thì bấm bừa"
+  },
+  {
+   "id": "novice",
+   "name": "Beginner",
+   "tier": "Kém",
+   "note": "50% bấm bừa, 50% chọn theo màu trên băng"
+  },
+  {
+   "id": "casual",
+   "name": "Casual",
+   "tier": "Trung bình",
+   "note": "30% bấm bừa, lấp mọi slot trống"
+  },
+  {
+   "id": "pcasual",
+   "name": "Patient casual",
+   "tier": "Trung bình",
+   "note": "như Casual nhưng giữ slot trống cuối cho hộp có màu đang trên băng"
+  },
+  {
+   "id": "watcher",
+   "name": "Belt watcher",
+   "tier": "Khá",
+   "note": "10% bấm bừa, còn lại chọn theo màu trên băng"
+  },
+  {
+   "id": "sharp",
+   "name": "Sharp, impatient",
+   "tier": "Khá",
+   "note": "không bấm bừa nhưng không bao giờ chờ: lấp slot ngay bằng hộp tốt nhất"
+  },
+  {
+   "id": "careful",
+   "name": "Careful",
+   "tier": "Giỏi",
+   "note": "đếm item sắp tới, chờ thay vì gửi hộp chưa thể lấp; không may rủi"
+  }
+ ],
+ "targets": {
+  "tutorial": [
+   [
+    "random",
+    0.9,
+    1
+   ]
+  ],
+  "intro": [
+   [
+    "casual",
+    0.9,
+    1
+   ],
+   [
+    "novice",
+    0.8,
+    1
+   ]
+  ],
+  "after-hard": [
+   [
+    "casual",
+    0.9,
+    1
+   ],
+   [
+    "novice",
+    0.8,
+    1
+   ]
+  ],
+  "medium": [
+   [
+    "casual",
+    0.6,
+    0.8
+   ],
+   [
+    "watcher",
+    0.85,
+    1
+   ],
+   [
+    "random",
+    0,
+    0.6
+   ],
+   [
+    "stay",
+    0,
+    0.6
+   ]
+  ],
+  "pre-hard": [
+   [
+    "casual",
+    0.4,
+    0.6
+   ],
+   [
+    "watcher",
+    0.7,
+    0.85
+   ],
+   [
+    "random",
+    0,
+    0.6
+   ],
+   [
+    "stay",
+    0,
+    0.6
+   ]
+  ],
+  "hard": [
+   [
+    "watcher",
+    0.4,
+    0.6
+   ],
+   [
+    "casual",
+    0,
+    0.3
+   ],
+   [
+    "random",
+    0,
+    0.1
+   ],
+   [
+    "careful",
+    1,
+    1
+   ]
+  ]
+ },
+ "levels": [
+  {
+   "n": 1,
+   "name": "First Sort",
+   "metaDiff": "easy",
+   "role": "tutorial",
+   "intro": null,
+   "res": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 2,
+   "name": "Two Queues",
+   "metaDiff": "easy",
+   "role": "tutorial",
+   "intro": null,
+   "res": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 3,
+   "name": "Round and Round",
+   "metaDiff": "easy",
+   "role": "tutorial",
+   "intro": null,
+   "res": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 4,
+   "name": "Side by Side",
+   "metaDiff": "easy",
+   "role": "tutorial",
+   "intro": null,
+   "res": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 5,
+   "name": "Colour Patches",
+   "metaDiff": "medium",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0,
+    "turns": 0,
+    "random": 0.53,
+    "glance": 0.98,
+    "novice": 0.845,
+    "casual": 0.945,
+    "pcasual": 0.945,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.495,
+    "turns": 1,
+    "random": 0.93,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.945,
+     "lo": 0.6,
+     "hi": 0.8
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "name": "Diagonal Stripes",
+   "metaDiff": "medium",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.5,
+    "turns": 0,
+    "random": 0.07,
+    "glance": 1,
+    "novice": 0.735,
+    "casual": 0.925,
+    "pcasual": 0.925,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.86,
+    "turns": 0,
+    "random": 0.515,
+    "glance": 1,
+    "novice": 0.975,
+    "casual": 0.995,
+    "pcasual": 0.995,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.925,
+     "lo": 0.6,
+     "hi": 0.8
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "name": "Hidden Box",
+   "metaDiff": "easy",
+   "role": "intro",
+   "intro": "Hidden Box",
+   "res": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 8,
+   "name": "Hidden Rows",
+   "metaDiff": "medium",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.34,
+    "turns": 0,
+    "random": 0.23,
+    "glance": 0.445,
+    "novice": 0.735,
+    "casual": 0.925,
+    "pcasual": 0.915,
+    "watcher": 0.985,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.83,
+    "turns": 0.685,
+    "random": 0.84,
+    "glance": 0.95,
+    "novice": 0.98,
+    "casual": 1,
+    "pcasual": 0.995,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.925,
+     "lo": 0.6,
+     "hi": 0.8
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "name": "Long Haul",
+   "metaDiff": "medium",
+   "role": "pre-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.355,
+    "turns": 0,
+    "random": 0.35,
+    "glance": 0.49,
+    "novice": 0.77,
+    "casual": 0.93,
+    "pcasual": 0.865,
+    "watcher": 0.995,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 0.355,
+    "random": 0.83,
+    "glance": 1,
+    "novice": 0.97,
+    "casual": 0.995,
+    "pcasual": 0.995,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.93,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "watcher",
+     "got": 0.995,
+     "lo": 0.7,
+     "hi": 0.85
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "name": "First Challenge",
+   "metaDiff": "hard",
+   "role": "hard",
+   "intro": null,
+   "res": {
+    "stay": 0,
+    "turns": 0,
+    "random": 0.03,
+    "glance": 0.93,
+    "novice": 0.36,
+    "casual": 0.65,
+    "pcasual": 0.665,
+    "watcher": 0.94,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.675,
+    "turns": 1,
+    "random": 0.725,
+    "glance": 1,
+    "novice": 0.97,
+    "casual": 1,
+    "pcasual": 0.985,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "watcher",
+     "got": 0.94,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "casual",
+     "got": 0.65,
+     "lo": 0,
+     "hi": 0.3
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "name": "Triple Stack",
+   "metaDiff": "medium",
+   "role": "after-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.495,
+    "turns": 0.33,
+    "random": 0.385,
+    "glance": 0.715,
+    "novice": 0.735,
+    "casual": 0.915,
+    "pcasual": 0.91,
+    "watcher": 0.95,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.66,
+    "turns": 1,
+    "random": 0.58,
+    "glance": 0.945,
+    "novice": 0.85,
+    "casual": 0.96,
+    "pcasual": 0.97,
+    "watcher": 0.99,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "novice",
+     "got": 0.735,
+     "lo": 0.8,
+     "hi": 1
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "name": "Locked Box",
+   "metaDiff": "easy",
+   "role": "intro",
+   "intro": "Locked Box",
+   "res": {
+    "stay": 0.34,
+    "turns": 1,
+    "random": 0.97,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 13,
+   "name": "Key Count",
+   "metaDiff": "medium",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.34,
+    "turns": 0,
+    "random": 0.28,
+    "glance": 0.87,
+    "novice": 0.755,
+    "casual": 0.95,
+    "pcasual": 0.93,
+    "watcher": 0.995,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.48,
+    "turns": 0.355,
+    "random": 0.62,
+    "glance": 0.98,
+    "novice": 0.97,
+    "casual": 0.995,
+    "pcasual": 0.985,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.95,
+     "lo": 0.6,
+     "hi": 0.8
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "name": "Blind Picks",
+   "metaDiff": "medium",
+   "role": "pre-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.34,
+    "turns": 0,
+    "random": 0.21,
+    "glance": 0.745,
+    "novice": 0.745,
+    "casual": 0.94,
+    "pcasual": 0.935,
+    "watcher": 0.995,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 0.355,
+    "random": 0.775,
+    "glance": 1,
+    "novice": 0.99,
+    "casual": 0.995,
+    "pcasual": 0.995,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.94,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "watcher",
+     "got": 0.995,
+     "lo": 0.7,
+     "hi": 0.85
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "name": "Three Gates",
+   "metaDiff": "hard",
+   "role": "hard",
+   "intro": null,
+   "res": {
+    "stay": 0,
+    "turns": 0,
+    "random": 0.265,
+    "glance": 0.92,
+    "novice": 0.515,
+    "casual": 0.63,
+    "pcasual": 0.63,
+    "watcher": 0.86,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 0.985,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "watcher",
+     "got": 0.86,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "casual",
+     "got": 0.63,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "random",
+     "got": 0.265,
+     "lo": 0,
+     "hi": 0.1
+    }
+   ]
+  },
+  {
+   "n": 16,
+   "name": "Heavy Load",
+   "metaDiff": "medium",
+   "role": "after-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.48,
+    "turns": 0,
+    "random": 0.47,
+    "glance": 0.805,
+    "novice": 0.92,
+    "casual": 0.965,
+    "pcasual": 0.975,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.83,
+    "turns": 1,
+    "random": 0.86,
+    "glance": 1,
+    "novice": 0.995,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 17,
+   "name": "Linked Box",
+   "metaDiff": "easy",
+   "role": "intro",
+   "intro": "Linked Box",
+   "res": {
+    "stay": 1,
+    "turns": 1,
+    "random": 0.975,
+    "glance": 1,
+    "novice": 0.99,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 18,
+   "name": "Hidden Links",
+   "metaDiff": "medium",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.355,
+    "turns": 0,
+    "random": 0.29,
+    "glance": 0.485,
+    "novice": 0.755,
+    "casual": 0.9,
+    "pcasual": 0.905,
+    "watcher": 0.94,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 0.985,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.9,
+     "lo": 0.6,
+     "hi": 0.8
+    }
+   ]
+  },
+  {
+   "n": 19,
+   "name": "Patience",
+   "metaDiff": "medium",
+   "role": "pre-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.48,
+    "turns": 0.355,
+    "random": 0.52,
+    "glance": 1,
+    "novice": 0.915,
+    "casual": 0.99,
+    "pcasual": 0.98,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.665,
+    "turns": 1,
+    "random": 0.905,
+    "glance": 1,
+    "novice": 0.98,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.99,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.7,
+     "hi": 0.85
+    }
+   ]
+  },
+  {
+   "n": 20,
+   "name": "Four Queues",
+   "metaDiff": "hard",
+   "role": "hard",
+   "intro": null,
+   "res": {
+    "stay": 0.26,
+    "turns": 0,
+    "random": 0.225,
+    "glance": 0.96,
+    "novice": 0.555,
+    "casual": 0.785,
+    "pcasual": 0.775,
+    "watcher": 0.92,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.73,
+    "turns": 1,
+    "random": 0.92,
+    "glance": 1,
+    "novice": 0.975,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "watcher",
+     "got": 0.92,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "casual",
+     "got": 0.785,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "random",
+     "got": 0.225,
+     "lo": 0,
+     "hi": 0.1
+    }
+   ]
+  },
+  {
+   "n": 21,
+   "name": "Clear Skies",
+   "metaDiff": "easy",
+   "role": "after-hard",
+   "intro": null,
+   "res": {
+    "stay": 1,
+    "turns": 1,
+    "random": 0.985,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 22,
+   "name": "Block Door",
+   "metaDiff": "easy",
+   "role": "intro",
+   "intro": "Block Door",
+   "res": {
+    "stay": 0.525,
+    "turns": 1,
+    "random": 0.95,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 23,
+   "name": "Behind the Door",
+   "metaDiff": "easy",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.83,
+    "turns": 1,
+    "random": 0.985,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 1,
+     "lo": 0.6,
+     "hi": 0.8
+    },
+    {
+     "bot": "random",
+     "got": 0.985,
+     "lo": 0,
+     "hi": 0.6
+    },
+    {
+     "bot": "stay",
+     "got": 0.83,
+     "lo": 0,
+     "hi": 0.6
+    }
+   ]
+  },
+  {
+   "n": 24,
+   "name": "Chain Gang",
+   "metaDiff": "medium",
+   "role": "pre-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.345,
+    "turns": 0.33,
+    "random": 0.215,
+    "glance": 0.43,
+    "novice": 0.695,
+    "casual": 0.915,
+    "pcasual": 0.83,
+    "watcher": 0.99,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.835,
+    "turns": 1,
+    "random": 0.825,
+    "glance": 0.965,
+    "novice": 0.96,
+    "casual": 1,
+    "pcasual": 0.995,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.915,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "watcher",
+     "got": 0.99,
+     "lo": 0.7,
+     "hi": 0.85
+    }
+   ]
+  },
+  {
+   "n": 25,
+   "name": "Door Lock",
+   "metaDiff": "hard",
+   "role": "hard",
+   "intro": null,
+   "res": {
+    "stay": 0.185,
+    "turns": 0.33,
+    "random": 0.14,
+    "glance": 0.37,
+    "novice": 0.47,
+    "casual": 0.65,
+    "pcasual": 0.49,
+    "watcher": 0.865,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.495,
+    "turns": 0.33,
+    "random": 0.405,
+    "glance": 0.815,
+    "novice": 0.865,
+    "casual": 0.965,
+    "pcasual": 0.94,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "watcher",
+     "got": 0.865,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "casual",
+     "got": 0.65,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "random",
+     "got": 0.14,
+     "lo": 0,
+     "hi": 0.1
+    }
+   ]
+  },
+  {
+   "n": 26,
+   "name": "Swing Doors",
+   "metaDiff": "easy",
+   "role": "after-hard",
+   "intro": null,
+   "res": {
+    "stay": 1,
+    "turns": 1,
+    "random": 0.985,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 27,
+   "name": "Locked Item",
+   "metaDiff": "easy",
+   "role": "intro",
+   "intro": "Locked Item",
+   "res": {
+    "stay": 0.895,
+    "turns": 1,
+    "random": 0.935,
+    "glance": 1,
+    "novice": 0.99,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 28,
+   "name": "Secret Cargo",
+   "metaDiff": "easy",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.35,
+    "turns": 1,
+    "random": 0.8,
+    "glance": 0.965,
+    "novice": 0.98,
+    "casual": 1,
+    "pcasual": 0.985,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.825,
+    "turns": 1,
+    "random": 0.985,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 1,
+     "lo": 0.6,
+     "hi": 0.8
+    },
+    {
+     "bot": "random",
+     "got": 0.8,
+     "lo": 0,
+     "hi": 0.6
+    }
+   ]
+  },
+  {
+   "n": 29,
+   "name": "Rush Hour",
+   "metaDiff": "medium",
+   "role": "pre-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.175,
+    "turns": 0,
+    "random": 0.12,
+    "glance": 0.46,
+    "novice": 0.355,
+    "casual": 0.55,
+    "pcasual": 0.475,
+    "watcher": 0.78,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.67,
+    "turns": 1,
+    "random": 0.685,
+    "glance": 0.975,
+    "novice": 0.945,
+    "casual": 0.99,
+    "pcasual": 0.985,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 30,
+   "name": "Deep Freeze",
+   "metaDiff": "hard",
+   "role": "hard",
+   "intro": null,
+   "res": {
+    "stay": 0.13,
+    "turns": 0,
+    "random": 0.085,
+    "glance": 0.12,
+    "novice": 0.245,
+    "casual": 0.32,
+    "pcasual": 0.305,
+    "watcher": 0.52,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.6,
+    "turns": 0.475,
+    "random": 0.775,
+    "glance": 0.88,
+    "novice": 0.925,
+    "casual": 0.925,
+    "pcasual": 0.94,
+    "watcher": 0.965,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.32,
+     "lo": 0,
+     "hi": 0.3
+    }
+   ]
+  },
+  {
+   "n": 31,
+   "name": "Cold Storage",
+   "metaDiff": "medium",
+   "role": "after-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.435,
+    "turns": 0,
+    "random": 0.185,
+    "glance": 0.685,
+    "novice": 0.515,
+    "casual": 0.66,
+    "pcasual": 0.69,
+    "watcher": 0.855,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.915,
+    "turns": 1,
+    "random": 0.7,
+    "glance": 1,
+    "novice": 0.93,
+    "casual": 0.98,
+    "pcasual": 0.985,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.66,
+     "lo": 0.9,
+     "hi": 1
+    },
+    {
+     "bot": "novice",
+     "got": 0.515,
+     "lo": 0.8,
+     "hi": 1
+    }
+   ]
+  },
+  {
+   "n": 32,
+   "name": "Block Queue",
+   "metaDiff": "easy",
+   "role": "intro",
+   "intro": "Block Queue",
+   "res": {
+    "stay": 0.835,
+    "turns": 1,
+    "random": 0.97,
+    "glance": 1,
+    "novice": 0.99,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 1,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 33,
+   "name": "Detour",
+   "metaDiff": "medium",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.33,
+    "turns": 0,
+    "random": 0.21,
+    "glance": 0.415,
+    "novice": 0.525,
+    "casual": 0.715,
+    "pcasual": 0.635,
+    "watcher": 0.95,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 0.33,
+    "random": 0.75,
+    "glance": 0.975,
+    "novice": 0.915,
+    "casual": 0.99,
+    "pcasual": 0.965,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 34,
+   "name": "Tangled",
+   "metaDiff": "medium",
+   "role": "pre-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.155,
+    "turns": 0,
+    "random": 0.06,
+    "glance": 0.235,
+    "novice": 0.285,
+    "casual": 0.48,
+    "pcasual": 0.43,
+    "watcher": 0.755,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.665,
+    "turns": 0.76,
+    "random": 0.615,
+    "glance": 0.775,
+    "novice": 0.885,
+    "casual": 0.92,
+    "pcasual": 0.95,
+    "watcher": 0.975,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": []
+  },
+  {
+   "n": 35,
+   "name": "Gridlock",
+   "metaDiff": "hard",
+   "role": "hard",
+   "intro": null,
+   "res": {
+    "stay": 0.18,
+    "turns": 0,
+    "random": 0.09,
+    "glance": 0.57,
+    "novice": 0.49,
+    "casual": 0.645,
+    "pcasual": 0.63,
+    "watcher": 0.91,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.965,
+    "turns": 1,
+    "random": 0.66,
+    "glance": 0.97,
+    "novice": 0.955,
+    "casual": 0.985,
+    "pcasual": 0.995,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "watcher",
+     "got": 0.91,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "casual",
+     "got": 0.645,
+     "lo": 0,
+     "hi": 0.3
+    }
+   ]
+  },
+  {
+   "n": 36,
+   "name": "Long Belt",
+   "metaDiff": "medium",
+   "role": "after-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.48,
+    "turns": 0.33,
+    "random": 0.545,
+    "glance": 0.75,
+    "novice": 0.78,
+    "casual": 0.915,
+    "pcasual": 0.885,
+    "watcher": 0.985,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 0.9,
+    "glance": 0.995,
+    "novice": 0.995,
+    "casual": 1,
+    "pcasual": 0.995,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "novice",
+     "got": 0.78,
+     "lo": 0.8,
+     "hi": 1
+    }
+   ]
+  },
+  {
+   "n": 37,
+   "name": "Night Shift",
+   "metaDiff": "medium",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.325,
+    "turns": 0,
+    "random": 0.2,
+    "glance": 1,
+    "novice": 0.785,
+    "casual": 0.975,
+    "pcasual": 0.975,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.5,
+    "turns": 0,
+    "random": 0.46,
+    "glance": 1,
+    "novice": 0.95,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.975,
+     "lo": 0.6,
+     "hi": 0.8
+    }
+   ]
+  },
+  {
+   "n": 38,
+   "name": "Roadblock",
+   "metaDiff": "medium",
+   "role": "medium",
+   "intro": null,
+   "res": {
+    "stay": 0.36,
+    "turns": 0.235,
+    "random": 0.415,
+    "glance": 0,
+    "novice": 0.78,
+    "casual": 0.9,
+    "pcasual": 0.915,
+    "watcher": 0.985,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.6,
+    "turns": 1,
+    "random": 0.855,
+    "glance": 0.675,
+    "novice": 0.975,
+    "casual": 0.995,
+    "pcasual": 0.995,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.9,
+     "lo": 0.6,
+     "hi": 0.8
+    }
+   ]
+  },
+  {
+   "n": 39,
+   "name": "Cold Links",
+   "metaDiff": "medium",
+   "role": "pre-hard",
+   "intro": null,
+   "res": {
+    "stay": 0.48,
+    "turns": 0.33,
+    "random": 0.525,
+    "glance": 0.745,
+    "novice": 0.865,
+    "casual": 0.965,
+    "pcasual": 0.94,
+    "watcher": 0.99,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 1,
+    "turns": 1,
+    "random": 0.935,
+    "glance": 1,
+    "novice": 1,
+    "casual": 1,
+    "pcasual": 1,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.965,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "watcher",
+     "got": 0.99,
+     "lo": 0.7,
+     "hi": 0.85
+    }
+   ]
+  },
+  {
+   "n": 40,
+   "name": "Grand Finale",
+   "metaDiff": "hard",
+   "role": "hard",
+   "intro": null,
+   "res": {
+    "stay": 0.2,
+    "turns": 0,
+    "random": 0.155,
+    "glance": 0.575,
+    "novice": 0.515,
+    "casual": 0.695,
+    "pcasual": 0.745,
+    "watcher": 0.925,
+    "sharp": 1,
+    "careful": 1
+   },
+   "resRV": {
+    "stay": 0.55,
+    "turns": 0.765,
+    "random": 0.65,
+    "glance": 0.945,
+    "novice": 0.97,
+    "casual": 0.99,
+    "pcasual": 0.985,
+    "watcher": 1,
+    "sharp": 1,
+    "careful": 1
+   },
+   "misses": [
+    {
+     "bot": "watcher",
+     "got": 0.925,
+     "lo": 0.4,
+     "hi": 0.6
+    },
+    {
+     "bot": "casual",
+     "got": 0.695,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "random",
+     "got": 0.155,
+     "lo": 0,
+     "hi": 0.1
+    }
+   ]
+  }
+ ]
+}
