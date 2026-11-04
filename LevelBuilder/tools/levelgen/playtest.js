@@ -91,6 +91,7 @@ function role(n) {
   if (n <= 4) return 'tutorial';
   if (INTRO[n]) return 'intro';
   if (n > 10 && n % 5 === 1) return 'after-hard';
+  if (INTRO[n - 1]) return 'after-intro';
   if (n >= 9 && n % 5 === 4) return 'pre-hard';
   return 'medium';
 }
@@ -99,11 +100,15 @@ const TARGET = {
   tutorial: [['random', 0.9, 1]],
   intro: [['casual', 0.9, 1], ['novice', 0.8, 1]],
   'after-hard': [['casual', 0.9, 1], ['novice', 0.8, 1]],
+  // the level right after an element intro is only a little harder than the intro
+  'after-intro': [['casual', 0.8, 0.9], ['watcher', 0.9, 1]],
   medium: [['casual', 0.6, 0.8], ['watcher', 0.85, 1], ['random', 0, 0.6], ['stay', 0, 0.6]],
   'pre-hard': [['casual', 0.4, 0.6], ['watcher', 0.7, 0.85], ['random', 0, 0.6], ['stay', 0, 0.6]],
   hard: [['watcher', 0.4, 0.6], ['casual', 0, 0.3], ['random', 0, 0.1], ['careful', 1, 1]]
 };
-const ROLE_VI = { tutorial: 'Hướng dẫn', intro: 'Intro (dễ)', 'after-hard': 'Sau Hard (dễ)', medium: 'Medium', 'pre-hard': 'Trước Hard', hard: 'Hard' };
+
+module.exports = { BOTS, play, role, TARGET, INTRO };
+if (require.main !== module) return;
 
 const out = [];
 levels.forEach((j, i) => {
