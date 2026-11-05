@@ -84,30 +84,34 @@ function rate(m, bot, rv) {
 
 /* GDD section 7 roles: Hard every 5 levels from 10, element intro levels (Hidden Box 7, Locked Box 12, Linked Box 17,
    Block Door 22, Locked Item 27, Block Queue 32) and the level after a Hard level are easy, the level before a Hard level
-   is a step up from medium, levels 1–4 teach the basics. */
+   is a step up from medium, levels 1–4 teach the basics. User, 2026-11-05: the level after an element intro is a medium
+   level (no second easy level), and every role was made harder (fewer bots may win). */
 const INTRO = { 7: 'Hidden Box', 12: 'Locked Box', 17: 'Linked Box', 22: 'Block Door', 27: 'Locked Item', 32: 'Block Queue' };
-// user, 2026-11-05: levels 4 and 8 are medium levels where the player must plan (4 was a tutorial level, 8 a light level after the Hidden Box intro)
-const ROLE_SET = { 4: 'medium', 8: 'medium' };
+// user, 2026-11-05: levels 4 and 8 are medium levels where the player must plan (4 was a tutorial level, 8 a light level
+// after the Hidden Box intro); level 26 (after the Hard level 25) was too easy and is medium too
+const ROLE_SET = { 4: 'medium', 8: 'medium', 26: 'medium' };
 function role(n) {
   if (ROLE_SET[n]) return ROLE_SET[n];
   if (n >= 10 && n % 5 === 0) return 'hard';
   if (n <= 4) return 'tutorial';
   if (INTRO[n]) return 'intro';
   if (n > 10 && n % 5 === 1) return 'after-hard';
-  if (INTRO[n - 1]) return 'after-intro';
   if (n >= 9 && n % 5 === 4) return 'pre-hard';
   return 'medium';
 }
-// targets (measured without RV slots): [bot, min, max]
+// targets (measured without RV slots): [bot, min, max]. Raised 2026-11-05 (user: fewer bots may win each type);
+// the old bars are in the comment after each line.
 const TARGET = {
   tutorial: [['random', 0.9, 1]],
-  intro: [['casual', 0.9, 1], ['novice', 0.8, 1]],
-  'after-hard': [['casual', 0.9, 1], ['novice', 0.8, 1]],
-  // the level right after an element intro is only a little harder than the intro
-  'after-intro': [['casual', 0.8, 0.9], ['watcher', 0.9, 1]],
-  medium: [['casual', 0.6, 0.8], ['watcher', 0.85, 1], ['random', 0, 0.6], ['stay', 0, 0.6]],
-  'pre-hard': [['casual', 0.4, 0.6], ['watcher', 0.7, 0.85], ['random', 0, 0.6], ['stay', 0, 0.6]],
-  hard: [['watcher', 0.4, 0.6], ['casual', 0, 0.3], ['random', 0, 0.1], ['careful', 1, 1]]
+  // intro levels still teach the element, so only the beginner bar moves
+  intro: [['casual', 0.85, 1], ['novice', 0.7, 0.95]],                                   // casual 90-100, novice 80-100
+  'after-hard': [['casual', 0.8, 0.95], ['novice', 0.65, 0.9]],                           // casual 90-100, novice 80-100
+  medium: [['casual', 0.45, 0.65], ['watcher', 0.75, 0.9], ['random', 0, 0.3], ['stay', 0, 0.3], ['glance', 0, 0.4]],
+                                                                   // casual 60-80, watcher 85-100, random/stay <= 60
+  'pre-hard': [['casual', 0.3, 0.45], ['watcher', 0.6, 0.75], ['random', 0, 0.15], ['stay', 0, 0.2], ['glance', 0, 0.3]],
+                                                                   // casual 40-60, watcher 70-85, random/stay <= 60
+  hard: [['watcher', 0.3, 0.5], ['casual', 0, 0.2], ['random', 0, 0.05], ['glance', 0, 0.15], ['careful', 1, 1]]
+                                                                   // watcher 40-60, casual <= 30, random <= 10
 };
 
 module.exports = { BOTS, play, role, TARGET, INTRO };

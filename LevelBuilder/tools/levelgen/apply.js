@@ -10,7 +10,7 @@ const D = path.join(__dirname, '../../');
 const LJ = D + 'js/levels.js';
 global.window = global; eval(fs.readFileSync(LJ, 'utf8'));
 const levels = window.CS_BUNDLED_LEVELS.levels;
-const DIFF = { tutorial: 'easy', intro: 'easy', 'after-intro': 'easy', 'after-hard': 'easy', medium: 'medium', 'pre-hard': 'medium', hard: 'hard' };
+const DIFF = { tutorial: 'easy', intro: 'easy', 'after-hard': 'easy', medium: 'medium', 'pre-hard': 'medium', hard: 'hard' };
 Object.keys(pick).map(Number).sort((a, b) => a - b).forEach(n => {
   const base = SPECS.find(s => s.n === n), o = pick[n];
   const S = Object.assign({}, base, base.watchTries ? base.watchTries[0] : {}, o.over);
