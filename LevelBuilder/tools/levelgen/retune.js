@@ -36,6 +36,7 @@ function structural(S, seed) {
   if (ORDERS) { const w = orderWins(m); if (w[0] > ORDERS[0] || w[1] > ORDERS[1]) return null; }
   return { m, json };
 }
+const RVMAX = process.env.RVMAX ? JSON.parse(process.env.RVMAX) : null;
 const ORDERS = process.env.ORDERS ? JSON.parse(process.env.ORDERS) : null;
 const perms = a => a.length < 2 ? [a] : a.flatMap((x, i) => perms(a.filter((_, k) => k !== i)).map(p => [x, ...p]));
 // wins of the blind one-queue player over every fixed order of the queues: [without RV, with RV]
@@ -50,7 +51,10 @@ function orderWins(m) {
   } finally { CS.shuffle = orig; }
   return w;
 }
-function rateN(m, id, runs) { let w = 0; for (let s = 0; s < runs; s++) if (P.play(m, bot(id), SEED + s, false).win) w++; return w / runs; }
+// the bars are measured WITH the RV slots (user, 2026-11-05: the user plays with them open); RVALL=0 measures without.
+// The careful player must still win without RV (see structural)
+const RVALL = process.env.RVALL !== '0';
+function rateN(m, id, runs) { let w = 0; for (let s = 0; s < runs; s++) if (P.play(m, bot(id), SEED + s, RVALL).win) w++; return w / runs; }
 function score(res) { return T.reduce((a, [id, lo, hi]) => a + Math.abs(res[id] - (lo + hi) / 2), 0); }
 
 // settings to try: the level's own first, then stick / window / colour changes
@@ -98,6 +102,14 @@ for (const o of grid) {
     const res = {};
     for (const [id, lo, hi] of T) { res[id] = id === 'careful' ? 1 : rateN(st.m, id, RUNS); if (res[id] < lo - 1e-9 || res[id] > hi + 1e-9) { ok = false; break; } }
     if (!ok) continue;
+    // RVMAX='{"random":0.05}': these bots may win at most this share WITH the RV slots too (user, 2026-11-05: level 29 played
+    // with the RV slots could be won without looking at the belt)
+    if (RVMAX) {
+      const rv = {};
+      for (const [id, hi] of Object.entries(RVMAX)) { let w = 0; for (let s = 0; s < RUNS; s++) if (P.play(st.m, bot(id), SEED + s, true).win) w++; rv[id] = w / RUNS; if (rv[id] > hi + 1e-9) ok = false; }
+      res.rv = rv;
+      if (!ok) { process.stderr.write(`${n} rv miss ${JSON.stringify(o)} seed ${seed} ${JSON.stringify(rv)}\n`); continue; }
+    }
     found.push({ n, over: o, seed, res, score: score(res) });
     process.stderr.write(`${n} found ${JSON.stringify(o)} seed ${seed} ${JSON.stringify(res)}\n`);
     if (found.length >= WANT) break outer;

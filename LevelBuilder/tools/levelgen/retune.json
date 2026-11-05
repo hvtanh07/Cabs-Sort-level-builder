@@ -152,12 +152,20 @@
  },
  "25": {
   "over": {
-   "stick": 0.85,
-   "window": 50,
+   "stick": 0.9,
+   "window": 300,
    "colors": 7,
-   "boxes": 28
+   "boxes": 33,
+   "lanes": 4,
+   "lockRun": 3,
+   "lockedRows": 4,
+   "rowLockRange": [
+    3,
+    8
+   ],
+   "intro": "Every element so far in 4 queues: Locked Boxes, Hidden Boxes (every even box), Linked Boxes and Locked Items behind a Block Door. Hard level."
   },
-  "seed": 80
+  "seed": 18
  },
  "26": {
   "over": {
@@ -177,9 +185,22 @@
   "over": {
    "stick": 0.6,
    "window": 100,
-   "colors": 8
+   "colors": 8,
+   "boxes": 38,
+   "locks": 5,
+   "lockRange": [
+    2,
+    4
+   ],
+   "lockRun": 3,
+   "lockedRows": 5,
+   "rowLockRange": [
+    3,
+    8
+   ],
+   "intro": "Locked Boxes and Locked Items in long queues: rows come far from box order, so plan which box to send for the colour coming."
   },
-  "seed": 60
+  "seed": 17
  },
  "30": {
   "over": {
