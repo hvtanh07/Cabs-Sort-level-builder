@@ -11,7 +11,7 @@ S.push({ n: 2, name: 'Two Queues', diff: 'easy', intro: 'A second queue: pick wh
   conveyor: 'square_19', entries: ['middle'], lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, slots: 5, extraSlots: 0,
   sizeAt: [3, 4, 4, 3, 3, 4, 4, 3, 3, 4, 4, 3], colorAt: [1, 2, 4, 3, 2, 1, 3, 4, 2, 1, 4, 3], rowOrder: [1, 3, 0, 2, 4, 6, 5, 7, 9, 8, 11, 10] });
 S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Two queues and two Enter Paths. Whole row groups take turns between the Enter Paths, mixed out of queue order.',
-  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, slots: 5, extraSlots: 0, groupPaths: true,
+  conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, slots: 4, extraSlots: 2, groupPaths: true,
   sizeAt: [3, 4, 4, 3, 3, 4, 4, 3, 3, 4, 4, 3], colorAt: [3, 1, 4, 2, 1, 4, 3, 2, 4, 3, 1, 2], rowOrder: [1, 2, 0, 3, 4, 5, 7, 6, 9, 11, 8, 10] });
 // level 4 adds 16- and 24-item boxes (all four sizes, 3 of each) and still groups each box's rows, mixed, one group per Enter Path
 // it also brings in 2 new colours (Pink and Orange, 6 in all, two boxes each) to make it a little harder

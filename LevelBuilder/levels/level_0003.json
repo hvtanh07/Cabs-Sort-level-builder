@@ -3,8 +3,8 @@
   "formatVersion": 5,
   "id": "level_0003",
   "conveyor": "square_19",
-  "slots": 5,
-  "extraSlots": 0,
+  "slots": 4,
+  "extraSlots": 2,
   "colors": [1, 2, 3, 4],
   "feeders": {
     "right": { "bottles": [

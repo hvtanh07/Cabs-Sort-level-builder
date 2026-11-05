@@ -1,8 +1,12 @@
 {
+ "3": {
+  "over": {},
+  "seed": 1
+ },
  "4": {
   "over": {
    "stick": 0.6,
-   "window": 400,
+   "window": 600,
    "colors": 6,
    "colorAt": null,
    "rowOrder": null,
@@ -11,8 +15,9 @@
     3,
     6
    ],
-   "boxes": 16,
-   "count": 16,
+   "lanes": 3,
+   "boxes": 15,
+   "count": 15,
    "sizeAt": [
     3,
     2,
@@ -25,15 +30,14 @@
     3,
     2,
     3,
-    4,
+    2,
     2,
     3,
-    2,
-    3
+    2
    ],
-   "intro": "First medium level: two queues, 16 boxes from 24 to 40 items. Rows come in patches of one colour, so watch which colour is coming and send the box for it."
+   "intro": "First medium level: a third queue, 15 boxes from 24 to 40 items. Rows come in patches of one colour, so watch which colour is coming and send the box for it."
   },
-  "seed": 223
+  "seed": 128
  },
  "5": {
   "over": {
