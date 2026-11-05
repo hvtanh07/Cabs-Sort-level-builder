@@ -1,11 +1,47 @@
 {
+ "4": {
+  "over": {
+   "stick": 0.6,
+   "window": 400,
+   "colors": 6,
+   "colorAt": null,
+   "rowOrder": null,
+   "groupPaths": false,
+   "chunk": [
+    3,
+    6
+   ],
+   "boxes": 16,
+   "count": 16,
+   "sizeAt": [
+    3,
+    2,
+    4,
+    2,
+    3,
+    3,
+    2,
+    4,
+    3,
+    2,
+    3,
+    4,
+    2,
+    3,
+    2,
+    3
+   ],
+   "intro": "First medium level: two queues, 16 boxes from 24 to 40 items. Rows come in patches of one colour, so watch which colour is coming and send the box for it."
+  },
+  "seed": 223
+ },
  "5": {
   "over": {
-   "stick": 0.3,
-   "window": 400,
+   "stick": 0.4,
+   "window": 550,
    "colors": 6
   },
-  "seed": 130
+  "seed": 629
  },
  "6": {
   "over": {
@@ -26,7 +62,8 @@
    "stick": 0.4,
    "window": 600,
    "colors": 7,
-   "atPos": null
+   "atPos": null,
+   "intro": "Longer queues (7 boxes each), boxes from 16 to 40 items; rows in colour patches. Each queue's boxes are needed in short turns, so no queue can be emptied first."
   },
   "seed": 118
  },
