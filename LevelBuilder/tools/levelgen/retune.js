@@ -31,7 +31,24 @@ function structural(S, seed) {
   const g1 = G.play(m, G.MODES.fly, 'smart', 1), g2 = G.play(m, M2, 'smart', 1);
   if (!g1.win || !g2.win) return null;
   if (S.noFailsafe && (g1.failsafe || g2.failsafe)) return null;
+  // ORDERS='[a,b]': a player who taps one queue until it is empty, then the next, in a fixed order, may win in at most a of
+  // the queue orders without RV slots and b with them (a player finds a winning order by retrying and keeps it)
+  if (ORDERS) { const w = orderWins(m); if (w[0] > ORDERS[0] || w[1] > ORDERS[1]) return null; }
   return { m, json };
+}
+const ORDERS = process.env.ORDERS ? JSON.parse(process.env.ORDERS) : null;
+const perms = a => a.length < 2 ? [a] : a.flatMap((x, i) => perms(a.filter((_, k) => k !== i)).map(p => [x, ...p]));
+// wins of the blind one-queue player over every fixed order of the queues: [without RV, with RV]
+function orderWins(m) {
+  const orig = CS.shuffle, w = [0, 0];
+  try {
+    for (const o of perms(m.lanes.map((_, i) => i))) {
+      CS.shuffle = () => o.slice();
+      if (G.play(m, G.MODES.fly, 'stay', 1).win) w[0]++;
+      if (G.play(m, G.MODES.fly, 'stay', 1, null, null, true).win) w[1]++;
+    }
+  } finally { CS.shuffle = orig; }
+  return w;
 }
 function rateN(m, id, runs) { let w = 0; for (let s = 0; s < runs; s++) if (P.play(m, bot(id), SEED + s, false).win) w++; return w / runs; }
 function score(res) { return T.reduce((a, [id, lo, hi]) => a + Math.abs(res[id] - (lo + hi) / 2), 0); }
@@ -60,6 +77,8 @@ const found = [];
 let tried = 0, near = null;
 outer:
 for (const o of grid) {
+  // OVER='{...}': extra spec values for every try (e.g. {"atPos": null} drops level 9's fixed chevron)
+  if (process.env.OVER) Object.assign(o, JSON.parse(process.env.OVER));
   const S = Object.assign({}, base, base.watchTries ? base.watchTries[0] : {}, o);
   delete S.keep; delete S.seed;
   for (let seed = +(process.env.SEED0 || 1); seed <= MAXSEED; seed++) {
@@ -86,4 +105,5 @@ for (const o of grid) {
   }
 }
 found.sort((a, b) => a.score - b.score);
+if (found[0]) found[0].orders = orderWins(structural(Object.assign({}, base, base.watchTries ? base.watchTries[0] : {}, found[0].over), found[0].seed).m);
 console.log(JSON.stringify(found[0] || { n, fail: true, role, tried, near }));

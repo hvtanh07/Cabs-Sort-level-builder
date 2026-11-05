@@ -1,7 +1,11 @@
 {
  "5": {
-  "over": {},
-  "seed": 90
+  "over": {
+   "stick": 0.3,
+   "window": 400,
+   "colors": 6
+  },
+  "seed": 130
  },
  "6": {
   "over": {
@@ -11,25 +15,28 @@
  },
  "8": {
   "over": {
-   "colors": 6
+   "stick": 0.3,
+   "window": 300,
+   "colors": 7
   },
-  "seed": 16
+  "seed": 78
  },
  "9": {
   "over": {
-   "stick": 0.85,
-   "window": 8,
-   "colors": 7
+   "stick": 0.4,
+   "window": 600,
+   "colors": 7,
+   "atPos": null
   },
-  "seed": 391
+  "seed": 118
  },
  "10": {
   "over": {
-   "stick": 1,
-   "window": 40,
+   "stick": 0.9,
+   "window": 260,
    "colors": 8
   },
-  "seed": 2
+  "seed": 190
  },
  "11": {
   "over": {

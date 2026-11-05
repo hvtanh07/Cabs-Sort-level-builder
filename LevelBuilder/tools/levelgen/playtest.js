@@ -86,7 +86,10 @@ function rate(m, bot, rv) {
    Block Door 22, Locked Item 27, Block Queue 32) and the level after a Hard level are easy, the level before a Hard level
    is a step up from medium, levels 1–4 teach the basics. */
 const INTRO = { 7: 'Hidden Box', 12: 'Locked Box', 17: 'Linked Box', 22: 'Block Door', 27: 'Locked Item', 32: 'Block Queue' };
+// user, 2026-11-05: level 8 is a medium level (the player must plan), not a light level after the Hidden Box intro
+const ROLE_SET = { 8: 'medium' };
 function role(n) {
+  if (ROLE_SET[n]) return ROLE_SET[n];
   if (n >= 10 && n % 5 === 0) return 'hard';
   if (n <= 4) return 'tutorial';
   if (INTRO[n]) return 'intro';
