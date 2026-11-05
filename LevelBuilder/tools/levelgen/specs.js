@@ -281,6 +281,12 @@ S.forEach(s => {
     delete s.watch; delete s.watchTries;
     Object.assign(s, { diff: 'easy', colors: 6, minRandom: 0.7, minCasual: 0.9, noFailsafe: true });
   }
+  // level 25 (Hard) felt too easy in play (user, 2026-11-05): besides its Locked Boxes and Block Door it also gets Hidden
+  // Boxes (every even box, like level 8) and 3 Linked Box pairs
+  if (s.n === 25) {
+    s.hiddenPattern = HIDDEN_PATTERN.rows.fn;
+    Object.assign(s, { links: 3, linkSpread: 1, intro: 'Locked Boxes, Hidden Boxes (every even box, like level 8) and Linked Boxes behind a Block Door. Hard level.' });
+  }
   if (s.n !== 23) return;
   delete s.watch; delete s.watchTries;
   Object.assign(s, { diff: 'easy', colors: 6, minRandom: 0.7, minCasual: 0.9, noFailsafe: true, seed: 36 });

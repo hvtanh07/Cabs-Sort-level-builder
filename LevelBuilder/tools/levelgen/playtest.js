@@ -99,7 +99,7 @@ function role(n) {
   if (n >= 9 && n % 5 === 4) return 'pre-hard';
   return 'medium';
 }
-// targets (measured without RV slots): [bot, min, max]. Raised 2026-11-05 (user: fewer bots may win each type);
+// targets (measured WITH the RV slots since 2026-11-05; the careful player without them): [bot, min, max]. Raised 2026-11-05 (user: fewer bots may win each type);
 // the old bars are in the comment after each line.
 const TARGET = {
   tutorial: [['random', 0.9, 1]],
@@ -125,9 +125,11 @@ levels.forEach((j, i) => {
   const res = {}, resRV = {};
   BOTS.forEach(b => { res[b.id] = rate(m, b, false); resRV[b.id] = b.id === 'careful' ? res[b.id] : rate(m, b, true); });
   const rl = role(n);
-  const misses = TARGET[rl].filter(([id, lo, hi]) => res[id] < lo - 1e-9 || res[id] > hi + 1e-9).map(([id, lo, hi]) => ({ bot: id, got: res[id], lo, hi }));
+  // user, 2026-11-05: the bars are measured WITH the RV slots (the user plays with them open); the careful player is still
+  // measured without them, so every level stays solvable without RV
+  const misses = TARGET[rl].filter(([id, lo, hi]) => resRV[id] < lo - 1e-9 || resRV[id] > hi + 1e-9).map(([id, lo, hi]) => ({ bot: id, got: resRV[id], lo, hi }));
   const row = { n, name: j.meta.name, metaDiff: j.meta.difficulty, role: rl, intro: INTRO[n] || null, res, resRV, misses };
   out.push(row);
-  console.log(n, rl, BOTS.map(b => b.id + ' ' + Math.round(res[b.id] * 100)).join(' '), misses.length ? 'OFF ' + misses.map(x => x.bot + ' ' + Math.round(x.got * 100)).join(', ') : 'ok');
+  console.log(n, rl, BOTS.map(b => b.id + ' ' + Math.round(resRV[b.id] * 100)).join(' '), misses.length ? 'OFF ' + misses.map(x => x.bot + ' ' + Math.round(x.got * 100)).join(', ') : 'ok');
 });
 fs.writeFileSync(path.join(__dirname, 'playtest.json'), JSON.stringify({ runs: RUNS, bots: BOTS.map(b => ({ id: b.id, name: b.name, tier: b.tier, note: b.note })), targets: TARGET, levels: out }, null, 1));

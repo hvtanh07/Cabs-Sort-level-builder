@@ -306,9 +306,33 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.71,
+     "got": 0.965,
      "lo": 0.45,
      "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.77,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 0.315,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.88,
+     "lo": 0,
+     "hi": 0.4
     }
    ]
   },
@@ -342,7 +366,32 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.985,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.755,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.985,
+     "lo": 0,
+     "hi": 0.4
+    }
+   ]
   },
   {
    "n": 6,
@@ -377,19 +426,31 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.67,
+     "got": 0.995,
      "lo": 0.45,
      "hi": 0.65
     },
     {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.485,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
      "bot": "stay",
-     "got": 0.5,
+     "got": 1,
      "lo": 0,
      "hi": 0.3
     },
     {
      "bot": "glance",
-     "got": 0.75,
+     "got": 1,
      "lo": 0,
      "hi": 0.4
     }
@@ -464,7 +525,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.995,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.875,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 0.315,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.945,
+     "lo": 0,
+     "hi": 0.4
+    }
+   ]
   },
   {
    "n": 9,
@@ -496,7 +588,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 1,
+     "lo": 0.3,
+     "hi": 0.45
+    },
+    {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.6,
+     "hi": 0.75
+    },
+    {
+     "bot": "random",
+     "got": 0.825,
+     "lo": 0,
+     "hi": 0.15
+    },
+    {
+     "bot": "stay",
+     "got": 0.335,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "glance",
+     "got": 0.99,
+     "lo": 0,
+     "hi": 0.3
+    }
+   ]
   },
   {
    "n": 10,
@@ -531,15 +654,27 @@
    "misses": [
     {
      "bot": "watcher",
-     "got": 0.56,
+     "got": 0.985,
      "lo": 0.3,
      "hi": 0.5
     },
     {
      "bot": "casual",
-     "got": 0.22,
+     "got": 0.865,
      "lo": 0,
      "hi": 0.2
+    },
+    {
+     "bot": "random",
+     "got": 0.325,
+     "lo": 0,
+     "hi": 0.05
+    },
+    {
+     "bot": "glance",
+     "got": 0.535,
+     "lo": 0,
+     "hi": 0.15
     }
    ]
   },
@@ -576,13 +711,13 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.985,
+     "got": 1,
      "lo": 0.8,
      "hi": 0.95
     },
     {
      "bot": "novice",
-     "got": 0.97,
+     "got": 1,
      "lo": 0.65,
      "hi": 0.9
     }
@@ -657,7 +792,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 1,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.81,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 0.835,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.985,
+     "lo": 0,
+     "hi": 0.4
+    }
+   ]
   },
   {
    "n": 14,
@@ -692,19 +858,31 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.495,
+     "got": 1,
      "lo": 0.3,
      "hi": 0.45
     },
     {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.6,
+     "hi": 0.75
+    },
+    {
      "bot": "random",
-     "got": 0.2,
+     "got": 0.68,
      "lo": 0,
      "hi": 0.15
     },
     {
+     "bot": "stay",
+     "got": 0.86,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
      "bot": "glance",
-     "got": 0.715,
+     "got": 1,
      "lo": 0,
      "hi": 0.3
     }
@@ -743,15 +921,27 @@
    "misses": [
     {
      "bot": "watcher",
-     "got": 0.685,
+     "got": 0.995,
      "lo": 0.3,
      "hi": 0.5
     },
     {
      "bot": "casual",
-     "got": 0.345,
+     "got": 0.98,
      "lo": 0,
      "hi": 0.2
+    },
+    {
+     "bot": "random",
+     "got": 0.84,
+     "lo": 0,
+     "hi": 0.05
+    },
+    {
+     "bot": "glance",
+     "got": 0.955,
+     "lo": 0,
+     "hi": 0.15
     }
    ]
   },
@@ -788,13 +978,13 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.965,
+     "got": 1,
      "lo": 0.8,
      "hi": 0.95
     },
     {
      "bot": "novice",
-     "got": 0.92,
+     "got": 0.995,
      "lo": 0.65,
      "hi": 0.9
     }
@@ -833,7 +1023,7 @@
    "misses": [
     {
      "bot": "novice",
-     "got": 0.99,
+     "got": 1,
      "lo": 0.7,
      "hi": 0.95
     }
@@ -869,7 +1059,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 1,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.745,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 0.835,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.89,
+     "lo": 0,
+     "hi": 0.4
+    }
+   ]
   },
   {
    "n": 19,
@@ -901,7 +1122,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.905,
+     "lo": 0.3,
+     "hi": 0.45
+    },
+    {
+     "bot": "watcher",
+     "got": 0.945,
+     "lo": 0.6,
+     "hi": 0.75
+    },
+    {
+     "bot": "random",
+     "got": 0.68,
+     "lo": 0,
+     "hi": 0.15
+    },
+    {
+     "bot": "stay",
+     "got": 1,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "glance",
+     "got": 0.87,
+     "lo": 0,
+     "hi": 0.3
+    }
+   ]
   },
   {
    "n": 20,
@@ -933,7 +1185,32 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "watcher",
+     "got": 0.995,
+     "lo": 0.3,
+     "hi": 0.5
+    },
+    {
+     "bot": "casual",
+     "got": 0.93,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "random",
+     "got": 0.405,
+     "lo": 0,
+     "hi": 0.05
+    },
+    {
+     "bot": "glance",
+     "got": 0.8,
+     "lo": 0,
+     "hi": 0.15
+    }
+   ]
   },
   {
    "n": 21,
@@ -1049,7 +1326,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.835,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 0.975,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.47,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 1,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.695,
+     "lo": 0,
+     "hi": 0.4
+    }
+   ]
   },
   {
    "n": 24,
@@ -1081,7 +1389,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.975,
+     "lo": 0.3,
+     "hi": 0.45
+    },
+    {
+     "bot": "watcher",
+     "got": 0.995,
+     "lo": 0.6,
+     "hi": 0.75
+    },
+    {
+     "bot": "random",
+     "got": 0.93,
+     "lo": 0,
+     "hi": 0.15
+    },
+    {
+     "bot": "stay",
+     "got": 0.675,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "glance",
+     "got": 0.975,
+     "lo": 0,
+     "hi": 0.3
+    }
+   ]
   },
   {
    "n": 25,
@@ -1092,33 +1431,39 @@
    "res": {
     "stay": 0,
     "turns": 0,
-    "random": 0.025,
-    "glance": 0.005,
-    "novice": 0.08,
-    "casual": 0.17,
-    "pcasual": 0.08,
-    "watcher": 0.135,
+    "random": 0.005,
+    "glance": 0.01,
+    "novice": 0.025,
+    "casual": 0.08,
+    "pcasual": 0.07,
+    "watcher": 0.055,
     "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.49,
-    "turns": 0.355,
-    "random": 0.37,
-    "glance": 0.355,
-    "novice": 0.535,
-    "casual": 0.645,
-    "pcasual": 0.525,
-    "watcher": 0.74,
-    "sharp": 1,
+    "stay": 0.065,
+    "turns": 0,
+    "random": 0.055,
+    "glance": 0.045,
+    "novice": 0.12,
+    "casual": 0.15,
+    "pcasual": 0.215,
+    "watcher": 0.12,
+    "sharp": 0,
     "careful": 1
    },
    "misses": [
     {
      "bot": "watcher",
-     "got": 0.135,
+     "got": 0.12,
      "lo": 0.3,
      "hi": 0.5
+    },
+    {
+     "bot": "random",
+     "got": 0.055,
+     "lo": 0,
+     "hi": 0.05
     }
    ]
   },
@@ -1152,7 +1497,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.975,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 0.99,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.845,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 0.48,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.905,
+     "lo": 0,
+     "hi": 0.4
+    }
+   ]
   },
   {
    "n": 27,
@@ -1187,7 +1563,7 @@
    "misses": [
     {
      "bot": "novice",
-     "got": 0.99,
+     "got": 1,
      "lo": 0.7,
      "hi": 0.95
     }
@@ -1223,7 +1599,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.965,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.735,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 0.335,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.875,
+     "lo": 0,
+     "hi": 0.4
+    }
+   ]
   },
   {
    "n": 29,
@@ -1234,24 +1641,24 @@
    "res": {
     "stay": 0,
     "turns": 0,
-    "random": 0.135,
-    "glance": 0.11,
-    "novice": 0.21,
-    "casual": 0.33,
-    "pcasual": 0.255,
-    "watcher": 0.66,
-    "sharp": 1,
+    "random": 0,
+    "glance": 0,
+    "novice": 0,
+    "casual": 0.005,
+    "pcasual": 0.02,
+    "watcher": 0.01,
+    "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.65,
-    "turns": 0.685,
-    "random": 0.69,
-    "glance": 0.945,
-    "novice": 0.885,
-    "casual": 0.93,
-    "pcasual": 0.935,
-    "watcher": 0.99,
+    "stay": 0,
+    "turns": 0,
+    "random": 0.025,
+    "glance": 0.095,
+    "novice": 0.11,
+    "casual": 0.33,
+    "pcasual": 0.34,
+    "watcher": 0.695,
     "sharp": 1,
     "careful": 1
    },
@@ -1289,8 +1696,26 @@
    },
    "misses": [
     {
+     "bot": "watcher",
+     "got": 0.935,
+     "lo": 0.3,
+     "hi": 0.5
+    },
+    {
+     "bot": "casual",
+     "got": 0.825,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "random",
+     "got": 0.265,
+     "lo": 0,
+     "hi": 0.05
+    },
+    {
      "bot": "glance",
-     "got": 0.26,
+     "got": 0.91,
      "lo": 0,
      "hi": 0.15
     }
@@ -1328,8 +1753,14 @@
    },
    "misses": [
     {
+     "bot": "casual",
+     "got": 1,
+     "lo": 0.8,
+     "hi": 0.95
+    },
+    {
      "bot": "novice",
-     "got": 0.91,
+     "got": 1,
      "lo": 0.65,
      "hi": 0.9
     }
@@ -1368,7 +1799,7 @@
    "misses": [
     {
      "bot": "novice",
-     "got": 0.99,
+     "got": 1,
      "lo": 0.7,
      "hi": 0.95
     }
@@ -1404,7 +1835,38 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "casual",
+     "got": 0.965,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 0.995,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "random",
+     "got": 0.75,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 0.825,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "glance",
+     "got": 0.78,
+     "lo": 0,
+     "hi": 0.4
+    }
+   ]
   },
   {
    "n": 34,
@@ -1439,15 +1901,33 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.48,
+     "got": 0.92,
      "lo": 0.3,
      "hi": 0.45
     },
     {
      "bot": "watcher",
-     "got": 0.755,
+     "got": 0.975,
      "lo": 0.6,
      "hi": 0.75
+    },
+    {
+     "bot": "random",
+     "got": 0.615,
+     "lo": 0,
+     "hi": 0.15
+    },
+    {
+     "bot": "stay",
+     "got": 0.665,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "glance",
+     "got": 0.775,
+     "lo": 0,
+     "hi": 0.3
     }
    ]
   },
@@ -1481,7 +1961,32 @@
     "sharp": 1,
     "careful": 1
    },
-   "misses": []
+   "misses": [
+    {
+     "bot": "watcher",
+     "got": 0.985,
+     "lo": 0.3,
+     "hi": 0.5
+    },
+    {
+     "bot": "casual",
+     "got": 0.885,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "random",
+     "got": 0.38,
+     "lo": 0,
+     "hi": 0.05
+    },
+    {
+     "bot": "glance",
+     "got": 0.76,
+     "lo": 0,
+     "hi": 0.15
+    }
+   ]
   },
   {
    "n": 36,
@@ -1516,13 +2021,13 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.96,
+     "got": 1,
      "lo": 0.8,
      "hi": 0.95
     },
     {
      "bot": "novice",
-     "got": 0.915,
+     "got": 0.995,
      "lo": 0.65,
      "hi": 0.9
     }
@@ -1561,25 +2066,31 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.665,
+     "got": 0.995,
      "lo": 0.45,
      "hi": 0.65
     },
     {
      "bot": "watcher",
-     "got": 0.91,
+     "got": 1,
      "lo": 0.75,
      "hi": 0.9
     },
     {
+     "bot": "random",
+     "got": 0.65,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
      "bot": "stay",
-     "got": 0.495,
+     "got": 0.835,
      "lo": 0,
      "hi": 0.3
     },
     {
      "bot": "glance",
-     "got": 0.505,
+     "got": 0.99,
      "lo": 0,
      "hi": 0.4
     }
@@ -1618,25 +2129,31 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.8,
+     "got": 1,
      "lo": 0.45,
      "hi": 0.65
     },
     {
      "bot": "watcher",
-     "got": 0.95,
+     "got": 1,
      "lo": 0.75,
      "hi": 0.9
     },
     {
      "bot": "random",
-     "got": 0.37,
+     "got": 0.965,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
+     "bot": "stay",
+     "got": 0.955,
      "lo": 0,
      "hi": 0.3
     },
     {
      "bot": "glance",
-     "got": 0.745,
+     "got": 0.995,
      "lo": 0,
      "hi": 0.4
     }
@@ -1675,15 +2192,33 @@
    "misses": [
     {
      "bot": "casual",
-     "got": 0.49,
+     "got": 1,
      "lo": 0.3,
      "hi": 0.45
     },
     {
+     "bot": "watcher",
+     "got": 1,
+     "lo": 0.6,
+     "hi": 0.75
+    },
+    {
      "bot": "random",
-     "got": 0.18,
+     "got": 0.885,
      "lo": 0,
      "hi": 0.15
+    },
+    {
+     "bot": "stay",
+     "got": 1,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "glance",
+     "got": 1,
+     "lo": 0,
+     "hi": 0.3
     }
    ]
   },
@@ -1720,9 +2255,27 @@
    "misses": [
     {
      "bot": "watcher",
-     "got": 0.52,
+     "got": 0.89,
      "lo": 0.3,
      "hi": 0.5
+    },
+    {
+     "bot": "casual",
+     "got": 0.71,
+     "lo": 0,
+     "hi": 0.2
+    },
+    {
+     "bot": "random",
+     "got": 0.255,
+     "lo": 0,
+     "hi": 0.05
+    },
+    {
+     "bot": "glance",
+     "got": 0.63,
+     "lo": 0,
+     "hi": 0.15
     }
    ]
   }
