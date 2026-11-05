@@ -126,11 +126,18 @@
  },
  "20": {
   "over": {
-   "stick": 0.9,
-   "window": 20,
-   "colors": 6
+   "stick": 0.8,
+   "window": 50,
+   "colors": 8,
+   "boxes": 34,
+   "lockedRows": 4,
+   "lockRun": 3,
+   "rowLockRange": [
+    3,
+    8
+   ]
   },
-  "seed": 29
+  "seed": 13
  },
  "23": {
   "over": {
@@ -145,10 +152,23 @@
  "24": {
   "over": {
    "stick": 0.8,
-   "window": 20,
-   "colors": 6
+   "window": 50,
+   "colors": 7,
+   "lanes": 4,
+   "boxes": 36,
+   "locks": 5,
+   "lockRange": [
+    2,
+    4
+   ],
+   "lockedRows": 5,
+   "lockRun": 3,
+   "rowLockRange": [
+    3,
+    8
+   ]
   },
-  "seed": 47
+  "seed": 50
  },
  "25": {
   "over": {
@@ -204,11 +224,15 @@
  },
  "30": {
   "over": {
-   "stick": 0.9,
-   "window": 20,
-   "colors": 7
+   "stick": 0.7,
+   "window": 120,
+   "colors": 8,
+   "lanes": 4,
+   "boxes": 40,
+   "locks": 6,
+   "lockedRows": 8
   },
-  "seed": 141
+  "seed": 50
  },
  "31": {
   "over": {},
@@ -218,13 +242,41 @@
   "over": {},
   "seed": 93
  },
+ "34": {
+  "over": {
+   "stick": 0.9,
+   "window": 300,
+   "colors": 7,
+   "boxes": 40,
+   "locks": 6,
+   "lockRange": [
+    2,
+    4
+   ],
+   "lockedRows": 6,
+   "lockRun": 3,
+   "rowLockRange": [
+    3,
+    8
+   ]
+  },
+  "seed": 65
+ },
  "35": {
   "over": {
    "stick": 0.9,
-   "window": 20,
-   "colors": 8
+   "window": 120,
+   "colors": 8,
+   "boxes": 40,
+   "locks": 5,
+   "lockRun": 3,
+   "lockedRows": 6,
+   "rowLockRange": [
+    3,
+    8
+   ]
   },
-  "seed": 17
+  "seed": 43
  },
  "36": {
   "over": {
@@ -244,18 +296,29 @@
  },
  "39": {
   "over": {
-   "stick": 0.9,
-   "window": 20,
-   "colors": 7
+   "stick": 0.7,
+   "window": 120,
+   "colors": 8,
+   "lanes": 4,
+   "boxes": 40,
+   "locks": 6,
+   "lockRange": [
+    2,
+    4
+   ],
+   "lockedRows": 5
   },
-  "seed": 50
+  "seed": 23
  },
  "40": {
   "over": {
-   "stick": 0.9,
-   "window": 20,
-   "colors": 8
+   "stick": 0.8,
+   "window": 120,
+   "colors": 7,
+   "boxes": 40,
+   "locks": 6,
+   "lockedRows": 7
   },
-  "seed": 41
+  "seed": 14
  }
 }
