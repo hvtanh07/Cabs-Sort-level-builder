@@ -252,7 +252,8 @@
    "colors": 8,
    "stick": 0.9,
    "window": 200,
-   "atPos": null
+   "atPos": null,
+   "intro": "Longer queues (11 boxes each), boxes from 16 to 40 items over all 8 colours; rows in colour patches, so no queue can be emptied first."
   },
   "seed": 104
  },

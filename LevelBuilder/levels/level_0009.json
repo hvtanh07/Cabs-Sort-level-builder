@@ -264,5 +264,5 @@
     [{ "color": 3, "size": 2 }, { "color": 6, "size": 3 }, { "color": 4, "size": 4 }, { "color": 6 }, { "color": 3, "size": 2 }, { "color": 5, "size": 3 }, { "color": 7, "size": 4 }, { "color": 6, "size": 2 }, { "color": 4, "size": 3 }, { "color": 8, "size": 4 }, { "color": 2, "size": 3 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Long Haul", "difficulty": "medium", "notes": "Longer queues (7 boxes each). Box colours in a repeating chevron, boxes from 16 to 40 items; rows in colour patches." }
+  "meta": { "name": "Long Haul", "difficulty": "medium", "notes": "Longer queues (11 boxes each), boxes from 16 to 40 items over all 8 colours; rows in colour patches, so no queue can be emptied first." }
 }
