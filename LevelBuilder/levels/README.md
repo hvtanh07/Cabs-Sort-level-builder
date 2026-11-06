@@ -66,12 +66,12 @@ Every medium and hard level from 5 on is a watch-the-belt level: random taps, ta
 | 2 | Two Queues | easy | A second queue: pick which front box to send. 32- and 40-item boxes, row groups mixed. | 2 | Middle | 4 | 12 (0 / 0 / 6 / 6) | 432 / 104 | square_19 | none | 100% / 100% | 100% | 100% |
 | 3 | Round and Round | easy · 1st booster | Two queues and two Enter Paths. Whole row groups take turns between the Enter Paths, mixed out of queue order. | 2 | Left, Right | 4 | 12 (0 / 0 / 6 / 6) | 432 / 104 | square_19 | none | 100% / 100% | 100% | 100% |
 | 4 | Side by Side | medium | First medium level: a third queue, 15 boxes from 24 to 40 items. Rows come in patches of one colour, so watch which colour is coming and send the box for it. | 3 | Left, Right | 6 | 15 (0 / 7 / 6 / 2) | 440 / 104 | square_19 | none | 18% / 17% | 71% | 89% |
-| 5 | Colour Patches | medium | A third queue. Rows come in patches of one colour: watch which colour is coming and send the box for it. | 3 | Left, Right | 6 | 18 (0 / 6 / 8 / 4) | 560 / 104 | square_19 | none | 23% / 25% | 61% | 82% |
-| 6 | Diagonal Stripes | medium | Box sizes from 16 to 40 items over all 8 colours; rows come in colour patches, so watch which colour is coming. | 3 | Left, Right | 8 | 30 (4 / 9 / 9 / 8) | 888 / 104 | square_19 | none | 4% with RV, 1% without | 55% | 81% |
-| 7 | Hidden Box | easy | Hidden Box in a staggered pattern over 3 queues: every other box after the front is hidden. Boxes from 16 to 40 items. | 3 | Left, Right | 8 | 27 (4 / 8 / 8 / 7) | 792 / 104 | square_19 | Hidden ×12 (16/24/32/40 items) | 37% with RV, 3% without | 77% | 91% |
-| 8 | Hidden Rows | medium | Every even box is hidden, so the queues show rows of Hidden Boxes. Rows in colour patches: watch which colour is coming. | 3 | Left, Right | 8 | 36 (5 / 10 / 11 / 10) | 1072 / 104 | square_19 | Hidden ×18 (16/24/32/40 items) | 11% with RV, 0% without | 51% | 87% |
-| 9 | Long Haul | medium | Longer queues (11 boxes each), boxes from 16 to 40 items over all 8 colours; rows in colour patches, so no queue can be emptied first. | 3 | Left, Right | 8 | 33 (4 / 10 / 10 / 9) | 984 / 104 | square_19 | none | 5% with RV, 0% without | 58% | 43% |
-| 10 | First Challenge | hard | First hard level: every box behind the front row is hidden. 30 boxes in 8 colours. | 3 | Left, Right | 8 | 30 (12 / 6 / 6 / 6) | 768 / 104 | square_19 | Hidden ×27 (16/24/32/40 items) | 5% with RV, 0% without | 35% | 20% |
+| 5 | Colour Patches | medium | A third queue. Rows come in patches of one colour: watch which colour is coming and send the box for it. | 3 | Left, Right | 8 | 36 (5 / 10 / 11 / 10) | 1072 / 104 | square_19 | none | 12% with RV, 0% without | 56% | 82% |
+| 6 | Diagonal Stripes | medium | Box sizes from 16 to 40 items over all 8 colours; rows come in colour patches, so watch which colour is coming. | 3 | Left, Right | 8 | 36 (5 / 10 / 11 / 10) | 1072 / 104 | square_19 | none | 22% with RV, 0% without | 55% | 70% |
+| 7 | Hidden Box | easy | Hidden Box in a staggered pattern over 3 queues: every other box after the front is hidden. Boxes from 16 to 40 items. | 3 | Left, Right | 8 | 30 (4 / 9 / 9 / 8) | 888 / 104 | square_19 | Hidden ×14 (16/24/32/40 items) | 16% with RV, 0% without | 80% | 95% |
+| 8 | Hidden Rows | medium | Every even box is hidden, so the queues show rows of Hidden Boxes. Rows in colour patches: watch which colour is coming. | 3 | Left, Right | 8 | 36 (5 / 10 / 11 / 10) | 1072 / 104 | square_19 | Hidden ×18 (16/24/32/40 items) | 7% with RV, 0% without | 64% | 76% |
+| 9 | Long Haul | medium | Longer queues (11 boxes each), boxes from 16 to 40 items over all 8 colours; rows in colour patches, so no queue can be emptied first. | 3 | Left, Right | 8 | 33 (4 / 10 / 10 / 9) | 984 / 104 | square_19 | none | 16% with RV, 0% without | 44% | 55% |
+| 10 | First Challenge | hard | First hard level: every box behind the front row is hidden. 30 boxes in 8 colours. | 3 | Left, Right | 8 | 33 (4 / 10 / 10 / 9) | 984 / 104 | square_19 | Hidden ×30 (16/24/32/40 items) | 13% with RV, 1% without | 25% | 24% |
 | 11 | Triple Stack | easy | First 32-item box. | 3 | Left, Right | 8 | 36 (5 / 10 / 11 / 10) | 1072 / 104 | square_19 | none | 7% with RV, 2% without | 51% | 77% |
 | 12 | Locked Box | easy | Introduces Locked Box. | 3 | Left, Right | 8 | 30 (4 / 9 / 9 / 8) | 888 / 112 | bean_18 | Locked Box ×2 (one at the front) | 10% with RV, 0% without | 71% | 96% |
 | 13 | Key Count | medium |  | 3 | Left, Right | 8 | 27 (14 / 7 / 6 / 0) | 584 / 104 | lens_18 | Locked Box ×5 | 22% with RV, 2% without | 71% | 87% |
@@ -125,12 +125,12 @@ Win rate of each bot over 200 runs (items fly straight to any matching box, belt
 | 2 | Two Queues | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
 | 3 | Round and Round | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
 | 4 | Side by Side | medium | 0% | 0% | 18% | 53% | 71% | 89% | 100% | 32% | Careful | Very hard |
-| 5 | Colour Patches | medium | 0% | 36% | 23% | 44% | 61% | 82% | 100% | 0% | Careful | Very hard |
-| 6 | Diagonal Stripes | medium | 0% | 0% | 1% | 6% | 19% | 57% | 100% | 14% | Careful | Very hard |
-| 7 | Hidden Box | easy | 0% | 0% | 3% | 15% | 12% | 8% | 100% | 0% | Careful | Very hard |
-| 8 | Hidden Rows | medium | 0% | 0% | 0% | 2% | 6% | 38% | 100% | 0% | Careful | Very hard |
-| 9 | Long Haul | medium | 0% | 0% | 0% | 0% | 0% | 0% | 100% | 14% | Careful | Very hard |
-| 10 | First Challenge | hard | 0% | 0% | 0% | 4% | 3% | 3% | 100% | 34% | Careful | Very hard |
+| 5 | Colour Patches | medium | 0% | 0% | 0% | 7% | 5% | 6% | 100% | 17% | Careful | Very hard |
+| 6 | Diagonal Stripes | medium | 0% | 0% | 0% | 4% | 3% | 1% | 100% | 0% | Careful | Very hard |
+| 7 | Hidden Box | easy | 0% | 0% | 0% | 4% | 12% | 20% | 100% | 65% | Careful | Very hard |
+| 8 | Hidden Rows | medium | 0% | 0% | 0% | 6% | 11% | 8% | 100% | 0% | Careful | Very hard |
+| 9 | Long Haul | medium | 0% | 0% | 0% | 2% | 1% | 0% | 100% | 14% | Careful | Very hard |
+| 10 | First Challenge | hard | 0% | 0% | 1% | 3% | 10% | 8% | 100% | 17% | Careful | Very hard |
 | 11 | Triple Stack | easy | 0% | 0% | 2% | 3% | 16% | 55% | 100% | 14% | Careful | Very hard |
 | 12 | Locked Box | easy | 0% | 0% | 0% | 5% | 11% | 44% | 100% | 32% | Careful | Very hard |
 | 13 | Key Count | medium | 0% | 0% | 2% | 12% | 32% | 65% | 100% | 50% | Careful | Very hard |

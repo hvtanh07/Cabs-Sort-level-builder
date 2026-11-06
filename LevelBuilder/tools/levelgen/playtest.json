@@ -344,50 +344,32 @@
    "intro": null,
    "res": {
     "stay": 0,
-    "turns": 0.355,
-    "random": 0.225,
-    "glance": 0,
-    "novice": 0.44,
-    "casual": 0.605,
-    "pcasual": 0.52,
-    "watcher": 0.82,
-    "sharp": 1,
+    "turns": 0,
+    "random": 0,
+    "glance": 0.07,
+    "novice": 0.07,
+    "casual": 0.05,
+    "pcasual": 0.11,
+    "watcher": 0.055,
+    "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0,
-    "turns": 1,
-    "random": 0.755,
-    "glance": 0.985,
-    "novice": 0.945,
-    "casual": 0.985,
-    "pcasual": 0.98,
-    "watcher": 1,
+    "stay": 0.165,
+    "turns": 0,
+    "random": 0.115,
+    "glance": 0.605,
+    "novice": 0.41,
+    "casual": 0.565,
+    "pcasual": 0.59,
+    "watcher": 0.815,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
-     "bot": "casual",
-     "got": 0.985,
-     "lo": 0.45,
-     "hi": 0.65
-    },
-    {
-     "bot": "watcher",
-     "got": 1,
-     "lo": 0.75,
-     "hi": 0.9
-    },
-    {
-     "bot": "random",
-     "got": 0.755,
-     "lo": 0,
-     "hi": 0.3
-    },
-    {
      "bot": "glance",
-     "got": 0.985,
+     "got": 0.605,
      "lo": 0,
      "hi": 0.4
     }
@@ -402,31 +384,37 @@
    "res": {
     "stay": 0,
     "turns": 0,
-    "random": 0.005,
-    "glance": 0.005,
-    "novice": 0.055,
-    "casual": 0.185,
-    "pcasual": 0.14,
-    "watcher": 0.57,
-    "sharp": 1,
+    "random": 0,
+    "glance": 0.095,
+    "novice": 0.035,
+    "casual": 0.025,
+    "pcasual": 0.1,
+    "watcher": 0.01,
+    "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.14,
+    "stay": 0,
     "turns": 0,
-    "random": 0.04,
-    "glance": 0.44,
-    "novice": 0.25,
+    "random": 0.22,
+    "glance": 0.8,
+    "novice": 0.47,
     "casual": 0.545,
-    "pcasual": 0.485,
-    "watcher": 0.81,
+    "pcasual": 0.6,
+    "watcher": 0.7,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
+     "bot": "watcher",
+     "got": 0.7,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
      "bot": "glance",
-     "got": 0.44,
+     "got": 0.8,
      "lo": 0,
      "hi": 0.4
     }
@@ -441,37 +429,37 @@
    "res": {
     "stay": 0,
     "turns": 0,
-    "random": 0.03,
-    "glance": 0.07,
-    "novice": 0.15,
+    "random": 0,
+    "glance": 0,
+    "novice": 0.04,
     "casual": 0.115,
-    "pcasual": 0.17,
-    "watcher": 0.08,
+    "pcasual": 0.07,
+    "watcher": 0.2,
     "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0,
-    "turns": 0.315,
-    "random": 0.37,
-    "glance": 0.47,
-    "novice": 0.68,
-    "casual": 0.765,
-    "pcasual": 0.825,
-    "watcher": 0.905,
+    "stay": 0.65,
+    "turns": 0,
+    "random": 0.155,
+    "glance": 0.59,
+    "novice": 0.495,
+    "casual": 0.795,
+    "pcasual": 0.66,
+    "watcher": 0.95,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
      "bot": "casual",
-     "got": 0.765,
+     "got": 0.795,
      "lo": 0.85,
      "hi": 1
     },
     {
      "bot": "novice",
-     "got": 0.68,
+     "got": 0.495,
      "lo": 0.7,
      "hi": 0.95
     }
@@ -487,38 +475,44 @@
     "stay": 0,
     "turns": 0,
     "random": 0,
-    "glance": 0.02,
-    "novice": 0.015,
-    "casual": 0.06,
-    "pcasual": 0.04,
-    "watcher": 0.375,
-    "sharp": 1,
+    "glance": 0.04,
+    "novice": 0.06,
+    "casual": 0.11,
+    "pcasual": 0.135,
+    "watcher": 0.08,
+    "sharp": 0,
     "careful": 1
    },
    "resRV": {
     "stay": 0,
     "turns": 0,
-    "random": 0.11,
-    "glance": 0.27,
-    "novice": 0.32,
-    "casual": 0.505,
-    "pcasual": 0.365,
-    "watcher": 0.865,
+    "random": 0.065,
+    "glance": 0.58,
+    "novice": 0.525,
+    "casual": 0.64,
+    "pcasual": 0.64,
+    "watcher": 0.76,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
      "bot": "casual",
-     "got": 0.505,
+     "got": 0.64,
      "lo": 0.3,
      "hi": 0.45
     },
     {
      "bot": "watcher",
-     "got": 0.865,
+     "got": 0.76,
      "lo": 0.6,
      "hi": 0.75
+    },
+    {
+     "bot": "glance",
+     "got": 0.58,
+     "lo": 0,
+     "hi": 0.3
     }
    ]
   },
@@ -533,9 +527,9 @@
     "turns": 0,
     "random": 0,
     "glance": 0.025,
-    "novice": 0,
-    "casual": 0,
-    "pcasual": 0,
+    "novice": 0.015,
+    "casual": 0.01,
+    "pcasual": 0.015,
     "watcher": 0,
     "sharp": 0,
     "careful": 1
@@ -543,31 +537,31 @@
    "resRV": {
     "stay": 0.14,
     "turns": 0,
-    "random": 0.045,
-    "glance": 0.565,
-    "novice": 0.435,
-    "casual": 0.58,
-    "pcasual": 0.57,
-    "watcher": 0.43,
-    "sharp": 0,
+    "random": 0.16,
+    "glance": 0.41,
+    "novice": 0.385,
+    "casual": 0.44,
+    "pcasual": 0.48,
+    "watcher": 0.55,
+    "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
-     "bot": "casual",
-     "got": 0.58,
-     "lo": 0.3,
-     "hi": 0.45
-    },
-    {
      "bot": "watcher",
-     "got": 0.43,
+     "got": 0.55,
      "lo": 0.6,
      "hi": 0.75
     },
     {
+     "bot": "random",
+     "got": 0.16,
+     "lo": 0,
+     "hi": 0.15
+    },
+    {
      "bot": "glance",
-     "got": 0.565,
+     "got": 0.41,
      "lo": 0,
      "hi": 0.3
     }
@@ -582,43 +576,49 @@
    "res": {
     "stay": 0,
     "turns": 0,
-    "random": 0,
-    "glance": 0.01,
-    "novice": 0.035,
-    "casual": 0.03,
-    "pcasual": 0.025,
-    "watcher": 0.03,
+    "random": 0.01,
+    "glance": 0.24,
+    "novice": 0.025,
+    "casual": 0.095,
+    "pcasual": 0.07,
+    "watcher": 0.08,
     "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.34,
+    "stay": 0.165,
     "turns": 0,
-    "random": 0.05,
-    "glance": 0.555,
-    "novice": 0.295,
-    "casual": 0.345,
-    "pcasual": 0.31,
-    "watcher": 0.195,
+    "random": 0.13,
+    "glance": 0.53,
+    "novice": 0.29,
+    "casual": 0.245,
+    "pcasual": 0.365,
+    "watcher": 0.235,
     "sharp": 0,
     "careful": 1
    },
    "misses": [
     {
      "bot": "watcher",
-     "got": 0.195,
+     "got": 0.235,
      "lo": 0.3,
      "hi": 0.5
     },
     {
      "bot": "casual",
-     "got": 0.345,
+     "got": 0.245,
      "lo": 0,
      "hi": 0.2
     },
     {
+     "bot": "random",
+     "got": 0.13,
+     "lo": 0,
+     "hi": 0.05
+    },
+    {
      "bot": "glance",
-     "got": 0.555,
+     "got": 0.53,
      "lo": 0,
      "hi": 0.15
     }
