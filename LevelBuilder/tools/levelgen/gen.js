@@ -76,6 +76,24 @@ function make(S, seed) {
   // `atPos(lane, depth)` -> [colour, tier]: colour and size follow the box's place in the queues, not the send order (level 6
   // keeps its diagonal colour stripes and 24 / 32 checkerboard while `stick` makes each queue send in runs)
   if (S.atPos) order.forEach(b => { const [c, z] = S.atPos(b.lane, b.depth); b.color = c; b.size = SZ[z]; });
+  // `lone` {color, lane, depth, tier?, lead}: that colour gets exactly one box, at (lane, depth) of the queues; every other box
+  // of that colour takes another colour, and the lone box's rows enter `lead` rows earlier, so its colour fills the belt
+  // while the box is still buried under the boxes in front of it (levels 5 / 6)
+  let loneBox = null;
+  if (S.lone) {
+    const L = S.lone, rest = pal.filter(c => c !== L.color);
+    loneBox = order.find(b => b.lane === L.lane && b.depth === L.depth);
+    if (!loneBox) throw new Error('lone: no box at lane ' + L.lane + ' depth ' + L.depth);
+    let k3 = 0;
+    order.forEach(b => {
+      if (b === loneBox || b.color !== L.color) return;
+      const near = order.filter(o => o !== b && Math.abs(o.i - b.i) <= 2).map(o => o.color);
+      const ok = rest.filter(c => !near.includes(c));
+      b.color = ok.length ? ok[k3++ % ok.length] : rest[k3++ % rest.length];
+    });
+    loneBox.color = L.color;
+    if (L.tier) loneBox.size = SZ[L.tier];
+  }
   // items in send order, one colour per Enter Path row: each box brings `size` rows of 4 of its colour
   const units = [];
   order.forEach(b => { for (let j = 0; j < b.size; j++) units.push({ c: b.color, b: b.i, key: units.length }); });
@@ -85,6 +103,7 @@ function make(S, seed) {
   }
   const w = (S.window || 0) / 4;   // spec windows are in items
   units.forEach(x => { x.key += r() * w; });
+  if (loneBox) units.forEach(x => { if (x.b === loneBox.i) x.key -= S.lone.lead; });
   if (S.late) {  // L5: the last rows of the first big box go to the very end
     const lb = order.find(b => b.size > SZ[1]);
     const idx = units.map((x, i) => i).filter(i => units[i].b === lb.i);
