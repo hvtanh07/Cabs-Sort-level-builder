@@ -6,7 +6,7 @@
    200 runs) inside the role's window, random taps under the role's bar, and stuck moments (choice-width profile) close to
    the planned points. */
 const fs = require('fs'), path = require('path');
-const G = require('./gen.js'), P = require('./playtest.js'), DZ = require('./design.js'), PR = require('./profile.js');
+const G = require('./gen.js'), P = require('./playtest.js'), DZ = require('./design.js'), PR = require('./profile.js'), LI = require('./litem-check.js');
 const CS = G.CS;
 const DESIGN = require('./design-levels.js');
 const n = +process.argv[2], TRIES = +(process.argv[3] || 400), RUNS = 200, SEED = 7000;
@@ -67,6 +67,8 @@ function evaluate(S, seed) {
   const g1 = G.play(m, G.MODES.fly, 'smart', 1), g2 = G.play(m, G.MODES.flyNP, 'smart', 1);
   if (!g1.win || !g2.win) return no('careful'); if (g1.failsafe) return no('failsafe');
   if (T.orders != null && orderWins(m) > T.orders) return no('orders');
+  // locked items must still be locked while a box of their colour is at a queue front or in a slot (user, 2026-11-06)
+  if ((json.feeders && Object.values(json.feeders).some(f => f.lockedRows)) && LI.check(m).share < 0.75) return no('litem');
   const q = { casual: rateN(m, 'casual', 40, true), watcher: rateN(m, 'watcher', 40, true) };
   const sc = 100 - (q.casual + q.watcher) * 50;
   if (sc < T.score[0] - 12 || sc > T.score[1] + 12) { no(sc < T.score[0] ? 'easy' : 'hard'); (WHY.sc = WHY.sc || []).push(Math.round(sc)); return { near: sc }; }
