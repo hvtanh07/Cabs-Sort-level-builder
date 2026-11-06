@@ -94,14 +94,14 @@
    "stick": 0.6,
    "lone": {
     "color": 3,
-    "lane": 1,
+    "lane": 0,
     "depth": 5,
-    "lead": 90,
+    "atRow": 40,
     "tier": 4
    },
-   "intro": "A third queue; rows come in patches of one colour. Only Red, Orange, Yellow, Pink and Green boxes, plus ONE Blue box in the whole level: a 40-item box sitting 6th in the middle queue. Blue rows reach the belt early and clog it: dig the middle queue down to the blue box with boxes whose colours are on the belt, without filling the slots."
+   "intro": "A third queue; rows come in patches of one colour. Only Red, Orange, Yellow, Pink and Green boxes, plus ONE Blue box in the whole level: a 40-item box sitting 6th in the left queue. Blue rows only start after a few boxes are cleared, then clog the belt: dig the left queue down to the blue box with boxes whose colours are on the belt, without filling the slots."
   },
-  "seed": 145
+  "seed": 15
  },
  "6": {
   "over": {
@@ -155,18 +155,19 @@
     6,
     1
    ],
-   "stick": 0.9,
+   "stick": 0.6,
    "atPos": null,
    "lone": {
     "color": 1,
-    "lane": 0,
-    "depth": 7,
-    "lead": 60,
-    "tier": 4
+    "lane": 2,
+    "depth": 5,
+    "depth2": 6,
+    "tier": 2,
+    "atRow": 20
    },
-   "intro": "Box sizes from 16 to 40 items. Only Blue, Cyan, Purple, Green and Yellow boxes, plus ONE Red box in the whole level: a 40-item box sitting 8th in the left queue. Red reaches the belt early: clear the boxes in front of the red box with boxes whose colours are on the belt. Once the red box is out, the rest of the level opens up."
+   "intro": "Box sizes from 16 to 40 items. Only Blue, Cyan, Purple, Green and Yellow boxes, plus TWO Red boxes (24 items each), 6th and 7th in the right queue. Red rows only start after a few boxes are cleared: clear the boxes in front of the red boxes with boxes whose colours are on the belt. Once the red boxes are out, the rest of the level opens up."
   },
-  "seed": 132
+  "seed": 39
  },
  "7": {
   "over": {
