@@ -25,7 +25,10 @@ const E = (n, list) => list.map((e, i) => Object.assign({ p: at(n, i) }, e));
 const LK = { lead: [2, 3, 4, 5] };
 const levels = {
   11: { ev: E(11, [{ t: 'buried' }]), notes: 'After Hard: one buried lone box at about 55%.' },
-  12: { ev: E(12, [{ t: 'locked', turns: [2] }]), notes: 'Introduces Locked Box: the only box of the colour on the belt is locked at the front of its queue.' },
+  // user (2026-11-06): one locked box already at the front of a queue at the start, so the player sees how it opens, and
+  // one more locked box 2nd in queue 2, so the player sees that a lock only counts down once its box is at the front
+  12: { ev: [{ t: 'locked', lane: [0, 2], depth: 0, turns: [2, 3], lead: [0, 2, 4] }, { t: 'locked', lane: 1, depth: 1, turns: [2, 3], lead: [2, 4, 6] }], stucks: [],
+    notes: 'Introduces Locked Box: one locked box is at the front of a queue from the start, a second locked box is 2nd in queue 2 and only counts down once it reaches the front. Each holds the only box of its colour.' },
   13: { ev: E(13, [{ t: 'locked', turns: [3] }]), notes: 'Locked Box: the needed colour is only in one locked box; send other boxes to open it.' },
   14: { ev: E(14, [{ t: 'hidden', decoy: [0] }, { t: 'hidden', decoy: [0, 1] }]), notes: 'Hidden Box: two colours are only inside hidden boxes.' },
   15: { ev: E(15, [{ t: 'buried' }, { t: 'locked', turns: [2, 3] }, { t: 'buried' }]), notes: 'Hard, three Enter Paths: buried box, locked box, buried box.' },
@@ -57,4 +60,4 @@ const levels = {
 };
 // wider search for the Hard levels that found nothing in the first pass
 [15, 20, 25].forEach(n => Object.assign(levels[n], { stick: [0.7, 0.8, 0.9, 0.95], delay: [6, 10, 14, 20], nb: [6, 7, 8] }));
-module.exports = { levels, ROLE, target: n => WIN[ROLE[n]], stucks: n => (n === 40 ? [0.23, 0.43, 0.68, 0.83] : STUCK[ROLE[n]]) };
+module.exports = { levels, ROLE, target: n => WIN[ROLE[n]], stucks: n => levels[n].stucks || (n === 40 ? [0.23, 0.43, 0.68, 0.83] : STUCK[ROLE[n]]) };

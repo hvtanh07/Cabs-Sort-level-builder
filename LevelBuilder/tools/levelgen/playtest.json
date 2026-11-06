@@ -4,62 +4,62 @@
   {
    "id": "stay",
    "name": "Blind, one queue",
-   "tier": "R\u1ea5t k\u00e9m",
-   "note": "kh\u00f4ng nh\u00ecn b\u0103ng chuy\u1ec1n, b\u1ea5m 1 h\u00e0ng t\u1edbi khi h\u1ebft r\u1ed3i sang h\u00e0ng kh\u00e1c (th\u1ee9 t\u1ef1 h\u00e0ng ng\u1eabu nhi\u00ean m\u1ed7i l\u1ea7n)"
+   "tier": "Rất kém",
+   "note": "không nhìn băng chuyền, bấm 1 hàng tới khi hết rồi sang hàng khác (thứ tự hàng ngẫu nhiên mỗi lần)"
   },
   {
    "id": "turns",
    "name": "Blind, in turn",
-   "tier": "R\u1ea5t k\u00e9m",
-   "note": "kh\u00f4ng nh\u00ecn, b\u1ea5m l\u1ea7n l\u01b0\u1ee3t h\u00e0ng 1, 2, 3, 1\u2026"
+   "tier": "Rất kém",
+   "note": "không nhìn, bấm lần lượt hàng 1, 2, 3, 1…"
   },
   {
    "id": "random",
    "name": "Random tap",
-   "tier": "R\u1ea5t k\u00e9m",
-   "note": "b\u1ea5m ng\u1eabu nhi\u00ean, l\u1ea5p m\u1ecdi slot tr\u1ed1ng ngay"
+   "tier": "Rất kém",
+   "note": "bấm ngẫu nhiên, lấp mọi slot trống ngay"
   },
   {
    "id": "glance",
    "name": "Belt glancer",
-   "tier": "K\u00e9m",
-   "note": "th\u1ea5y m\u00e0u h\u1ed9p c\u00f3 tr\u00ean b\u0103ng chuy\u1ec1n l\u00e0 g\u1eedi, kh\u00f4ng \u0111\u1ebfm s\u1ed1 l\u01b0\u1ee3ng; kh\u00f4ng c\u00f3 th\u00ec b\u1ea5m b\u1eeba"
+   "tier": "Kém",
+   "note": "thấy màu hộp có trên băng chuyền là gửi, không đếm số lượng; không có thì bấm bừa"
   },
   {
    "id": "novice",
    "name": "Beginner",
-   "tier": "K\u00e9m",
-   "note": "50% b\u1ea5m b\u1eeba, 50% ch\u1ecdn theo m\u00e0u tr\u00ean b\u0103ng"
+   "tier": "Kém",
+   "note": "50% bấm bừa, 50% chọn theo màu trên băng"
   },
   {
    "id": "casual",
    "name": "Casual",
-   "tier": "Trung b\u00ecnh",
-   "note": "30% b\u1ea5m b\u1eeba, l\u1ea5p m\u1ecdi slot tr\u1ed1ng"
+   "tier": "Trung bình",
+   "note": "30% bấm bừa, lấp mọi slot trống"
   },
   {
    "id": "pcasual",
    "name": "Patient casual",
-   "tier": "Trung b\u00ecnh",
-   "note": "nh\u01b0 Casual nh\u01b0ng gi\u1eef slot tr\u1ed1ng cu\u1ed1i cho h\u1ed9p c\u00f3 m\u00e0u \u0111ang tr\u00ean b\u0103ng"
+   "tier": "Trung bình",
+   "note": "như Casual nhưng giữ slot trống cuối cho hộp có màu đang trên băng"
   },
   {
    "id": "watcher",
    "name": "Belt watcher",
-   "tier": "Kh\u00e1",
-   "note": "10% b\u1ea5m b\u1eeba, c\u00f2n l\u1ea1i ch\u1ecdn theo m\u00e0u tr\u00ean b\u0103ng"
+   "tier": "Khá",
+   "note": "10% bấm bừa, còn lại chọn theo màu trên băng"
   },
   {
    "id": "sharp",
    "name": "Sharp, impatient",
-   "tier": "Kh\u00e1",
-   "note": "kh\u00f4ng b\u1ea5m b\u1eeba nh\u01b0ng kh\u00f4ng bao gi\u1edd ch\u1edd: l\u1ea5p slot ngay b\u1eb1ng h\u1ed9p t\u1ed1t nh\u1ea5t"
+   "tier": "Khá",
+   "note": "không bấm bừa nhưng không bao giờ chờ: lấp slot ngay bằng hộp tốt nhất"
   },
   {
    "id": "careful",
    "name": "Careful",
-   "tier": "Gi\u1ecfi",
-   "note": "\u0111\u1ebfm item s\u1eafp t\u1edbi, ch\u1edd thay v\u00ec g\u1eedi h\u1ed9p ch\u01b0a th\u1ec3 l\u1ea5p; kh\u00f4ng may r\u1ee7i"
+   "tier": "Giỏi",
+   "note": "đếm item sắp tới, chờ thay vì gửi hộp chưa thể lấp; không may rủi"
   }
  ],
  "targets": {
@@ -682,35 +682,41 @@
    "role": "intro",
    "intro": "Locked Box",
    "res": {
-    "stay": 0,
-    "turns": 0.685,
-    "random": 0.275,
-    "glance": 0.24,
-    "novice": 0.365,
-    "casual": 0.34,
-    "pcasual": 0.365,
-    "watcher": 0.205,
-    "sharp": 0,
+    "stay": 0.14,
+    "turns": 0,
+    "random": 0.08,
+    "glance": 0.125,
+    "novice": 0.295,
+    "casual": 0.59,
+    "pcasual": 0.525,
+    "watcher": 0.785,
+    "sharp": 1,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.34,
+    "stay": 0.325,
     "turns": 1,
-    "random": 0.6,
-    "glance": 0.53,
-    "novice": 0.765,
-    "casual": 0.76,
-    "pcasual": 0.845,
-    "watcher": 0.85,
+    "random": 0.295,
+    "glance": 0.55,
+    "novice": 0.625,
+    "casual": 0.825,
+    "pcasual": 0.815,
+    "watcher": 0.935,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
      "bot": "casual",
-     "got": 0.76,
+     "got": 0.825,
      "lo": 0.85,
      "hi": 1
+    },
+    {
+     "bot": "novice",
+     "got": 0.625,
+     "lo": 0.7,
+     "hi": 0.95
     }
    ]
   },

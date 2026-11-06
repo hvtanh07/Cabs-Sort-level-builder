@@ -50,7 +50,7 @@ function sample() {
   S.keySide = pick([0, 1]);
   S.ev = L.ev.map(e => {
     const o = Object.assign({}, e);
-    ['lead', 'turns', 'decoy', 'pd', 'tier'].forEach(k => { if (Array.isArray(e[k])) o[k] = pick(e[k]); });
+    ['lead', 'turns', 'decoy', 'pd', 'tier', 'lane'].forEach(k => { if (Array.isArray(e[k])) o[k] = pick(e[k]); });
     if (o.lead == null) o.lead = pick([3, 6, 9, 12]);
     return o;
   });
