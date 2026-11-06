@@ -2,7 +2,7 @@
   --paper: #EEF1F6; --surface: #FFFFFF; --ink: #18203A; --muted: #566079; --line: #D6DCE8; --tint: #E3E8F1;
   --accent: #1F55D6; --accent-ink: #fff; --danger: #C42B33; --warn: #B7791F; --ok: #1B8641;
   --belt: #2A3149; --belt-edge: #4A5578; --sel: #FFB020;
-  --c1: #D9363E; --c2: #2563EB; --c3: #1B8641; --c4: #F4BE0B; --c5: #F472B6; --c6: #F58220; --c7: #7C4DDB; --c8: #22B8D1;
+  --c1: #D9363E; --c2: #F58220; --c3: #2563EB; --c4: #1B8641; --c5: #7C4DDB; --c6: #F4BE0B; --c7: #22B8D1; --c8: #F472B6;
   --font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
   color-scheme: light;
 }

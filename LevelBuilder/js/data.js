@@ -6,15 +6,15 @@ window.CS = window.CS || {};
   /* ---------- constants (from the GDD, section 3.2 colour list) ---------- */
   CS.COLORS = [null,
     { id: 1, name: 'Red', hex: '#D9363E' },
-    { id: 2, name: 'Blue', hex: '#2563EB' },
-    { id: 3, name: 'Green', hex: '#1B8641' },
-    { id: 4, name: 'Yellow', hex: '#F4BE0B' },
-    { id: 5, name: 'Pink', hex: '#F472B6' },
-    { id: 6, name: 'Orange', hex: '#F58220' },
-    { id: 7, name: 'Purple', hex: '#7C4DDB' },
-    { id: 8, name: 'Cyan', hex: '#22B8D1' }
+    { id: 2, name: 'Orange', hex: '#F58220' },
+    { id: 3, name: 'Blue', hex: '#2563EB' },
+    { id: 4, name: 'Green', hex: '#1B8641' },
+    { id: 5, name: 'Purple', hex: '#7C4DDB' },
+    { id: 6, name: 'Yellow', hex: '#F4BE0B' },
+    { id: 7, name: 'Cyan', hex: '#22B8D1' },
+    { id: 8, name: 'Pink', hex: '#F472B6' }
   ];
-  CS.LIGHT = { 4: 1, 5: 1, 6: 1, 8: 1 };     // colours that need dark text
+  CS.LIGHT = { 2: 1, 6: 1, 7: 1, 8: 1 };     // colours that need dark text
   CS.ROW_W = 4;                               // conveyor and Enter Path rows are 4 items wide
   CS.ENTRIES = ['left', 'middle', 'right'];
   CS.ENTRY_LABEL = { left: 'Left', middle: 'Middle', right: 'Right' };
