@@ -290,7 +290,7 @@
     ] }
   },
   "lanes": [
-    [{ "color": 6, "size": 2 }, { "color": 2, "size": 4 }, { "color": 1, "size": 4 }, { "color": 5, "size": 2 }, { "color": 2, "size": 3 }, { "color": 1, "size": 2 }, { "color": 5, "size": 4 }, { "color": 6, "size": 3 }, { "color": 2, "size": 3 }],
+    [{ "color": 6, "size": 2, "lockTurns": 2 }, { "color": 2, "size": 4 }, { "color": 1, "size": 4 }, { "color": 5, "size": 2 }, { "color": 2, "size": 3 }, { "color": 1, "size": 2 }, { "color": 5, "size": 4 }, { "color": 6, "size": 3 }, { "color": 2, "size": 3 }],
     [{ "color": 7, "size": 2 }, { "color": 5, "size": 2 }, { "color": 6 }, { "color": 1, "size": 2 }, { "color": 6, "size": 2 }, { "color": 5, "size": 2 }, { "color": 7, "size": 2 }, { "color": 2, "size": 2 }, { "color": 6, "size": 3 }],
     [{ "color": 5, "size": 3 }, { "color": 7, "size": 2 }, { "color": 5, "size": 4 }, { "color": 7, "size": 3 }, { "color": 5, "size": 2 }, { "color": 6, "size": 3 }, { "color": 5, "size": 4 }, { "color": 8, "size": 3 }, { "color": 5, "size": 4 }],
     [{ "color": 1 }, { "color": 3, "size": 4 }, { "color": 1, "size": 4 }, { "color": 2, "size": 4 }, { "color": 1, "size": 4 }, { "color": 2, "size": 2 }, { "color": 1, "size": 2 }, { "color": 4, "hidden": true, "size": 3, "lockTurns": 3 }, { "color": 1, "size": 4 }]

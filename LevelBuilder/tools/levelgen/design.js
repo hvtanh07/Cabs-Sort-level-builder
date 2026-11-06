@@ -95,6 +95,23 @@ function make(S, seed) {
       c.forEach(x => { x.hidden = true; });
     }
   });
+  // `early` (user, 2026-11-06: every element level shows an element from the start): extra element boxes near the top of
+  // the queues, not key boxes. lock: a locked box at depth 0-1; hidden: a hidden box at depth 1-2 (a front box is revealed);
+  // link: two linked boxes at the front of next queues; litem is handled after the rows are dealt.
+  (S.early || []).forEach(e => {
+    const free = x => x.key == null && !x.partner && !x.hidden && !x.lock && !x.link && !x.linked;
+    if (e.t === 'lock' || e.t === 'hidden') {
+      const ds = e.t === 'lock' ? [0, 1] : [1, 2];
+      const c = CS.shuffle(lanes.flat().filter(x => ds.includes(x.d) && free(x) && (e.lane == null || x.l === e.lane)), r)[0];
+      if (!c) throw new Error('no early spot');
+      if (e.t === 'lock') c.lock = e.turns || 2; else c.hidden = true;
+    } else if (e.t === 'link') {
+      const pairs = [];
+      for (let l = 0; l + 1 < Q; l++) for (const d of [0, 1]) for (const d2 of [0, 1]) { const a = lanes[l][d], b = lanes[l + 1][d2]; if (free(a) && free(b) && a.c !== b.c) pairs.push([a, b]); }
+      const pr = pk(r, pairs); if (!pr) throw new Error('no early link');
+      pr[0].link = { lane: pr[1].l, tray: pr[1].d }; pr[1].linked = true;
+    }
+  });
   // background tension: any other box may get its rows late too (`lateAll` share)
   if (S.lateAll) lanes.flat().forEach(b => { if (b.key == null && r() < S.lateAll) b.late = true; });
   if (S.hideExtra) CS.shuffle(lanes.flat().filter(x => x.key == null && x.d >= 1 && !x.hidden && !x.partner), r).slice(0, S.hideExtra).forEach(x => { x.hidden = true; });
@@ -130,6 +147,16 @@ function make(S, seed) {
   EV.forEach((e, k) => {
     if (e.t !== 'litem') return;
     paths.forEach((p, f) => p.forEach((x, i) => { if (x.c === keys[k] && (e.share == null || x.ch.box.key === k)) lockedRows[f].push({ row: i, lockTurns: e.turns || 4 }); }));
+  });
+  (S.early || []).filter(e => e.t === 'litem').forEach(e => {
+    // the first patch of 3+ rows of one colour that starts in the first rows of a path is locked
+    let done = false;
+    paths.forEach((p, f) => { if (done) return; for (let i = 0; i < Math.min(p.length, e.row || 10); i++) {
+      if (i && p[i - 1].c === p[i].c) continue;
+      let k = i; while (k < p.length && p[k].c === p[i].c) k++;
+      if (k - i >= 3 && !keys.includes(p[i].c)) { for (let q = i; q < k; q++) lockedRows[f].push({ row: q, lockTurns: e.turns || 3 }); done = true; return; }
+    } });
+    if (!done) throw new Error('no early litem');
   });
   const j = {
     $schema: CS.LEVEL_SCHEMA, formatVersion: CS.FORMAT_VERSION, id: 'level_' + String(S.n).padStart(4, '0'), conveyor: S.conveyor,

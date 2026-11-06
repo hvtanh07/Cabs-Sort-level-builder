@@ -237,7 +237,7 @@
     [{ "color": 3 }, { "color": 5, "size": 3 }, { "color": 7, "size": 3, "lockTurns": 2 }, { "color": 5, "size": 3 }, { "color": 4, "size": 3 }, { "color": 6, "size": 4 }, { "color": 1, "size": 3 }],
     [{ "color": 4, "size": 2 }, { "color": 3, "size": 4 }, { "color": 5, "size": 4 }, { "color": 1, "size": 4 }, { "color": 2, "size": 2 }, { "color": 5, "size": 4 }, { "color": 3, "size": 2 }],
     [{ "color": 3, "size": 3 }, { "color": 1, "size": 3 }, { "color": 8, "size": 4 }, { "color": 4, "size": 2 }, { "color": 1, "size": 4 }, { "color": 2, "size": 2 }, { "color": 1, "size": 2 }],
-    [{ "color": 5, "size": 4 }, { "color": 4, "size": 4 }, { "color": 3, "size": 4 }, { "color": 2, "size": 2 }, { "color": 3, "size": 2 }, { "color": 1 }, { "color": 4, "size": 3 }]
+    [{ "color": 5, "size": 4 }, { "color": 4, "size": 4, "lockTurns": 2 }, { "color": 3, "size": 4 }, { "color": 2, "size": 2 }, { "color": 3, "size": 2 }, { "color": 1 }, { "color": 4, "size": 3 }]
   ],
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Door Lock", "difficulty": "hard", "notes": "Hard: Block Door with different colours per side, plus a locked lone box." }
