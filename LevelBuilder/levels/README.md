@@ -73,7 +73,7 @@ Every medium and hard level from 5 on is a watch-the-belt level: random taps, ta
 | 9 | Long Haul | medium | Longer queues (11 boxes each), boxes from 16 to 40 items over all 8 colours; rows in colour patches, so no queue can be emptied first. | 3 | Left, Right | 8 | 33 (4 / 10 / 10 / 9) | 984 / 104 | square_19 | none | 5% with RV, 0% without | 58% | 43% |
 | 10 | First Challenge | hard | First hard level: every box behind the front row is hidden. 30 boxes in 8 colours. | 3 | Left, Right | 8 | 30 (12 / 6 / 6 / 6) | 768 / 104 | square_19 | Hidden ×27 (16/24/32/40 items) | 5% with RV, 0% without | 35% | 20% |
 | 11 | Triple Stack | easy | First 32-item box. | 3 | Left, Right | 8 | 36 (5 / 10 / 11 / 10) | 1072 / 104 | square_19 | none | 7% with RV, 2% without | 51% | 77% |
-| 12 | Locked Box | easy | Introduces Locked Box. | 3 | Left, Right | 5 | 18 (8 / 5 / 5 / 0) | 408 / 112 | bean_18 | Locked Box ×2 (one at the front) | 97% / 98% | 100% | 100% |
+| 12 | Locked Box | easy | Introduces Locked Box. | 3 | Left, Right | 8 | 30 (4 / 9 / 9 / 8) | 888 / 112 | bean_18 | Locked Box ×2 (one at the front) | 10% with RV, 0% without | 71% | 96% |
 | 13 | Key Count | medium |  | 3 | Left, Right | 8 | 27 (14 / 7 / 6 / 0) | 584 / 104 | lens_18 | Locked Box ×5 | 22% with RV, 2% without | 71% | 87% |
 | 14 | Blind Picks | medium | Hidden Boxes in a staggered pattern, like level 7. | 3 | Left, Right | 8 | 30 (4 / 9 / 9 / 8) | 888 / 104 | square_19 | Locked Box ×4, Hidden ×14 (16/24/32/40 items) | 6% with RV, 0% without | 47% | 52% |
 | 15 | Three Gates | hard | Third Enter Path. Hard level. | 3 | Left, Middle, Right | 8 | 27 (4 / 8 / 8 / 7) | 792 / 120 | heart_21 | Locked Box ×6 | 8% with RV, 0% without | 31% | 21% |
@@ -132,7 +132,7 @@ Win rate of each bot over 200 runs (items fly straight to any matching box, belt
 | 9 | Long Haul | medium | 0% | 0% | 0% | 0% | 0% | 0% | 100% | 14% | Careful | Very hard |
 | 10 | First Challenge | hard | 0% | 0% | 0% | 4% | 3% | 3% | 100% | 34% | Careful | Very hard |
 | 11 | Triple Stack | easy | 0% | 0% | 2% | 3% | 16% | 55% | 100% | 14% | Careful | Very hard |
-| 12 | Locked Box | easy | 34% | 100% | 97% | 100% | 100% | 100% | 100% | 100% | Blind, in turn | Very easy |
+| 12 | Locked Box | easy | 0% | 0% | 0% | 5% | 11% | 44% | 100% | 32% | Careful | Very hard |
 | 13 | Key Count | medium | 0% | 0% | 2% | 12% | 32% | 65% | 100% | 50% | Careful | Very hard |
 | 14 | Blind Picks | medium | 0% | 0% | 0% | 1% | 2% | 4% | 100% | 35% | Careful | Very hard |
 | 15 | Three Gates | hard | 0% | 0% | 0% | 0% | 0% | 0% | 100% | 0% | Careful | Very hard |

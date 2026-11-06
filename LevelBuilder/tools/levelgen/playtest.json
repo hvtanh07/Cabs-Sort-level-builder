@@ -676,33 +676,39 @@
    "role": "intro",
    "intro": "Locked Box",
    "res": {
-    "stay": 0.34,
-    "turns": 1,
-    "random": 0.97,
-    "glance": 1,
-    "novice": 1,
-    "casual": 1,
-    "pcasual": 1,
-    "watcher": 1,
+    "stay": 0,
+    "turns": 0,
+    "random": 0,
+    "glance": 0,
+    "novice": 0.05,
+    "casual": 0.11,
+    "pcasual": 0.125,
+    "watcher": 0.44,
     "sharp": 1,
     "careful": 1
    },
    "resRV": {
-    "stay": 1,
-    "turns": 1,
-    "random": 1,
-    "glance": 1,
-    "novice": 1,
-    "casual": 1,
-    "pcasual": 1,
-    "watcher": 1,
+    "stay": 0.315,
+    "turns": 0,
+    "random": 0.095,
+    "glance": 0.67,
+    "novice": 0.45,
+    "casual": 0.71,
+    "pcasual": 0.71,
+    "watcher": 0.96,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
+     "bot": "casual",
+     "got": 0.71,
+     "lo": 0.85,
+     "hi": 1
+    },
+    {
      "bot": "novice",
-     "got": 1,
+     "got": 0.45,
      "lo": 0.7,
      "hi": 0.95
     }
