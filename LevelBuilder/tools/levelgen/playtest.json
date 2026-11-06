@@ -345,47 +345,28 @@
    "res": {
     "stay": 0,
     "turns": 0,
-    "random": 0,
-    "glance": 0.025,
-    "novice": 0.015,
-    "casual": 0.015,
-    "pcasual": 0.025,
-    "watcher": 0.01,
+    "random": 0.01,
+    "glance": 0.04,
+    "novice": 0.055,
+    "casual": 0.09,
+    "pcasual": 0.05,
+    "watcher": 0.05,
     "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.5,
-    "turns": 0.315,
-    "random": 0.105,
-    "glance": 0.45,
-    "novice": 0.53,
-    "casual": 0.6,
-    "pcasual": 0.6,
-    "watcher": 0.61,
+    "stay": 0,
+    "turns": 0,
+    "random": 0.155,
+    "glance": 0.335,
+    "novice": 0.43,
+    "casual": 0.62,
+    "pcasual": 0.535,
+    "watcher": 0.9,
     "sharp": 1,
     "careful": 1
    },
-   "misses": [
-    {
-     "bot": "watcher",
-     "got": 0.61,
-     "lo": 0.75,
-     "hi": 0.9
-    },
-    {
-     "bot": "stay",
-     "got": 0.5,
-     "lo": 0,
-     "hi": 0.3
-    },
-    {
-     "bot": "glance",
-     "got": 0.45,
-     "lo": 0,
-     "hi": 0.4
-    }
-   ]
+   "misses": []
   },
   {
    "n": 6,
@@ -397,36 +378,36 @@
     "stay": 0,
     "turns": 0,
     "random": 0,
-    "glance": 0.04,
-    "novice": 0.055,
-    "casual": 0.18,
-    "pcasual": 0.05,
-    "watcher": 0.465,
-    "sharp": 1,
+    "glance": 0.03,
+    "novice": 0.09,
+    "casual": 0.095,
+    "pcasual": 0.13,
+    "watcher": 0.125,
+    "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.165,
-    "turns": 0.355,
-    "random": 0.145,
-    "glance": 0.695,
-    "novice": 0.6,
-    "casual": 0.7,
-    "pcasual": 0.74,
-    "watcher": 0.835,
+    "stay": 0.14,
+    "turns": 0,
+    "random": 0.12,
+    "glance": 0.535,
+    "novice": 0.515,
+    "casual": 0.695,
+    "pcasual": 0.605,
+    "watcher": 0.895,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
      "bot": "casual",
-     "got": 0.7,
+     "got": 0.695,
      "lo": 0.45,
      "hi": 0.65
     },
     {
      "bot": "glance",
-     "got": 0.695,
+     "got": 0.535,
      "lo": 0,
      "hi": 0.4
     }

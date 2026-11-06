@@ -125,8 +125,8 @@ Win rate of each bot over 200 runs (items fly straight to any matching box, belt
 | 2 | Two Queues | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
 | 3 | Round and Round | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
 | 4 | Side by Side | medium | 0% | 0% | 18% | 53% | 71% | 89% | 100% | 32% | Careful | Very hard |
-| 5 | Colour Patches | medium | 0% | 0% | 0% | 2% | 2% | 1% | 100% | 50% | Careful | Very hard |
-| 6 | Diagonal Stripes | medium | 0% | 0% | 0% | 6% | 18% | 47% | 100% | 17% | Careful | Very hard |
+| 5 | Colour Patches | medium | 0% | 0% | 1% | 6% | 9% | 5% | 100% | 0% | Careful | Very hard |
+| 6 | Diagonal Stripes | medium | 0% | 0% | 0% | 9% | 10% | 13% | 100% | 14% | Careful | Very hard |
 | 7 | Hidden Box | easy | 0% | 0% | 0% | 4% | 12% | 20% | 100% | 65% | Careful | Very hard |
 | 8 | Hidden Rows | medium | 0% | 0% | 0% | 6% | 11% | 8% | 100% | 0% | Careful | Very hard |
 | 9 | Long Haul | medium | 0% | 0% | 0% | 2% | 1% | 0% | 100% | 14% | Careful | Very hard |
