@@ -122,10 +122,10 @@
      2,
      5
     ],
-    "d1": 3,
-    "d2": 5,
-    "dmin": 3,
-    "d3": 3,
+    "d1": 2,
+    "d2": 6,
+    "dmin": 2,
+    "d3": 2,
     "t1": [
      2,
      3
@@ -139,7 +139,7 @@
     ],
     "tD": 4,
     "fD": 1,
-    "q": 0,
+    "q": 0.25,
     "t3": [
      2,
      3
@@ -147,9 +147,9 @@
     "big": 4,
     "cdFirst": true
    },
-   "intro": "Three stretches with their own colours. First the front boxes are only Red, Orange and Blue, and the first rows bring exactly their items. Then Cyan rows and the rows of the ONLY Green box fill the belt while the next boxes are Purple and Yellow, whose items come later; one Cyan 40 sits 7th in the right queue and the Green 40 sits 8th in the middle queue. Send Purple and Yellow boxes a few at a time so the slots do not fill, dig down to the Cyan and Green boxes, and the last stretch (Purple, Yellow, Orange) gets easy."
+   "intro": "Three stretches with their own colours. First the front boxes are only Red, Orange and Blue, and the first rows bring exactly their items. Then Cyan rows and the rows of the ONLY Green box fill the belt while the next boxes are Purple and Yellow, whose items come later; the Green 40 sits 6th in the middle queue and one Cyan 40 sits 8th in the left queue. For several sends only one queue keeps the level alive: send Purple and Yellow boxes a few at a time so the slots do not fill, dig down to the Green and Cyan boxes, and the last stretch (Red, Orange, Purple) gets easy."
   },
-  "seed": 31
+  "seed": 41
  },
  "7": {
   "over": {
