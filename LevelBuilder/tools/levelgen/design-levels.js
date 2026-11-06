@@ -36,7 +36,7 @@ const levels = {
   14: { ev: E(14, [{ t: 'hidden', decoy: [0] }, { t: 'hidden', decoy: [0, 1] }]), notes: 'Hidden Box: two colours are only inside hidden boxes.' },
   15: { ev: E(15, [{ t: 'buried' }, { t: 'locked', turns: [2, 3] }, { t: 'buried' }]), notes: 'Hard, three Enter Paths: buried box, locked box, buried box.' },
   16: { ev: E(16, [{ t: 'buried' }]), notes: 'After Hard: one buried lone box at about 55%.' },
-  17: { ev: E(17, [{ t: 'linked', pd: [0, 1], depth: [2, 3, 4] }]), notes: 'Introduces Linked Box: the needed colour is linked to an extra box in the next queue.' },
+  17: { ev: E(17, [{ t: 'linked', pd: [3, 4], depth: [2, 3] }]), notes: 'Introduces Linked Box: the needed colour is linked to an extra box in the next queue.' },
   18: { ev: E(18, [{ t: 'linked', pd: [1, 2], hide: true }]), notes: 'Linked Box: the needed colour is only in one hidden box, linked to an extra box.' },
   19: { ev: E(19, [{ t: 'locked', turns: [3] }, { t: 'locked', turns: [2, 3] }]), notes: 'Pre-Hard: two locked lone boxes.' },
   20: { ev: E(20, [{ t: 'linked', pd: [1, 2] }, { t: 'locked', turns: [3] }, { t: 'buried' }]), notes: 'Hard, four queues: linked, locked, buried.' },
@@ -66,6 +66,10 @@ const levels = {
 const EARLY = { 14: 'hidden', 15: 'lock', 17: 'link', 18: 'link', 19: 'lock', 25: 'lock', 26: 'link', 27: 'litem', 28: 'litem',
   31: 'litem', 35: 'lock', 37: 'hidden', 38: 'link', 39: 'litem' };
 Object.keys(EARLY).forEach(n => { levels[n].early = [{ t: EARLY[n], turns: EARLY[n] === 'litem' ? [2, 3] : [2, 3] }]; });
+// user (2026-11-06, level 27): locked items unlocked on the belt before their colour's box showed up, so they never got in
+// the way. The key colour's rows now come with its box (lead around 0), and dscan.js checks that the locked items are
+// still locked while a box of their colour is at the front of a queue or in a slot.
+Object.values(levels).forEach(L => (L.ev || []).forEach(e => { if (e.t === 'litem') e.lead = [-2, -1, 0, 1]; }));
 // user (2026-11-06): levels with Hidden Boxes hide them in a pattern (every other box, or every even box of each queue),
 // like levels 7 and 8, instead of a few single boxes
 [14, 18, 23, 28, 30, 35, 37, 40].forEach(n => { levels[n].hidePattern = ['checker', 'checker2', 'even']; if (levels[n].early && levels[n].early[0].t === 'hidden') delete levels[n].early; });

@@ -157,11 +157,13 @@ function make(S, seed) {
   });
   (S.early || []).filter(e => e.t === 'litem').forEach(e => {
     // the first patch of 3+ rows of one colour that starts in the first rows of a path is locked
+    // (user, 2026-11-06: only a colour whose box is at the front of a queue, so the locked items hold up that box)
+    const fronts = lanes.map(q => q[0].c);
     let done = false;
     paths.forEach((p, f) => { if (done) return; for (let i = 0; i < Math.min(p.length, e.row || 10); i++) {
       if (i && p[i - 1].c === p[i].c) continue;
       let k = i; while (k < p.length && p[k].c === p[i].c) k++;
-      if (k - i >= 3 && !keys.includes(p[i].c)) { for (let q = i; q < k; q++) lockedRows[f].push({ row: q, lockTurns: e.turns || 3 }); done = true; return; }
+      if (k - i >= 3 && !keys.includes(p[i].c) && fronts.includes(p[i].c)) { for (let q = i; q < k; q++) lockedRows[f].push({ row: q, lockTurns: e.turns || 3 }); done = true; return; }
     } });
     if (!done) throw new Error('no early litem');
   });
