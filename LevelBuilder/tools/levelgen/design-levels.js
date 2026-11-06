@@ -29,7 +29,10 @@ const levels = {
   // one more locked box 2nd in queue 2, so the player sees that a lock only counts down once its box is at the front
   12: { ev: [{ t: 'locked', lane: [0, 2], depth: 0, turns: [2, 3], lead: [0, 2, 4] }, { t: 'locked', lane: 1, depth: 1, turns: [2, 3], lead: [2, 4, 6] }], stucks: [],
     notes: 'Introduces Locked Box: one locked box is at the front of a queue from the start, a second locked box is 2nd in queue 2 and only counts down once it reaches the front. Each holds the only box of its colour.' },
-  13: { ev: E(13, [{ t: 'locked', turns: [3] }]), notes: 'Locked Box: the needed colour is only in one locked box; send other boxes to open it.' },
+  // user (2026-11-06): the locked boxes were too deep, so the player met the element only late; now two locked boxes in
+  // the first rows (2nd-3rd and 4th-5th in their queues)
+  13: { ev: [{ t: 'locked', depth: [1, 2], turns: [2, 3], lead: [3, 6, 9] }, { t: 'locked', depth: [3, 4], turns: [3], lead: [3, 6, 9] }], stucks: [0.15, 0.4],
+    notes: 'Locked Box: two colours are each only in one locked box near the top of its queue; send other boxes to open them.' },
   14: { ev: E(14, [{ t: 'hidden', decoy: [0] }, { t: 'hidden', decoy: [0, 1] }]), notes: 'Hidden Box: two colours are only inside hidden boxes.' },
   15: { ev: E(15, [{ t: 'buried' }, { t: 'locked', turns: [2, 3] }, { t: 'buried' }]), notes: 'Hard, three Enter Paths: buried box, locked box, buried box.' },
   16: { ev: E(16, [{ t: 'buried' }]), notes: 'After Hard: one buried lone box at about 55%.' },
