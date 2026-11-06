@@ -9,7 +9,7 @@
       gets easier.
    Rows come in patches of 3-6 rows of one colour (`big`: smallest patch when a colour has more than 6 rows).
    phases: { cols: [A, B, C, D], d1, d2, dmin, d3, t1, t2, tC, tD, t3 (box tiers to pick from), fD (share of the D items in
-   phase 2), q, big, cdFirst } */
+   phase 2), q, big, cdFirst, c1 / c3 (colours of the phase 1 / phase 3 boxes, default A, B, C) } */
 const CS = global.CS;
 const ri = (r, a, b) => a + Math.floor(r() * (b - a + 1)), pk = (r, a) => a[Math.floor(r() * a.length)];
 const ROWS = { 1: 4, 2: 6, 3: 8, 4: 10 };
@@ -17,7 +17,8 @@ function make(S, seed, rng) {
   const P = S.phases, r = rng(seed), [A, B, C, D] = P.cols;
   const lanes = [[], [], []];   // each box {c, t, ph}
   // phase 1: depth 0..P.d1-1
-  const p1 = CS.shuffle([].concat(...Array.from({ length: Math.ceil(3 * P.d1 / 3) }, () => [A, B, C])).slice(0, 3 * P.d1), r);
+  const c1 = P.c1 || [A, B, C];
+  const p1 = CS.shuffle([].concat(...Array.from({ length: Math.ceil(3 * P.d1 / c1.length) }, () => c1)).slice(0, 3 * P.d1), r);
   let k = 0; for (let d = 0; d < P.d1; d++) for (let l = 0; l < 3; l++) lanes[l].push({ c: p1[k++], t: pk(r, P.t1), ph: 1 });
   // phase 2: depth d1 .. d1+P.d2-1
   const lc = ri(r, 0, 2); let ld = ri(r, 0, 1); if (ld >= lc) ld++;
