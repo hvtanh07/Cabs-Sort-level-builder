@@ -36,7 +36,7 @@ const levels = {
   14: { ev: E(14, [{ t: 'hidden', decoy: [0] }, { t: 'hidden', decoy: [0, 1] }]), notes: 'Hidden Box: two colours are only inside hidden boxes.' },
   15: { ev: E(15, [{ t: 'buried' }, { t: 'locked', turns: [2, 3] }, { t: 'buried' }]), notes: 'Hard, three Enter Paths: buried box, locked box, buried box.' },
   16: { ev: E(16, [{ t: 'buried' }]), notes: 'After Hard: one buried lone box at about 55%.' },
-  17: { ev: E(17, [{ t: 'linked', pd: [1, 2] }]), notes: 'Introduces Linked Box: the needed colour is linked to an extra box in the next queue.' },
+  17: { ev: E(17, [{ t: 'linked', pd: [0, 1], depth: [2, 3, 4] }]), notes: 'Introduces Linked Box: the needed colour is linked to an extra box in the next queue.' },
   18: { ev: E(18, [{ t: 'linked', pd: [1, 2], hide: true }]), notes: 'Linked Box: the needed colour is only in one hidden box, linked to an extra box.' },
   19: { ev: E(19, [{ t: 'locked', turns: [3] }, { t: 'locked', turns: [2, 3] }]), notes: 'Pre-Hard: two locked lone boxes.' },
   20: { ev: E(20, [{ t: 'linked', pd: [1, 2] }, { t: 'locked', turns: [3] }, { t: 'buried' }]), notes: 'Hard, four queues: linked, locked, buried.' },
