@@ -186,33 +186,39 @@
    "res": {
     "stay": 0,
     "turns": 0,
-    "random": 0.02,
-    "glance": 0.095,
-    "novice": 0.05,
-    "casual": 0.075,
-    "pcasual": 0.075,
-    "watcher": 0.08,
+    "random": 0,
+    "glance": 0.015,
+    "novice": 0.03,
+    "casual": 0.03,
+    "pcasual": 0.045,
+    "watcher": 0.01,
     "sharp": 0,
     "careful": 1
    },
    "resRV": {
     "stay": 0,
     "turns": 0,
-    "random": 0.235,
-    "glance": 0.475,
-    "novice": 0.43,
-    "casual": 0.485,
-    "pcasual": 0.44,
-    "watcher": 0.75,
+    "random": 0.07,
+    "glance": 0.3,
+    "novice": 0.29,
+    "casual": 0.355,
+    "pcasual": 0.325,
+    "watcher": 0.625,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
-     "bot": "glance",
-     "got": 0.475,
-     "lo": 0,
-     "hi": 0.4
+     "bot": "casual",
+     "got": 0.355,
+     "lo": 0.45,
+     "hi": 0.65
+    },
+    {
+     "bot": "watcher",
+     "got": 0.625,
+     "lo": 0.75,
+     "hi": 0.9
     }
    ]
   }

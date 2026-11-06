@@ -67,7 +67,7 @@ Every medium and hard level from 5 on is a watch-the-belt level: random taps, ta
 | 3 | Round and Round | easy · 1st booster | Two queues and two Enter Paths. Whole row groups take turns between the Enter Paths, mixed out of queue order. | 2 | Left, Right | 4 | 12 (0 / 0 / 6 / 6) | 432 / 104 | square_19 | none | 100% / 100% | 100% | 100% |
 | 4 | Side by Side | medium | First medium level: a third queue, 15 boxes from 24 to 40 items. Rows come in patches of one colour, so watch which colour is coming and send the box for it. | 3 | Left, Right | 6 | 15 (0 / 7 / 6 / 2) | 440 / 104 | square_19 | none | 18% / 17% | 71% | 89% |
 | 5 | Colour Patches | medium | A third queue. Rows come in patches of one colour: watch which colour is coming and send the box for it. | 3 | Left, Right | 8 | 36 (5 / 10 / 11 / 10) | 1072 / 104 | square_19 | none | 12% with RV, 0% without | 56% | 82% |
-| 6 | Diagonal Stripes | medium | Three stretches with their own colours: Red/Orange/Blue boxes match the first rows; then Cyan and Green rows fill the belt while the next boxes are Purple and Yellow, with the ONLY Green box 6th and one Cyan 40 8th; for several sends only one queue keeps the level alive; the last stretch gets easy. | 3 | Left, Right | 7 | 30 (0 / 15 / 13 / 2) | 856 / 104 | square_19 | none | 24% with RV, 2% without | 48% | 75% |
+| 6 | Diagonal Stripes | medium | Three stretches with their own colours: Red/Orange/Blue boxes match the first rows; then Cyan and Green rows fill the belt while the next boxes are Purple and Yellow (many 40s), with one Cyan 40 9th and the ONLY Green box 10th; for several sends only one queue keeps the level alive; the last stretch gets easy. | 3 | Left, Right | 7 | 36 (0 / 15 / 11 / 10) | 1112 / 104 | square_19 | none | 7% with RV, 0% without | 36% | 62% |
 | 7 | Hidden Box | easy | Hidden Box in a staggered pattern over 3 queues: every other box after the front is hidden. Boxes from 16 to 40 items. | 3 | Left, Right | 8 | 30 (4 / 9 / 9 / 8) | 888 / 104 | square_19 | Hidden ×14 (16/24/32/40 items) | 16% with RV, 0% without | 80% | 95% |
 | 8 | Hidden Rows | medium | Every even box is hidden, so the queues show rows of Hidden Boxes. Rows in colour patches: watch which colour is coming. | 3 | Left, Right | 8 | 36 (5 / 10 / 11 / 10) | 1072 / 104 | square_19 | Hidden ×18 (16/24/32/40 items) | 7% with RV, 0% without | 64% | 76% |
 | 9 | Long Haul | medium | Longer queues (11 boxes each), boxes from 16 to 40 items over all 8 colours; rows in colour patches, so no queue can be emptied first. | 3 | Left, Right | 8 | 33 (4 / 10 / 10 / 9) | 984 / 104 | square_19 | none | 16% with RV, 0% without | 44% | 55% |
@@ -126,7 +126,7 @@ Win rate of each bot over 200 runs (items fly straight to any matching box, belt
 | 3 | Round and Round | easy | 100% | 100% | 100% | 100% | 100% | 100% | 100% | 100% | Blind, one queue | Very easy |
 | 4 | Side by Side | medium | 0% | 0% | 18% | 53% | 71% | 89% | 100% | 32% | Careful | Very hard |
 | 5 | Colour Patches | medium | 0% | 0% | 1% | 5% | 14% | 17% | 100% | 0% | Careful | Very hard |
-| 6 | Diagonal Stripes | medium | 0% | 0% | 2% | 5% | 8% | 8% | 100% | 0% | Careful | Very hard |
+| 6 | Diagonal Stripes | medium | 0% | 0% | 0% | 3% | 3% | 1% | 100% | 0% | Careful | Very hard |
 | 7 | Hidden Box | easy | 0% | 0% | 0% | 4% | 12% | 20% | 100% | 65% | Careful | Very hard |
 | 8 | Hidden Rows | medium | 0% | 0% | 0% | 6% | 11% | 8% | 100% | 0% | Careful | Very hard |
 | 9 | Long Haul | medium | 0% | 0% | 0% | 2% | 1% | 0% | 100% | 14% | Careful | Very hard |
