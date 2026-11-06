@@ -89,7 +89,7 @@ function rate(m, bot, rv) {
 const INTRO = { 7: 'Hidden Box', 12: 'Locked Box', 17: 'Linked Box', 22: 'Block Door', 27: 'Locked Item', 32: 'Block Queue' };
 // user, 2026-11-05: levels 4 and 8 are medium levels where the player must plan (4 was a tutorial level, 8 a light level
 // after the Hidden Box intro); level 26 (after the Hard level 25) was too easy and is medium too
-const ROLE_SET = { 4: 'medium', 8: 'medium', 26: 'medium' };
+const ROLE_SET = { 4: 'medium', 8: 'pre-hard', 26: 'medium' };
 function role(n) {
   if (ROLE_SET[n]) return ROLE_SET[n];
   if (n >= 10 && n % 5 === 0) return 'hard';

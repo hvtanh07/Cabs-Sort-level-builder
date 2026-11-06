@@ -400,57 +400,33 @@
    "role": "medium",
    "intro": null,
    "res": {
-    "stay": 0.5,
+    "stay": 0,
     "turns": 0,
-    "random": 0.045,
-    "glance": 0.75,
-    "novice": 0.45,
-    "casual": 0.67,
-    "pcasual": 0.685,
-    "watcher": 0.87,
+    "random": 0.005,
+    "glance": 0.005,
+    "novice": 0.055,
+    "casual": 0.185,
+    "pcasual": 0.14,
+    "watcher": 0.57,
     "sharp": 1,
     "careful": 1
    },
    "resRV": {
-    "stay": 1,
+    "stay": 0.14,
     "turns": 0,
-    "random": 0.485,
-    "glance": 1,
-    "novice": 0.965,
-    "casual": 0.995,
-    "pcasual": 0.995,
-    "watcher": 1,
+    "random": 0.04,
+    "glance": 0.44,
+    "novice": 0.25,
+    "casual": 0.545,
+    "pcasual": 0.485,
+    "watcher": 0.81,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
-     "bot": "casual",
-     "got": 0.995,
-     "lo": 0.45,
-     "hi": 0.65
-    },
-    {
-     "bot": "watcher",
-     "got": 1,
-     "lo": 0.75,
-     "hi": 0.9
-    },
-    {
-     "bot": "random",
-     "got": 0.485,
-     "lo": 0,
-     "hi": 0.3
-    },
-    {
-     "bot": "stay",
-     "got": 1,
-     "lo": 0,
-     "hi": 0.3
-    },
-    {
      "bot": "glance",
-     "got": 1,
+     "got": 0.44,
      "lo": 0,
      "hi": 0.4
     }
@@ -463,33 +439,39 @@
    "role": "intro",
    "intro": "Hidden Box",
    "res": {
-    "stay": 1,
-    "turns": 1,
-    "random": 1,
-    "glance": 1,
-    "novice": 1,
-    "casual": 1,
-    "pcasual": 1,
-    "watcher": 1,
-    "sharp": 1,
+    "stay": 0,
+    "turns": 0,
+    "random": 0.03,
+    "glance": 0.07,
+    "novice": 0.15,
+    "casual": 0.115,
+    "pcasual": 0.17,
+    "watcher": 0.08,
+    "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 1,
-    "turns": 1,
-    "random": 1,
-    "glance": 1,
-    "novice": 1,
-    "casual": 1,
-    "pcasual": 1,
-    "watcher": 1,
+    "stay": 0,
+    "turns": 0.315,
+    "random": 0.37,
+    "glance": 0.47,
+    "novice": 0.68,
+    "casual": 0.765,
+    "pcasual": 0.825,
+    "watcher": 0.905,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
+     "bot": "casual",
+     "got": 0.765,
+     "lo": 0.85,
+     "hi": 1
+    },
+    {
      "bot": "novice",
-     "got": 1,
+     "got": 0.68,
      "lo": 0.7,
      "hi": 0.95
     }
@@ -499,62 +481,44 @@
    "n": 8,
    "name": "Hidden Rows",
    "metaDiff": "medium",
-   "role": "medium",
+   "role": "pre-hard",
    "intro": null,
    "res": {
     "stay": 0,
     "turns": 0,
-    "random": 0.155,
-    "glance": 0.12,
-    "novice": 0.415,
-    "casual": 0.64,
-    "pcasual": 0.495,
-    "watcher": 0.89,
+    "random": 0,
+    "glance": 0.02,
+    "novice": 0.015,
+    "casual": 0.06,
+    "pcasual": 0.04,
+    "watcher": 0.375,
     "sharp": 1,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.5,
-    "turns": 0.67,
-    "random": 0.675,
-    "glance": 0.56,
-    "novice": 0.755,
-    "casual": 0.845,
-    "pcasual": 0.78,
-    "watcher": 0.95,
+    "stay": 0,
+    "turns": 0,
+    "random": 0.11,
+    "glance": 0.27,
+    "novice": 0.32,
+    "casual": 0.505,
+    "pcasual": 0.365,
+    "watcher": 0.865,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
      "bot": "casual",
-     "got": 0.845,
-     "lo": 0.45,
-     "hi": 0.65
+     "got": 0.505,
+     "lo": 0.3,
+     "hi": 0.45
     },
     {
      "bot": "watcher",
-     "got": 0.95,
-     "lo": 0.75,
-     "hi": 0.9
-    },
-    {
-     "bot": "random",
-     "got": 0.675,
-     "lo": 0,
-     "hi": 0.3
-    },
-    {
-     "bot": "stay",
-     "got": 0.5,
-     "lo": 0,
-     "hi": 0.3
-    },
-    {
-     "bot": "glance",
-     "got": 0.56,
-     "lo": 0,
-     "hi": 0.4
+     "got": 0.865,
+     "lo": 0.6,
+     "hi": 0.75
     }
    ]
   },
