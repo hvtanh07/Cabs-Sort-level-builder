@@ -15,6 +15,7 @@ const pick = (r, arr) => arr[Math.floor(r() * arr.length)];
 const SIZE = { 1: 4, 2: 6, 3: 8, 4: 10 };   // rows of 4 items per box tier: 16 / 24 / 32 / 40 items
 const TIER = { 4: 1, 6: 2, 8: 3, 10: 4 };   // rows back to the box `size` saved in the level file
 function make(S, seed) {
+  if (S.phases) return require('./phases.js').make(S, seed, rng);   // three-phase level (level 6), see phases.js
   const r = rng(seed * 7919 + S.n * 104729);
   const N = S.boxes, lanesN = S.lanes;
   // sizes: specs count boxes by tier (1 = small, big2 / big3 / big4 = the next tiers up); SIZE turns a tier into the
@@ -80,20 +81,27 @@ function make(S, seed) {
   // the queues (and a second one at (lane, depth2) when `depth2` is set, so both sit in one queue); every other box of that
   // colour takes another colour, and the lone boxes' rows enter `lead` rows earlier (or right after `atRow` rows), so the
   // colour fills the belt while its box is still buried under the boxes in front of it (levels 5 / 6)
-  let loneBoxes = [];
-  if (S.lone) {
-    const L = S.lone, rest = pal.filter(c => c !== L.color);
+  // `lone` may also be a list of such objects (level 6: one Red and one Orange box in two queues); each colour then has
+  // its own boxes and its own `atRow` / `lead`
+  const LONES = S.lone ? [].concat(S.lone) : [];
+  const loneCols = LONES.map(L => L.color);
+  const BOXES = LONES.map(L => {
     const at = (d, t) => { const b = order.find(o => o.lane === L.lane && o.depth === d); if (!b) throw new Error('lone: no box at lane ' + L.lane + ' depth ' + d); if (t) b.size = SZ[t]; return b; };
-    loneBoxes = [at(L.depth, L.tier)];
-    if (L.depth2 != null) loneBoxes.push(at(L.depth2, L.tier2 || L.tier));
+    const bx = [at(L.depth, L.tier)];
+    if (L.depth2 != null) bx.push(at(L.depth2, L.tier2 || L.tier));
+    return bx;
+  });
+  const loneBoxes = [].concat(...BOXES);
+  if (LONES.length) {
+    const rest = pal.filter(c => !loneCols.includes(c));
     let k3 = 0;
     order.forEach(b => {
-      if (loneBoxes.includes(b) || b.color !== L.color) return;
+      if (loneBoxes.includes(b) || !loneCols.includes(b.color)) return;
       const near = order.filter(o => o !== b && Math.abs(o.i - b.i) <= 2).map(o => o.color);
       const ok = rest.filter(c => !near.includes(c));
       b.color = ok.length ? ok[k3++ % ok.length] : rest[k3++ % rest.length];
     });
-    loneBoxes.forEach(b => { b.color = L.color; });
+    LONES.forEach((L, i) => BOXES[i].forEach(b => { b.color = L.color; }));
   }
   // items in send order, one colour per Enter Path row: each box brings `size` rows of 4 of its colour
   const units = [];
@@ -105,13 +113,16 @@ function make(S, seed) {
   const w = (S.window || 0) / 4;   // spec windows are in items
   units.forEach(x => { x.key += r() * w; });
   const isLone = x => loneBoxes.some(b => b.i === x.b);
-  if (loneBoxes.length && S.lone.atRow != null) {
-    // `atRow`: the lone colour's rows start right after this many rows of the other boxes (counted over all Enter Paths),
-    // so the colour shows up only once a few boxes have been cleared
-    const others = units.filter(x => !isLone(x)).map(x => x.key).sort((p, q) => p - q);
-    const k0 = others[Math.min(others.length - 1, S.lone.atRow)];
-    units.filter(isLone).forEach((x, j) => { x.key = k0 + 1e-3 + j * 1e-6; });
-  } else if (loneBoxes.length) units.forEach(x => { if (isLone(x)) x.key -= S.lone.lead || 0; });
+  LONES.forEach((L, i) => {
+    const mine = x => BOXES[i].some(b => b.i === x.b);
+    if (L.atRow != null) {
+      // `atRow`: this lone colour's rows start right after this many rows of the non-lone boxes (counted over all Enter
+      // Paths), so the colour shows up only once a few boxes have been cleared
+      const others = units.filter(x => !isLone(x)).map(x => x.key).sort((p, q) => p - q);
+      const k0 = others[Math.min(others.length - 1, L.atRow)];
+      units.filter(mine).forEach((x, j) => { x.key = k0 + 1e-3 + j * 1e-6; });
+    } else units.forEach(x => { if (mine(x)) x.key -= L.lead || 0; });
+  });
   if (S.late) {  // L5: the last rows of the first big box go to the very end
     const lb = order.find(b => b.size > SZ[1]);
     const idx = units.map((x, i) => i).filter(i => units[i].b === lb.i);

@@ -105,69 +105,41 @@
  },
  "6": {
   "over": {
-   "window": 200,
-   "colors": 6,
-   "boxes": 36,
-   "count": 36,
-   "sizeAt": [
-    2,
-    3,
-    4,
-    3,
-    1,
-    2,
-    4,
-    2,
-    3,
-    4,
-    2,
-    1,
-    3,
-    4,
-    2,
-    3,
-    4,
-    1,
-    2,
-    3,
-    4,
-    2,
-    3,
-    4,
-    3,
-    1,
-    2,
-    4,
-    2,
-    3,
-    4,
-    2,
-    3,
-    1,
-    4,
-    3
-   ],
-   "palette": [
-    3,
-    7,
-    5,
-    4,
-    6,
-    1
-   ],
-   "stick": 0.6,
-   "atPos": null,
-   "lone": {
-    "color": 1,
-    "lane": 2,
-    "depth": 5,
-    "depth2": 6,
-    "tier": 2,
-    "atRow": 20
+   "phases": {
+    "cols": [
+     3,
+     4,
+     5,
+     1
+    ],
+    "d1": 3,
+    "d2": 5,
+    "dmin": 2,
+    "d3": 3,
+    "t1": [
+     2,
+     3
+    ],
+    "t2": [
+     2,
+     3
+    ],
+    "tC": [
+     4
+    ],
+    "tD": 4,
+    "fD": 1,
+    "q": 0,
+    "t3": [
+     2,
+     3
+    ],
+    "big": 4,
+    "cdFirst": true
    },
-   "intro": "Box sizes from 16 to 40 items. Only Blue, Cyan, Purple, Green and Yellow boxes, plus TWO Red boxes (24 items each), 6th and 7th in the right queue. Red rows only start after a few boxes are cleared: clear the boxes in front of the red boxes with boxes whose colours are on the belt. Once the red boxes are out, the rest of the level opens up."
+   "intro": "Three phases. First the front boxes are only Blue, Green and Purple, and the first rows bring exactly their items. Then Purple and Red rows fill the belt while the next boxes are mostly Blue and Green, whose items come later; one Purple 40 and the ONLY Red box (40 items) sit 8th in the middle and right queues. Send Blue and Green boxes a few at a time so the slots do not fill, dig down to the Purple and Red boxes, and the rest of the level gets easy."
   },
-  "seed": 39
+  "seed": 4
  },
  "7": {
   "over": {
