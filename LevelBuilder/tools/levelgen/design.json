@@ -179,29 +179,24 @@
    "Q": 3,
    "diff": "medium",
    "notes": "Hidden Box: two colours are only inside hidden boxes.",
-   "D": 12,
-   "nb": 7,
+   "D": 13,
+   "nb": 8,
    "tiers": [
     1,
     3,
     3,
     3
    ],
-   "window": 2,
-   "delay": 8,
-   "q": 0.8,
-   "dw": 1,
+   "window": 4,
+   "delay": 12,
+   "q": 0.6,
+   "dw": 2,
    "lateAll": 0.5,
    "jit": 0.5,
-   "stick": 0.85,
-   "spread": 1,
-   "early": [
-    {
-     "t": "hidden",
-     "turns": 2
-    }
-   ],
-   "keySide": 0,
+   "stick": 0.95,
+   "spread": 0.3,
+   "hidePattern": "checker",
+   "keySide": 1,
    "ev": [
     {
      "p": 0.33,
@@ -212,26 +207,12 @@
     {
      "p": 0.68,
      "t": "hidden",
-     "decoy": 1,
+     "decoy": 0,
      "lead": 12
     }
    ]
   },
-  "seed": 4,
-  "res": {
-   "casual": 0.565,
-   "watcher": 0.43,
-   "score": 50.3,
-   "random": 0.085,
-   "glance": 0.595
-  },
-  "traps": [
-   0.42,
-   0.5,
-   0.53,
-   0.56,
-   0.58
-  ]
+  "seed": 2
  },
  "15": {
   "S": {
@@ -420,50 +401,41 @@
    "Q": 3,
    "diff": "medium",
    "notes": "Linked Box: the needed colour is only in one hidden box, linked to an extra box.",
-   "D": 9,
-   "nb": 7,
+   "D": 10,
+   "nb": 8,
    "tiers": [
-    2,
+    1,
     3,
     3,
-    2
+    3
    ],
-   "window": 4,
-   "delay": 12,
-   "q": 1,
-   "dw": 2,
-   "lateAll": 0.1,
-   "jit": 1,
-   "stick": 0.75,
-   "spread": 1,
+   "window": 1,
+   "delay": 4,
+   "q": 0.6,
+   "dw": 1,
+   "lateAll": 0.3,
+   "jit": 0,
+   "stick": 0.6,
+   "spread": 0.6,
+   "hidePattern": "checker",
    "early": [
     {
      "t": "link",
-     "turns": 3
+     "turns": 2
     }
    ],
-   "keySide": 1,
+   "keySide": 0,
    "ev": [
     {
      "p": 0.53,
      "t": "linked",
      "pd": 1,
      "hide": true,
-     "lead": 12
+     "lead": 3
     }
    ]
   },
-  "seed": 1,
-  "res": {
-   "casual": 0.595,
-   "watcher": 0.75,
-   "score": 32.8,
-   "random": 0.155,
-   "glance": 0.85
-  },
-  "traps": [
-   0.56
-  ]
+  "seed": 2
  },
  "19": {
   "S": {
@@ -706,49 +678,38 @@
    "Q": 3,
    "diff": "medium",
    "notes": "Block Door with a colour only in a hidden box.",
-   "D": 9,
-   "nb": 6,
+   "D": 10,
+   "nb": 8,
    "tiers": [
-    3,
-    3,
     2,
-    1
+    3,
+    3,
+    2
    ],
-   "window": 0,
-   "delay": 12,
-   "q": 0.4,
-   "dw": 2,
-   "lateAll": 0.1,
+   "window": 2,
+   "delay": 8,
+   "q": 0.6,
+   "dw": 1,
+   "lateAll": 0.3,
    "jit": 0.5,
-   "stick": 0.85,
-   "spread": 1,
+   "stick": 0.6,
+   "spread": 0.6,
    "door": {
     "turns": 3,
-    "open": 0
+    "open": 1
    },
+   "hidePattern": "checker",
    "keySide": 1,
    "ev": [
     {
      "p": 0.53,
      "t": "hidden",
      "decoy": 0,
-     "lead": 3
+     "lead": 6
     }
    ]
   },
-  "seed": 2,
-  "res": {
-   "casual": 0.495,
-   "watcher": 0.815,
-   "score": 34.5,
-   "random": 0.22,
-   "glance": 0.65
-  },
-  "traps": [
-   0.19,
-   0.22,
-   0.44
-  ]
+  "seed": 6
  },
  "24": {
   "S": {
@@ -1015,50 +976,40 @@
    "diff": "medium",
    "notes": "Locked Items of a colour whose box is hidden.",
    "D": 11,
-   "nb": 7,
+   "nb": 8,
    "tiers": [
     1,
     3,
     3,
     3
    ],
-   "window": 2,
+   "window": 0,
    "delay": 4,
-   "q": 0.4,
-   "dw": 4,
+   "q": 1,
+   "dw": 1,
    "lateAll": 0.1,
-   "jit": 0,
-   "stick": 0.85,
-   "spread": 1,
+   "jit": 1,
+   "stick": 0.6,
+   "spread": 0.3,
+   "hidePattern": "checker",
    "early": [
     {
      "t": "litem",
      "turns": 3
     }
    ],
-   "keySide": 0,
+   "keySide": 1,
    "ev": [
     {
      "p": 0.53,
      "t": "litem",
      "turns": 4,
      "hide": true,
-     "lead": 9
+     "lead": 6
     }
    ]
   },
-  "seed": 4,
-  "res": {
-   "casual": 0.62,
-   "watcher": 0.88,
-   "score": 25,
-   "random": 0.135,
-   "glance": 0.705
-  },
-  "traps": [
-   0.36,
-   0.39
-  ]
+  "seed": 1
  },
  "29": {
   "S": {
@@ -1133,33 +1084,34 @@
    "D": 10,
    "nb": 5,
    "tiers": [
-    1,
     3,
     3,
-    3
+    2,
+    1
    ],
-   "window": 1,
+   "window": 2,
    "delay": 10,
-   "q": 1,
-   "dw": 1,
-   "lateAll": 0.4,
+   "q": 0.6,
+   "dw": 2,
+   "lateAll": 0.5,
    "jit": 0,
-   "stick": 1,
-   "spread": 1,
-   "keySide": 0,
+   "stick": 0.9,
+   "spread": 0.6,
+   "hidePattern": "checker",
+   "keySide": 1,
    "ev": [
     {
      "p": 0.23,
      "t": "litem",
-     "turns": 5,
-     "lead": 12
+     "turns": 4,
+     "lead": 6
     },
     {
      "p": 0.43,
      "t": "locked",
-     "turns": 3,
+     "turns": 2,
      "hide": true,
-     "lead": 6
+     "lead": 9
     },
     {
      "p": 0.68,
@@ -1168,23 +1120,7 @@
     }
    ]
   },
-  "seed": 5,
-  "res": {
-   "casual": 0.205,
-   "watcher": 0.13,
-   "score": 83.3,
-   "random": 0.01,
-   "glance": 0.375
-  },
-  "traps": [
-   0.07,
-   0.1,
-   0.13,
-   0.17,
-   0.25,
-   0.4,
-   0.45
-  ]
+  "seed": 6
  },
  "31": {
   "S": {
@@ -1433,22 +1369,22 @@
    "Q": 4,
    "diff": "hard",
    "notes": "Hard: Block Queue, a hidden locked box, a buried box.",
-   "D": 9,
-   "nb": 6,
+   "D": 10,
+   "nb": 5,
    "tiers": [
-    1,
+    2,
     3,
     3,
-    3
+    2
    ],
-   "window": 4,
-   "delay": 20,
-   "q": 0.4,
+   "window": 0,
+   "delay": 10,
+   "q": 1,
    "dw": 1,
-   "lateAll": 0.6,
-   "jit": 1,
+   "lateAll": 0.4,
+   "jit": 0.5,
    "stick": 0.9,
-   "spread": 1,
+   "spread": 0.3,
    "bq": {
     "turns": 3,
     "lanes": [
@@ -1456,46 +1392,35 @@
      3
     ]
    },
-   "keySide": 1,
+   "hidePattern": "checker2",
+   "early": [
+    {
+     "t": "lock",
+     "turns": 2
+    }
+   ],
+   "keySide": 0,
    "ev": [
     {
      "p": 0.23,
      "t": "bq",
-     "lead": 9
+     "lead": 12
     },
     {
      "p": 0.43,
      "t": "locked",
      "turns": 3,
      "hide": true,
-     "lead": 12
+     "lead": 9
     },
     {
      "p": 0.68,
      "t": "buried",
-     "lead": 9
+     "lead": 6
     }
    ]
   },
-  "seed": 5,
-  "res": {
-   "casual": 0.32,
-   "watcher": 0.17,
-   "score": 75.5,
-   "random": 0.07
-  },
-  "traps": [
-   0.36,
-   0.53
-  ],
-  "post": [
-   {
-    "t": "lock",
-    "lane": 0,
-    "depth": 0,
-    "turns": 2
-   }
-  ]
+  "seed": 5
  },
  "36": {
   "S": {
@@ -1561,61 +1486,44 @@
    "Q": 3,
    "diff": "medium",
    "notes": "Block Door with two colours that are only in hidden boxes.",
-   "D": 10,
-   "nb": 6,
+   "D": 9,
+   "nb": 7,
    "tiers": [
-    1,
     3,
     3,
-    3
+    2,
+    1
    ],
    "window": 0,
-   "delay": 14,
-   "q": 0.4,
-   "dw": 3,
-   "lateAll": 0.2,
-   "jit": 0.5,
+   "delay": 6,
+   "q": 0.6,
+   "dw": 1,
+   "lateAll": 0.3,
+   "jit": 1,
    "stick": 0.9,
-   "spread": 0.6,
+   "spread": 0.3,
    "door": {
     "turns": 3,
-    "open": 1
+    "open": 0
    },
+   "hidePattern": "checker2",
    "keySide": 1,
    "ev": [
     {
      "t": "hidden",
      "p": 0.5,
      "decoy": 0,
-     "lead": 9
+     "lead": 3
     },
     {
      "t": "hidden",
      "p": 0.6,
-     "decoy": 1,
-     "lead": 9
+     "decoy": 0,
+     "lead": 3
     }
    ]
   },
-  "seed": 5,
-  "res": {
-   "casual": 0.47,
-   "watcher": 0.665,
-   "score": 43.3,
-   "random": 0.065
-  },
-  "traps": [
-   0.13,
-   0.23,
-   0.53
-  ],
-  "post": [
-   {
-    "t": "hidden",
-    "lane": 0,
-    "depth": 1
-   }
-  ]
+  "seed": 1
  },
  "38": {
   "S": {
@@ -1761,22 +1669,22 @@
    "Q": 4,
    "diff": "hard",
    "notes": "Grand Finale: Block Queue, hidden locked box, locked items, buried box.",
-   "D": 10,
-   "nb": 8,
+   "D": 11,
+   "nb": 7,
    "tiers": [
+    1,
     3,
     3,
-    2,
-    1
+    3
    ],
-   "window": 2,
-   "delay": 20,
-   "q": 1,
-   "dw": 4,
-   "lateAll": 0.4,
-   "jit": 0.5,
-   "stick": 0.9,
-   "spread": 0.3,
+   "window": 0,
+   "delay": 10,
+   "q": 0.6,
+   "dw": 3,
+   "lateAll": 0.5,
+   "jit": 1,
+   "stick": 1,
+   "spread": 1,
    "bq": {
     "turns": 3,
     "lanes": [
@@ -1784,25 +1692,26 @@
      1
     ]
    },
+   "hidePattern": "checker",
    "keySide": 1,
    "ev": [
     {
      "p": 0.23,
      "t": "bq",
-     "lead": 3
+     "lead": 12
     },
     {
      "p": 0.43,
      "t": "locked",
      "turns": 3,
      "hide": true,
-     "lead": 3
+     "lead": 6
     },
     {
      "p": 0.68,
      "t": "litem",
      "turns": 4,
-     "lead": 6
+     "lead": 12
     },
     {
      "p": 0.83,
@@ -1811,18 +1720,6 @@
     }
    ]
   },
-  "seed": 1,
-  "res": {
-   "casual": 0.14,
-   "watcher": 0.125,
-   "score": 86.8,
-   "random": 0.01,
-   "glance": 0.285
-  },
-  "traps": [
-   0.13,
-   0.23,
-   0.63
-  ]
+  "seed": 3
  }
 }

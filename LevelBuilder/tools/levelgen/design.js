@@ -57,6 +57,10 @@ function make(S, seed) {
       lanes[cur][top[cur]++].i = idx++ + (r() - 0.5) * (S.jit || 0);
     }
   } else for (let d = 0; d < D; d++) CS.shuffle([...Array(Q).keys()], r).forEach(l => { lanes[l][d].i = idx++ + (r() - 0.5) * (S.jit || 0); });
+  // `hidePattern` (user, 2026-11-06, like levels 7 and 8): boxes are hidden in a pattern, not one by one.
+  // checker / checker2: every other box, alternating between queues; even: every 2nd, 4th, 6th... box of every queue.
+  // The front box is never hidden (it would be revealed at once).
+  const inPat = x => x.d >= 1 && (S.hidePattern === 'even' ? x.d % 2 === 1 : (x.l + x.d) % 2 === (S.hidePattern === 'checker' ? 1 : 0));
   // events
   const usedLane = [];
   const info = [];
@@ -68,7 +72,9 @@ function make(S, seed) {
     if (S.bq && e.t === 'bq') lanesOk = [bqL[1]];
     // `depth`: an exact place in the queue (0 = front), used by intro levels that show a box from the start
     const dOk = x => e.depth != null ? x.d === e.depth : x.d >= 1 && x.d <= D - 2;
-    const cand = lanes.flat().filter(x => lanesOk.includes(x.l) && dOk(x) && x.key == null && !x.partner && !usedLane.some(u => u.l === x.l && Math.abs(u.d - x.d) <= 1));
+    // a hidden key box must sit on a cell of the level's hidden pattern (`hidePattern`)
+    const pOk = x => !S.hidePattern || !(e.t === 'hidden' || e.hide) || inPat(x);
+    const cand = lanes.flat().filter(x => lanesOk.includes(x.l) && dOk(x) && pOk(x) && x.key == null && !x.partner && !usedLane.some(u => u.l === x.l && Math.abs(u.d - x.d) <= 1));
     if (!cand.length) throw new Error('no key spot');
     const b = cand.sort((x, y) => Math.abs(x.i - want) - Math.abs(y.i - want))[0];
     const le = b.l, de = b.d;
@@ -114,7 +120,8 @@ function make(S, seed) {
   });
   // background tension: any other box may get its rows late too (`lateAll` share)
   if (S.lateAll) lanes.flat().forEach(b => { if (b.key == null && r() < S.lateAll) b.late = true; });
-  if (S.hideExtra) CS.shuffle(lanes.flat().filter(x => x.key == null && x.d >= 1 && !x.hidden && !x.partner), r).slice(0, S.hideExtra).forEach(x => { x.hidden = true; });
+  if (S.hidePattern) lanes.flat().forEach(x => { if (inPat(x) && !x.partner && !x.lock && !x.link && !x.linked) x.hidden = true; else if (x.key == null || !(EV[x.key].t === 'hidden' || EV[x.key].hide)) x.hidden = false; });
+  if (S.hideExtra && !S.hidePattern) CS.shuffle(lanes.flat().filter(x => x.key == null && x.d >= 1 && !x.hidden && !x.partner), r).slice(0, S.hideExtra).forEach(x => { x.hidden = true; });
   // rows: each box brings ROWS[tier] rows of its colour, split into patches of 3-6 rows, keyed by its place in the send order
   const chunks = [];
   lanes.flat().forEach(b => {

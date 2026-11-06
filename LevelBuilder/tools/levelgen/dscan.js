@@ -47,6 +47,7 @@ function sample() {
   if (L.door) S.door = { turns: pick(L.door), open: pick([0, 1]) };
   if (L.bq) S.bq = { turns: pick(L.bq.turns), lanes: pick(L.bq.lanes) };
   if (L.hideExtra) S.hideExtra = pick(L.hideExtra);
+  if (L.hidePattern) S.hidePattern = pick(L.hidePattern);
   if (L.early) S.early = L.early.map(e => { const o = Object.assign({}, e); ['turns', 'lane', 'row'].forEach(k => { if (Array.isArray(e[k])) o[k] = pick(e[k]); }); return o; });
   S.keySide = pick([0, 1]);
   S.ev = L.ev.map(e => {
