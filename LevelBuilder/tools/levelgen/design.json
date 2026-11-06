@@ -1,0 +1,1719 @@
+{
+ "11": {
+  "S": {
+   "n": 11,
+   "name": "Triple Stack",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "easy",
+   "notes": "After Hard: one buried lone box at about 55%.",
+   "D": 13,
+   "nb": 6,
+   "tiers": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "window": 4,
+   "delay": 4,
+   "q": 0.8,
+   "dw": 2,
+   "lateAll": 0.2,
+   "jit": 1,
+   "stick": 0.6,
+   "spread": 0.3,
+   "keySide": 0,
+   "ev": [
+    {
+     "p": 0.58,
+     "t": "buried",
+     "lead": 12
+    }
+   ]
+  },
+  "seed": 4,
+  "res": {
+   "casual": 0.655,
+   "watcher": 0.78,
+   "score": 28.3,
+   "random": 0.1,
+   "glance": 0.695
+  },
+  "traps": [
+   0.31,
+   0.33,
+   0.36,
+   0.38,
+   0.46
+  ]
+ },
+ "12": {
+  "S": {
+   "n": 12,
+   "name": "Locked Box",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "easy",
+   "notes": "Introduces Locked Box: the only box of the colour on the belt is locked at the front of its queue.",
+   "D": 10,
+   "nb": 6,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 4,
+   "delay": 4,
+   "q": 0.6,
+   "dw": 3,
+   "lateAll": 0,
+   "jit": 1,
+   "stick": 0.3,
+   "spread": 1,
+   "keySide": 0,
+   "ev": [
+    {
+     "p": 0.43,
+     "t": "locked",
+     "turns": 2,
+     "lead": 9
+    }
+   ]
+  },
+  "seed": 2,
+  "res": {
+   "casual": 0.76,
+   "watcher": 0.85,
+   "score": 19.5,
+   "random": 0.6,
+   "glance": 0.53
+  },
+  "traps": [
+   0.33
+  ]
+ },
+ "13": {
+  "S": {
+   "n": 13,
+   "name": "Key Count",
+   "conveyor": "lens_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Locked Box: the needed colour is only in one locked box; send other boxes to open it.",
+   "D": 10,
+   "nb": 7,
+   "tiers": [
+    3,
+    3,
+    2,
+    1
+   ],
+   "window": 0,
+   "delay": 12,
+   "q": 0.6,
+   "dw": 3,
+   "lateAll": 0.3,
+   "jit": 1,
+   "stick": 0.6,
+   "spread": 1,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.53,
+     "t": "locked",
+     "turns": 3,
+     "lead": 12
+    }
+   ]
+  },
+  "seed": 5,
+  "res": {
+   "casual": 0.66,
+   "watcher": 0.77,
+   "score": 28.5,
+   "random": 0.26,
+   "glance": 0.335
+  },
+  "traps": [
+   0.4,
+   0.53
+  ]
+ },
+ "14": {
+  "S": {
+   "n": 14,
+   "name": "Blind Picks",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Hidden Box: two colours are only inside hidden boxes.",
+   "D": 11,
+   "nb": 8,
+   "tiers": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "window": 1,
+   "delay": 16,
+   "q": 0.6,
+   "dw": 4,
+   "lateAll": 0.3,
+   "jit": 0.5,
+   "stick": 0.9,
+   "spread": 0.6,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.33,
+     "t": "hidden",
+     "decoy": 0,
+     "lead": 3
+    },
+    {
+     "p": 0.68,
+     "t": "hidden",
+     "decoy": 1,
+     "lead": 6
+    }
+   ]
+  },
+  "seed": 1,
+  "res": {
+   "casual": 0.29,
+   "watcher": 0.545,
+   "score": 58.3,
+   "random": 0.025,
+   "glance": 0.365
+  },
+  "traps": [
+   0.12,
+   0.45
+  ]
+ },
+ "15": {
+  "S": {
+   "n": 15,
+   "name": "Three Gates",
+   "conveyor": "heart_21",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 3,
+   "diff": "hard",
+   "notes": "Hard, three Enter Paths: buried box, locked box, buried box.",
+   "D": 9,
+   "nb": 6,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 2,
+   "delay": 20,
+   "q": 0.4,
+   "dw": 4,
+   "lateAll": 0.5,
+   "jit": 0.5,
+   "stick": 0.7,
+   "spread": 0.3,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.23,
+     "t": "buried",
+     "lead": 12
+    },
+    {
+     "p": 0.43,
+     "t": "locked",
+     "turns": 3,
+     "lead": 12
+    },
+    {
+     "p": 0.68,
+     "t": "buried",
+     "lead": 9
+    }
+   ]
+  },
+  "seed": 4,
+  "res": {
+   "casual": 0.185,
+   "watcher": 0.24,
+   "score": 78.8,
+   "random": 0.005,
+   "glance": 0.085
+  },
+  "traps": [
+   0.37
+  ]
+ },
+ "16": {
+  "S": {
+   "n": 16,
+   "name": "Heavy Load",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "easy",
+   "notes": "After Hard: one buried lone box at about 55%.",
+   "D": 12,
+   "nb": 7,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 2,
+   "delay": 8,
+   "q": 0.4,
+   "dw": 3,
+   "lateAll": 0.3,
+   "jit": 1,
+   "stick": 0.75,
+   "spread": 1,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.58,
+     "t": "buried",
+     "lead": 12
+    }
+   ]
+  },
+  "seed": 4,
+  "res": {
+   "casual": 0.78,
+   "watcher": 0.565,
+   "score": 32.8,
+   "random": 0.395,
+   "glance": 0.945
+  },
+  "traps": [
+   0.19,
+   0.58
+  ]
+ },
+ "17": {
+  "S": {
+   "n": 17,
+   "name": "Linked Box",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "easy",
+   "notes": "Introduces Linked Box: the needed colour is linked to an extra box in the next queue.",
+   "D": 11,
+   "nb": 8,
+   "tiers": [
+    3,
+    3,
+    2,
+    1
+   ],
+   "window": 4,
+   "delay": 2,
+   "q": 1,
+   "dw": 4,
+   "lateAll": 0.1,
+   "jit": 0.5,
+   "stick": 0.3,
+   "spread": 1,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.43,
+     "t": "linked",
+     "pd": 2,
+     "lead": 12
+    }
+   ]
+  },
+  "seed": 2,
+  "res": {
+   "casual": 0.85,
+   "watcher": 0.98,
+   "score": 8.5,
+   "random": 0.325,
+   "glance": 0.535
+  },
+  "traps": [
+   0.42,
+   0.52
+  ]
+ },
+ "18": {
+  "S": {
+   "n": 18,
+   "name": "Hidden Links",
+   "conveyor": "lens_18",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Linked Box: the needed colour is only in one hidden box, linked to an extra box.",
+   "D": 9,
+   "nb": 8,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 4,
+   "delay": 12,
+   "q": 1,
+   "dw": 1,
+   "lateAll": 0.2,
+   "jit": 1,
+   "stick": 0.85,
+   "spread": 0.3,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.53,
+     "t": "linked",
+     "pd": 1,
+     "hide": true,
+     "lead": 9
+    }
+   ]
+  },
+  "seed": 3,
+  "res": {
+   "casual": 0.55,
+   "watcher": 0.755,
+   "score": 34.7,
+   "random": 0.025,
+   "glance": 0.385
+  },
+  "traps": [
+   0.19,
+   0.44
+  ]
+ },
+ "19": {
+  "S": {
+   "n": 19,
+   "name": "Patience",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Pre-Hard: two locked lone boxes.",
+   "D": 11,
+   "nb": 7,
+   "tiers": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "window": 0,
+   "delay": 12,
+   "q": 0.4,
+   "dw": 4,
+   "lateAll": 0.3,
+   "jit": 1,
+   "stick": 0.85,
+   "spread": 0.3,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.33,
+     "t": "locked",
+     "turns": 3,
+     "lead": 12
+    },
+    {
+     "p": 0.68,
+     "t": "locked",
+     "turns": 3,
+     "lead": 6
+    }
+   ]
+  },
+  "seed": 4,
+  "res": {
+   "casual": 0.3,
+   "watcher": 0.615,
+   "score": 54.3,
+   "random": 0.035,
+   "glance": 0.25
+  },
+  "traps": [
+   0.36,
+   0.42
+  ]
+ },
+ "20": {
+  "S": {
+   "n": 20,
+   "name": "Four Queues",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 4,
+   "diff": "hard",
+   "notes": "Hard, four queues: linked, locked, buried.",
+   "D": 10,
+   "nb": 6,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 4,
+   "delay": 6,
+   "q": 0.4,
+   "dw": 4,
+   "lateAll": 0.4,
+   "jit": 0,
+   "stick": 0.7,
+   "spread": 1,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.23,
+     "t": "linked",
+     "pd": 2,
+     "lead": 9
+    },
+    {
+     "p": 0.43,
+     "t": "locked",
+     "turns": 3,
+     "lead": 9
+    },
+    {
+     "p": 0.68,
+     "t": "buried",
+     "lead": 9
+    }
+   ]
+  },
+  "seed": 6,
+  "res": {
+   "casual": 0.17,
+   "watcher": 0.2,
+   "score": 81.5,
+   "random": 0.005,
+   "glance": 0.11
+  },
+  "traps": [
+   0.38,
+   0.6
+  ]
+ },
+ "21": {
+  "S": {
+   "n": 21,
+   "name": "Clear Skies",
+   "conveyor": "lens_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "easy",
+   "notes": "After Hard, no elements: one buried lone box.",
+   "D": 10,
+   "nb": 6,
+   "tiers": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "window": 4,
+   "delay": 12,
+   "q": 0.4,
+   "dw": 2,
+   "lateAll": 0.2,
+   "jit": 0,
+   "stick": 0.75,
+   "spread": 0.6,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.58,
+     "t": "buried",
+     "lead": 12
+    }
+   ]
+  },
+  "seed": 5,
+  "res": {
+   "casual": 0.665,
+   "watcher": 0.79,
+   "score": 27.3,
+   "random": 0.215,
+   "glance": 0.54
+  },
+  "traps": [
+   0.53
+  ]
+ },
+ "22": {
+  "S": {
+   "n": 22,
+   "name": "Block Door",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 2,
+   "diff": "easy",
+   "notes": "Introduces Block Door: each Enter Path carries its own colours.",
+   "D": 15,
+   "nb": 6,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 1,
+   "delay": 2,
+   "q": 0.4,
+   "dw": 4,
+   "lateAll": 0,
+   "jit": 1,
+   "stick": 0,
+   "spread": 0.3,
+   "door": {
+    "turns": 3,
+    "open": 0
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.43,
+     "t": "buried",
+     "lead": 3
+    }
+   ]
+  },
+  "seed": 5,
+  "res": {
+   "casual": 0.86,
+   "watcher": 0.95,
+   "score": 9.5,
+   "random": 0.635,
+   "glance": 0.72
+  },
+  "traps": [
+   0.33
+  ]
+ },
+ "23": {
+  "S": {
+   "n": 23,
+   "name": "Behind the Door",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Block Door with a colour only in a hidden box.",
+   "D": 9,
+   "nb": 6,
+   "tiers": [
+    3,
+    3,
+    2,
+    1
+   ],
+   "window": 0,
+   "delay": 12,
+   "q": 0.4,
+   "dw": 2,
+   "lateAll": 0.1,
+   "jit": 0.5,
+   "stick": 0.85,
+   "spread": 1,
+   "door": {
+    "turns": 3,
+    "open": 0
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.53,
+     "t": "hidden",
+     "decoy": 0,
+     "lead": 3
+    }
+   ]
+  },
+  "seed": 2,
+  "res": {
+   "casual": 0.495,
+   "watcher": 0.815,
+   "score": 34.5,
+   "random": 0.22,
+   "glance": 0.65
+  },
+  "traps": [
+   0.19,
+   0.22,
+   0.44
+  ]
+ },
+ "24": {
+  "S": {
+   "n": 24,
+   "name": "Chain Gang",
+   "conveyor": "lens_18",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 4,
+   "diff": "medium",
+   "notes": "Pre-Hard, four queues: two linked lone boxes.",
+   "D": 8,
+   "nb": 8,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 0,
+   "delay": 8,
+   "q": 1,
+   "dw": 1,
+   "lateAll": 0.5,
+   "jit": 1,
+   "stick": 0.9,
+   "spread": 0.3,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.33,
+     "t": "linked",
+     "pd": 2,
+     "lead": 3
+    },
+    {
+     "p": 0.68,
+     "t": "linked",
+     "pd": 2,
+     "lead": 12
+    }
+   ]
+  },
+  "seed": 1,
+  "res": {
+   "casual": 0.48,
+   "watcher": 0.445,
+   "score": 53.8,
+   "random": 0.025,
+   "glance": 0.42
+  },
+  "traps": [
+   0.22,
+   0.28,
+   0.59
+  ]
+ },
+ "25": {
+  "S": {
+   "n": 25,
+   "name": "Door Lock",
+   "conveyor": "heart_21",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 4,
+   "diff": "hard",
+   "notes": "Hard: Block Door with different colours per side, plus a locked lone box.",
+   "D": 7,
+   "nb": 7,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 0,
+   "delay": 6,
+   "q": 0.8,
+   "dw": 4,
+   "lateAll": 0.5,
+   "jit": 1,
+   "stick": 0.7,
+   "spread": 1,
+   "door": {
+    "turns": 3,
+    "open": 1
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.23,
+     "t": "buried",
+     "lead": 12
+    },
+    {
+     "p": 0.43,
+     "t": "locked",
+     "turns": 2,
+     "lead": 3
+    },
+    {
+     "p": 0.68,
+     "t": "buried",
+     "lead": 6
+    }
+   ]
+  },
+  "seed": 4,
+  "res": {
+   "casual": 0.3,
+   "watcher": 0.255,
+   "score": 72.3,
+   "random": 0.03,
+   "glance": 0.21
+  },
+  "traps": [
+   0.07,
+   0.39
+  ]
+ },
+ "26": {
+  "S": {
+   "n": 26,
+   "name": "Swing Doors",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Linked Box behind switching doors.",
+   "D": 10,
+   "nb": 7,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 4,
+   "delay": 14,
+   "q": 0.4,
+   "dw": 2,
+   "lateAll": 0.4,
+   "jit": 0.5,
+   "stick": 0.85,
+   "spread": 0.3,
+   "door": {
+    "turns": 3,
+    "open": 0
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.53,
+     "t": "linked",
+     "pd": 1,
+     "lead": 3
+    }
+   ]
+  },
+  "seed": 3,
+  "res": {
+   "casual": 0.43,
+   "watcher": 0.72,
+   "score": 42.5,
+   "random": 0.1,
+   "glance": 0.285
+  },
+  "traps": [
+   0.37,
+   0.43,
+   0.7
+  ]
+ },
+ "27": {
+  "S": {
+   "n": 27,
+   "name": "Locked Item",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 4,
+   "diff": "easy",
+   "notes": "Introduces Locked Item: one colour patch is locked, its 40 box waits.",
+   "D": 9,
+   "nb": 6,
+   "tiers": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "window": 4,
+   "delay": 4,
+   "q": 0.4,
+   "dw": 3,
+   "lateAll": 0.1,
+   "jit": 0.5,
+   "stick": 0.5,
+   "spread": 0.6,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.43,
+     "t": "litem",
+     "turns": 4,
+     "lead": 6
+    }
+   ]
+  },
+  "seed": 2,
+  "res": {
+   "casual": 0.86,
+   "watcher": 0.975,
+   "score": 8.3,
+   "random": 0.51,
+   "glance": 0.85
+  },
+  "traps": [
+   0.36,
+   0.42
+  ]
+ },
+ "28": {
+  "S": {
+   "n": 28,
+   "name": "Secret Cargo",
+   "conveyor": "lens_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Locked Items of a colour whose box is hidden.",
+   "D": 10,
+   "nb": 5,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 1,
+   "delay": 12,
+   "q": 1,
+   "dw": 4,
+   "lateAll": 0.3,
+   "jit": 1,
+   "stick": 0.85,
+   "spread": 0.3,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.53,
+     "t": "litem",
+     "turns": 4,
+     "hide": true,
+     "lead": 3
+    }
+   ]
+  },
+  "seed": 6,
+  "res": {
+   "casual": 0.525,
+   "watcher": 0.82,
+   "score": 32.8,
+   "random": 0.155,
+   "glance": 0.22
+  },
+  "traps": [
+   0.63
+  ]
+ },
+ "29": {
+  "S": {
+   "n": 29,
+   "name": "Rush Hour",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Pre-Hard, three Enter Paths, no elements: two buried lone boxes.",
+   "D": 13,
+   "nb": 7,
+   "tiers": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "window": 2,
+   "delay": 8,
+   "q": 0.4,
+   "dw": 4,
+   "lateAll": 0.3,
+   "jit": 0.5,
+   "stick": 0.9,
+   "spread": 0.6,
+   "keySide": 0,
+   "ev": [
+    {
+     "p": 0.33,
+     "t": "buried",
+     "lead": 9
+    },
+    {
+     "p": 0.68,
+     "t": "buried",
+     "lead": 6
+    }
+   ]
+  },
+  "seed": 5,
+  "res": {
+   "casual": 0.36,
+   "watcher": 0.34,
+   "score": 65,
+   "random": 0.01,
+   "glance": 0.35
+  },
+  "traps": [
+   0.26,
+   0.31,
+   0.56
+  ]
+ },
+ "30": {
+  "S": {
+   "n": 30,
+   "name": "Deep Freeze",
+   "conveyor": "heart_21",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 4,
+   "diff": "hard",
+   "notes": "Hard: locked items, a hidden locked box, a buried box.",
+   "D": 10,
+   "nb": 5,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 1,
+   "delay": 10,
+   "q": 1,
+   "dw": 1,
+   "lateAll": 0.4,
+   "jit": 0,
+   "stick": 1,
+   "spread": 1,
+   "keySide": 0,
+   "ev": [
+    {
+     "p": 0.23,
+     "t": "litem",
+     "turns": 5,
+     "lead": 12
+    },
+    {
+     "p": 0.43,
+     "t": "locked",
+     "turns": 3,
+     "hide": true,
+     "lead": 6
+    },
+    {
+     "p": 0.68,
+     "t": "buried",
+     "lead": 3
+    }
+   ]
+  },
+  "seed": 5,
+  "res": {
+   "casual": 0.205,
+   "watcher": 0.13,
+   "score": 83.3,
+   "random": 0.01,
+   "glance": 0.375
+  },
+  "traps": [
+   0.07,
+   0.1,
+   0.13,
+   0.17,
+   0.25,
+   0.4,
+   0.45
+  ]
+ },
+ "31": {
+  "S": {
+   "n": 31,
+   "name": "Cold Storage",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 4,
+   "diff": "easy",
+   "notes": "After Hard: one locked colour patch.",
+   "D": 8,
+   "nb": 7,
+   "tiers": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "window": 2,
+   "delay": 12,
+   "q": 0.8,
+   "dw": 3,
+   "lateAll": 0.3,
+   "jit": 1,
+   "stick": 0.6,
+   "spread": 0.6,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.58,
+     "t": "litem",
+     "turns": 2,
+     "lead": 9
+    }
+   ]
+  },
+  "seed": 3,
+  "res": {
+   "casual": 0.62,
+   "watcher": 0.88,
+   "score": 25,
+   "random": 0.08,
+   "glance": 0.53
+  },
+  "traps": [
+   0.44,
+   0.5
+  ]
+ },
+ "32": {
+  "S": {
+   "n": 32,
+   "name": "Block Queue",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "easy",
+   "notes": "Introduces Block Queue: the two blocked queues have different colours.",
+   "D": 9,
+   "nb": 6,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 4,
+   "delay": 2,
+   "q": 0.4,
+   "dw": 4,
+   "lateAll": 0.1,
+   "jit": 1,
+   "stick": 0.3,
+   "spread": 1,
+   "bq": {
+    "turns": 4,
+    "lanes": [
+     1,
+     2
+    ]
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.43,
+     "t": "bq",
+     "lead": 6
+    }
+   ]
+  },
+  "seed": 3,
+  "res": {
+   "casual": 0.795,
+   "watcher": 0.93,
+   "score": 13.8,
+   "random": 0.545,
+   "glance": 0.95
+  },
+  "traps": [
+   0.41
+  ]
+ },
+ "33": {
+  "S": {
+   "n": 33,
+   "name": "Detour",
+   "conveyor": "lens_18",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Block Queue: get the lone box before its queue is blocked.",
+   "D": 10,
+   "nb": 7,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 0,
+   "delay": 4,
+   "q": 1,
+   "dw": 1,
+   "lateAll": 0.2,
+   "jit": 0,
+   "stick": 0.6,
+   "spread": 0.6,
+   "bq": {
+    "turns": 3,
+    "lanes": [
+     2,
+     1
+    ]
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.53,
+     "t": "bq",
+     "lead": 3
+    }
+   ]
+  },
+  "seed": 2,
+  "res": {
+   "casual": 0.505,
+   "watcher": 0.87,
+   "score": 31.3,
+   "random": 0.125,
+   "glance": 0.47
+  },
+  "traps": [
+   0.13,
+   0.3,
+   0.47,
+   0.5
+  ]
+ },
+ "34": {
+  "S": {
+   "n": 34,
+   "name": "Tangled",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 4,
+   "diff": "medium",
+   "notes": "Pre-Hard, four queues: two linked lone boxes.",
+   "D": 11,
+   "nb": 5,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 0,
+   "delay": 12,
+   "q": 0.6,
+   "dw": 3,
+   "lateAll": 0.4,
+   "jit": 1,
+   "stick": 0.9,
+   "spread": 1,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.33,
+     "t": "linked",
+     "pd": 2,
+     "lead": 6
+    },
+    {
+     "p": 0.68,
+     "t": "linked",
+     "pd": 1,
+     "lead": 12
+    }
+   ]
+  },
+  "seed": 5,
+  "res": {
+   "casual": 0.395,
+   "watcher": 0.58,
+   "score": 51.3,
+   "random": 0.02,
+   "glance": 0.325
+  },
+  "traps": [
+   0.36,
+   0.5,
+   0.52,
+   0.55,
+   0.59,
+   0.68
+  ]
+ },
+ "35": {
+  "S": {
+   "n": 35,
+   "name": "Gridlock",
+   "conveyor": "heart_21",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 4,
+   "diff": "hard",
+   "notes": "Hard: Block Queue, a hidden locked box, a buried box.",
+   "D": 9,
+   "nb": 6,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 4,
+   "delay": 20,
+   "q": 0.4,
+   "dw": 1,
+   "lateAll": 0.6,
+   "jit": 1,
+   "stick": 0.9,
+   "spread": 1,
+   "bq": {
+    "turns": 3,
+    "lanes": [
+     2,
+     3
+    ]
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.23,
+     "t": "bq",
+     "lead": 9
+    },
+    {
+     "p": 0.43,
+     "t": "locked",
+     "turns": 3,
+     "hide": true,
+     "lead": 12
+    },
+    {
+     "p": 0.68,
+     "t": "buried",
+     "lead": 9
+    }
+   ]
+  },
+  "seed": 5,
+  "res": {
+   "casual": 0.32,
+   "watcher": 0.19,
+   "score": 74.5,
+   "random": 0.03,
+   "glance": 0.585
+  },
+  "traps": [
+   0.36,
+   0.53
+  ]
+ },
+ "36": {
+  "S": {
+   "n": 36,
+   "name": "Long Belt",
+   "conveyor": "square_19",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 3,
+   "diff": "easy",
+   "notes": "After Hard, three Enter Paths: one buried lone box.",
+   "D": 9,
+   "nb": 8,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 0,
+   "delay": 12,
+   "q": 0.6,
+   "dw": 2,
+   "lateAll": 0.3,
+   "jit": 0,
+   "stick": 0.75,
+   "spread": 0.6,
+   "keySide": 0,
+   "ev": [
+    {
+     "p": 0.58,
+     "t": "buried",
+     "lead": 9
+    }
+   ]
+  },
+  "seed": 3,
+  "res": {
+   "casual": 0.595,
+   "watcher": 0.84,
+   "score": 28.3,
+   "random": 0.18,
+   "glance": 0.545
+  },
+  "traps": [
+   0.04,
+   0.48,
+   0.52
+  ]
+ },
+ "37": {
+  "S": {
+   "n": 37,
+   "name": "Night Shift",
+   "conveyor": "lens_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 3,
+   "diff": "medium",
+   "notes": "Block Door with two colours that are only in hidden boxes.",
+   "D": 10,
+   "nb": 6,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 0,
+   "delay": 14,
+   "q": 0.4,
+   "dw": 3,
+   "lateAll": 0.2,
+   "jit": 0.5,
+   "stick": 0.9,
+   "spread": 0.6,
+   "door": {
+    "turns": 3,
+    "open": 1
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "t": "hidden",
+     "p": 0.5,
+     "decoy": 0,
+     "lead": 9
+    },
+    {
+     "t": "hidden",
+     "p": 0.6,
+     "decoy": 1,
+     "lead": 9
+    }
+   ]
+  },
+  "seed": 5,
+  "res": {
+   "casual": 0.47,
+   "watcher": 0.665,
+   "score": 43.3,
+   "random": 0.065,
+   "glance": 0.405
+  },
+  "traps": [
+   0.13,
+   0.23,
+   0.53
+  ]
+ },
+ "38": {
+  "S": {
+   "n": 38,
+   "name": "Roadblock",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 4,
+   "diff": "medium",
+   "notes": "Linked Box with a Block Queue.",
+   "D": 8,
+   "nb": 7,
+   "tiers": [
+    1,
+    3,
+    3,
+    3
+   ],
+   "window": 4,
+   "delay": 10,
+   "q": 0.6,
+   "dw": 3,
+   "lateAll": 0.3,
+   "jit": 0.5,
+   "stick": 0.75,
+   "spread": 0.3,
+   "bq": {
+    "turns": 3,
+    "lanes": [
+     0,
+     1
+    ]
+   },
+   "keySide": 0,
+   "ev": [
+    {
+     "p": 0.53,
+     "t": "linked",
+     "pd": 2,
+     "lead": 3
+    }
+   ]
+  },
+  "seed": 6,
+  "res": {
+   "casual": 0.41,
+   "watcher": 0.75,
+   "score": 42,
+   "random": 0.045,
+   "glance": 0.315
+  },
+  "traps": [
+   0.41,
+   0.47
+  ]
+ },
+ "39": {
+  "S": {
+   "n": 39,
+   "name": "Cold Links",
+   "conveyor": "bean_18",
+   "entries": [
+    "right",
+    "left"
+   ],
+   "Q": 4,
+   "diff": "medium",
+   "notes": "Pre-Hard: linked lone box, then locked colour patch.",
+   "D": 9,
+   "nb": 5,
+   "tiers": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "window": 4,
+   "delay": 12,
+   "q": 1,
+   "dw": 4,
+   "lateAll": 0.4,
+   "jit": 1,
+   "stick": 0.85,
+   "spread": 0.3,
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.33,
+     "t": "linked",
+     "pd": 2,
+     "lead": 6
+    },
+    {
+     "p": 0.68,
+     "t": "litem",
+     "turns": 4,
+     "lead": 6
+    }
+   ]
+  },
+  "seed": 6,
+  "res": {
+   "casual": 0.52,
+   "watcher": 0.39,
+   "score": 54.5,
+   "random": 0.025,
+   "glance": 0.445
+  },
+  "traps": [
+   0.25,
+   0.5
+  ]
+ },
+ "40": {
+  "S": {
+   "n": 40,
+   "name": "Grand Finale",
+   "conveyor": "heart_21",
+   "entries": [
+    "right",
+    "left",
+    "middle"
+   ],
+   "Q": 4,
+   "diff": "hard",
+   "notes": "Grand Finale: Block Queue, hidden locked box, locked items, buried box.",
+   "D": 10,
+   "nb": 8,
+   "tiers": [
+    3,
+    3,
+    2,
+    1
+   ],
+   "window": 2,
+   "delay": 20,
+   "q": 1,
+   "dw": 4,
+   "lateAll": 0.4,
+   "jit": 0.5,
+   "stick": 0.9,
+   "spread": 0.3,
+   "bq": {
+    "turns": 3,
+    "lanes": [
+     0,
+     1
+    ]
+   },
+   "keySide": 1,
+   "ev": [
+    {
+     "p": 0.23,
+     "t": "bq",
+     "lead": 3
+    },
+    {
+     "p": 0.43,
+     "t": "locked",
+     "turns": 3,
+     "hide": true,
+     "lead": 3
+    },
+    {
+     "p": 0.68,
+     "t": "litem",
+     "turns": 4,
+     "lead": 6
+    },
+    {
+     "p": 0.83,
+     "t": "buried",
+     "lead": 12
+    }
+   ]
+  },
+  "seed": 1,
+  "res": {
+   "casual": 0.14,
+   "watcher": 0.125,
+   "score": 86.8,
+   "random": 0.01,
+   "glance": 0.285
+  },
+  "traps": [
+   0.13,
+   0.23,
+   0.63
+  ]
+ }
+}
