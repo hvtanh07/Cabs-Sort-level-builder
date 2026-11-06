@@ -292,5 +292,5 @@
     [{ "color": 7, "size": 2 }, { "color": 1, "size": 3 }, { "color": 7, "size": 4 }, { "color": 2, "size": 2 }, { "color": 5, "size": 4 }, { "color": 8, "size": 3 }, { "color": 6, "size": 3 }, { "color": 3 }, { "color": 4, "size": 2 }, { "color": 2, "size": 4 }, { "color": 3, "size": 2 }, { "color": 8, "size": 3 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Diagonal Stripes", "difficulty": "medium", "notes": "Box sizes from 16 to 40 items over all 8 colours. Pink has only ONE box in the whole level, a 40-item box sitting 5th in the right queue. Pink reaches the belt early: clear the boxes in front of the pink box with boxes whose colours are on the belt. Once the pink box is out, the rest of the level opens up." }
+  "meta": { "name": "Diagonal Stripes", "difficulty": "medium", "notes": "Box sizes from 16 to 40 items over all 8 colours. Purple has only ONE box in the whole level, a 40-item box sitting 5th in the right queue. Purple reaches the belt early: clear the boxes in front of the purple box with boxes whose colours are on the belt. Once the purple box is out, the rest of the level opens up." }
 }

@@ -4,7 +4,7 @@ const S = [];
 // ---- levels 1-10: hand written from Ethan's brief ----
 S.push({ n: 1, name: 'First Sort', diff: 'easy', intro: 'Tap a box to send it up. One middle Enter Path, 3 colours (two boxes each), 32- and 40-item boxes.',
   conveyor: 'square_19', entries: ['middle'], lanes: 1, boxes: 8, colors: 4, window: 0, count: 6, slots: 5, extraSlots: 0,
-  sizeAt: [3, 4, 3, 4, 3, 4], colorAt: [1, 1, 4, 4, 2, 2], rowOrder: [0, 2, 1, 4, 3, 5] });   // `sizeAt` sets each box's size in send order (3 = 32, 4 = 40 items), `colorAt` its colour (1 Red, 2 Blue, 3 Green, 4 Yellow), `rowOrder` the order its row groups enter: Red 32, Yellow 32, Red 40, Blue 32, Yellow 40, Blue 40
+  sizeAt: [3, 4, 3, 4, 3, 4], colorAt: [1, 1, 4, 4, 2, 2], rowOrder: [0, 2, 1, 4, 3, 5] });   // `sizeAt` sets each box's size in send order (3 = 32, 4 = 40 items), `colorAt` its colour (1 Red, 2 Orange, 3 Blue, 4 Green), `rowOrder` the order its row groups enter: Red 32, Green 32, Red 40, Orange 32, Green 40, Orange 40
 // levels 2 and 3 work like level 1: 32- and 40-item boxes, each box's rows grouped together and the groups mixed (`rowOrder`).
 // Send order takes turns between the 2 queues, so each queue alternates 32 and 40; 6 boxes per queue, each colour 3 boxes
 S.push({ n: 2, name: 'Two Queues', diff: 'easy', intro: 'A second queue: pick which front box to send. 32- and 40-item boxes, row groups mixed.',
@@ -14,7 +14,7 @@ S.push({ n: 3, name: 'Round and Round', diff: 'easy', booster: '1st', intro: 'Tw
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 4, window: 0, count: 12, slots: 4, extraSlots: 2, groupPaths: true,
   sizeAt: [3, 4, 4, 3, 3, 4, 4, 3, 3, 4, 4, 3], colorAt: [3, 1, 4, 2, 1, 4, 3, 2, 4, 3, 1, 2], rowOrder: [1, 2, 0, 3, 4, 5, 7, 6, 9, 11, 8, 10] });
 // level 4 adds 16- and 24-item boxes (all four sizes, 3 of each) and still groups each box's rows, mixed, one group per Enter Path
-// it also brings in 2 new colours (Pink and Orange, 6 in all, two boxes each) to make it a little harder
+// it also brings in 2 new colours (Purple and Yellow, 6 in all, two boxes each) to make it a little harder
 S.push({ n: 4, name: 'Side by Side', diff: 'easy', intro: 'Two queues with two Enter Paths. All four box sizes (16 to 40 items); each box\'s rows still come as one group. Two new colours.',
   conveyor: 'square_19', entries: LR, lanes: 2, boxes: 12, colors: 6, window: 0, count: 12, groupPaths: true,
   sizeAt: [4, 1, 2, 3, 4, 1, 2, 3, 3, 4, 1, 2], colorAt: [3, 5, 4, 1, 6, 2, 1, 3, 5, 6, 2, 4], rowOrder: [0, 2, 1, 3, 6, 5, 7, 4, 9, 8, 11, 10] });
@@ -166,7 +166,7 @@ for (let n = 11; n <= 40; n++) {
 // 168 items (176 on Heart) plus EXTRA, the same amounts as before the conveyors changed.
 const BELT = { square_19: 26, bean_18: 28, lens_18: 26, heart_21: 30, triangle_12: 20, oval_14: 22 };   // belt rows of each conveyor
 const TOTAL = { 1: 64, 2: 80, 3: 96, 4: 128, 5: 136, 6: 160, 7: 192, 8: 208, 9: 224, 10: 352 };
-// colours unlock one by one: Red, Blue, Green and Yellow first, then Pink at level 5, Orange at 7, Purple at 10 and Cyan at 12.
+// colours unlock one by one: Red, Orange, Blue and Green first, then Purple at level 5, Yellow at 7, Cyan at 10 and Pink at 12.
 // Up to level 12 a level uses every unlocked colour; after that any of the 8 can be mixed in.
 const UNLOCKED = n => n < 5 ? 4 : n < 7 ? 5 : n < 10 ? 6 : n < 12 ? 7 : 8;
 S.forEach(s => {

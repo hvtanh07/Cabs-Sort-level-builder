@@ -101,7 +101,7 @@
     "lead": 90,
     "tier": 4
    },
-   "intro": "A third queue; rows come in patches of one colour. Green has only ONE box in the whole level, a 40-item box sitting 6th in the middle queue. Its rows reach the belt early and clog it: dig the middle queue down to the green box with boxes whose colours are on the belt, without filling the slots."
+   "intro": "A third queue; rows come in patches of one colour. Blue has only ONE box in the whole level, a 40-item box sitting 6th in the middle queue. Its rows reach the belt early and clog it: dig the middle queue down to the blue box with boxes whose colours are on the belt, without filling the slots."
   },
   "seed": 1
  },
@@ -168,7 +168,7 @@
     "lead": 90,
     "tier": 4
    },
-   "intro": "Box sizes from 16 to 40 items over all 8 colours. Pink has only ONE box in the whole level, a 40-item box sitting 5th in the right queue. Pink reaches the belt early: clear the boxes in front of the pink box with boxes whose colours are on the belt. Once the pink box is out, the rest of the level opens up."
+   "intro": "Box sizes from 16 to 40 items over all 8 colours. Purple has only ONE box in the whole level, a 40-item box sitting 5th in the right queue. Purple reaches the belt early: clear the boxes in front of the purple box with boxes whose colours are on the belt. Once the purple box is out, the rest of the level opens up."
   },
   "seed": 46
  },

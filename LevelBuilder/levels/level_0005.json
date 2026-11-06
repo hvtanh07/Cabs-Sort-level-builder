@@ -286,5 +286,5 @@
     [{ "color": 2, "size": 3 }, { "color": 7 }, { "color": 5, "size": 2 }, { "color": 1, "size": 4 }, { "color": 5 }, { "color": 7, "size": 2 }, { "color": 6 }, { "color": 1, "size": 2 }, { "color": 8, "size": 4 }, { "color": 6, "size": 2 }, { "color": 4, "size": 3 }, { "color": 7, "size": 4 }]
   ],
   "view": { "cameraPreset": "default" },
-  "meta": { "name": "Colour Patches", "difficulty": "medium", "notes": "A third queue; rows come in patches of one colour. Green has only ONE box in the whole level, a 40-item box sitting 6th in the middle queue. Its rows reach the belt early and clog it: dig the middle queue down to the green box with boxes whose colours are on the belt, without filling the slots." }
+  "meta": { "name": "Colour Patches", "difficulty": "medium", "notes": "A third queue; rows come in patches of one colour. Blue has only ONE box in the whole level, a 40-item box sitting 6th in the middle queue. Its rows reach the belt early and clog it: dig the middle queue down to the blue box with boxes whose colours are on the belt, without filling the slots." }
 }
