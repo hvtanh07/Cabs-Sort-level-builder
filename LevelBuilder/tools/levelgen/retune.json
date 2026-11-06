@@ -41,16 +41,138 @@
  },
  "5": {
   "over": {
-   "stick": 0.4,
-   "window": 550,
-   "colors": 6
+   "stick": 0.9,
+   "window": 200,
+   "colors": 8,
+   "boxes": 36,
+   "count": 36,
+   "sizeAt": [
+    2,
+    3,
+    4,
+    3,
+    1,
+    2,
+    4,
+    2,
+    3,
+    4,
+    2,
+    1,
+    3,
+    4,
+    2,
+    3,
+    4,
+    1,
+    2,
+    3,
+    4,
+    2,
+    3,
+    4,
+    3,
+    1,
+    2,
+    4,
+    2,
+    3,
+    4,
+    2,
+    3,
+    1,
+    4,
+    3
+   ],
+   "palette": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "intro": "A third queue. Rows come in patches of one colour: watch which colour is coming and send the box for it. Stuck moment: the belt fills with one colour whose box is buried under other boxes; dig for it with boxes whose colours are coming."
   },
-  "seed": 629
+  "seed": 247
  },
  "6": {
   "over": {
    "stick": 0.7,
-   "window": 50,
+   "window": 200,
+   "colors": 8,
+   "boxes": 36,
+   "count": 36,
+   "sizeAt": [
+    2,
+    3,
+    4,
+    3,
+    1,
+    2,
+    4,
+    2,
+    3,
+    4,
+    2,
+    1,
+    3,
+    4,
+    2,
+    3,
+    4,
+    1,
+    2,
+    3,
+    4,
+    2,
+    3,
+    4,
+    3,
+    1,
+    2,
+    4,
+    2,
+    3,
+    4,
+    2,
+    3,
+    1,
+    4,
+    3
+   ],
+   "atPos": null,
+   "palette": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "intro": "Box sizes from 16 to 40 items over all 8 colours; rows come in colour patches, so watch which colour is coming. Stuck moment: one free slot left; the box that finishes now beats the box that matches the most items."
+  },
+  "seed": 130
+ },
+ "7": {
+  "over": {
+   "lanes": 3,
+   "palette": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "stick": 0.9,
+   "window": 200,
    "colors": 8,
    "boxes": 30,
    "count": 30,
@@ -86,61 +208,9 @@
     2,
     3
    ],
-   "atPos": null,
-   "intro": "Box sizes from 16 to 40 items over all 8 colours; rows come in colour patches, so watch which colour is coming."
+   "intro": "Hidden Box in a staggered pattern over 3 queues: every other box after the front is hidden. Boxes from 16 to 40 items. Stuck moment: a colour on the belt has no visible box, so its box is hidden; uncover it with a box whose colour is coming."
   },
-  "seed": 20
- },
- "7": {
-  "over": {
-   "lanes": 3,
-   "palette": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8
-   ],
-   "stick": 0.7,
-   "window": 200,
-   "colors": 8,
-   "boxes": 27,
-   "count": 27,
-   "sizeAt": [
-    2,
-    3,
-    4,
-    3,
-    1,
-    2,
-    4,
-    2,
-    3,
-    4,
-    2,
-    1,
-    3,
-    4,
-    2,
-    3,
-    4,
-    1,
-    2,
-    3,
-    4,
-    2,
-    3,
-    4,
-    3,
-    1,
-    2
-   ],
-   "intro": "Hidden Box in a staggered pattern over 3 queues: every other box after the front is hidden. Boxes from 16 to 40 items."
-  },
-  "seed": 13
+  "seed": 8
  },
  "8": {
   "over": {
@@ -196,9 +266,10 @@
     1,
     4,
     3
-   ]
+   ],
+   "intro": "Every even box is hidden, so the queues show rows of Hidden Boxes. Rows in colour patches: watch which colour is coming. Stuck moment: one free slot left with Hidden Boxes behind the fronts; send the front box that will fill, not the one that parks."
   },
-  "seed": 91
+  "seed": 62
  },
  "9": {
   "over": {
@@ -253,18 +324,65 @@
    "stick": 0.9,
    "window": 200,
    "atPos": null,
-   "intro": "Longer queues (11 boxes each), boxes from 16 to 40 items over all 8 colours; rows in colour patches, so no queue can be emptied first."
+   "intro": "Longer queues (11 boxes each), boxes from 16 to 40 items over all 8 colours; rows in colour patches, so no queue can be emptied first. Stuck moment: the belt fills with one colour and the obvious box of that colour is the wrong one; count items against box size."
   },
-  "seed": 104
+  "seed": 95
  },
  "10": {
   "over": {
-   "stick": 0.9,
-   "window": 50,
+   "stick": 0.7,
+   "window": 200,
    "colors": 8,
-   "boxes": 30
+   "boxes": 33,
+   "count": 33,
+   "sizeAt": [
+    2,
+    3,
+    4,
+    3,
+    1,
+    2,
+    4,
+    2,
+    3,
+    4,
+    2,
+    1,
+    3,
+    4,
+    2,
+    3,
+    4,
+    1,
+    2,
+    3,
+    4,
+    2,
+    3,
+    4,
+    3,
+    1,
+    2,
+    4,
+    2,
+    3,
+    4,
+    2,
+    3
+   ],
+   "palette": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "intro": "First hard level: every box behind the front row is hidden. Boxes from 16 to 40 items. Stuck moment: the last free slot while one colour clogs the belt; clear the belt so the Enter Paths can feed the waiting boxes."
   },
-  "seed": 26
+  "seed": 15
  },
  "11": {
   "over": {
