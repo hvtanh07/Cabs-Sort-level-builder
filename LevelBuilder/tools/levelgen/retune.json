@@ -107,14 +107,24 @@
   "over": {
    "phases": {
     "cols": [
-     3,
-     4,
      5,
-     1
+     6,
+     7,
+     4
+    ],
+    "c1": [
+     1,
+     2,
+     3
+    ],
+    "c3": [
+     1,
+     2,
+     5
     ],
     "d1": 3,
     "d2": 5,
-    "dmin": 2,
+    "dmin": 3,
     "d3": 3,
     "t1": [
      2,
@@ -137,9 +147,9 @@
     "big": 4,
     "cdFirst": true
    },
-   "intro": "Three phases. First the front boxes are only Blue, Green and Purple, and the first rows bring exactly their items. Then Purple and Red rows fill the belt while the next boxes are mostly Blue and Green, whose items come later; one Purple 40 and the ONLY Red box (40 items) sit 8th in the middle and right queues. Send Blue and Green boxes a few at a time so the slots do not fill, dig down to the Purple and Red boxes, and the rest of the level gets easy."
+   "intro": "Three stretches with their own colours. First the front boxes are only Red, Orange and Blue, and the first rows bring exactly their items. Then Cyan rows and the rows of the ONLY Green box fill the belt while the next boxes are Purple and Yellow, whose items come later; one Cyan 40 sits 7th in the right queue and the Green 40 sits 8th in the middle queue. Send Purple and Yellow boxes a few at a time so the slots do not fill, dig down to the Cyan and Green boxes, and the last stretch (Purple, Yellow, Orange) gets easy."
   },
-  "seed": 4
+  "seed": 31
  },
  "7": {
   "over": {
