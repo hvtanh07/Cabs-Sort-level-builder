@@ -66,7 +66,9 @@ function make(S, seed) {
     let lanesOk = [...Array(Q).keys()];
     if (e.lane != null) lanesOk = [e.lane];
     if (S.bq && e.t === 'bq') lanesOk = [bqL[1]];
-    const cand = lanes.flat().filter(x => lanesOk.includes(x.l) && x.d >= 1 && x.d <= D - 2 && x.key == null && !x.partner && !usedLane.some(u => u.l === x.l && Math.abs(u.d - x.d) <= 1));
+    // `depth`: an exact place in the queue (0 = front), used by intro levels that show a box from the start
+    const dOk = x => e.depth != null ? x.d === e.depth : x.d >= 1 && x.d <= D - 2;
+    const cand = lanes.flat().filter(x => lanesOk.includes(x.l) && dOk(x) && x.key == null && !x.partner && !usedLane.some(u => u.l === x.l && Math.abs(u.d - x.d) <= 1));
     if (!cand.length) throw new Error('no key spot');
     const b = cand.sort((x, y) => Math.abs(x.i - want) - Math.abs(y.i - want))[0];
     const le = b.l, de = b.d;
