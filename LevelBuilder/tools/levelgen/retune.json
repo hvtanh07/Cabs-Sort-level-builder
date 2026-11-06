@@ -159,18 +159,18 @@
     7,
     8
    ],
-   "stick": 0.7,
+   "stick": 0.8,
    "atPos": null,
    "lone": {
     "color": 5,
-    "lane": 1,
-    "depth": 3,
-    "lead": 20,
+    "lane": 2,
+    "depth": 4,
+    "lead": 90,
     "tier": 4
    },
-   "intro": "Box sizes from 16 to 40 items over all 8 colours. Pink has only ONE box in the whole level, a 40-item box sitting 4th in the middle queue. When pink fills the belt, find that box and clear the boxes in front of it, using boxes whose colours are on the belt."
+   "intro": "Box sizes from 16 to 40 items over all 8 colours. Pink has only ONE box in the whole level, a 40-item box sitting 5th in the right queue. Pink reaches the belt early: clear the boxes in front of the pink box with boxes whose colours are on the belt. Once the pink box is out, the rest of the level opens up."
   },
-  "seed": 15
+  "seed": 46
  },
  "7": {
   "over": {
