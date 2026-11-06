@@ -251,7 +251,8 @@
     [{ "color": 6, "size": 4 }, { "color": 2, "size": 4 }, { "color": 1, "size": 4 }, { "color": 3, "size": 4 }, { "color": 7, "size": 2 }, { "color": 1, "size": 2 }, { "color": 2, "size": 3 }, { "color": 3, "size": 4 }, { "color": 8, "size": 4 }, { "color": 4 }]
   ],
   "links": [
-    { "a": { "lane": 0, "tray": 5 }, "b": { "lane": 1, "tray": 6 } }
+    { "a": { "lane": 0, "tray": 5 }, "b": { "lane": 1, "tray": 6 } },
+    { "a": { "lane": 0, "tray": 0 }, "b": { "lane": 1, "tray": 1 } }
   ],
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Swing Doors", "difficulty": "medium", "notes": "Linked Box behind switching doors." }

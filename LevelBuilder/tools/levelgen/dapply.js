@@ -13,6 +13,12 @@ global.window = global; eval(fs.readFileSync(LJ, 'utf8'));
 const levels = window.CS_BUNDLED_LEVELS.levels;
 Object.keys(pick).map(Number).filter(n => !only || only.includes(n)).sort((a, b) => a - b).forEach(n => {
   const { json } = DZ.make(pick[n].S, pick[n].seed);
+  // `post`: element edits made on top of the built level (user, 2026-11-06: an element from the start of the level)
+  (pick[n].post || []).forEach(e => {
+    if (e.t === 'lock') json.lanes[e.lane][e.depth].lockTurns = e.turns;
+    else if (e.t === 'hidden') json.lanes[e.lane][e.depth].hidden = true;
+    else if (e.t === 'link') (json.links = json.links || []).push({ a: { lane: e.lane, tray: e.depth }, b: { lane: e.lane2, tray: e.depth2 } });
+  });
   const i = levels.findIndex(j => j.id === json.id);
   if (i !== n - 1) throw new Error('level ' + n + ' id ' + json.id + ' not at its place');
   levels[i] = json;

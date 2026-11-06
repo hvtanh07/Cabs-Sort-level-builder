@@ -61,6 +61,11 @@ const levels = {
   39: { ev: E(39, [{ t: 'linked', pd: [1, 2] }, { t: 'litem', turns: [3, 4] }]), notes: 'Pre-Hard: linked lone box, then locked colour patch.' },
   40: { ev: E(40, [{ t: 'bq' }, { t: 'locked', turns: [2, 3], hide: true }, { t: 'litem', turns: [3, 4] }, { t: 'buried' }]), bq: { turns: [3], lanes: [[0, 1], [2, 3], [1, 2]] }, notes: 'Grand Finale: Block Queue, hidden locked box, locked items, buried box.' }
 };
+// user (2026-11-06): every level with Locked Box, Hidden Box, Locked Item or Linked Box shows at least one of them from the
+// start of the level (box near the top of a queue, or locked rows among the first rows)
+const EARLY = { 14: 'hidden', 15: 'lock', 17: 'link', 18: 'link', 19: 'lock', 25: 'lock', 26: 'link', 27: 'litem', 28: 'litem',
+  31: 'litem', 35: 'lock', 37: 'hidden', 38: 'link', 39: 'litem' };
+Object.keys(EARLY).forEach(n => { levels[n].early = [{ t: EARLY[n], turns: EARLY[n] === 'litem' ? [2, 3] : [2, 3] }]; });
 // wider search for the Hard levels that found nothing in the first pass
 [15, 20, 25].forEach(n => Object.assign(levels[n], { stick: [0.7, 0.8, 0.9, 0.95], delay: [6, 10, 14, 20], nb: [6, 7, 8] }));
 module.exports = { levels, ROLE, target: n => WIN[ROLE[n]], stucks: n => levels[n].stucks || (n === 40 ? [0.23, 0.43, 0.68, 0.83] : STUCK[ROLE[n]]) };

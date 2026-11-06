@@ -248,7 +248,8 @@
     [{ "color": 7, "size": 2 }, { "color": 6, "size": 3 }, { "color": 2, "size": 3 }, { "color": 3, "size": 3 }, { "color": 7, "size": 2 }, { "color": 2, "size": 3 }, { "color": 4, "size": 4 }, { "color": 6, "size": 2 }]
   ],
   "links": [
-    { "a": { "lane": 3, "tray": 6 }, "b": { "lane": 2, "tray": 7 } }
+    { "a": { "lane": 3, "tray": 6 }, "b": { "lane": 2, "tray": 7 } },
+    { "a": { "lane": 0, "tray": 0 }, "b": { "lane": 1, "tray": 1 } }
   ],
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Roadblock", "difficulty": "medium", "notes": "Linked Box with a Block Queue." }

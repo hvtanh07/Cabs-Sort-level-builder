@@ -179,23 +179,29 @@
    "Q": 3,
    "diff": "medium",
    "notes": "Hidden Box: two colours are only inside hidden boxes.",
-   "D": 11,
-   "nb": 8,
+   "D": 12,
+   "nb": 7,
    "tiers": [
-    2,
+    1,
     3,
     3,
-    2
+    3
    ],
-   "window": 1,
-   "delay": 16,
-   "q": 0.6,
-   "dw": 4,
-   "lateAll": 0.3,
+   "window": 2,
+   "delay": 8,
+   "q": 0.8,
+   "dw": 1,
+   "lateAll": 0.5,
    "jit": 0.5,
-   "stick": 0.9,
-   "spread": 0.6,
-   "keySide": 1,
+   "stick": 0.85,
+   "spread": 1,
+   "early": [
+    {
+     "t": "hidden",
+     "turns": 2
+    }
+   ],
+   "keySide": 0,
    "ev": [
     {
      "p": 0.33,
@@ -207,21 +213,24 @@
      "p": 0.68,
      "t": "hidden",
      "decoy": 1,
-     "lead": 6
+     "lead": 12
     }
    ]
   },
-  "seed": 1,
+  "seed": 4,
   "res": {
-   "casual": 0.29,
-   "watcher": 0.545,
-   "score": 58.3,
-   "random": 0.025,
-   "glance": 0.365
+   "casual": 0.565,
+   "watcher": 0.43,
+   "score": 50.3,
+   "random": 0.085,
+   "glance": 0.595
   },
   "traps": [
-   0.12,
-   0.45
+   0.42,
+   0.5,
+   0.53,
+   0.56,
+   0.58
   ]
  },
  "15": {
@@ -275,14 +284,21 @@
   },
   "seed": 4,
   "res": {
-   "casual": 0.185,
-   "watcher": 0.24,
-   "score": 78.8,
-   "random": 0.005,
-   "glance": 0.085
+   "casual": 0.195,
+   "watcher": 0.26,
+   "score": 77.3,
+   "random": 0.01
   },
   "traps": [
    0.37
+  ],
+  "post": [
+   {
+    "t": "lock",
+    "lane": 2,
+    "depth": 0,
+    "turns": 2
+   }
   ]
  },
  "16": {
@@ -348,41 +364,46 @@
    "diff": "easy",
    "notes": "Introduces Linked Box: the needed colour is linked to an extra box in the next queue.",
    "D": 11,
-   "nb": 8,
+   "nb": 7,
    "tiers": [
     3,
     3,
     2,
     1
    ],
-   "window": 4,
+   "window": 1,
    "delay": 2,
-   "q": 1,
+   "q": 0.4,
    "dw": 4,
-   "lateAll": 0.1,
-   "jit": 0.5,
+   "lateAll": 0,
+   "jit": 1,
    "stick": 0.3,
    "spread": 1,
+   "early": [
+    {
+     "t": "link",
+     "turns": 2
+    }
+   ],
    "keySide": 1,
    "ev": [
     {
      "p": 0.43,
      "t": "linked",
      "pd": 2,
-     "lead": 12
+     "lead": 9
     }
    ]
   },
-  "seed": 2,
+  "seed": 4,
   "res": {
-   "casual": 0.85,
-   "watcher": 0.98,
-   "score": 8.5,
-   "random": 0.325,
-   "glance": 0.535
+   "casual": 0.795,
+   "watcher": 0.96,
+   "score": 12.3,
+   "random": 0.36,
+   "glance": 0.455
   },
   "traps": [
-   0.42,
    0.52
   ]
  },
@@ -400,21 +421,27 @@
    "diff": "medium",
    "notes": "Linked Box: the needed colour is only in one hidden box, linked to an extra box.",
    "D": 9,
-   "nb": 8,
+   "nb": 7,
    "tiers": [
-    1,
+    2,
     3,
     3,
-    3
+    2
    ],
    "window": 4,
    "delay": 12,
    "q": 1,
-   "dw": 1,
-   "lateAll": 0.2,
+   "dw": 2,
+   "lateAll": 0.1,
    "jit": 1,
-   "stick": 0.85,
-   "spread": 0.3,
+   "stick": 0.75,
+   "spread": 1,
+   "early": [
+    {
+     "t": "link",
+     "turns": 3
+    }
+   ],
    "keySide": 1,
    "ev": [
     {
@@ -422,21 +449,20 @@
      "t": "linked",
      "pd": 1,
      "hide": true,
-     "lead": 9
+     "lead": 12
     }
    ]
   },
-  "seed": 3,
+  "seed": 1,
   "res": {
-   "casual": 0.55,
-   "watcher": 0.755,
-   "score": 34.7,
-   "random": 0.025,
-   "glance": 0.385
+   "casual": 0.595,
+   "watcher": 0.75,
+   "score": 32.8,
+   "random": 0.155,
+   "glance": 0.85
   },
   "traps": [
-   0.19,
-   0.44
+   0.56
   ]
  },
  "19": {
@@ -485,15 +511,22 @@
   },
   "seed": 4,
   "res": {
-   "casual": 0.3,
-   "watcher": 0.615,
-   "score": 54.3,
-   "random": 0.035,
-   "glance": 0.25
+   "casual": 0.27,
+   "watcher": 0.585,
+   "score": 57.3,
+   "random": 0.005
   },
   "traps": [
    0.36,
    0.42
+  ],
+  "post": [
+   {
+    "t": "lock",
+    "lane": 2,
+    "depth": 0,
+    "turns": 2
+   }
   ]
  },
  "20": {
@@ -830,15 +863,22 @@
   },
   "seed": 4,
   "res": {
-   "casual": 0.3,
-   "watcher": 0.255,
-   "score": 72.3,
-   "random": 0.03,
-   "glance": 0.21
+   "casual": 0.24,
+   "watcher": 0.12,
+   "score": 82,
+   "random": 0.03
   },
   "traps": [
    0.07,
    0.39
+  ],
+  "post": [
+   {
+    "t": "lock",
+    "lane": 3,
+    "depth": 1,
+    "turns": 2
+   }
   ]
  },
  "26": {
@@ -885,16 +925,24 @@
   },
   "seed": 3,
   "res": {
-   "casual": 0.43,
+   "casual": 0.395,
    "watcher": 0.72,
-   "score": 42.5,
-   "random": 0.1,
-   "glance": 0.285
+   "score": 44.3,
+   "random": 0.085
   },
   "traps": [
    0.37,
    0.43,
    0.7
+  ],
+  "post": [
+   {
+    "t": "link",
+    "lane": 0,
+    "depth": 0,
+    "lane2": 1,
+    "depth2": 1
+   }
   ]
  },
  "27": {
@@ -910,42 +958,48 @@
    "diff": "easy",
    "notes": "Introduces Locked Item: one colour patch is locked, its 40 box waits.",
    "D": 9,
-   "nb": 6,
+   "nb": 8,
    "tiers": [
     2,
     3,
     3,
     2
    ],
-   "window": 4,
-   "delay": 4,
+   "window": 1,
+   "delay": 2,
    "q": 0.4,
-   "dw": 3,
+   "dw": 2,
    "lateAll": 0.1,
-   "jit": 0.5,
+   "jit": 0,
    "stick": 0.5,
-   "spread": 0.6,
-   "keySide": 1,
+   "spread": 0.3,
+   "early": [
+    {
+     "t": "litem",
+     "turns": 2
+    }
+   ],
+   "keySide": 0,
    "ev": [
     {
      "p": 0.43,
      "t": "litem",
      "turns": 4,
-     "lead": 6
+     "lead": 9
     }
    ]
   },
   "seed": 2,
   "res": {
-   "casual": 0.86,
-   "watcher": 0.975,
+   "casual": 0.855,
+   "watcher": 0.98,
    "score": 8.3,
-   "random": 0.51,
+   "random": 0.375,
    "glance": 0.85
   },
   "traps": [
-   0.36,
-   0.42
+   0.33,
+   0.36
   ]
  },
  "28": {
@@ -960,43 +1014,50 @@
    "Q": 3,
    "diff": "medium",
    "notes": "Locked Items of a colour whose box is hidden.",
-   "D": 10,
-   "nb": 5,
+   "D": 11,
+   "nb": 7,
    "tiers": [
     1,
     3,
     3,
     3
    ],
-   "window": 1,
-   "delay": 12,
-   "q": 1,
+   "window": 2,
+   "delay": 4,
+   "q": 0.4,
    "dw": 4,
-   "lateAll": 0.3,
-   "jit": 1,
+   "lateAll": 0.1,
+   "jit": 0,
    "stick": 0.85,
-   "spread": 0.3,
-   "keySide": 1,
+   "spread": 1,
+   "early": [
+    {
+     "t": "litem",
+     "turns": 3
+    }
+   ],
+   "keySide": 0,
    "ev": [
     {
      "p": 0.53,
      "t": "litem",
      "turns": 4,
      "hide": true,
-     "lead": 3
+     "lead": 9
     }
    ]
   },
-  "seed": 6,
+  "seed": 4,
   "res": {
-   "casual": 0.525,
-   "watcher": 0.82,
-   "score": 32.8,
-   "random": 0.155,
-   "glance": 0.22
+   "casual": 0.62,
+   "watcher": 0.88,
+   "score": 25,
+   "random": 0.135,
+   "glance": 0.705
   },
   "traps": [
-   0.63
+   0.36,
+   0.39
   ]
  },
  "29": {
@@ -1138,42 +1199,48 @@
    "diff": "easy",
    "notes": "After Hard: one locked colour patch.",
    "D": 8,
-   "nb": 7,
+   "nb": 6,
    "tiers": [
     2,
     3,
     3,
     2
    ],
-   "window": 2,
+   "window": 1,
    "delay": 12,
-   "q": 0.8,
-   "dw": 3,
-   "lateAll": 0.3,
-   "jit": 1,
-   "stick": 0.6,
-   "spread": 0.6,
+   "q": 0.6,
+   "dw": 1,
+   "lateAll": 0.2,
+   "jit": 0.5,
+   "stick": 0.85,
+   "spread": 1,
+   "early": [
+    {
+     "t": "litem",
+     "turns": 3
+    }
+   ],
    "keySide": 1,
    "ev": [
     {
      "p": 0.58,
      "t": "litem",
-     "turns": 2,
-     "lead": 9
+     "turns": 3,
+     "lead": 3
     }
    ]
   },
-  "seed": 3,
+  "seed": 2,
   "res": {
-   "casual": 0.62,
-   "watcher": 0.88,
-   "score": 25,
-   "random": 0.08,
-   "glance": 0.53
+   "casual": 0.585,
+   "watcher": 0.775,
+   "score": 32,
+   "random": 0.18,
+   "glance": 0.515
   },
   "traps": [
-   0.44,
-   0.5
+   0.13,
+   0.53
   ]
  },
  "32": {
@@ -1413,14 +1480,21 @@
   "seed": 5,
   "res": {
    "casual": 0.32,
-   "watcher": 0.19,
-   "score": 74.5,
-   "random": 0.03,
-   "glance": 0.585
+   "watcher": 0.17,
+   "score": 75.5,
+   "random": 0.07
   },
   "traps": [
    0.36,
    0.53
+  ],
+  "post": [
+   {
+    "t": "lock",
+    "lane": 0,
+    "depth": 0,
+    "turns": 2
+   }
   ]
  },
  "36": {
@@ -1528,13 +1602,19 @@
    "casual": 0.47,
    "watcher": 0.665,
    "score": 43.3,
-   "random": 0.065,
-   "glance": 0.405
+   "random": 0.065
   },
   "traps": [
    0.13,
    0.23,
    0.53
+  ],
+  "post": [
+   {
+    "t": "hidden",
+    "lane": 0,
+    "depth": 1
+   }
   ]
  },
  "38": {
@@ -1585,15 +1665,23 @@
   },
   "seed": 6,
   "res": {
-   "casual": 0.41,
-   "watcher": 0.75,
-   "score": 42,
-   "random": 0.045,
-   "glance": 0.315
+   "casual": 0.4,
+   "watcher": 0.73,
+   "score": 43.5,
+   "random": 0.04
   },
   "traps": [
    0.41,
    0.47
+  ],
+  "post": [
+   {
+    "t": "link",
+    "lane": 0,
+    "depth": 0,
+    "lane2": 1,
+    "depth2": 1
+   }
   ]
  },
  "39": {
@@ -1609,47 +1697,54 @@
    "diff": "medium",
    "notes": "Pre-Hard: linked lone box, then locked colour patch.",
    "D": 9,
-   "nb": 5,
+   "nb": 7,
    "tiers": [
+    3,
+    3,
     2,
-    3,
-    3,
-    2
+    1
    ],
-   "window": 4,
-   "delay": 12,
-   "q": 1,
-   "dw": 4,
+   "window": 1,
+   "delay": 8,
+   "q": 0.4,
+   "dw": 3,
    "lateAll": 0.4,
    "jit": 1,
    "stick": 0.85,
-   "spread": 0.3,
-   "keySide": 1,
+   "spread": 1,
+   "early": [
+    {
+     "t": "litem",
+     "turns": 2
+    }
+   ],
+   "keySide": 0,
    "ev": [
     {
      "p": 0.33,
      "t": "linked",
-     "pd": 2,
-     "lead": 6
+     "pd": 1,
+     "lead": 9
     },
     {
      "p": 0.68,
      "t": "litem",
-     "turns": 4,
+     "turns": 3,
      "lead": 6
     }
    ]
   },
-  "seed": 6,
+  "seed": 3,
   "res": {
-   "casual": 0.52,
-   "watcher": 0.39,
-   "score": 54.5,
-   "random": 0.025,
-   "glance": 0.445
+   "casual": 0.39,
+   "watcher": 0.455,
+   "score": 57.8,
+   "random": 0.005,
+   "glance": 0.48
   },
   "traps": [
-   0.25,
+   0.11,
+   0.39,
    0.5
   ]
  },

@@ -247,7 +247,7 @@
   "lanes": [
     [{ "color": 1, "size": 4 }, { "color": 6, "size": 3 }, { "color": 4, "size": 3, "lockTurns": 3 }, { "color": 1, "size": 3 }, { "color": 7, "size": 4 }, { "color": 6, "size": 3 }, { "color": 7, "size": 4 }, { "color": 6 }, { "color": 8, "size": 3 }],
     [{ "color": 7, "size": 4 }, { "color": 3, "size": 4 }, { "color": 7, "size": 3 }, { "color": 8, "size": 4 }, { "color": 6, "size": 4 }, { "color": 2, "size": 4 }, { "color": 6, "size": 4 }, { "color": 3, "size": 2 }, { "color": 7, "size": 3 }],
-    [{ "color": 1, "size": 4 }, { "color": 5, "size": 4 }, { "color": 3, "size": 2 }, { "color": 6, "size": 3 }, { "color": 8, "size": 3 }, { "color": 3, "size": 3 }, { "color": 8, "size": 3 }, { "color": 1, "size": 4 }, { "color": 6, "size": 2 }]
+    [{ "color": 1, "size": 4, "lockTurns": 2 }, { "color": 5, "size": 4 }, { "color": 3, "size": 2 }, { "color": 6, "size": 3 }, { "color": 8, "size": 3 }, { "color": 3, "size": 3 }, { "color": 8, "size": 3 }, { "color": 1, "size": 4 }, { "color": 6, "size": 2 }]
   ],
   "view": { "cameraPreset": "default" },
   "meta": { "name": "Three Gates", "difficulty": "hard", "notes": "Hard, three Enter Paths: buried box, locked box, buried box." }
