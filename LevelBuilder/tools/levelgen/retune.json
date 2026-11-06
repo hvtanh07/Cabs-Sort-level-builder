@@ -41,7 +41,6 @@
  },
  "5": {
   "over": {
-   "stick": 0.9,
    "window": 200,
    "colors": 8,
    "boxes": 36,
@@ -94,13 +93,20 @@
     7,
     8
    ],
-   "intro": "A third queue. Rows come in patches of one colour: watch which colour is coming and send the box for it. Stuck moment: the belt fills with one colour whose box is buried under other boxes; dig for it with boxes whose colours are coming."
+   "stick": 0.8,
+   "lone": {
+    "color": 3,
+    "lane": 1,
+    "depth": 5,
+    "lead": 90,
+    "tier": 4
+   },
+   "intro": "A third queue; rows come in patches of one colour. Green has only ONE box in the whole level, a 40-item box sitting 6th in the middle queue. Its rows reach the belt early and clog it: dig the middle queue down to the green box with boxes whose colours are on the belt, without filling the slots."
   },
-  "seed": 247
+  "seed": 1
  },
  "6": {
   "over": {
-   "stick": 0.7,
    "window": 200,
    "colors": 8,
    "boxes": 36,
@@ -143,7 +149,6 @@
     4,
     3
    ],
-   "atPos": null,
    "palette": [
     1,
     2,
@@ -154,9 +159,18 @@
     7,
     8
    ],
-   "intro": "Box sizes from 16 to 40 items over all 8 colours; rows come in colour patches, so watch which colour is coming. Stuck moment: one free slot left; the box that finishes now beats the box that matches the most items."
+   "stick": 0.7,
+   "atPos": null,
+   "lone": {
+    "color": 5,
+    "lane": 1,
+    "depth": 3,
+    "lead": 20,
+    "tier": 4
+   },
+   "intro": "Box sizes from 16 to 40 items over all 8 colours. Pink has only ONE box in the whole level, a 40-item box sitting 4th in the middle queue. When pink fills the belt, find that box and clear the boxes in front of it, using boxes whose colours are on the belt."
   },
-  "seed": 130
+  "seed": 15
  },
  "7": {
   "over": {

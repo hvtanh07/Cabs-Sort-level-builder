@@ -346,30 +346,42 @@
     "stay": 0,
     "turns": 0,
     "random": 0,
-    "glance": 0.07,
-    "novice": 0.07,
-    "casual": 0.05,
-    "pcasual": 0.11,
-    "watcher": 0.055,
+    "glance": 0.025,
+    "novice": 0.015,
+    "casual": 0.015,
+    "pcasual": 0.025,
+    "watcher": 0.01,
     "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0.165,
-    "turns": 0,
-    "random": 0.115,
-    "glance": 0.605,
-    "novice": 0.41,
-    "casual": 0.565,
-    "pcasual": 0.59,
-    "watcher": 0.815,
+    "stay": 0.5,
+    "turns": 0.315,
+    "random": 0.105,
+    "glance": 0.45,
+    "novice": 0.53,
+    "casual": 0.6,
+    "pcasual": 0.6,
+    "watcher": 0.61,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
+     "bot": "watcher",
+     "got": 0.61,
+     "lo": 0.75,
+     "hi": 0.9
+    },
+    {
+     "bot": "stay",
+     "got": 0.5,
+     "lo": 0,
+     "hi": 0.3
+    },
+    {
      "bot": "glance",
-     "got": 0.605,
+     "got": 0.45,
      "lo": 0,
      "hi": 0.4
     }
@@ -385,36 +397,30 @@
     "stay": 0,
     "turns": 0,
     "random": 0,
-    "glance": 0.095,
-    "novice": 0.035,
-    "casual": 0.025,
-    "pcasual": 0.1,
-    "watcher": 0.01,
+    "glance": 0.085,
+    "novice": 0.04,
+    "casual": 0.03,
+    "pcasual": 0.09,
+    "watcher": 0.045,
     "sharp": 0,
     "careful": 1
    },
    "resRV": {
-    "stay": 0,
+    "stay": 0.165,
     "turns": 0,
-    "random": 0.22,
-    "glance": 0.8,
-    "novice": 0.47,
-    "casual": 0.545,
-    "pcasual": 0.6,
-    "watcher": 0.7,
+    "random": 0.085,
+    "glance": 0.54,
+    "novice": 0.345,
+    "casual": 0.47,
+    "pcasual": 0.36,
+    "watcher": 0.795,
     "sharp": 1,
     "careful": 1
    },
    "misses": [
     {
-     "bot": "watcher",
-     "got": 0.7,
-     "lo": 0.75,
-     "hi": 0.9
-    },
-    {
      "bot": "glance",
-     "got": 0.8,
+     "got": 0.54,
      "lo": 0,
      "hi": 0.4
     }
