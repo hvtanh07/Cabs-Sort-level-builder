@@ -133,7 +133,8 @@ levels.forEach((j, i) => {
   console.log(n, rl, BOTS.map(b => b.id + ' ' + Math.round(resRV[b.id] * 100)).join(' '), misses.length ? 'OFF ' + misses.map(x => x.bot + ' ' + Math.round(x.got * 100)).join(', ') : 'ok');
 });
 // a run on some levels only (node playtest.js 5,6) replaces just those levels' rows and keeps the others
-const PJ = path.join(__dirname, 'playtest.json');
+// OUT=file.json writes only these rows to that file, so a few processes can each play some levels; their rows are then merged into playtest.json
+const PJ = process.env.OUT ? path.resolve(process.env.OUT) : path.join(__dirname, 'playtest.json');
 let all = out;
-if (only && fs.existsSync(PJ)) { const prev = JSON.parse(fs.readFileSync(PJ, 'utf8')).levels || []; all = prev.filter(x => !only.includes(x.n)).concat(out).sort((a, b) => a.n - b.n); }
+if (only && !process.env.OUT && fs.existsSync(PJ)) { const prev = JSON.parse(fs.readFileSync(PJ, 'utf8')).levels || []; all = prev.filter(x => !only.includes(x.n)).concat(out).sort((a, b) => a.n - b.n); }
 fs.writeFileSync(PJ, JSON.stringify({ runs: RUNS, bots: BOTS.map(b => ({ id: b.id, name: b.name, tier: b.tier, note: b.note })), targets: TARGET, levels: all }, null, 1));

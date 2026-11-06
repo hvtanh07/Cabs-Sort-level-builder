@@ -35,6 +35,10 @@ node write.js      # writes levels/level_00NN.json and js/levels.js
 
 Running it again with the same specs gives the same levels. Editing a level in the tool and exporting it is fine; the generator is only for rebuilding the set.
 
+## Levels 11–40 by design (2026-11-06)
+
+`design.js` builds a level around its planned stuck moments and the element rules (see the comment at its top). `design-levels.js` gives each level its role, score window and events (stuck points and the element each uses). `node dscan.js 13` samples settings and seeds for level 13 and prints the best layout as JSON (`TL` seconds, `SALT` for another sample stream); it checks no jam, Enter Path patches of 3–6 rows, the careful player winning without RV and without the fail-safe, no fixed queue order winning without RV, the score window and the random-tap bar (200 runs with RV), and how close the stuck sends (choice-width profile, `profile.js`) come to the planned points. `design.json` keeps the chosen settings and seed of each level, and `node dapply.js design.json` writes them into `levels/` and `js/levels.js`. `OUT=file.json node playtest.js 11,12` writes only those rows to another file, so a few play tests can run at once.
+
 ## Play test report
 
 `node playtest.js` (or `node playtest.js 29,30`) plays every level with ten bots, from blind taps to the careful player, 200 runs each (`RUNS=` changes it), without and with the RV slots, and writes `playtest.json`. Besides the ladder bots in `gen.js` (blind one queue, blind in turn, random taps, beginner, casual, belt watcher, careful) it adds three play styles that only read what a player can see (hidden Enter Path rows are not counted):
