@@ -66,6 +66,9 @@ const levels = {
 const EARLY = { 14: 'hidden', 15: 'lock', 17: 'link', 18: 'link', 19: 'lock', 25: 'lock', 26: 'link', 27: 'litem', 28: 'litem',
   31: 'litem', 35: 'lock', 37: 'hidden', 38: 'link', 39: 'litem' };
 Object.keys(EARLY).forEach(n => { levels[n].early = [{ t: EARLY[n], turns: EARLY[n] === 'litem' ? [2, 3] : [2, 3] }]; });
+// user (2026-11-06): levels with Hidden Boxes hide them in a pattern (every other box, or every even box of each queue),
+// like levels 7 and 8, instead of a few single boxes
+[14, 18, 23, 28, 30, 35, 37, 40].forEach(n => { levels[n].hidePattern = ['checker', 'checker2', 'even']; if (levels[n].early && levels[n].early[0].t === 'hidden') delete levels[n].early; });
 // wider search for the Hard levels that found nothing in the first pass
 [15, 20, 25].forEach(n => Object.assign(levels[n], { stick: [0.7, 0.8, 0.9, 0.95], delay: [6, 10, 14, 20], nb: [6, 7, 8] }));
 module.exports = { levels, ROLE, target: n => WIN[ROLE[n]], stucks: n => levels[n].stucks || (n === 40 ? [0.23, 0.43, 0.68, 0.83] : STUCK[ROLE[n]]) };
