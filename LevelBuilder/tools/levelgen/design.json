@@ -1184,8 +1184,8 @@
    "Q": 3,
    "diff": "easy",
    "notes": "Introduces Block Queue: the two blocked queues have different colours.",
-   "D": 9,
-   "nb": 6,
+   "D": 10,
+   "nb": 7,
    "tiers": [
     1,
     3,
@@ -1193,13 +1193,13 @@
     3
    ],
    "window": 4,
-   "delay": 2,
-   "q": 0.4,
-   "dw": 4,
+   "delay": 6,
+   "q": 0.8,
+   "dw": 1,
    "lateAll": 0.1,
    "jit": 1,
-   "stick": 0.3,
-   "spread": 1,
+   "stick": 0.5,
+   "spread": 0.3,
    "bq": {
     "turns": 4,
     "lanes": [
@@ -1207,25 +1207,27 @@
      2
     ]
    },
-   "keySide": 1,
+   "bqMix": 0.55,
+   "keySide": 0,
    "ev": [
     {
      "p": 0.43,
      "t": "bq",
-     "lead": 6
+     "lead": 9
     }
    ]
   },
-  "seed": 3,
+  "seed": 2,
   "res": {
-   "casual": 0.795,
-   "watcher": 0.93,
+   "casual": 0.845,
+   "watcher": 0.88,
    "score": 13.8,
-   "random": 0.545,
-   "glance": 0.95
+   "random": 0.525,
+   "glance": 0.73
   },
   "traps": [
-   0.41
+   0.27,
+   0.33
   ]
  },
  "33": {
@@ -1242,50 +1244,49 @@
    "diff": "medium",
    "notes": "Block Queue: get the lone box before its queue is blocked.",
    "D": 10,
-   "nb": 7,
+   "nb": 8,
    "tiers": [
     1,
     3,
     3,
     3
    ],
-   "window": 0,
-   "delay": 4,
-   "q": 1,
+   "window": 4,
+   "delay": 12,
+   "q": 0.6,
    "dw": 1,
-   "lateAll": 0.2,
-   "jit": 0,
+   "lateAll": 0.3,
+   "jit": 0.5,
    "stick": 0.6,
-   "spread": 0.6,
+   "spread": 1,
    "bq": {
     "turns": 3,
     "lanes": [
-     2,
-     1
+     0,
+     2
     ]
    },
-   "keySide": 1,
+   "bqMix": 0.4,
+   "keySide": 0,
    "ev": [
     {
      "p": 0.53,
      "t": "bq",
-     "lead": 3
+     "lead": 12
     }
    ]
   },
-  "seed": 2,
+  "seed": 4,
   "res": {
-   "casual": 0.505,
-   "watcher": 0.87,
-   "score": 31.3,
-   "random": 0.125,
-   "glance": 0.47
+   "casual": 0.51,
+   "watcher": 0.81,
+   "score": 34,
+   "random": 0.09,
+   "glance": 0.65
   },
   "traps": [
-   0.13,
-   0.3,
-   0.47,
-   0.5
+   0.03,
+   0.4
   ]
  },
  "34": {
