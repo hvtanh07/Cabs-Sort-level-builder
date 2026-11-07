@@ -46,6 +46,7 @@ function sample() {
   S.spread = pick([0.3, 0.6, 1]);
   if (L.door) S.door = { turns: pick(L.door), open: pick([0, 1]) };
   if (L.bq) S.bq = { turns: pick(L.bq.turns), lanes: pick(L.bq.lanes) };
+  if (L.bqMix) S.bqMix = pick(L.bqMix);
   if (L.hideExtra) S.hideExtra = pick(L.hideExtra);
   if (L.hidePattern) S.hidePattern = pick(L.hidePattern);
   if (L.early) S.early = L.early.map(e => { const o = Object.assign({}, e); ['turns', 'lane', 'row'].forEach(k => { if (Array.isArray(e[k])) o[k] = pick(e[k]); }); return o; });
@@ -85,7 +86,12 @@ function evaluate(S, seed) {
   // every planned stuck point should have a trap within 0.12 of it
   const miss = DESIGN.stucks(n).reduce((a, p) => { const d = traps.length ? Math.min(...traps.map(t => Math.abs(t - p))) : 1; return a + Math.max(0, d - 0.12); }, 0);
   const off = Math.max(0, T.score[0] - res.score, res.score - T.score[1]);
-  return { res, prof: pf.steps.map(s => s.trap ? 'T' + s.width : '' + s.width).join(' '), traps: traps.map(t => +t.toFixed(2)), ones: +ones.toFixed(2), cost: off / 3 + miss * 10, m, json };
+  // `wide` [from, min]: mean choice width (share of the queues) over the level from point `from` on should reach `min`
+  // (user, 2026-11-07: levels 32 and 33 felt too narrow)
+  const Q = m.lanes.length, tail = pf.steps.filter(s => s.k / N >= (L.wide ? L.wide[0] : 0)), wAvg = tail.reduce((a, s) => a + s.width, 0) / Math.max(1, tail.length) / Q;
+  const wAll = pf.steps.reduce((a, s) => a + s.width, 0) / N / Q;
+  const wMiss = L.wide ? Math.max(0, L.wide[1] - wAvg) : 0;
+  return { wAvg: +wAvg.toFixed(2), wAll: +wAll.toFixed(2), cost: off / 3 + miss * 10 + wMiss * 20, res, prof: pf.steps.map(s => s.trap ? 'T' + s.width : '' + s.width).join(' '), traps: traps.map(t => +t.toFixed(2)), ones: +ones.toFixed(2), m, json };
 }
 let best = null, tried = 0, passed = 0; const t0 = Date.now();
 const TL = +(process.env.TL || 600) * 1000;
@@ -97,8 +103,8 @@ for (let i = 0; i < TRIES && Date.now() - t0 < TL; i++) {
     if (!e || !e.res) continue;
     passed++;
     if (!best || e.cost < best.cost) {
-      best = { n, S, seed: s, res: e.res, prof: e.prof, traps: e.traps, ones: e.ones, cost: +e.cost.toFixed(2) };
-      process.stderr.write(`${n} best cost ${best.cost} score ${e.res.score} rnd ${e.res.random} traps ${e.traps} | ${e.prof}\n`);
+      best = { n, S, seed: s, res: e.res, prof: e.prof, traps: e.traps, ones: e.ones, wAvg: e.wAvg, wAll: e.wAll, cost: +e.cost.toFixed(2) };
+      process.stderr.write(`${n} best cost ${best.cost} score ${e.res.score} rnd ${e.res.random} traps ${e.traps} w ${e.wAll}/${e.wAvg} | ${e.prof}\n`);
     }
     break;
   }

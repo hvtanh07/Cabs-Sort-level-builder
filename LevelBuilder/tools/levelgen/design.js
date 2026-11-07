@@ -34,13 +34,16 @@ function make(S, seed) {
   base.forEach((c, i) => { side[c] = i % 2; }); keys.forEach((c, i) => { side[c] = (i + (S.keySide || 0)) % 2; });
   const half = [base.filter((c, i) => i % 2 === 0), base.filter((c, i) => i % 2 === 1)];
   const bqL = S.bq ? S.bq.lanes : null;
-  const allowed = l => bqL && bqL[0] === l ? half[0] : bqL && bqL[1] === l ? half[1] : base;
+  // `bqMix` (user, 2026-11-07, levels 32 and 33): the two blocked queues keep apart colour sets only in their top rows;
+  // from depth bqMix * D on, every queue draws from all colours, so the player has more choices later in the level
+  const mixD = S.bqMix != null ? Math.round(S.bqMix * D) : Infinity;
+  const allowed = (l, d) => d >= mixD ? base : bqL && bqL[0] === l ? half[0] : bqL && bqL[1] === l ? half[1] : base;
   // queues
   const lanes = Array.from({ length: Q }, () => []);
   for (let d = 0; d < D; d++) for (let l = 0; l < Q; l++) {
     const prev = lanes[l][d - 1], nb = l > 0 ? lanes[l - 1][d] : null;
-    let cand = allowed(l).filter(c => (!prev || prev.c !== c) && (!nb || nb.c !== c));
-    if (!cand.length) cand = allowed(l);
+    let cand = allowed(l, d).filter(c => (!prev || prev.c !== c) && (!nb || nb.c !== c));
+    if (!cand.length) cand = allowed(l, d);
     lanes[l].push({ c: pk(r, cand), t: wpick(r, S.tiers || [3, 3, 2, 1]), l, d });
   }
   // send order of the intended line: depth by depth, queues in a random order at each depth

@@ -72,6 +72,10 @@ Object.assign(levels[27], { Q: 3, boxes: 33,
   ev: [{ t: 'litem', p: 0.43, turns: [3, 4] }, { t: 'litem', p: 0.7, turns: [3, 4] }],
   early: [{ t: 'litem', turns: [2, 3] }, { t: 'litem', turns: [2, 3], other: true, row: 16 }],
   notes: 'Introduces Locked Item: several colour patches are locked, so a box sent for them waits in its slot.' });
+// user (2026-11-07): levels 32 and 33 were too narrow. The two blocked queues keep apart colours only in their top rows
+// (32) or top to middle rows (33); deeper down every queue has every colour, so the level widens toward its end
+Object.assign(levels[32], { bqMix: [0.35, 0.45, 0.55], wide: [0.5, 0.75] });
+Object.assign(levels[33], { bqMix: [0.4, 0.5], wide: [0.55, 0.7] });
 // user (2026-11-06, level 27): locked items unlocked on the belt before their colour's box showed up, so they never got in
 // the way. The key colour's rows now come with its box (lead around 0), and dscan.js checks that the locked items are
 // still locked while a box of their colour is at the front of a queue or in a slot.
