@@ -17,6 +17,8 @@ Object.keys(pick).map(Number).filter(n => !only || only.includes(n)).sort((a, b)
   (pick[n].post || []).forEach(e => {
     if (e.t === 'lock') json.lanes[e.lane][e.depth].lockTurns = e.turns;
     else if (e.t === 'hidden') json.lanes[e.lane][e.depth].hidden = true;
+    // user (2026-11-07): more sends to open the Locked Items, same layout
+    else if (e.t === 'lockadd') Object.values(json.feeders).forEach(f => (f.lockedRows || []).forEach(r => { r.lockTurns += e.add; }));
     else if (e.t === 'link') (json.links = json.links || []).push({ a: { lane: e.lane, tray: e.depth }, b: { lane: e.lane2, tray: e.depth2 } });
   });
   const i = levels.findIndex(j => j.id === json.id);

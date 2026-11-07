@@ -941,7 +941,13 @@
     }
    ]
   },
-  "seed": 6
+  "seed": 6,
+  "post": [
+   {
+    "t": "lockadd",
+    "add": 1
+   }
+  ]
  },
  "28": {
   "S": {
@@ -989,7 +995,13 @@
     }
    ]
   },
-  "seed": 4
+  "seed": 4,
+  "post": [
+   {
+    "t": "lockadd",
+    "add": 1
+   }
+  ]
  },
  "29": {
   "S": {
@@ -1061,35 +1073,35 @@
    "Q": 4,
    "diff": "hard",
    "notes": "Hard: locked items, a hidden locked box, a buried box.",
-   "D": 10,
-   "nb": 6,
+   "D": 9,
+   "nb": 7,
    "tiers": [
-    1,
+    2,
     3,
     3,
-    3
+    2
    ],
-   "window": 2,
+   "window": 4,
    "delay": 14,
-   "q": 0.4,
-   "dw": 3,
+   "q": 0.8,
+   "dw": 1,
    "lateAll": 0.5,
-   "jit": 1,
-   "stick": 1,
-   "spread": 1,
+   "jit": 0,
+   "stick": 0.95,
+   "spread": 0.6,
    "hidePattern": "even",
    "keySide": 1,
    "ev": [
     {
      "p": 0.23,
      "t": "litem",
-     "turns": 4,
-     "lead": 0
+     "turns": 6,
+     "lead": -2
     },
     {
      "p": 0.43,
      "t": "locked",
-     "turns": 3,
+     "turns": 2,
      "hide": true,
      "lead": 6
     },
@@ -1100,7 +1112,7 @@
     }
    ]
   },
-  "seed": 3
+  "seed": 5
  },
  "31": {
   "S": {
@@ -1146,7 +1158,13 @@
     }
    ]
   },
-  "seed": 1
+  "seed": 1,
+  "post": [
+   {
+    "t": "lockadd",
+    "add": 2
+   }
+  ]
  },
  "32": {
   "S": {
@@ -1611,7 +1629,13 @@
     }
    ]
   },
-  "seed": 1
+  "seed": 1,
+  "post": [
+   {
+    "t": "lockadd",
+    "add": 1
+   }
+  ]
  },
  "40": {
   "S": {
@@ -1677,6 +1701,12 @@
     }
    ]
   },
-  "seed": 6
+  "seed": 6,
+  "post": [
+   {
+    "t": "lockadd",
+    "add": 3
+   }
+  ]
  }
 }

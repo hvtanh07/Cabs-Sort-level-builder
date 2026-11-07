@@ -164,7 +164,7 @@
       4, 4, 4, 4,
       4, 4, 4, 4,
       4, 4, 4, 4
-    ], "lockedRows": [{ "row": 0, "lockTurns": 3 }, { "row": 1, "lockTurns": 3 }, { "row": 2, "lockTurns": 3 }, { "row": 3, "lockTurns": 3 }, { "row": 4, "lockTurns": 3 }, { "row": 5, "lockTurns": 3 }, { "row": 55, "lockTurns": 4 }, { "row": 56, "lockTurns": 4 }, { "row": 57, "lockTurns": 4 }, { "row": 58, "lockTurns": 4 }, { "row": 59, "lockTurns": 4 }, { "row": 60, "lockTurns": 4 }, { "row": 64, "lockTurns": 4 }, { "row": 65, "lockTurns": 4 }, { "row": 66, "lockTurns": 4 }, { "row": 67, "lockTurns": 4 }] },
+    ], "lockedRows": [{ "row": 0, "lockTurns": 4 }, { "row": 1, "lockTurns": 4 }, { "row": 2, "lockTurns": 4 }, { "row": 3, "lockTurns": 4 }, { "row": 4, "lockTurns": 4 }, { "row": 5, "lockTurns": 4 }, { "row": 55, "lockTurns": 5 }, { "row": 56, "lockTurns": 5 }, { "row": 57, "lockTurns": 5 }, { "row": 58, "lockTurns": 5 }, { "row": 59, "lockTurns": 5 }, { "row": 60, "lockTurns": 5 }, { "row": 64, "lockTurns": 5 }, { "row": 65, "lockTurns": 5 }, { "row": 66, "lockTurns": 5 }, { "row": 67, "lockTurns": 5 }] },
     "left": { "bottles": [
       4, 4, 4, 4,
       4, 4, 4, 4,
