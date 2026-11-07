@@ -1243,31 +1243,31 @@
    "Q": 3,
    "diff": "medium",
    "notes": "Block Queue: get the lone box before its queue is blocked.",
-   "D": 10,
-   "nb": 8,
+   "D": 11,
+   "nb": 7,
    "tiers": [
-    1,
+    2,
     3,
     3,
-    3
+    2
    ],
-   "window": 4,
+   "window": 2,
    "delay": 12,
    "q": 0.6,
-   "dw": 1,
-   "lateAll": 0.3,
-   "jit": 0.5,
+   "dw": 2,
+   "lateAll": 0.1,
+   "jit": 1,
    "stick": 0.6,
    "spread": 1,
    "bq": {
     "turns": 3,
     "lanes": [
-     0,
-     2
+     1,
+     0
     ]
    },
    "bqMix": 0.4,
-   "keySide": 0,
+   "keySide": 1,
    "ev": [
     {
      "p": 0.53,
@@ -1276,17 +1276,17 @@
     }
    ]
   },
-  "seed": 4,
+  "seed": 5,
   "res": {
-   "casual": 0.51,
-   "watcher": 0.81,
-   "score": 34,
-   "random": 0.09,
-   "glance": 0.65
+   "casual": 0.695,
+   "watcher": 0.93,
+   "score": 18.8,
+   "random": 0.135,
+   "glance": 0.58
   },
   "traps": [
-   0.03,
-   0.4
+   0.15,
+   0.61
   ]
  },
  "34": {
