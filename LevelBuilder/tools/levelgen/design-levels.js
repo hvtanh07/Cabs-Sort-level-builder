@@ -49,7 +49,7 @@ const levels = {
   27: { ev: E(27, [{ t: 'litem', turns: [3, 4] }]), notes: 'Introduces Locked Item: one colour patch is locked, its 40 box waits.' },
   28: { ev: E(28, [{ t: 'litem', turns: [3, 4], hide: true }]), notes: 'Locked Items of a colour whose box is hidden.' },
   29: { ev: E(29, [{ t: 'buried' }, { t: 'buried' }]), notes: 'Pre-Hard, three Enter Paths, no elements: two buried lone boxes.' },
-  30: { ev: E(30, [{ t: 'litem', turns: [4, 5] }, { t: 'locked', turns: [2, 3], hide: true }, { t: 'buried' }]), notes: 'Hard: locked items, a hidden locked box, a buried box.' },
+  30: { ev: E(30, [{ t: 'litem', turns: [5, 6] }, { t: 'locked', turns: [2, 3], hide: true }, { t: 'buried' }]), notes: 'Hard: locked items, a hidden locked box, a buried box.' },
   31: { ev: E(31, [{ t: 'litem', turns: [2, 3] }]), notes: 'After Hard: one locked colour patch.' },
   32: { ev: E(32, [{ t: 'bq' }]), bq: { turns: [3, 4], lanes: [[1, 2], [2, 1], [0, 1]] }, notes: 'Introduces Block Queue: the two blocked queues have different colours.' },
   33: { ev: E(33, [{ t: 'bq' }]), bq: { turns: [3], lanes: [[2, 1], [1, 0], [0, 2]] }, notes: 'Block Queue: get the lone box before its queue is blocked.' },
