@@ -66,6 +66,12 @@ const levels = {
 const EARLY = { 14: 'hidden', 15: 'lock', 17: 'link', 18: 'link', 19: 'lock', 25: 'lock', 26: 'link', 27: 'litem', 28: 'litem',
   31: 'litem', 35: 'lock', 37: 'hidden', 38: 'link', 39: 'litem' };
 Object.keys(EARLY).forEach(n => { levels[n].early = [{ t: EARLY[n], turns: EARLY[n] === 'litem' ? [2, 3] : [2, 3] }]; });
+// user (2026-11-07): level 27 introduces Locked Item, so it has only 3 queues, and more colour patches are locked (two
+// patches of front-box colours from the start, plus two key colours later), at about the old difficulty and choice width
+Object.assign(levels[27], { Q: 3, boxes: 33,
+  ev: [{ t: 'litem', p: 0.43, turns: [3, 4] }, { t: 'litem', p: 0.7, turns: [3, 4] }],
+  early: [{ t: 'litem', turns: [2, 3] }, { t: 'litem', turns: [2, 3], other: true, row: 16 }],
+  notes: 'Introduces Locked Item: several colour patches are locked, so a box sent for them waits in its slot.' });
 // user (2026-11-06, level 27): locked items unlocked on the belt before their colour's box showed up, so they never got in
 // the way. The key colour's rows now come with its box (lead around 0), and dscan.js checks that the locked items are
 // still locked while a box of their colour is at the front of a queue or in a slot.
