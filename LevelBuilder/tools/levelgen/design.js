@@ -163,7 +163,7 @@ function make(S, seed) {
     paths.forEach((p, f) => { if (done) return; for (let i = 0; i < Math.min(p.length, e.row || 10); i++) {
       if (i && p[i - 1].c === p[i].c) continue;
       let k = i; while (k < p.length && p[k].c === p[i].c) k++;
-      if (k - i >= 3 && !keys.includes(p[i].c) && fronts.includes(p[i].c)) { for (let q = i; q < k; q++) lockedRows[f].push({ row: q, lockTurns: e.turns || 3 }); done = true; return; }
+      if (k - i >= 3 && !keys.includes(p[i].c) && fronts.includes(p[i].c) && !lockedRows[f].some(x => x.row === i) && !(e.other && lockedRows.some(L => L.length && L.some(x => paths[lockedRows.indexOf(L)][x.row].c === p[i].c)))) { for (let q = i; q < k; q++) lockedRows[f].push({ row: q, lockTurns: e.turns || 3 }); done = true; return; }
     } });
     if (!done) throw new Error('no early litem');
   });

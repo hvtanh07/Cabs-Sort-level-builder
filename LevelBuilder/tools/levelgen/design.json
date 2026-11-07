@@ -906,48 +906,54 @@
     "right",
     "left"
    ],
-   "Q": 4,
+   "Q": 3,
    "diff": "easy",
-   "notes": "Introduces Locked Item: one colour patch is locked, its 40 box waits.",
-   "D": 10,
+   "notes": "Introduces Locked Item: several colour patches are locked, so a box sent for them waits in its slot.",
+   "D": 11,
    "nb": 8,
    "tiers": [
+    3,
+    3,
     2,
-    3,
-    3,
-    2
+    1
    ],
    "window": 1,
-   "delay": 6,
-   "q": 0.6,
-   "dw": 3,
+   "delay": 2,
+   "q": 0.4,
+   "dw": 4,
    "lateAll": 0.1,
    "jit": 0,
-   "stick": 0.3,
-   "spread": 1,
+   "stick": 0.5,
+   "spread": 0.3,
    "early": [
     {
      "t": "litem",
      "turns": 3
+    },
+    {
+     "t": "litem",
+     "turns": 3,
+     "other": true,
+     "row": 16
     }
    ],
-   "keySide": 1,
+   "keySide": 0,
    "ev": [
     {
-     "p": 0.43,
      "t": "litem",
+     "p": 0.43,
      "turns": 4,
-     "lead": -2
+     "lead": -1
+    },
+    {
+     "t": "litem",
+     "p": 0.7,
+     "turns": 3,
+     "lead": 0
     }
    ]
   },
-  "seed": 6,
-  "post": [
-   {
-    "t": "lockadd",
-    "add": 1
-   }
-  ]
+  "seed": 2
  },
  "28": {
   "S": {

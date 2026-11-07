@@ -12,8 +12,8 @@ const DESIGN = require('./design-levels.js');
 const n = +process.argv[2], TRIES = +(process.argv[3] || 400), RUNS = 200, SEED = 7000;
 const L = DESIGN.levels[n];
 const cur = JSON.parse(fs.readFileSync(path.join(__dirname, '../../levels/level_' + String(n).padStart(4, '0') + '.json'), 'utf8'));
-const layout = { n, name: cur.meta.name, conveyor: cur.conveyor, entries: Object.keys(cur.feeders), Q: cur.lanes.length };
-const boxes = cur.lanes.reduce((a, q) => a + q.length, 0);
+const layout = { n, name: cur.meta.name, conveyor: cur.conveyor, entries: Object.keys(cur.feeders), Q: L.Q || cur.lanes.length };
+const boxes = L.boxes || cur.lanes.reduce((a, q) => a + q.length, 0);
 const T = DESIGN.target(n);
 const bot = id => P.BOTS.find(b => b.id === id);
 function rateN(m, id, runs, rv) { let w = 0; for (let s = 0; s < runs; s++) if (P.play(m, bot(id), SEED + s, rv).win) w++; return w / runs; }
